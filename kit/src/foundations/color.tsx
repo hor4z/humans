@@ -85,7 +85,7 @@ export function ColorSection() {
           <Scale title="Azul" note="El 600 está anclado: el blanco encima llega a 4,5:1, y de ahí sale `--brand`." tokens={blue} />
           <Scale title="Amarillo" note="Lleva tinta oscura: contra blanco su mejor paso da 1,31:1. Se ancla en el 100." tokens={yellow} />
           <Scale title="Naranja" note="El acento, acotado a propósito: si aparece en botones y fondos deja de señalar." tokens={amber} />
-          <Scale title="Gris" note="Gray: gris frío con el azul apenas insinuado. Todo neutro del sistema sale de acá." tokens={gray} />
+          <Scale title="Gris" note="Un gris apenas cálido, anclado al lienzo `#fbfaf6`: cada paso conserva su luminosidad y toma ese matiz, con la croma más baja en los oscuros para que el texto no tire a marrón. El papel es blanco. Todo neutro del sistema sale de acá." tokens={gray} />
         </Stack>
       </Section>
 
