@@ -1,12 +1,11 @@
-import cls from './slider.module.css'
 import { useState } from 'react'
 import { Slider } from '@milo/ui/slider'
-import { A11y, Example, Footnote, Frame, Mono, Page, Panel, Practices, Props, Section, Variant } from '../kit'
+import { A11y, Footnote, Frame, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function SliderStory() {
-  const [a, setA] = useState(59)
-  const [b, setB] = useState(0)
-  const [c, setC] = useState(100)
+  const [volume, setVolume] = useState(59)
+  const [low, setLow] = useState(0)
+  const [high, setHigh] = useState(100)
   const [steps, setSteps] = useState(3)
 
   return (
@@ -21,9 +20,9 @@ export function SliderStory() {
         note="El pulgar sobresale del riel y se agarra, al revés que el del `Switch`, que corre adentro de su canal. Esa es la diferencia entre elegir un valor y prender algo."
       >
         <Panel>
-          <Variant name={`valor ${a}`}>
+          <Variant name={`valor ${volume}`} code={`<Slider value={volume} onValueChange={setVolume} label="Volumen" />`}>
             <Frame width="sm">
-              <Slider value={a} onValueChange={setA} label="Volumen" />
+              <Slider value={volume} onValueChange={setVolume} label="Volumen" />
             </Frame>
           </Variant>
         </Panel>
@@ -31,17 +30,17 @@ export function SliderStory() {
 
       <Section
         title="Los extremos"
-        note="El pulgar viaja entre 12 y el ancho menos 12, así que la cuenta lleva su propio tamaño adentro. Sin eso, en 0 y en 100 la mitad del pulgar queda afuera de la pista."
+        note="En 0 y en 100 el pulgar queda entero adentro de la pista."
       >
         <Panel>
-          <Variant name="en 0">
+          <Variant name="en 0" code={`<Slider value={low} onValueChange={setLow} label="En cero" />`}>
             <Frame width="sm">
-              <Slider value={b} onValueChange={setB} label="En cero" />
+              <Slider value={low} onValueChange={setLow} label="En cero" />
             </Frame>
           </Variant>
-          <Variant name="en 100">
+          <Variant name="en 100" code={`<Slider value={high} onValueChange={setHigh} label="En cien" />`}>
             <Frame width="sm">
-              <Slider value={c} onValueChange={setC} label="En cien" />
+              <Slider value={high} onValueChange={setHigh} label="En cien" />
             </Frame>
           </Variant>
         </Panel>
@@ -49,26 +48,21 @@ export function SliderStory() {
 
       <Section
         title="Con pasos"
-        note="Las flechas, Home, End y el arrastre vienen del `range` nativo, así que el teclado funciona sin que nadie lo escriba."
+        note="`step` corta el recorrido en saltos, y las flechas avanzan de a uno."
       >
         <Panel>
-          <Variant name={`${steps} de 5 · step 1, max 5`}>
+          <Variant name={`${steps} de 5 · step 1, max 5`} code={`<Slider value={steps} onValueChange={setSteps} min={0} max={5} step={1} label="Dificultad" />`}>
             <Frame width="sm">
               <Slider value={steps} onValueChange={setSteps} min={0} max={5} step={1} label="Dificultad" />
             </Frame>
           </Variant>
         </Panel>
-        <Footnote>
-          Probalo con el teclado: tabulá hasta el slider y usá las flechas. El anillo de foco se
-          suma al relieve del pulgar en vez de reemplazarlo: la regla global de <code>:focus-visible</code>{' '}
-          pisa el <code>box-shadow</code> entero y deja la pieza plana, que es el bug que está anotado en
-          Pendiente para el resto de los controles.
-        </Footnote>
+        <Footnote>Probalo con el teclado: tabulá hasta el slider y usá las flechas.</Footnote>
       </Section>
 
       <Section title="Deshabilitado">
         <Panel>
-          <Variant name="disabled">
+          <Variant name="disabled" code={`<Slider value={40} onValueChange={setValue} disabled label="Deshabilitado" />`}>
             <Frame width="sm">
               <Slider value={40} onValueChange={() => {}} disabled label="Deshabilitado" />
             </Frame>
@@ -76,22 +70,13 @@ export function SliderStory() {
         </Panel>
       </Section>
 
-      <Section title="Cómo se escribe">
-        <Example code={`const [peso, setPeso] = useState(50)
-<Slider value={peso} onValueChange={setPeso} min={0} max={100} step={5} label="Peso de la nota" />`} />
-      </Section>
+      <Section
+        title="El azul no se elige acá"
+        note="El pulgar va en `--switch-on` y `--brand`, el azul de lo que el usuario prendió o confirmó, sin un hex nuevo."
+      />
 
       <Section title="Props">
         <Props of="Slider" />
-      </Section>
-
-      <Section title="El azul no se elige acá">
-        <p className={cls.blueText}>
-          Es la regla de rol que ya está escrita: el azul es lo que el usuario prendió o
-          confirmó (el switch, el checkbox, el CTA) y el valor de un slider es exactamente eso.
-          El punto azul del pulgar es la misma frase dicha en la pieza que se agarra.{' '}
-          <Mono>--switch-on</Mono> y <Mono>--brand</Mono>, sin un hex nuevo.
-        </p>
       </Section>
 
       <Section title="Cómo se usa bien">

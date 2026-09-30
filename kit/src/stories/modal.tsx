@@ -5,7 +5,7 @@ import { Icon } from '@milo/ui/icon'
 import { Modal } from '@milo/ui/modal'
 import { SettingsModal } from '../demo/settings-modal/settings-modal'
 import { TextField } from '@milo/ui/text-field'
-import { A11y, Demo, Example, Grid, Note, Page, Practices, Props, Section } from '../kit'
+import { A11y, Demo, Grid, Note, Page, Practices, Props, Section } from '../kit'
 
 export function ModalStory() {
   const [open, setOpen] = useState(false)
@@ -22,12 +22,25 @@ export function ModalStory() {
     >
       <Section
         title="Vivo"
-        note="Probá Escape, y probá scrollear la página de atrás: está bloqueado y no hay salto lateral al abrir."
+        note="Probá Escape, y probá scrollear la página de atrás."
       >
         <Grid min={300}>
-          <Demo label="md · 620, el de siempre">
+          <Demo label="md · 620, el de siempre" code={`<Button variant="muted" onClick={() => setOpen(true)}>Abrir modal</Button>
+<Modal open={open} onOpenChange={setOpen} size="md">
+  <Modal.Header>
+    <Modal.Title>Un modal de 620</Modal.Title>
+    <Modal.Hint>Lo que el lector anuncia sale de ese título.</Modal.Hint>
+  </Modal.Header>
+  <Modal.Body>
+    El cuerpo es lo que scrollea cuando el contenido no entra. La cabecera y los botones se quedan donde están.
+  </Modal.Body>
+  <Modal.Footer>
+    <Button variant="ghost" onClick={() => setOpen(false)}>Cancelar</Button>
+    <Button variant="brand" onClick={() => setOpen(false)}>Entendido</Button>
+  </Modal.Footer>
+</Modal>`}>
             <Button variant="muted" onClick={() => setOpen(true)}>Abrir modal</Button>
-            <Modal open={open} onOpenChange={() => setOpen(false)} size="md">
+            <Modal open={open} onOpenChange={setOpen} size="md">
               <Modal.Header>
                 <Modal.Title>Un modal de 620</Modal.Title>
                 <Modal.Hint>Lo que el lector anuncia sale de ese título.</Modal.Hint>
@@ -43,9 +56,25 @@ export function ModalStory() {
             </Modal>
           </Demo>
 
-          <Demo label="sm · 420, una pregunta o un campo">
+          <Demo label="sm · 420, una pregunta o un campo" code={`<Button variant="muted" onClick={() => setOpen(true)}>Renombrar</Button>
+<Modal open={open} onOpenChange={setOpen} size="sm">
+  <Modal.Header>
+    <Modal.Title>Renombrar el espacio</Modal.Title>
+  </Modal.Header>
+  <Modal.Body>
+    <Field>
+      <Field.Label>Nombre</Field.Label>
+      <Field.Hint>Lo ven los 28 del curso.</Field.Hint>
+      <TextField value={name} onValueChange={setName} />
+    </Field>
+  </Modal.Body>
+  <Modal.Footer>
+    <Button variant="ghost" size="sm" onClick={() => setOpen(false)}>Cancelar</Button>
+    <Button variant="brand" size="sm" onClick={save}>Guardar</Button>
+  </Modal.Footer>
+</Modal>`}>
             <Button variant="muted" onClick={() => setNarrowOpen(true)}>Renombrar</Button>
-            <Modal open={narrowOpen} onOpenChange={() => setNarrowOpen(false)} size="sm">
+            <Modal open={narrowOpen} onOpenChange={setNarrowOpen} size="sm">
               <Modal.Header>
                 <Modal.Title>Renombrar el espacio</Modal.Title>
               </Modal.Header>
@@ -63,7 +92,17 @@ export function ModalStory() {
             </Modal>
           </Demo>
 
-          <Demo label="md · el caso real">
+          <Demo label="md · el caso real" code={`<Button variant="muted" iconStart={<Icon name="tune" />} onClick={() => setOpen(true)}>Ajustes</Button>
+<SettingsModal
+  open={open}
+  onOpenChange={setOpen}
+  user={{
+    name: 'Ana Pérez',
+    email: 'ana.perez@ejemplo.edu',
+    alias: 'Profe Ana',
+    school: 'Escuela N.º 12 · Distrito 7',
+  }}
+/>`}>
             <Button variant="muted" iconStart={<Icon name="tune" />} onClick={() => setSettingsOpen(true)}>Ajustes</Button>
             <SettingsModal
               open={settingsOpen}
@@ -77,24 +116,6 @@ export function ModalStory() {
             />
           </Demo>
         </Grid>
-      </Section>
-
-      <Section title="Cómo se escribe">
-        <Example code={`
-<Modal open={open} onOpenChange={cerrar} size="md">
-  <Modal.Header>
-    <Modal.Title>Un modal de 620</Modal.Title>
-    <Modal.Hint>La línea de apoyo, si hace falta.</Modal.Hint>
-  </Modal.Header>
-  <Modal.Body>
-    El contenido.
-  </Modal.Body>
-  <Modal.Footer>
-    <Button variant="ghost" onClick={cerrar}>Cancelar</Button>
-    <Button variant="brand" onClick={guardar}>Entendido</Button>
-  </Modal.Footer>
-</Modal>
-`} />
       </Section>
 
       <Note title="Modal o ConfirmDialog">

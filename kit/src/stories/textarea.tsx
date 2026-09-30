@@ -1,7 +1,6 @@
-import cls from './textarea.module.css'
 import { useState } from 'react'
 import { Textarea } from '@milo/ui/textarea'
-import { A11y, Cluster, Demo, Example, Page, Practices, Props, Section } from '../kit'
+import { A11y, Cluster, Demo, Page, Practices, Props, Section } from '../kit'
 
 export function TextareaStory() {
   const [short, setShort] = useState('')
@@ -23,26 +22,35 @@ export function TextareaStory() {
     >
       <Section
         title="Crece con lo que escribís"
-        note="Un alto fijo obliga a elegir mal dos veces: corto, y escribís mirando por una ranura; largo, y hay un rectángulo vacío ocupando media pantalla hasta que alguien lo llene. Escribí y borrá en los dos: crecer es la mitad fácil, lo que se olvida es volver."
+        note="Un alto fijo queda corto para escribir o largo y vacío. Escribí y borrá en los dos: crecer es la mitad fácil, lo que se olvida es volver."
       >
         <Cluster align="start">
-          <Demo width="sm" fill label="rows 3 · maxRows 6">
+          <Demo width="sm" fill label="rows 3 · maxRows 6" code={`<Textarea
+  aria-label="Consigna, con techo de seis filas"
+  value={withCap}
+  onValueChange={setWithCap}
+  rows={3}
+  maxRows={6}
+/>`}>
             <Textarea
               aria-label="Consigna, con techo de seis filas"
               value={withCap}
               onValueChange={setWithCap}
               rows={3}
               maxRows={6}
-
             />
           </Demo>
-          <Demo width="sm" fill label="sin techo">
+          <Demo width="sm" fill label="sin techo" code={`<Textarea
+  aria-label="Consigna, sin techo"
+  value={noCap}
+  onValueChange={setNoCap}
+  rows={2}
+/>`}>
             <Textarea
               aria-label="Consigna, sin techo"
               value={noCap}
               onValueChange={setNoCap}
               rows={2}
-
             />
           </Demo>
         </Cluster>
@@ -50,10 +58,17 @@ export function TextareaStory() {
 
       <Section
         title="La cuenta, y por qué no es solo un número"
-        note="Con `counter` aparece abajo a la derecha y lee el `maxLength` y el `minLength` que ya le pasás. Mientras sobra lugar cuenta y nada más, en gris, porque ahí el número no es una decisión. Cuando entra en el último diez por ciento deja de contar y dice cuánto queda, y si todavía no llegó al mínimo dice cuánto falta: **un contador informa, una frase orienta**, que es la regla que el sistema ya tiene escrita en Cómo se escribe."
+        note="Mientras sobra lugar cuenta en gris; en el último diez por ciento dice cuánto queda, y abajo del mínimo cuánto falta: **un contador informa, una frase orienta**."
       >
         <Cluster align="start">
-          <Demo width="sm" fill label="mientras sobra lugar">
+          <Demo width="sm" fill label="mientras sobra lugar" code={`<Textarea
+  aria-label="Devolución para el estudiante"
+  value={feedback}
+  onValueChange={setFeedback}
+  counter
+  maxLength={400}
+  rows={3}
+/>`}>
             <Textarea
               aria-label="Devolución para el estudiante"
               value={feedback}
@@ -61,10 +76,16 @@ export function TextareaStory() {
               counter
               maxLength={400}
               rows={3}
-
             />
           </Demo>
-          <Demo width="sm" fill label="cerca del techo">
+          <Demo width="sm" fill label="cerca del techo" code={`<Textarea
+  aria-label="Devolución con techo corto"
+  value={near}
+  onValueChange={setNear}
+  counter
+  maxLength={60}
+  rows={3}
+/>`}>
             <Textarea
               aria-label="Devolución con techo corto"
               value={near}
@@ -72,10 +93,17 @@ export function TextareaStory() {
               counter
               maxLength={60}
               rows={3}
-
             />
           </Demo>
-          <Demo width="sm" fill label="todavía no llega al mínimo">
+          <Demo width="sm" fill label="todavía no llega al mínimo" code={`<Textarea
+  aria-label="Devolución con mínimo"
+  value={belowMin}
+  onValueChange={setBelowMin}
+  counter
+  minLength={20}
+  maxLength={400}
+  rows={3}
+/>`}>
             <Textarea
               aria-label="Devolución con mínimo"
               value={belowMin}
@@ -84,7 +112,6 @@ export function TextareaStory() {
               minLength={20}
               maxLength={400}
               rows={3}
-
             />
           </Demo>
         </Cluster>
@@ -95,7 +122,14 @@ export function TextareaStory() {
         note="El placeholder va en el mismo gris que el del TextField, y el deshabilitado usa la misma opacidad: son el mismo campo."
       >
         <Cluster align="start">
-          <Demo width="sm" fill label="con placeholder">
+          <Demo width="sm" fill label="con placeholder" code={`<Textarea
+  aria-label="Consigna de la actividad"
+  value={short}
+  onValueChange={setShort}
+  placeholder="Escribí la consigna de la actividad…"
+  rows={3}
+  maxRows={8}
+/>`}>
             <Textarea
               aria-label="Consigna de la actividad"
               value={short}
@@ -103,65 +137,43 @@ export function TextareaStory() {
               placeholder="Escribí la consigna de la actividad…"
               rows={3}
               maxRows={8}
-
             />
           </Demo>
-          <Demo width="sm" fill label="disabled">
-            <Textarea aria-label="Consigna no editable"
-              value="No editable" disabled rows={3} />
+          <Demo width="sm" fill label="disabled" code={`<Textarea aria-label="Consigna no editable" value="No editable" disabled rows={3} />`}>
+            <Textarea aria-label="Consigna no editable" value="No editable" disabled rows={3} />
           </Demo>
         </Cluster>
       </Section>
 
       <Section
         title="Quién decide el alto"
-        note="Tres modos, y son excluyentes a propósito: o lo decide el contenido, o lo decide quien arrastra, o no lo decide nadie. Mezclarlos es lo que rompe: con el tirador y el crecimiento a la vez, arrastrás el campo a un alto y la tecla siguiente te lo pisa."
+        note="Tres modos excluyentes: lo decide el contenido, quien arrastra o nadie. Con el tirador y el crecimiento a la vez, la tecla siguiente pisa el alto que arrastraste."
       >
         <Cluster align="start">
-          <Demo width="xs" fill label="auto · el default">
-            <Textarea aria-label="Consigna, alto automático"
-              value={mode} onValueChange={setMode} rows={2} maxRows={6} />
+          <Demo width="xs" fill label="auto · el default" code={`<Textarea aria-label="Consigna, alto automático" value={mode} onValueChange={setMode} rows={2} maxRows={6} />`}>
+            <Textarea aria-label="Consigna, alto automático" value={mode} onValueChange={setMode} rows={2} maxRows={6} />
           </Demo>
-          <Demo width="xs" fill label="vertical · el tirador nativo">
-            <Textarea aria-label="Consigna, alto arrastrable"
-              defaultValue="Arrastrá la esquina." rows={2} resize="vertical" />
+          <Demo width="xs" fill label="vertical · el tirador nativo" code={`<Textarea aria-label="Consigna, alto arrastrable" defaultValue="Arrastrá la esquina." rows={2} resize="vertical" />`}>
+            <Textarea aria-label="Consigna, alto arrastrable" defaultValue="Arrastrá la esquina." rows={2} resize="vertical" />
           </Demo>
-          <Demo width="xs" fill label="none · fijo, y scrollea">
+          <Demo width="xs" fill label="none · fijo, y scrollea" code={`<Textarea
+  aria-label="Consigna, alto fijo"
+  defaultValue={'Alto fijo de dos filas.\\nLo que sobra scrollea y el campo no se mueve.'}
+  rows={2}
+  resize="none"
+/>`}>
             <Textarea
               aria-label="Consigna, alto fijo"
               defaultValue={'Alto fijo de dos filas.\nLo que sobra scrollea y el campo no se mueve.'}
               rows={2}
               resize="none"
-
             />
           </Demo>
         </Cluster>
       </Section>
 
-      <Section title="Props" note="Todo lo que acepta un `<textarea>` nativo pasa derecho: `value`, `onChange`, `placeholder`, `disabled`, `maxLength`. Menos `style` y `resize`, que son de quien decide el alto.">
-        <Section title="Cómo se escribe">
-          <Example code={`<Textarea
-  rows={3}
-  maxRows={8}
-  counter
-  maxLength={280}
-  value={consigna}
-  onValueChange={setConsigna}
-/>`} />
-        </Section>
-
+      <Section title="Props">
         <Props of="Textarea" />
-      </Section>
-
-      <Section
-        title="Lo que se paga si falta"
-        note="Crecer es la mitad fácil: lo que se olvida es volver. Escribí y borrá en los dos ejemplos de arriba."
-      >
-        <p className={cls.costText}>
-          El <code>resize</code> nativo no está: es una esquina que solo existe con mouse, y
-          arrastrarla deja un alto que el crecimiento automático después pisa. El alto lo decide el
-          contenido.
-        </p>
       </Section>
 
       <Section title="Cómo se usa bien">

@@ -6,7 +6,7 @@ import { Toolbar } from './toolbar'
 function Bar({ onBold = () => {} }) {
   return (
     <Toolbar label="Formato del texto">
-      <Toolbar.Button icon="format_bold" label="Negrita" pressed onClick={onBold} />
+      <Toolbar.Button icon="format_bold" label="Negrita" pressed onPressedChange={onBold} />
       <Toolbar.Button icon="format_italic" label="Cursiva" pressed={false} />
       <Toolbar.Separator />
       <Toolbar.Button icon="link" label="Enlace" />

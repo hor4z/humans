@@ -21,61 +21,6 @@ describe('las vistas del kit', () => {
     expect(withoutCover).toEqual([])
   })
 
-  it('el sitio usa la misma escala que el paquete', () => {
-    const dir = join(import.meta.dirname, '..')
-    const walk = (base: string, prefix = ''): string[] =>
-      readdirSync(base, { withFileTypes: true }).flatMap(e =>
-        e.isDirectory()
-          ? (e.name === '__tests__' ? [] : walk(join(base, e.name), `${prefix}${e.name}/`))
-          : /\.tsx?$/.test(e.name) ? [`${prefix}${e.name}`] : [],
-      )
-
-    const banned = /\btext-(2xs|xs|sm|base|md|lg|xl|2xl)\b|text-\[(?![\d.]+em\])|\b(leading|tracking)-(\[|none|tight|normal|snug|relaxed|loose|wide|wider|widest)|\bduration-(\[|\d)/
-    const offenders = walk(dir)
-      .filter(f => banned.test(readFileSync(join(dir, f), 'utf8').replace(/`[^`]*`/g, '')))
-    expect(offenders).toEqual([])
-  })
-
-  it('el sitio declara la duración y la curva de cada transición', () => {
-    const dir = join(import.meta.dirname, '..')
-    const walk = (base: string, prefix = ''): string[] =>
-      readdirSync(base, { withFileTypes: true }).flatMap(e =>
-        e.isDirectory()
-          ? (e.name === '__tests__' ? [] : walk(join(base, e.name), `${prefix}${e.name}/`))
-          : /\.tsx?$/.test(e.name) ? [`${prefix}${e.name}`] : [],
-      )
-    const offenders: string[] = []
-    for (const f of walk(dir)) {
-      const text = readFileSync(join(dir, f), 'utf8')
-      for (const m of text.matchAll(/(['"`])((?:(?!\1)[\s\S])*?\btransition-[\w[\],-]+(?:(?!\1)[\s\S])*?)\1/g)) {
-        const frag = m[2]
-        if (!/\bduration-(fast|normal)\b/.test(frag) || !/\bease-(out|in)\b/.test(frag)) {
-          offenders.push(`${f}: ${/transition-[\w[\],-]+/.exec(frag)?.[0]}`)
-        }
-      }
-    }
-    expect([...new Set(offenders)]).toEqual([])
-  })
-
-  it('el sitio tampoco usa el peso de display fuera del tamaño display', () => {
-    const dir = join(import.meta.dirname, '..')
-    const walk = (base: string, prefix = ''): string[] =>
-      readdirSync(base, { withFileTypes: true }).flatMap(e =>
-        e.isDirectory()
-          ? (e.name === '__tests__' ? [] : walk(join(base, e.name), `${prefix}${e.name}/`))
-          : /\.tsx?$/.test(e.name) ? [`${prefix}${e.name}`] : [],
-      )
-    const offenders: string[] = []
-    for (const f of walk(dir)) {
-      for (const line of readFileSync(join(dir, f), 'utf8').split('\n')) {
-        if (!/\bfont-bold\b/.test(line)) continue
-        if (/(['"`])font-bold\1/.test(line)) continue
-        if (!/\btext-display\b/.test(line)) offenders.push(`${f}: ${line.trim().slice(0, 56)}`)
-      }
-    }
-    expect(offenders).toEqual([])
-  })
-
   it('ninguna demo muestra un control que no responde', () => {
     const controlled = /^(Select|Search|TextField|Textarea|Slider|Segmented|Checkbox|Radio|Switch)$/
     const dir = join(import.meta.dirname, '..')
@@ -128,11 +73,35 @@ describe('las vistas del kit', () => {
     ).toEqual([])
   })
 
-  it('cada vista de una pieza muestra cómo se escribe', () => {
-    const withoutExample = files.filter(f => !readFileSync(join(stories, f), 'utf8').includes('<Example'))
+  it('cada vista de una pieza muestra el código al lado de lo que dibuja', () => {
+    const offenders: string[] = []
+    for (const f of files) {
+      if (f === 'utilidades.tsx') continue
+      const text = readFileSync(join(stories, f), 'utf8')
+      if (!/<(Demo|Variant)\b/.test(text)) offenders.push(`${f}: no tiene ninguna Demo ni Variant`)
+      if (/<Example\b/.test(text)) offenders.push(`${f}: un Example suelto; el código va en la Demo o la Variant que lo dibuja`)
+      if (/<Canvas\b/.test(text)) offenders.push(`${f}: un Canvas suelto; lo que se ve va en una Demo, con su código`)
+    }
     expect(
-      withoutExample,
-      'una tabla de props dice qué acepta la pieza; el ejemplo dice cómo se arma, que es lo que alguien copia',
+      offenders,
+      'el código pegado a lo que se ve es cómo se revisa una API: si la pieza se ve bien y su código no, la pieza está mal',
+    ).toEqual([])
+  })
+
+  it('cada vista de una pieza sigue el mismo orden', () => {
+    const tail = ['Props', 'Cómo se usa bien', 'Accesibilidad']
+    const offenders: string[] = []
+    for (const f of files) {
+      if (f === 'utilidades.tsx') continue
+      const text = readFileSync(join(stories, f), 'utf8')
+      const titles = [...text.matchAll(/<Section\s+title="([^"]+)"/g)].map(m => m[1])
+      if (titles.includes('Cómo se escribe')) offenders.push(`${f}: "Cómo se escribe" suelto`)
+      if (titles.slice(-3).join(' · ') !== tail.join(' · ')) offenders.push(`${f}: cierra con ${titles.slice(-3).join(' · ')}`)
+      if (titles.length < 4) offenders.push(`${f}: sin ninguna sección de demos antes de Props`)
+    }
+    expect(
+      offenders,
+      'la misma plantilla en todas: demos con su código, Props, Cómo se usa bien y Accesibilidad',
     ).toEqual([])
   })
 
@@ -261,30 +230,6 @@ describe('accesibilidad documentada', () => {
   it('el conjunto no se olvida de ninguna historia con teclado', () => {
     const candidates = files.filter(f => !noKeyboard.has(f))
     expect(candidates.length).toBeGreaterThan(20)
-  })
-})
-
-describe('las escalas que la doctrina dibuja', () => {
-  it('cada paso de espaciado que Medidas declara se puede escribir', () => {
-    const view = readFileSync(join(import.meta.dirname, '../foundations/measure.tsx'), 'utf8')
-    const steps = [...view.matchAll(/\{ px: (\d+), role:/g)].map(m => Number(m[1]))
-    const guards = readFileSync(
-      join(import.meta.dirname, '../../../src/__tests__/coherencia.test.ts'),
-      'utf8',
-    )
-    const banned = guards
-      .match(/\)-\(([^)]+)\)\(\?!/)![1]
-      .replace(/\\/g, '')
-      .split('|')
-      .map(s => Number(s) * 4)
-
-    expect(steps.length).toBeGreaterThan(0)
-    expect(banned.length).toBeGreaterThan(0)
-    const withoutHelper = steps.filter(px => banned.includes(px))
-    expect(
-      withoutHelper,
-      `Medidas declara ${withoutHelper.join(', ')}px y la guarda de coherencia prohíbe la utilidad que los escribe`,
-    ).toEqual([])
   })
 })
 

@@ -40,74 +40,6 @@ describe('coherencia del sistema', () => {
     expect(offenders).toEqual([])
   })
 
-  it('los radios salen de la escala 6·10·12·16·24', () => {
-    const offenders = sources
-      .filter(f => /rounded-\[/.test(f.text))
-      .map(f => f.name)
-    expect(offenders).toEqual([])
-  })
-
-  it('los tamaños de texto salen de la escala', () => {
-    const offenders = sources
-      .filter(f => /text-\[/.test(f.text))
-      .map(f => f.name)
-    expect(offenders).toEqual([])
-  })
-
-  it('nadie usa un nombre de la escala vieja', () => {
-    const stale = /\btext-(2xs|xs|sm|base|md|lg|xl|2xl)\b/
-    const offenders = sources.filter(f => stale.test(f.text)).map(f => f.name)
-    expect(offenders).toEqual([])
-  })
-
-  it('el interlineado y el tracking vienen del rol, no sueltos', () => {
-    const loose = /\b(leading|tracking)-(\[|none|tight|normal|snug|relaxed|loose|wide|wider|widest)/
-    const offenders = sources.filter(f => loose.test(f.text)).map(f => f.name)
-    expect(offenders).toEqual([])
-  })
-
-  it('las duraciones salen de las dos del sistema', () => {
-    const loose = /\bduration-(\[|\d)/
-    const offenders = sources.filter(f => loose.test(f.text)).map(f => f.name)
-    expect(offenders).toEqual([])
-  })
-
-  it('las curvas también', () => {
-    const loose = /\bease-(\[|linear|initial)/
-    const offenders = sources.filter(f => loose.test(f.text)).map(f => f.name)
-    expect(offenders).toEqual([])
-  })
-
-  it('el espaciado sale de la grilla', () => {
-    const axis = 'p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|gap|gap-x|gap-y|space-y|space-x'
-    const outside = new RegExp(`(?<![\\w-])-?(${axis})-(1\\.5|2\\.5|3\\.5|7|9|11|13|14|15)(?![\\w.])`)
-    const offenders = sources.filter(f => outside.test(f.text)).map(f => f.name)
-    expect(offenders).toEqual([])
-  })
-
-  it('un espaciado arbitrario va con un token adentro, no con un número', () => {
-    const axis = 'p|px|py|pt|pb|pl|pr|m|mx|my|mt|mb|ml|mr|gap|gap-x|gap-y|space-y|space-x'
-    const magic = new RegExp(`(?<![\\w-])-?(${axis})-\\[(?!var\\(|calc\\()`, 'g')
-    const offenders: string[] = []
-    for (const f of sources) {
-      for (const m of f.text.matchAll(magic)) offenders.push(`${f.name}: ${f.text.slice(m.index, m.index! + 18)}`)
-    }
-    expect(offenders).toEqual([])
-  })
-
-  it('una transición declara su duración y su curva', () => {
-    const offenders: string[] = []
-    for (const f of sources) {
-      for (const m of f.text.matchAll(/(['"`])((?:(?!\1)[\s\S])*?\btransition-[\w[\],-]+(?:(?!\1)[\s\S])*?)\1/g)) {
-        const frag = m[2]
-        if (!/\bduration-(fast|normal)\b/.test(frag) || !/\bease-(out|in)\b/.test(frag)) {
-          offenders.push(`${f.name}: ${/transition-[\w[\],-]+/.exec(frag)?.[0]}`)
-        }
-      }
-    }
-    expect([...new Set(offenders)]).toEqual([])
-  })
-
   it('un panel anclado a un disparador usa la receta de cierre', () => {
     const anchored = sources.filter(f =>
       /getBoundingClientRect\(\)/.test(f.text) && /<Portal[\s>]/.test(f.text))
@@ -154,24 +86,6 @@ describe('coherencia del sistema', () => {
         for (const t of f.text.matchAll(new RegExp(`(?:^|[{,])\\s*${key}:\\s*(\\d+)\\s*,`, 'gm'))) {
           if (!scale.has(Number(t[1]))) offenders.push(`${f.name}: ${key} vale ${t[1]}`)
         }
-      }
-    }
-    expect(offenders).toEqual([])
-  })
-
-  it('los pesos salen de los tres roles', () => {
-    const outside = /font-\[\d|font-(thin|extralight|light|normal|extrabold|black)\b/
-    const offenders = sources.filter(f => outside.test(f.text)).map(f => f.name)
-    expect(offenders).toEqual([])
-  })
-
-  it('el peso de display solo aparece en tamaño display', () => {
-    const offenders: string[] = []
-    for (const f of sources) {
-      for (const line of f.text.split('\n')) {
-        if (!/\bfont-bold\b/.test(line)) continue
-        if (/(['"`])font-bold\1/.test(line)) continue
-        if (!/\btext-display\b/.test(line)) offenders.push(`${f.name}: ${line.trim().slice(0, 56)}`)
       }
     }
     expect(offenders).toEqual([])

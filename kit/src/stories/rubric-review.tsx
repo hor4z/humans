@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { RubricReview, type Criterion, type Mark } from '@milo/ui/blocks/rubric/rubric-review'
-import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
+import { A11y, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const criteria: Criterion[] = [
   {
@@ -64,6 +64,9 @@ export function RubricReviewStory() {
   const [marks, setMarks] = useState<Record<string, Mark>>({
     medicion: { level: 2 },
   })
+  const setLevel = (id: string, level: number) => setMarks(m => ({ ...m, [id]: { ...m[id], level } }))
+  const setNote = (id: string, text: string) => setMarks(m => ({ ...m, [id]: { ...m[id], note: { by: ana, text } } }))
+  const clearNote = (id: string) => setMarks(m => ({ ...m, [id]: { ...m[id], note: undefined } }))
 
   return (
     <Page
@@ -74,18 +77,31 @@ export function RubricReviewStory() {
     >
       <Section
         title="Corrigiendo"
-        note="Con `onLevel` se elige el nivel, con `onNote` se comenta y con `onClearNote` se borra ese comentario. Se marca uno solo: los cuatro renglones son descripciones del mismo estado y solo una es cierta, así que no hay un sí y un no por renglón. A la derecha del nombre dice en cuál quedó, así que plegada la tarjeta igual se sabe qué falta corregir. La barra se llena hasta el nivel elegido: no hay nota ni puntaje, y eso no es un olvido."
+        note="Se marca un renglón por aspecto: son descripciones del mismo estado y solo una es cierta. La barra se llena hasta el nivel elegido, sin nota ni puntaje."
       >
         <Panel>
-          <Variant name="a medio corregir" note="Elegí un nivel en El gráfico y mirá cómo se llena su tramo. Al elegir otro, el anterior se apaga.">
+          <Variant
+            name="a medio corregir"
+            note="Elegí un nivel en El gráfico y mirá cómo se llena su tramo. Al elegir otro, el anterior se apaga."
+            code={`<RubricReview
+  criteria={criteria}
+  marks={marks}
+  by={ana}
+  onLevel={setLevel}
+  onNote={setNote}
+  onClearNote={clearNote}
+>
+  <RubricReview.Title>Entrega</RubricReview.Title>
+</RubricReview>`}
+          >
             <Stack width="sm">
               <RubricReview
                 criteria={criteria}
                 marks={marks}
                 by={ana}
-                onLevel={(id, level) => setMarks(m => ({ ...m, [id]: { ...m[id], level } }))}
-                onNote={(id, text) => setMarks(m => ({ ...m, [id]: { ...m[id], note: { by: ana, text } } }))}
-                onClearNote={id => setMarks(m => ({ ...m, [id]: { ...m[id], note: undefined } }))}
+                onLevel={setLevel}
+                onNote={setNote}
+                onClearNote={clearNote}
               >
                 <RubricReview.Title>Entrega</RubricReview.Title>
               </RubricReview>
@@ -96,10 +112,15 @@ export function RubricReviewStory() {
 
       <Section
         title="La devolución"
-        note="Sin los callbacks, la misma pieza es lo que abre quien entregó: qué renglones cumplió, cuáles no y qué le dijeron. Lo que falta no hay que escribirlo: es el renglón de abajo del que quedó tildado, que está a la vista y dice exactamente qué hacer la próxima vez."
+        note="Sin los callbacks, la misma pieza es lo que abre quien entregó: en qué renglón quedó cada aspecto y qué le dijeron."
       >
         <Panel>
-          <Variant name="lo que ve quien entregó">
+          <Variant
+            name="lo que ve quien entregó"
+            code={`<RubricReview criteria={criteria} marks={returned}>
+  <RubricReview.Title>Cómo te fue</RubricReview.Title>
+</RubricReview>`}
+          >
             <Stack width="sm">
               <RubricReview criteria={criteria} marks={returned}>
                 <RubricReview.Title>Cómo te fue</RubricReview.Title>
@@ -109,23 +130,8 @@ export function RubricReviewStory() {
         </Panel>
         <Note>
           Un comentario lo puede escribir una persona o un agente, y los dos pueden comentar el
-          mismo aspecto: cambia la firma y nada más. El agente se anuncia como asistente para que no
-          se lo confunda con alguien del curso, y lo que escribe queda a la vista del docente antes
-          de que el estudiante lo lea.
+          mismo aspecto: cambia la firma y nada más.
         </Note>
-      </Section>
-
-      <Section title="Cómo se escribe">
-        <Example code={`<RubricReview
-  criteria={aspectos}
-  marks={loCorregido}
-  by={quienCorrige}
-  onMet={(id, renglon, cumple) => tildar(id, renglon, cumple)}
-  onNote={(id, text) => comentar(id, text)}
-  onClearNote={id => borrarComentario(id)}
->
-  <RubricReview.Title>Entrega</RubricReview.Title>
-</RubricReview>`} />
       </Section>
 
       <Section title="Props">

@@ -1,7 +1,7 @@
 import cls from './numbers.module.css'
 import { Table } from '@milo/ui/table'
 import { bytes, count, decimals, delta, share, span, withUnit } from '@milo/ui/lib/number'
-import { A11y, Note, Page, Panel, Rich, Section, Stack, Variant } from '../kit'
+import { A11y, Note, Page, Panel, Rich, Section, Stack, Specimen } from '../kit'
 
 const which = [
   ['Una cantidad que alguien va a leer', '`18 de 24`', 'La cuenta dice cuánto falta; el porcentaje obliga a calcularlo'],
@@ -45,26 +45,26 @@ export function NumbersSection() {
 
       <Section title="Vivo" note="Todo esto sale de las mismas funciones.">
         <Panel>
-          <Variant name="enteros y decimales">
+          <Specimen name="enteros y decimales">
             <Sample>{count(1250)}</Sample>
             <Sample>{decimals(9.84)}</Sample>
             <Sample>{decimals(1250.5)}</Sample>
-          </Variant>
-          <Variant name="una parte de un total">
+          </Specimen>
+          <Specimen name="una parte de un total">
             <Sample>{share(18, 24).count}</Sample>
             <Sample>{share(18, 24).percent}</Sample>
-          </Variant>
-          <Variant name="con unidad">
+          </Specimen>
+          <Specimen name="con unidad">
             <Sample>{withUnit(45, 'min')}</Sample>
             <Sample>{bytes(1024 ** 3 * 1.4)}</Sample>
             <Sample>{bytes(1024 ** 3 * 24)}</Sample>
-          </Variant>
-          <Variant name="rango y cambio">
+          </Specimen>
+          <Specimen name="rango y cambio">
             <Sample>{span(3, 7, 'entregas')}</Sample>
             <Sample>{delta(12, { percent: true })}</Sample>
             <Sample>{delta(-3)}</Sample>
             <Sample>{delta(0)}</Sample>
-          </Variant>
+          </Specimen>
         </Panel>
       </Section>
 

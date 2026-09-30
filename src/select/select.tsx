@@ -23,7 +23,7 @@ export function Select({
   size?: 'sm' | 'md' | 'lg'
   /** Sin esto toma el ancho del contenido. */
   width?: number
-  /** Adelante del valor: un `Icon`, un `FolderIcon`, un `Avatar`, un `Spinner`. */
+  /** Adelante del valor: un `Icon`, un `Icon.Folder`, un `Avatar`, un `Spinner`. */
   leading?: ReactNode
   /** Mientras los datos no están: no abre, y el spinner va solo si no hay `leading`. */
   loading?: boolean

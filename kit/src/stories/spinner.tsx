@@ -1,7 +1,7 @@
 import cls from './spinner.module.css'
 import { Button } from '@milo/ui/button'
 import { Spinner } from '@milo/ui/spinner'
-import { A11y, Example, Page, Panel, Practices, Props, Section, Variant } from '../kit'
+import { A11y, Demo, Grid, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function SpinnerStory() {
   return (
@@ -16,7 +16,10 @@ export function SpinnerStory() {
         note="El trazo crece con el diámetro, así que el mismo spinner se lee igual adentro de un botón chico que en el medio de una pantalla."
       >
         <Panel>
-          <Variant name="16 · 20 · 28 · 44">
+          <Variant name="16 · 20 · 28 · 44" code={`<Spinner size={16} />
+<Spinner size={20} />
+<Spinner size={28} />
+<Spinner size={44} />`}>
             <Spinner size={16} />
             <Spinner size={20} />
             <Spinner size={28} />
@@ -27,26 +30,30 @@ export function SpinnerStory() {
 
       <Section
         title="En contexto"
-        note="El arco va en el azul y no en tinta: lo único que se mueve conviene que se distinga también por el color. Adentro de un botón oscuro hay que pasarle `on=&quot;solid&quot;`, o el filo blanco se ve como un halo."
+        note="Adentro de un botón oscuro va `on=&quot;solid&quot;`, o el filo blanco se ve como un halo."
       >
         <Panel>
-          <Variant name="en un botón">
+          <Variant name="en un botón" code={`<Button variant="solid" aria-busy><Spinner size={16} on="solid" />Guardando</Button>
+<Button variant="muted" aria-busy><Spinner size={16} />Guardando</Button>`}>
             <Button variant="solid" aria-busy><Spinner size={16} on="solid" />Guardando</Button>
             <Button variant="muted" aria-busy><Spinner size={16} />Guardando</Button>
           </Variant>
-          <Variant name="en una fila">
+          <Variant name="en una fila" code={`<Spinner size={16} />
+Buscando en siete espacios`}>
             <span className={cls.inlineWait}>
               <Spinner size={16} />
               Buscando en siete espacios
             </span>
           </Variant>
         </Panel>
-      </Section>
-
-      <Section title="Cómo se escribe">
-        <Example code={`<Spinner label="Cargando las entregas" />
-
-<Button loading>Guardar</Button>`} />
+        <Grid>
+          <Demo label="Con lo que está cargando" code={`<Spinner label="Cargando las entregas" />`}>
+            <Spinner label="Cargando las entregas" />
+          </Demo>
+          <Demo label="En un botón, con `loading`" code={`<Button variant="brand" loading>Guardar</Button>`}>
+            <Button variant="brand" loading>Guardar</Button>
+          </Demo>
+        </Grid>
       </Section>
 
       <Section title="Props">

@@ -224,12 +224,11 @@ export function ColorSection() {
           <Swatch token="--ok-subtle" note="su fondo" />
           <Swatch token="--warn-subtle" note="su fondo" />
           <Swatch token="--bad-subtle" note="su fondo" />
+          <Swatch token="--ok-fill" note="el verde que lleva tinta blanca: el más claro de su tono que llega a 4,5" />
         </div>
         <Footnote>
-          También hay un `--ok-border`, un `--warn-border` y un `--bad-border`, y **hoy los dos
-          primeros no los usa nadie**. Eran la línea del `Alert`, que dejó de tener borde para
-          parecerse al `Callout`: con el papel teñido, el borde no agregaba nada. Del tercero queda
-          un solo uso, en el `AudioPlayer`.
+          `--bad-border` es la línea de un estado roto y la usa el `AudioPlayer`. No hay uno para
+          `ok` ni para `warn`: eran la línea del `Alert`, que la dejó para parecerse al `Callout`.
         </Footnote>
       </Section>
 

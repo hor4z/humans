@@ -1,14 +1,14 @@
 import cls from './checkbox.module.css'
 import { useState } from 'react'
 import { Checkbox } from '@milo/ui/checkbox'
-import { A11y, Example, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
+import { A11y, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 export function CheckboxStory() {
   const [spaces, setSpaces] = useState<string[]>(['Ciencias'])
   const [partial, setPartial] = useState(false)
-  const [a, setA] = useState(true)
-  const [b, setB] = useState(false)
-  const [c, setC] = useState(true)
+  const [checked, setChecked] = useState(true)
+  const [unchecked, setUnchecked] = useState(false)
+  const [shared, setShared] = useState(true)
 
   return (
     <Page
@@ -19,48 +19,56 @@ export function CheckboxStory() {
     >
       <Section
         title="Estados"
-        note="Apagada es una caja vacía con su línea, del color del campo que la rodea. Prendida pasa al azul con el tilde en blanco. El azul porque es el único control que confirma una elección de quien lo usa."
+        note="Apagada es una caja vacía con su línea, del color del campo que la rodea. Prendida pasa al azul con el tilde en blanco."
       >
         <Panel>
-          <Variant name="off / on">
-            <Checkbox checked={b} onCheckedChange={setB} label="Sin marcar" />
-            <Checkbox checked={a} onCheckedChange={setA} label="Marcada" />
+          <Variant name="off / on" code={`<Checkbox checked={unchecked} onCheckedChange={setUnchecked} label="Sin marcar" />
+<Checkbox checked={checked} onCheckedChange={setChecked} label="Marcada" />`}>
+            <Checkbox checked={unchecked} onCheckedChange={setUnchecked} label="Sin marcar" />
+            <Checkbox checked={checked} onCheckedChange={setChecked} label="Marcada" />
           </Variant>
-          <Variant name="indeterminate"><Checkbox checked={partial} indeterminate={!partial} onCheckedChange={setPartial} label="Parcial" /></Variant>
-          <Variant name="disabled">
+          <Variant name="indeterminate" code={`<Checkbox checked={partial} indeterminate={!partial} onCheckedChange={setPartial} label="Parcial" />`}><Checkbox checked={partial} indeterminate={!partial} onCheckedChange={setPartial} label="Parcial" /></Variant>
+          <Variant name="disabled" code={`<Checkbox checked onCheckedChange={setChecked} disabled label="Fija" />
+<Checkbox checked={false} onCheckedChange={setChecked} disabled label="Fija" />`}>
             <Checkbox checked onCheckedChange={() => {}} disabled label="Fija" />
             <Checkbox checked={false} onCheckedChange={() => {}} disabled label="Fija" />
           </Variant>
         </Panel>
       </Section>
 
-      <Section title="En una fila" note="El `<label>` envolviendo la casilla hace que el texto también sea zona de click, que es la mitad del área útil. El tilde va a 14 y no a 16: el tamaño hay que mirarlo con el trazo incluido, que agrega media línea de cada lado, y a 16 tocaba las esquinas de la caja de 18.">
+      <Section title="En una fila" note="Envolvé la casilla en un `<label>`: así el texto también es zona de click, que es la mitad del área útil.">
         <Panel>
-          <Variant name="con etiqueta">
+          <Variant name="con etiqueta" code={`<label>
+  <Checkbox checked={shared} onCheckedChange={setShared} />
+  Compartir la receta con el equipo
+</label>`}>
             <label className={cls.singleLabel}>
-              <Checkbox checked={c} onCheckedChange={setC} />
+              <Checkbox checked={shared} onCheckedChange={setShared} />
               Compartir la receta con el equipo
             </label>
           </Variant>
-          <Variant name="lista">
+          <Variant name="lista" code={`{['Geografía', 'Ciencias', 'Matemática'].map(space => (
+  <label key={space}>
+    <Checkbox
+      checked={spaces.includes(space)}
+      onCheckedChange={on => setSpaces(list => (on ? [...list, space] : list.filter(n => n !== space)))}
+    />
+    {space}
+  </label>
+))}`}>
             <Stack gap="sm">
-              {['Geografía', 'Ciencias', 'Matemática'].map(x => (
-                <label key={x} className={cls.itemLabel}>
+              {['Geografía', 'Ciencias', 'Matemática'].map(space => (
+                <label key={space} className={cls.itemLabel}>
                   <Checkbox
-                    checked={spaces.includes(x)}
-                    onCheckedChange={v => setSpaces(e => (v ? [...e, x] : e.filter(n => n !== x)))}
+                    checked={spaces.includes(space)}
+                    onCheckedChange={on => setSpaces(list => (on ? [...list, space] : list.filter(n => n !== space)))}
                   />
-                  {x}
+                  {space}
                 </label>
               ))}
             </Stack>
           </Variant>
         </Panel>
-      </Section>
-
-      <Section title="Cómo se escribe">
-        <Example code={`const [marcado, setMarcado] = useState(false)
-<Checkbox checked={marcado} onCheckedChange={setMarcado} label="Permitir entregas tarde" />`} />
       </Section>
 
       <Section title="Props">

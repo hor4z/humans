@@ -1,6 +1,7 @@
 import s from './toolbar.module.css'
 import { useLayoutEffect, useRef, type FocusEvent, type KeyboardEvent, type ReactNode } from 'react'
 import { Icon, type IconName } from '../../../icon/icon'
+import { control } from '../../../lib/control'
 import { cx } from '../../../lib/cx'
 import { ToggleButton } from '../../../toggle-button/toggle-button'
 
@@ -51,15 +52,17 @@ function Root({ label, children, className }: {
   )
 }
 
-/** Un botón de la barra. Con `pressed` es un interruptor y lo dice: "negrita, activado". */
-/** El botón de la barra: siempre un glifo solo, y siempre `sm`. Con `pressed` es un interruptor y sin él una acción que pasa y no queda. */
-function Button({ icon, label, pressed, disabled, onClick }: {
+/** El botón de la barra: siempre un glifo solo, y siempre `sm`. Con `pressed` es un interruptor y lo dice ("negrita, activado"); sin él, una acción que pasa y no queda. */
+function Button({ icon, label, pressed, onPressedChange, disabled, onClick }: {
   icon: IconName
   /** Sin esto el botón no dice nada: adentro solo hay un glifo. */
   label: string
   /** Presente lo vuelve un interruptor. Ausente es una acción que pasa y no queda. */
   pressed?: boolean
+  /** Recibe el estado nuevo del interruptor. */
+  onPressedChange?: (pressed: boolean) => void
   disabled?: boolean
+  /** La acción, cuando no es un interruptor. */
   onClick?: () => void
 }) {
   if (pressed === undefined) {
@@ -71,7 +74,7 @@ function Button({ icon, label, pressed, disabled, onClick }: {
         onClick={onClick}
         className={cx(s.button, s.disabled, s.buttonPlain)}
       >
-        <Icon name={icon} size={18} />
+        <Icon name={icon} size={control.sm.icon} />
       </button>
     )
   }
@@ -82,7 +85,7 @@ function Button({ icon, label, pressed, disabled, onClick }: {
       label={label}
       pressed={pressed}
       disabled={disabled}
-      onPressedChange={() => onClick?.()}
+      onPressedChange={onPressedChange}
       className={s.button}
     />
   )

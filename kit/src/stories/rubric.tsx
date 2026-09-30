@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { Rubric, type Criterion } from '@milo/ui/blocks/rubric/rubric'
+import { Rubric, type Criterion, type CriterionDraft } from '@milo/ui/blocks/rubric/rubric'
 import { labelColors } from '@milo/ui/lib/colors'
-import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
+import { A11y, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const base: Criterion[] = [
   {
@@ -45,6 +45,12 @@ const base: Criterion[] = [
 
 export function RubricStory() {
   const [criteria, setCriteria] = useState(base)
+  const addCriterion = (draft: CriterionDraft) => setCriteria(cs => [...cs, {
+    ...draft,
+    id: `c${Date.now()}`,
+    color: labelColors[cs.length % labelColors.length],
+  }])
+  const removeCriterion = (c: Criterion) => setCriteria(cs => cs.filter(x => x.id !== c.id))
 
   return (
     <Page
@@ -55,25 +61,33 @@ export function RubricStory() {
     >
       <Section
         title="Cómo se arma"
-        note="Los aspectos entran como dato y no como hijos, igual que en `TaskList`: son una lista que alguien guarda y ordena, no contenido escrito a mano. Lo único que va como hijo es el nombre, que es texto de la pantalla."
+        note="Los aspectos entran como dato, porque son una lista que alguien guarda y ordena. Lo único que va como hijo es el nombre."
       >
         <Panel>
-          <Variant name="editable" note="Con `onAdd` aparece el alta y con `onRemove` el tacho de cada aspecto. Probá agregar uno: la barra se reparte de nuevo mientras movés el peso.">
+          <Variant
+            name="editable"
+            note="Probá agregar uno: la barra se reparte de nuevo mientras movés el peso."
+            code={`<Rubric criteria={criteria} onAdd={addCriterion} onRemove={removeCriterion}>
+  <Rubric.Title>Qué vamos a mirar</Rubric.Title>
+</Rubric>`}
+          >
             <Stack width="sm">
               <Rubric
                 criteria={criteria}
-                onRemove={c => setCriteria(cs => cs.filter(x => x.id !== c.id))}
-                onAdd={draft => setCriteria(cs => [...cs, {
-                  ...draft,
-                  id: `c${Date.now()}`,
-                  color: labelColors[cs.length % labelColors.length],
-                }])}
+                onAdd={addCriterion}
+                onRemove={removeCriterion}
               >
                 <Rubric.Title>Qué vamos a mirar</Rubric.Title>
               </Rubric>
             </Stack>
           </Variant>
-          <Variant name="de solo lectura" note="Sin los dos callbacks la rúbrica se lee y nada más, que es como la ve quien no la escribió.">
+          <Variant
+            name="de solo lectura"
+            note="Sin los dos callbacks la rúbrica se lee y nada más, que es como la ve quien no la escribió."
+            code={`<Rubric criteria={base} defaultOpen={false}>
+  <Rubric.Title>Qué vamos a mirar</Rubric.Title>
+</Rubric>`}
+          >
             <Stack width="sm">
               <Rubric criteria={base} defaultOpen={false}>
                 <Rubric.Title>Qué vamos a mirar</Rubric.Title>
@@ -82,24 +96,10 @@ export function RubricStory() {
           </Variant>
         </Panel>
         <Note>
-          Plegada deja a la vista el nombre, el contador y la barra entera: la rúbrica completa en
-          una línea. Por eso la barra vive afuera del cuerpo y no adentro.
+          La barra mide el peso y no lo logrado: cada tramo es un aspecto y su ancho es lo que vale
+          contra los demás. Los renglones se cumplen o no, así que van escritos adentro del aspecto.
+          El color ata cada tramo con su tarjeta.
         </Note>
-      </Section>
-
-      <Section
-        title="La barra mide el peso, no lo logrado"
-        note="Cada tramo es un aspecto y su ancho es lo que vale contra los demás, que es una cantidad de verdad. Los renglones son cosas que se cumplen o no, así que van escritos adentro del aspecto y no repartidos en una barra: cumplir uno no es una porción de nada. El color nombra al aspecto y ata su tramo con su tarjeta."
-      />
-
-      <Section title="Cómo se escribe">
-        <Example code={`<Rubric
-  criteria={aspectos}
-  onAdd={draft => guardar({ ...draft, id: nuevoId(), color: 'green', icon: 'label' })}
-  onRemove={c => sacar(c.id)}
->
-  <Rubric.Title>Qué vamos a mirar</Rubric.Title>
-</Rubric>`} />
       </Section>
 
       <Section title="Props">

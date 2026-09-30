@@ -48,7 +48,7 @@ function Root({
   const withUnit = (v: number) => (unit ? `${amount(v)} ${unit}` : amount(v))
   const n = parseNumber(value)
   const still = revealed || readOnly || !onValueChange
-  const acertó = revealed && expected !== undefined && n !== null && Math.abs(n - expected) <= tolerance
+  const isCorrect = revealed && expected !== undefined && n !== null && Math.abs(n - expected) <= tolerance
 
   return (
     <div className={cx(s.root, className)}>
@@ -68,11 +68,11 @@ function Root({
           className={s.control}
         />
         {revealed && expected !== undefined && (
-          <p className={cx(s.verdict, acertó ? s.metText : s.unmetText)}>
-            <span aria-hidden className={cx(s.trailing, acertó ? s.met : s.unmet)}>
-              <Icon name={acertó ? 'check' : 'remove'} size={14} weight={600} />
+          <p className={cx(s.verdict, isCorrect ? s.metText : s.unmetText)}>
+            <span aria-hidden className={cx(s.trailing, isCorrect ? s.met : s.unmet)}>
+              <Icon name={isCorrect ? 'check' : 'remove'} size={14} weight={600} />
             </span>
-            {acertó
+            {isCorrect
               ? 'Cae adentro del margen'
               : `Da ${withUnit(expected)}${tolerance ? `, con ${amount(tolerance)} de margen` : ''}`}
           </p>

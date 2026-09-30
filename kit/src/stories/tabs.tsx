@@ -1,8 +1,11 @@
 import cls from './tabs.module.css'
+import { useState } from 'react'
 import { Tabs } from '@milo/ui/tabs'
-import { A11y, Canvas, Example, Note, Page, Practices, Props, Section } from '../kit'
+import { A11y, Demo, Page, Practices, Props, Section } from '../kit'
 
 export function TabsStory() {
+  const [range, setRange] = useState('semana')
+
   return (
     <Page
       title="Tabs"
@@ -12,9 +15,24 @@ export function TabsStory() {
     >
       <Section
         title="Cómo se arma"
-        note="El activo se marca con la línea **y** con el azul: unas solapas dicen dónde estás, y eso es orientación. Un `Segmented` se le parece y no lleva azul, porque ahí se elige un filtro (una decisión que cambia diez veces por minuto) y no un lugar donde estás parado."
+        note="El activo se marca con la línea **y** con el azul: unas solapas dicen dónde estás. Un `Segmented` se le parece y no lleva azul, porque ahí se elige un filtro y no un lugar."
       >
-        <Canvas>
+        <Demo fill code={`<Tabs defaultValue="entregas">
+  <Tabs.List label="Secciones de la actividad">
+    <Tabs.Tab value="entregas">Entregas</Tabs.Tab>
+    <Tabs.Tab value="rubrica">Rúbrica</Tabs.Tab>
+    <Tabs.Tab value="ajustes">Ajustes</Tabs.Tab>
+  </Tabs.List>
+  <Tabs.Panel value="entregas">
+    <p>Dieciocho entregas, cuatro sin mirar.</p>
+  </Tabs.Panel>
+  <Tabs.Panel value="rubrica">
+    <p>Cuatro aspectos, cada uno de 1 a 4.</p>
+  </Tabs.Panel>
+  <Tabs.Panel value="ajustes">
+    <p>Quién puede ver la actividad y hasta cuándo.</p>
+  </Tabs.Panel>
+</Tabs>`}>
           <Tabs defaultValue="entregas">
             <Tabs.List label="Secciones de la actividad">
               <Tabs.Tab value="entregas">Entregas</Tabs.Tab>
@@ -31,15 +49,30 @@ export function TabsStory() {
               <p className={cls.accessText}>Quién puede ver la actividad y hasta cuándo.</p>
             </Tabs.Panel>
           </Tabs>
-        </Canvas>
+        </Demo>
       </Section>
 
       <Section
         title="Controlado"
-        note="Sin `value` las solapas se acuerdan solas cuál está abierta, que es lo que hace falta casi siempre. Con `value` y `onValueChange` la decisión es de afuera: cuando la solapa abierta tiene que salir de la URL, o cuando algo más de la pantalla la cambia."
+        note="Con `value` y `onValueChange` la decisión es de afuera: cuando la solapa abierta sale de la URL, o cuando algo más de la pantalla la cambia."
       >
-        <Canvas>
-          <Tabs defaultValue="semana" onValueChange={() => {}}>
+        <Demo fill code={`<Tabs value={range} onValueChange={setRange}>
+  <Tabs.List label="Rango del panel">
+    <Tabs.Tab value="semana">Esta semana</Tabs.Tab>
+    <Tabs.Tab value="mes">Este mes</Tabs.Tab>
+    <Tabs.Tab value="todo">Todo</Tabs.Tab>
+  </Tabs.List>
+  <Tabs.Panel value="semana">
+    <p>79 entregas en cuatro espacios.</p>
+  </Tabs.Panel>
+  <Tabs.Panel value="mes">
+    <p>312 entregas, 289 corregidas.</p>
+  </Tabs.Panel>
+  <Tabs.Panel value="todo">
+    <p>Desde marzo: 1.204 entregas.</p>
+  </Tabs.Panel>
+</Tabs>`}>
+          <Tabs value={range} onValueChange={setRange}>
             <Tabs.List label="Rango del panel">
               <Tabs.Tab value="semana">Esta semana</Tabs.Tab>
               <Tabs.Tab value="mes">Este mes</Tabs.Tab>
@@ -55,24 +88,7 @@ export function TabsStory() {
               <p className={cls.allText}>Desde marzo: 1.204 entregas.</p>
             </Tabs.Panel>
           </Tabs>
-        </Canvas>
-      </Section>
-
-      <Note title="Solapas o acordeón">
-        Si las opciones se comparan entre sí (el mismo tipo de contenido para distintos recortes) van
-        solapas. Si son preguntas sueltas que se leen de a una y la mayoría no se va a abrir nunca, va
-        un [Accordion](#accordion).
-      </Note>
-
-      <Section title="Cómo se escribe">
-        <Example code={`<Tabs defaultValue="entregas">
-  <Tabs.List label="Secciones de la actividad">
-    <Tabs.Tab value="entregas">Entregas</Tabs.Tab>
-    <Tabs.Tab value="consigna">Consigna</Tabs.Tab>
-  </Tabs.List>
-  <Tabs.Panel value="entregas">{tabla}</Tabs.Panel>
-  <Tabs.Panel value="consigna">{texto}</Tabs.Panel>
-</Tabs>`} />
+        </Demo>
       </Section>
 
       <Section title="Props">
@@ -82,7 +98,7 @@ export function TabsStory() {
       <Section title="Cómo se usa bien">
         <Practices>
           <Practices.Do>El panel y su solapa se atan por el mismo `value`.</Practices.Do>
-          <Practices.Dont>Si el contenido de las solapas hay que compararlo, va un acordeón o la lista entera.</Practices.Dont>
+          <Practices.Dont>Si son preguntas sueltas que se leen de a una y la mayoría no se va a abrir nunca, no van solapas: va un [Accordion](#accordion).</Practices.Dont>
         </Practices>
       </Section>
 

@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { Checklist } from '@milo/ui/blocks/editor/checklist'
-import { A11y, Example, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
+import { A11y, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 export function ChecklistStory() {
   const [connected, setConnected] = useState(false)
   const [level, setLevel] = useState(2)
+  const toggleConnected = () => setConnected(v => !v)
 
   return (
     <Page
@@ -15,10 +16,20 @@ export function ChecklistStory() {
     >
       <Section
         title="Cuándo va"
-        note="Va para una secuencia que alguien recorre una sola vez y a su ritmo: configurar un espacio, dejar listo un aula. Para los pasos de un formulario que se hace de corrido va `Steps`, que marca dónde estás; para una lista de cosas por hacer que no tiene orden va `TaskList`."
+        note="Para una secuencia que alguien recorre una sola vez y a su ritmo: configurar un espacio, dejar listo un aula. Si no tiene orden, es una `TaskList`."
       >
         <Panel>
-          <Variant name="plegada" note="Una fila: el nombre, cuánto va y nada más. Es como vive el otro 90% del tiempo, y con tres de cuatro hechos la barra dice sola que falta poco.">
+          <Variant
+            name="plegada"
+            note="Una fila: el nombre, cuánto va y nada más. Es como vive el otro 90% del tiempo."
+            code={`<Checklist>
+  <Checklist.Title>Primeros pasos</Checklist.Title>
+  <Checklist.Item state="done">Creá tu primer espacio</Checklist.Item>
+  <Checklist.Item state="done">Sumá a tus estudiantes</Checklist.Item>
+  <Checklist.Item state="done">Publicá una actividad</Checklist.Item>
+  <Checklist.Item state="doing">Ajustá tus preferencias</Checklist.Item>
+</Checklist>`}
+          >
             <Stack width="md">
               <Checklist>
                 <Checklist.Title>Primeros pasos</Checklist.Title>
@@ -29,20 +40,38 @@ export function ChecklistStory() {
               </Checklist>
             </Stack>
           </Variant>
-          <Variant name="abierta" note="Cada paso dice dónde está con la marca de la izquierda, no con el color del texto.">
+          <Variant
+            name="abierta"
+            note="Tocá el segundo paso: el tercero deja de estar trabado."
+            code={`<Checklist defaultOpen>
+  <Checklist.Title>Primeros pasos</Checklist.Title>
+  <Checklist.Item state="done">Creá tu primer espacio</Checklist.Item>
+  <Checklist.Item state={connected ? 'done' : 'doing'} onClick={toggleConnected}>
+    Conectá tu cuenta de la escuela
+  </Checklist.Item>
+  <Checklist.Item
+    state={connected ? 'todo' : 'blocked'}
+    hint={connected ? '' : 'Primero hace falta conectar la cuenta de la escuela'}
+  >
+    Sumá a tus estudiantes
+  </Checklist.Item>
+  <Checklist.Item>Ajustá tus preferencias</Checklist.Item>
+  <Checklist.Footer>Podés volver acá desde el menú de tu cuenta.</Checklist.Footer>
+</Checklist>`}
+          >
             <Stack width="md">
               <Checklist defaultOpen>
                 <Checklist.Title>Primeros pasos</Checklist.Title>
                 <Checklist.Item state="done">Creá tu primer espacio</Checklist.Item>
                 <Checklist.Item
                   state={connected ? 'done' : 'doing'}
-                  onClick={() => setConnected(v => !v)}
+                  onClick={toggleConnected}
                 >
                   Conectá tu cuenta de la escuela
                 </Checklist.Item>
                 <Checklist.Item
                   state={connected ? 'todo' : 'blocked'}
-                  hint={connected ? undefined : 'Primero hace falta conectar la cuenta de la escuela'}
+                  hint={connected ? '' : 'Primero hace falta conectar la cuenta de la escuela'}
                 >
                   Sumá a tus estudiantes
                 </Checklist.Item>
@@ -51,7 +80,16 @@ export function ChecklistStory() {
               </Checklist>
             </Stack>
           </Variant>
-          <Variant name="compacta" note="`size='sm'` para un riel angosto: el título y los pasos van los dos en texto de cuerpo, así que la lista se lee como un bloque y no como cuatro filas sueltas.">
+          <Variant
+            name="compacta"
+            note={'`size="sm"` para un riel angosto: el título y los pasos van los dos en texto de cuerpo.'}
+            code={`<Checklist size="sm" defaultOpen>
+  <Checklist.Title>Toma de datos</Checklist.Title>
+  <Checklist.Item state="done">Una sola medición anotada</Checklist.Item>
+  <Checklist.Item>Las tres, sin el error</Checklist.Item>
+  <Checklist.Item>Las tres, con el error estimado</Checklist.Item>
+</Checklist>`}
+          >
             <Stack width="sm">
               <Checklist size="sm" defaultOpen>
                 <Checklist.Title>Toma de datos</Checklist.Title>
@@ -66,10 +104,23 @@ export function ChecklistStory() {
 
       <Section
         title="Como escalera"
-        note="Con `value` y `onChange` los pasos dejan de ser independientes: cada uno incluye a los de arriba, así que tocar el tercero marca los tres y volver a tocarlo desmarca de ahí para abajo. Es para lo que se recorre en orden y no se saltea: los niveles de un aspecto, el avance de una entrega. El estado de cada paso lo decide la pieza, así que el call site no puede dejar el segundo sin marcar y el tercero marcado."
+        note="Con `value` y `onValueChange` cada paso incluye a los de arriba: tocar el tercero marca los tres, y volver a tocarlo desmarca de ahí para abajo."
       >
         <Panel>
-          <Variant name="tres de cuatro" note="El contador y la barra salen del mismo número, y tocar un paso ya marcado vuelve al anterior.">
+          <Variant
+            name="tres de cuatro"
+            note="El contador y la barra salen del mismo número."
+            code={`<Checklist defaultOpen value={level} onValueChange={setLevel}>
+  <Checklist.Title>Toma de datos</Checklist.Title>
+  <Checklist.Item>Una sola medición anotada</Checklist.Item>
+  <Checklist.Item>Las tres, sin el error</Checklist.Item>
+  <Checklist.Item>Las tres, con el error estimado</Checklist.Item>
+  <Checklist.Item>Las tres, con el error y de dónde sale</Checklist.Item>
+  <Checklist.Footer hint="Cada renglón incluye al anterior: al marcar uno quedan marcados los de arriba.">
+    Vale 33% de la nota.
+  </Checklist.Footer>
+</Checklist>`}
+          >
             <Stack width="md">
               <Checklist defaultOpen value={level} onValueChange={setLevel}>
                 <Checklist.Title>Toma de datos</Checklist.Title>
@@ -88,10 +139,19 @@ export function ChecklistStory() {
 
       <Section
         title="Los cuatro estados de un paso"
-        note="`done` es el que ya está. `doing` es el que se está haciendo ahora, y es el único que se anuncia como el actual. `todo` es el que falta. `blocked` es el que no se puede hacer todavía, y ese lleva una aclaración de por qué."
+        note="`done` ya está, `doing` es el de ahora, `todo` es el que falta y `blocked` el que todavía no se puede hacer."
       >
         <Panel>
-          <Variant name="uno de cada">
+          <Variant
+            name="uno de cada"
+            code={`<Checklist defaultOpen>
+  <Checklist.Title>Los cuatro</Checklist.Title>
+  <Checklist.Item state="done">Hecho</Checklist.Item>
+  <Checklist.Item state="doing">En curso</Checklist.Item>
+  <Checklist.Item state="todo">Todavía no</Checklist.Item>
+  <Checklist.Item state="blocked" hint="Falta el anterior">Trabado</Checklist.Item>
+</Checklist>`}
+          >
             <Stack width="md">
               <Checklist defaultOpen>
                 <Checklist.Title>Los cuatro</Checklist.Title>
@@ -105,18 +165,6 @@ export function ChecklistStory() {
         </Panel>
       </Section>
 
-      <Section title="Cómo se escribe">
-        <Example code={`<Checklist defaultOpen>
-  <Checklist.Title>Primeros pasos</Checklist.Title>
-  <Checklist.Item state="done">Creá tu primer espacio</Checklist.Item>
-  <Checklist.Item state="doing" onClick={conectar}>Conectá tu cuenta</Checklist.Item>
-  <Checklist.Item state="blocked" hint="Primero conectá la cuenta">
-    Sumá a tus estudiantes
-  </Checklist.Item>
-  <Checklist.Footer>Podés volver acá desde el menú de tu cuenta.</Checklist.Footer>
-</Checklist>`} />
-      </Section>
-
       <Section title="Props">
         <Props of="Checklist" />
       </Section>
@@ -125,7 +173,7 @@ export function ChecklistStory() {
         <Practices>
           <Practices.Do>El contador sale de los pasos, así que no hay un número que pueda despegarse de la lista.</Practices.Do>
           <Practices.Do>Un paso `blocked` lleva `hint`: si no se puede hacer, hay que decir por qué.</Practices.Do>
-          <Practices.Do>Cuando los pasos se recorren en orden, pasale `value` y `onChange`: la escalera no deja estados imposibles, como el tercero hecho y el segundo no.</Practices.Do>
+          <Practices.Do>Cuando los pasos se recorren en orden, pasale `value` y `onValueChange`: la escalera no deja estados imposibles, como el tercero hecho y el segundo no.</Practices.Do>
           <Practices.Dont>No la uses para una secuencia que se hace de corrido: eso es `Steps`.</Practices.Dont>
           <Practices.Dont>Cuando todo está hecho, sacala de la pantalla. Una lista de cuatro tildes verdes ocupa lugar y no dice nada.</Practices.Dont>
         </Practices>

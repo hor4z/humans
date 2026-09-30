@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Button } from '@milo/ui/button'
 import { Choice } from '@milo/ui/blocks/task/choice'
-import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
+import { A11y, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const places = [
   { id: 'patio', label: 'El patio en el recreo' },
@@ -21,6 +21,7 @@ export function ChoiceStory() {
   const [one, setOne] = useState<string[]>([])
   const [many, setMany] = useState<string[]>(['aparato'])
   const [revealed, setRevealed] = useState(false)
+  const toggleRevealed = () => setRevealed(v => !v)
 
   return (
     <Page
@@ -31,10 +32,16 @@ export function ChoiceStory() {
     >
       <Section
         title="Una o varias"
-        note="Con `multiple` las tarjetas pasan a ser casillas y se pueden marcar varias. El valor es un array en los dos casos, así que el call site no cambia de forma cuando una pregunta de una pasa a ser de varias."
+        note="Con `multiple` las tarjetas pasan a ser casillas y se pueden marcar varias."
       >
         <Panel>
-          <Variant name="una sola" note="Es un grupo de opción única: una sola parada de tabulación y las flechas mueven entre las tarjetas.">
+          <Variant
+            name="una sola"
+            code={`<Choice options={places} value={one} onValueChange={setOne}>
+  <Choice.Prompt>¿Dónde esperás que dé más alto?</Choice.Prompt>
+  <Choice.Hint>Todavía no midieron nada: se contesta con lo que cada uno cree.</Choice.Hint>
+</Choice>`}
+          >
             <Stack width="sm">
               <Choice options={places} value={one} onValueChange={setOne}>
                 <Choice.Prompt>¿Dónde esperás que dé más alto?</Choice.Prompt>
@@ -42,7 +49,12 @@ export function ChoiceStory() {
               </Choice>
             </Stack>
           </Variant>
-          <Variant name="varias correctas" note="Cada tarjeta es una casilla y tiene su propia parada de tabulación, porque marcar una no descarta a las otras.">
+          <Variant
+            name="varias correctas"
+            code={`<Choice multiple options={care} value={many} onValueChange={setMany}>
+  <Choice.Prompt>¿Qué hay que cuidar para que los números se puedan comparar?</Choice.Prompt>
+</Choice>`}
+          >
             <Stack width="sm">
               <Choice multiple options={care} value={many} onValueChange={setMany}>
                 <Choice.Prompt>¿Qué hay que cuidar para que los números se puedan comparar?</Choice.Prompt>
@@ -54,10 +66,25 @@ export function ChoiceStory() {
 
       <Section
         title="Corregir es otro momento"
-        note="Sin `revealed` la pieza no corrige a nadie: guarda `correct` y no lo dibuja. Cuando alguien decide mostrarlo, las que iban quedan con el tilde y las marcadas de más con la raya amarilla, que es el tono de un consejo. Rojo no hay: equivocarse mientras se aprende no es un error del sistema."
+        note="Al revelar, las que iban quedan con el tilde y las marcadas de más con la raya amarilla, que es el tono de un consejo."
       >
         <Panel>
-          <Variant name="antes y después">
+          <Variant
+            name="antes y después"
+            code={`<Choice
+  multiple
+  options={care}
+  value={many}
+  onValueChange={setMany}
+  correct={['aparato', 'hora', 'contexto']}
+  revealed={revealed}
+>
+  <Choice.Prompt>¿Qué hay que cuidar para que los números se puedan comparar?</Choice.Prompt>
+</Choice>
+<Button size="sm" variant="ghost" onClick={toggleRevealed}>
+  {revealed ? 'Volver a antes' : 'Mostrar cuáles iban'}
+</Button>`}
+          >
             <Stack width="sm">
               <Choice
                 multiple
@@ -69,29 +96,12 @@ export function ChoiceStory() {
               >
                 <Choice.Prompt>¿Qué hay que cuidar para que los números se puedan comparar?</Choice.Prompt>
               </Choice>
-              <Button size="sm" variant="ghost" onClick={() => setRevealed(v => !v)}>
+              <Button size="sm" variant="ghost" onClick={toggleRevealed}>
                 {revealed ? 'Volver a antes' : 'Mostrar cuáles iban'}
               </Button>
             </Stack>
           </Variant>
         </Panel>
-        <Note>
-          Revelar también apaga la pregunta: una vez corregida no se vuelve a responder, así que no
-          hace falta pasar `readOnly` además. `readOnly` queda para el otro caso, que es leer la
-          entrega de alguien sin corregirla.
-        </Note>
-      </Section>
-
-      <Section title="Cómo se escribe">
-        <Example code={`<Choice
-  options={opciones}
-  value={marcadas}
-  onValueChange={setMarcadas}
-  correct={['aparato', 'hora']}
-  revealed={yaSeCorrigio}
->
-  <Choice.Prompt>¿Qué hay que cuidar?</Choice.Prompt>
-</Choice>`} />
       </Section>
 
       <Section title="Props">

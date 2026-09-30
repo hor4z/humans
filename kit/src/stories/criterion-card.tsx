@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { CriterionCard, type Criterion } from '@milo/ui/blocks/rubric/criterion-card'
-import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
+import { A11y, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const chart: Criterion = {
   id: 'grafico',
@@ -31,6 +31,9 @@ const measurement: Criterion = {
 
 export function CriterionCardStory() {
   const [open, setOpen] = useState<string | null>('grafico')
+  const [detailOpen, setDetailOpen] = useState(true)
+  const [readOpen, setReadOpen] = useState(true)
+  const toggle = (id: string) => setOpen(o => (o === id ? null : id))
 
   return (
     <Page
@@ -41,35 +44,60 @@ export function CriterionCardStory() {
     >
       <Section
         title="Cómo se arma"
-        note="Es controlada a propósito: quien la contiene decide cuál está abierta, así que puede dejar una sola y mantener el alto del panel. `Rubric` hace eso, y además la abre cuando alguien enfoca su tramo en la barra."
+        note="Es controlada a propósito: quien la contiene decide cuál está abierta, así que puede dejar una sola y mantener el alto del panel."
       >
         <Panel>
-          <Variant name="una abierta por vez" note="Tocá la flecha de la otra: la primera se cierra sola.">
+          <Variant
+            name="una abierta por vez"
+            note="Tocá la flecha de la otra: la primera se cierra sola."
+            code={`<CriterionCard
+  criterion={chart}
+  total={15}
+  open={open === 'grafico'}
+  onOpenChange={() => toggle('grafico')}
+  onRemove={removeChart}
+/>
+<CriterionCard
+  criterion={measurement}
+  total={15}
+  open={open === 'medicion'}
+  onOpenChange={() => toggle('medicion')}
+  onRemove={removeMeasurement}
+/>`}
+          >
             <Stack width="sm">
               <CriterionCard
                 criterion={chart}
                 total={15}
                 open={open === 'grafico'}
-                onOpenChange={() => setOpen(o => (o === 'grafico' ? null : 'grafico'))}
+                onOpenChange={() => toggle('grafico')}
                 onRemove={() => {}}
               />
               <CriterionCard
                 criterion={measurement}
                 total={15}
                 open={open === 'medicion'}
-                onOpenChange={() => setOpen(o => (o === 'medicion' ? null : 'medicion'))}
+                onOpenChange={() => toggle('medicion')}
                 onRemove={() => {}}
               />
             </Stack>
           </Variant>
-          <Variant name="con descripción" note="`detail` se lee recién al abrirla, arriba de los renglones. Plegada sigue siendo una fila, que es lo que la pieza promete.">
+          <Variant
+            name="con descripción"
+            note="`detail` se lee recién al abrirla, arriba de los renglones."
+            code={`<CriterionCard criterion={measurement} total={15} open={open} onOpenChange={setOpen} />`}
+          >
             <Stack width="sm">
-              <CriterionCard criterion={measurement} total={15} open onOpenChange={() => {}} />
+              <CriterionCard criterion={measurement} total={15} open={detailOpen} onOpenChange={setDetailOpen} />
             </Stack>
           </Variant>
-          <Variant name="de solo lectura" note="Sin `onRemove` no hay tacho: es la misma tarjeta para quien no escribió la rúbrica.">
+          <Variant
+            name="de solo lectura"
+            note="Sin `onRemove` no hay tacho: es la misma tarjeta para quien no escribió la rúbrica."
+            code={`<CriterionCard criterion={chart} total={15} open={open} onOpenChange={setOpen} />`}
+          >
             <Stack width="sm">
-              <CriterionCard criterion={chart} total={15} open onOpenChange={() => {}} />
+              <CriterionCard criterion={chart} total={15} open={readOpen} onOpenChange={setReadOpen} />
             </Stack>
           </Variant>
         </Panel>
@@ -79,21 +107,6 @@ export function CriterionCardStory() {
           descripción se lee al abrirlo. Los dos tienen tope, y los dos topes los declara la pieza
           en `criterionLimits`: 56 y 220. Un aspecto que necesita más que eso son dos aspectos.
         </Note>
-        <Note>
-          El porcentaje no se ve: lo dibuja la barra de la rúbrica, que es donde el largo significa
-          algo. Acá vive en un texto que solo alcanza un lector de pantalla, para que el dato no
-          dependa de ver la barra.
-        </Note>
-      </Section>
-
-      <Section title="Cómo se escribe">
-        <Example code={`<CriterionCard
-  criterion={aspecto}
-  total={sumaDeLosPesos}
-  open={abierto === aspecto.id}
-  onOpenChange={() => abrir(aspecto.id)}
-  onRemove={() => sacar(aspecto.id)}
-/>`} />
       </Section>
 
       <Section title="Props">

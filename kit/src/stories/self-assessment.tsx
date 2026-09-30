@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { SelfAssessment, type Criterion } from '@milo/ui/blocks/rubric/self-assessment'
-import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
+import { A11y, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const criteria: Criterion[] = [
   {
@@ -53,10 +53,16 @@ export function SelfAssessmentStory() {
     >
       <Section
         title="Cómo se arma"
-        note="Es el mismo marco y la misma tarjeta que el panel del docente: se pliega entera, los aspectos se abren de a uno y adentro va el `CriterionCard` de siempre. Toma además los mismos `Criterion`, así que lo que el docente escribe es lo que el estudiante lee. Lo que cambia es el momento y el gesto: acá no se corrige, se dice dónde estoy."
+        note="El mismo marco y el mismo `CriterionCard` que el panel del docente, con los mismos `Criterion`. Lo que cambia es el gesto: acá no se corrige, se dice dónde estoy."
       >
         <Panel>
-          <Variant name="a medio ubicar" note="Elegí un nivel en otro aspecto: el de arriba se cierra y el tramo de la barra se llena.">
+          <Variant
+            name="a medio ubicar"
+            note="Elegí un nivel en otro aspecto: el de arriba se cierra y el tramo de la barra se llena."
+            code={`<SelfAssessment criteria={criteria} value={value} onValueChange={setValue}>
+  <SelfAssessment.Title>Dónde estás</SelfAssessment.Title>
+</SelfAssessment>`}
+          >
             <Stack width="sm">
               <SelfAssessment
                 criteria={criteria}
@@ -80,16 +86,6 @@ export function SelfAssessmentStory() {
           de cada aspecto como en la vista del docente, donde el color ata cada tramo con su
           tarjeta.
         </Note>
-      </Section>
-
-      <Section title="Cómo se escribe">
-        <Example code={`<SelfAssessment
-  criteria={aspectos}
-  value={donde}
-  onValueChange={(id, nivel) => ubicar(id, nivel)}
->
-  <SelfAssessment.Title>Dónde estás</SelfAssessment.Title>
-</SelfAssessment>`} />
       </Section>
 
       <Section title="Props">

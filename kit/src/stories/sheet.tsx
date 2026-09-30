@@ -8,7 +8,7 @@ import { Switch } from '@milo/ui/switch'
 import { TextField } from '@milo/ui/text-field'
 import { Textarea } from '@milo/ui/textarea'
 import { useToast } from '@milo/ui/toast'
-import { A11y, Canvas, Example, Note, Page, Practices, Props, Section, Stack } from '../kit'
+import { A11y, Demo, Note, Page, Practices, Props, Section } from '../kit'
 
 export function SheetStory() {
   const [late, setLate] = useState(true)
@@ -28,78 +28,126 @@ export function SheetStory() {
     >
       <Section
         title="Un formulario entero"
-        note="Se arma en tres partes: la cabecera con el título y la X, el cuerpo que scrollea, y el pie con las acciones, que no scrollea nunca. Un formulario de seis campos donde el botón de guardar hay que ir a buscarlo abajo de todo es un formulario que se abandona."
+        note="Cabecera, cuerpo y pie: el cuerpo scrollea y el pie con las acciones no, así que guardar queda siempre a la vista."
       >
-        <Canvas center>
-          <Button variant="brand" onClick={() => setOpen(true)}>Nueva actividad</Button>
-        </Canvas>
+        <Demo code={`<Button variant="brand" onClick={() => setOpen(true)}>Nueva actividad</Button>
 
-        <Sheet open={open} onOpenChange={() => setOpen(false)}>
-          <Sheet.Header><Sheet.Title>Nueva actividad</Sheet.Title></Sheet.Header>
-          <Sheet.Body>
-            <Field.Set legend="Lo básico">
-              <Field required>
-                <Field.Label>Nombre</Field.Label>
-                <TextField placeholder="Fracciones equivalentes" />
-              </Field>
-              <Field>
-                <Field.Label>Espacio</Field.Label>
-                <Select value={space} onValueChange={setSpace} options={['Matemática · 4.º A', 'Lengua · 6.º', 'Ciencias · 5.º B']} />
-              </Field>
-              <Field>
-                <Field.Label>Consigna</Field.Label>
-                <Field.Hint>Se puede editar después de publicar</Field.Hint>
-                <Textarea rows={4} maxRows={10} />
-              </Field>
-              <Field>
-                <Field.Label>Entregas fuera de fecha</Field.Label>
-                <Field.Hint>Permitir que entreguen después del cierre</Field.Hint>
-                <Switch checked={late} onCheckedChange={setLate} label="Entregas fuera de fecha" />
-              </Field>
-            </Field.Set>
-          </Sheet.Body>
-          <Sheet.Footer>
-            <Button variant="ghost" onClick={() => setOpen(false)}>Cancelar</Button>
-            <Button
-              variant="brand"
-              onClick={() => {
-                setOpen(false)
-                toast({ title: 'Actividad creada', body: 'Quedó en borrador', tone: 'ok' })
-              }}
-            >
-              Crear
-            </Button>
-          </Sheet.Footer>
-        </Sheet>
+<Sheet open={open} onOpenChange={setOpen}>
+  <Sheet.Header><Sheet.Title>Nueva actividad</Sheet.Title></Sheet.Header>
+  <Sheet.Body>
+    <Field.Set legend="Lo básico">
+      <Field required>
+        <Field.Label>Nombre</Field.Label>
+        <TextField placeholder="Fracciones equivalentes" />
+      </Field>
+      <Field>
+        <Field.Label>Espacio</Field.Label>
+        <Select value={space} onValueChange={setSpace} options={['Matemática · 4.º A', 'Lengua · 6.º', 'Ciencias · 5.º B']} />
+      </Field>
+      <Field>
+        <Field.Label>Consigna</Field.Label>
+        <Field.Hint>Se puede editar después de publicar</Field.Hint>
+        <Textarea rows={4} maxRows={10} />
+      </Field>
+      <Field>
+        <Field.Label>Entregas fuera de fecha</Field.Label>
+        <Field.Hint>Permitir que entreguen después del cierre</Field.Hint>
+        <Switch checked={late} onCheckedChange={setLate} />
+      </Field>
+    </Field.Set>
+  </Sheet.Body>
+  <Sheet.Footer>
+    <Button variant="ghost" onClick={() => setOpen(false)}>Cancelar</Button>
+    <Button variant="brand" onClick={create}>Crear</Button>
+  </Sheet.Footer>
+</Sheet>`}>
+          <Button variant="brand" onClick={() => setOpen(true)}>Nueva actividad</Button>
+          <Sheet open={open} onOpenChange={setOpen}>
+            <Sheet.Header><Sheet.Title>Nueva actividad</Sheet.Title></Sheet.Header>
+            <Sheet.Body>
+              <Field.Set legend="Lo básico">
+                <Field required>
+                  <Field.Label>Nombre</Field.Label>
+                  <TextField placeholder="Fracciones equivalentes" />
+                </Field>
+                <Field>
+                  <Field.Label>Espacio</Field.Label>
+                  <Select value={space} onValueChange={setSpace} options={['Matemática · 4.º A', 'Lengua · 6.º', 'Ciencias · 5.º B']} />
+                </Field>
+                <Field>
+                  <Field.Label>Consigna</Field.Label>
+                  <Field.Hint>Se puede editar después de publicar</Field.Hint>
+                  <Textarea rows={4} maxRows={10} />
+                </Field>
+                <Field>
+                  <Field.Label>Entregas fuera de fecha</Field.Label>
+                  <Field.Hint>Permitir que entreguen después del cierre</Field.Hint>
+                  <Switch checked={late} onCheckedChange={setLate} />
+                </Field>
+              </Field.Set>
+            </Sheet.Body>
+            <Sheet.Footer>
+              <Button variant="ghost" onClick={() => setOpen(false)}>Cancelar</Button>
+              <Button
+                variant="brand"
+                onClick={() => {
+                  setOpen(false)
+                  toast({ title: 'Actividad creada', body: 'Quedó en borrador', tone: 'ok' })
+                }}
+              >
+                Crear
+              </Button>
+            </Sheet.Footer>
+          </Sheet>
+        </Demo>
       </Section>
 
       <Section
         title="De qué lado entra"
-        note="Por defecto de la derecha, que es de donde vienen las cosas nuevas. El izquierdo es para lo que acompaña a la navegación (un filtro, un índice) y no para un formulario: entrar por donde está el menú se lee como que el menú creció."
+        note="El izquierdo es para lo que acompaña a la navegación (un filtro, un índice) y no para un formulario: entrar por donde está el menú se lee como que el menú creció."
       >
-        <Canvas center>
-          <Button variant="muted" iconStart={<Icon name="filter_list" />} onClick={() => setLeftOpen(true)}>Filtros</Button>
-        </Canvas>
+        <Demo code={`<Button variant="muted" iconStart={<Icon name="filter_list" />} onClick={() => setLeftOpen(true)}>Filtros</Button>
 
-        <Sheet open={leftOpen} onOpenChange={() => setLeftOpen(false)} side="left" width={360}>
-          <Sheet.Header><Sheet.Title>Filtros</Sheet.Title></Sheet.Header>
-          <Sheet.Body>
-            <Stack gap="xl">
-              <Field>
-                <Field.Label>Espacio</Field.Label>
-                <Select value={spaceFilter} onValueChange={setSpaceFilter} options={['Todos', 'Matemática · 4.º A', 'Lengua · 6.º']} />
-              </Field>
-              <Field>
-                <Field.Label>Estado</Field.Label>
-                <Select value={statusFilter} onValueChange={setStatusFilter} options={['Cualquiera', 'Abierta', 'Corregida', 'Borrador']} />
-              </Field>
-            </Stack>
-          </Sheet.Body>
-          <Sheet.Footer>
-            <Button variant="ghost" onClick={() => setLeftOpen(false)}>Limpiar</Button>
-            <Button variant="brand" onClick={() => setLeftOpen(false)}>Aplicar</Button>
-          </Sheet.Footer>
-        </Sheet>
+<Sheet open={leftOpen} onOpenChange={setLeftOpen} side="left" width={360}>
+  <Sheet.Header><Sheet.Title>Filtros</Sheet.Title></Sheet.Header>
+  <Sheet.Body>
+    <Field.Set>
+      <Field>
+        <Field.Label>Espacio</Field.Label>
+        <Select value={spaceFilter} onValueChange={setSpaceFilter} options={['Todos', 'Matemática · 4.º A', 'Lengua · 6.º']} />
+      </Field>
+      <Field>
+        <Field.Label>Estado</Field.Label>
+        <Select value={statusFilter} onValueChange={setStatusFilter} options={['Cualquiera', 'Abierta', 'Corregida', 'Borrador']} />
+      </Field>
+    </Field.Set>
+  </Sheet.Body>
+  <Sheet.Footer>
+    <Button variant="ghost" onClick={clearFilters}>Limpiar</Button>
+    <Button variant="brand" onClick={applyFilters}>Aplicar</Button>
+  </Sheet.Footer>
+</Sheet>`}>
+          <Button variant="muted" iconStart={<Icon name="filter_list" />} onClick={() => setLeftOpen(true)}>Filtros</Button>
+          <Sheet open={leftOpen} onOpenChange={setLeftOpen} side="left" width={360}>
+            <Sheet.Header><Sheet.Title>Filtros</Sheet.Title></Sheet.Header>
+            <Sheet.Body>
+              <Field.Set>
+                <Field>
+                  <Field.Label>Espacio</Field.Label>
+                  <Select value={spaceFilter} onValueChange={setSpaceFilter} options={['Todos', 'Matemática · 4.º A', 'Lengua · 6.º']} />
+                </Field>
+                <Field>
+                  <Field.Label>Estado</Field.Label>
+                  <Select value={statusFilter} onValueChange={setStatusFilter} options={['Cualquiera', 'Abierta', 'Corregida', 'Borrador']} />
+                </Field>
+              </Field.Set>
+            </Sheet.Body>
+            <Sheet.Footer>
+              <Button variant="ghost" onClick={() => setLeftOpen(false)}>Limpiar</Button>
+              <Button variant="brand" onClick={() => setLeftOpen(false)}>Aplicar</Button>
+            </Sheet.Footer>
+          </Sheet>
+        </Demo>
       </Section>
 
       <Note title="Sheet o Modal">
@@ -108,16 +156,6 @@ export function SheetStory() {
         formulario de seis campos en un modal centrado tapa la pantalla y no deja ver aquello sobre
         lo que estás escribiendo.
       </Note>
-
-      <Section title="Cómo se escribe">
-        <Example code={`const { open, onOpen, onClose } = useDisclosure()
-
-<Sheet open={open} onOpenChange={onClose} width={460}>
-  <Sheet.Header><Sheet.Title>Nueva actividad</Sheet.Title></Sheet.Header>
-  <Sheet.Body>{campos}</Sheet.Body>
-  <Sheet.Footer><Button variant="brand">Guardar</Button></Sheet.Footer>
-</Sheet>`} />
-      </Section>
 
       <Section title="Props">
         <Props of="Sheet" />

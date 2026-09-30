@@ -398,7 +398,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Papel sobresale y tira sombra; muted es un hueco."
       }
     ],
-    "doc": "El contenedor de radio 16: lo que se apoya en la página. Lo que flota sobre un velo (un modal, un diálogo) va en 24."
+    "doc": "El contenedor de radio 16, que es el de toda superficie: lo que se apoya en la página."
   },
   "Card.Header": {
     "props": [],
@@ -2939,8 +2939,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
       {
         "name": "placeholder",
         "type": "string",
-        "required": false,
-        "def": "'Buscar…'",
+        "required": true,
         "doc": "Qué se busca, no \"Buscar…\" a secas."
       },
       {
@@ -3054,7 +3053,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "name": "leading",
         "type": "ReactNode",
         "required": false,
-        "doc": "Adelante del valor: un `Icon`, un `FolderIcon`, un `Avatar`, un `Spinner`."
+        "doc": "Adelante del valor: un `Icon`, un `Icon.Folder`, un `Avatar`, un `Spinner`."
       },
       {
         "name": "loading",
@@ -4107,6 +4106,12 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Presente lo vuelve un interruptor. Ausente es una acción que pasa y no queda."
       },
       {
+        "name": "onPressedChange",
+        "type": "(pressed: boolean) => void",
+        "required": false,
+        "doc": "Recibe el estado nuevo del interruptor."
+      },
+      {
         "name": "disabled",
         "type": "boolean",
         "required": false
@@ -4114,10 +4119,11 @@ export const propsByComponent: Record<string, ComponentDoc> = {
       {
         "name": "onClick",
         "type": "() => void",
-        "required": false
+        "required": false,
+        "doc": "La acción, cuando no es un interruptor."
       }
     ],
-    "doc": "El botón de la barra: siempre un glifo solo, y siempre `sm`. Con `pressed` es un interruptor y sin él una acción que pasa y no queda."
+    "doc": "El botón de la barra: siempre un glifo solo, y siempre `sm`. Con `pressed` es un interruptor y lo dice (\"negrita, activado\"); sin él, una acción que pasa y no queda."
   },
   "Tooltip": {
     "props": [

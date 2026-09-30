@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { SumTable, type SumCell } from '@milo/ui/blocks/task/sum-table'
-import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
+import { A11y, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const expenses = [
   { id: 'materia', label: 'Materia prima o productos' },
@@ -27,10 +27,17 @@ export function SumTableStory() {
     >
       <Section
         title="Cómo se arma"
-        note="Los conceptos entran como dato y los pone quien arma la consigna; lo que se carga adentro es de quien la resuelve. Un renglón suma recién cuando tiene los dos números, así que una cantidad sin precio no cuenta como cero."
+        note="Un renglón suma recién cuando tiene los dos números, así que una cantidad sin precio no cuenta como cero."
       >
         <Panel>
-          <Variant name="con tope" note="Cambiá una cantidad y mirá el aviso: dice cuánto queda, y cuando te pasás dice de cuánto.">
+          <Variant
+            name="con tope"
+            note="Cambiá una cantidad y mirá el aviso: dice cuánto queda, y cuando te pasás dice de cuánto."
+            code={`<SumTable rows={expenses} value={value} onValueChange={setValue} cap={100000}>
+  <SumTable.Prompt>Repartí los $100.000</SumTable.Prompt>
+  <SumTable.Hint>No hace falta gastarlos todos: lo que sobra es lo que te banca el primer mes flojo.</SumTable.Hint>
+</SumTable>`}
+          >
             <Stack width="md">
               <SumTable rows={expenses} value={value} onValueChange={setValue} cap={100000}>
                 <SumTable.Prompt>Repartí los $100.000</SumTable.Prompt>
@@ -38,7 +45,12 @@ export function SumTableStory() {
               </SumTable>
             </Stack>
           </Variant>
-          <Variant name="sin tope" note="Sin `cap` la tabla suma y no opina, que es lo que hace falta cuando no hay un límite sino una cuenta.">
+          <Variant
+            name="sin tope"
+            code={`<SumTable rows={expenses} value={loaded}>
+  <SumTable.Prompt>Lo que salió armar el primer lote</SumTable.Prompt>
+</SumTable>`}
+          >
             <Stack width="md">
               <SumTable rows={expenses} value={loaded}>
                 <SumTable.Prompt>Lo que salió armar el primer lote</SumTable.Prompt>
@@ -51,17 +63,6 @@ export function SumTableStory() {
           un ejercicio es algo para volver a mirar, no una falta. El rojo está reservado para lo que
           no tiene vuelta.
         </Note>
-      </Section>
-
-      <Section title="Cómo se escribe">
-        <Example code={`<SumTable
-  rows={gastos}
-  value={presupuesto}
-  onValueChange={(id, celda) => guardar(id, celda)}
-  cap={100000}
->
-  <SumTable.Prompt>Repartí los $100.000</SumTable.Prompt>
-</SumTable>`} />
       </Section>
 
       <Section title="Props">

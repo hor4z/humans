@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ToggleButton } from '@milo/ui/toggle-button'
-import { A11y, Example, Page, Panel, Practices, Props, Section, Variant } from '../kit'
+import { A11y, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function ToggleButtonStory() {
   const [bold, setBold] = useState(true)
@@ -16,14 +16,17 @@ export function ToggleButtonStory() {
     >
       <Section
         title="Cuándo va"
-        note="Un estado que se prende y se apaga y se aplica al momento. Para elegir uno entre varios va `Segmented`; para una preferencia de ajustes, `Switch`."
+        note="Un estado que se prende y se apaga y se aplica al momento. Para elegir uno entre varios va `Segmented`."
       >
         <Panel>
-          <Variant name="solo el glifo" note="En una barra de formato, que es donde más se usa.">
+          <Variant name="solo el glifo" note="En una barra de formato, que es donde más se usa." code={`<ToggleButton size="sm" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
+<ToggleButton size="sm" pressed={italic} onPressedChange={setItalic} icon="format_italic" label="Cursiva" />`}>
             <ToggleButton size="sm" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
             <ToggleButton size="sm" pressed={italic} onPressedChange={setItalic} icon="format_italic" label="Cursiva" />
           </Variant>
-          <Variant name="con texto" note="Un filtro que se prende y se apaga: hay un estado, no una opción entre varias.">
+          <Variant name="con texto" note="Un filtro que se prende y se apaga: hay un estado, no una opción entre varias." code={`<ToggleButton size="sm" pressed={onlyUngraded} onPressedChange={setOnlyUngraded} icon="filter_alt">
+  Solo sin corregir
+</ToggleButton>`}>
             <ToggleButton size="sm" pressed={onlyUngraded} onPressedChange={setOnlyUngraded} icon="filter_alt">
               Solo sin corregir
             </ToggleButton>
@@ -36,20 +39,17 @@ export function ToggleButtonStory() {
         note="36 · 40 · 44, los del `Button`. `sm` en una barra, `md` suelto en una pantalla, `lg` donde se toca con el dedo."
       >
         <Panel>
-          <Variant name="sm · md · lg">
-            <ToggleButton size="sm" pressed icon="format_bold" label="Negrita" />
-            <ToggleButton size="md" pressed icon="format_bold" label="Negrita" />
-            <ToggleButton size="lg" pressed icon="format_bold" label="Negrita" />
+          <Variant name="sm · md · lg" code={`<ToggleButton size="sm" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
+<ToggleButton size="md" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
+<ToggleButton size="lg" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />`}>
+            <ToggleButton size="sm" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
+            <ToggleButton size="md" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
+            <ToggleButton size="lg" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
           </Variant>
-          <Variant name="apagado" note="No responde y se ve que no responde.">
+          <Variant name="apagado" note="No responde y se ve que no responde." code={`<ToggleButton size="sm" pressed={false} disabled icon="format_bold" label="Negrita" />`}>
             <ToggleButton size="sm" pressed={false} disabled icon="format_bold" label="Negrita" />
           </Variant>
         </Panel>
-      </Section>
-
-      <Section title="Cómo se escribe">
-        <Example code={`const [bold, setBold] = useState(false)
-<ToggleButton pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />`} />
       </Section>
 
       <Section title="Props">

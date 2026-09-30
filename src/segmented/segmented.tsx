@@ -10,6 +10,7 @@ type SegmentedOption<T extends string> = {
   /** Con `label` la opción es de texto; sin él, cuadrada con solo el icono. */
   label?: string
   icon?: IconName
+  /** Un punto verde al lado: hay algo nuevo en esa opción. */
   dot?: boolean
   /** En las opciones que solo tienen icono: es su nombre y su ayuda. */
   title?: string

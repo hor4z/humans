@@ -54,5 +54,5 @@ function Footer({ className, ...props }: ComponentPropsWithoutRef<'div'>) {
   return <div className={cx(s.footer, className)} {...props} />
 }
 
-/** El contenedor de radio 16: lo que se apoya en la página. Lo que flota sobre un velo (un modal, un diálogo) va en 24. */
+/** El contenedor de radio 16, que es el de toda superficie: lo que se apoya en la página. */
 export const Card = Object.assign(Root, { Header, Title, Hint, Body, Footer })

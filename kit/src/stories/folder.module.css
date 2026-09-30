@@ -42,18 +42,4 @@
     color: var(--text);
   }
 
-  .glyphShelf {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    padding-inline: 1.5rem;
-    padding-block: 1.5rem;
-  }
-
-  .glyphCaption {
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    color: var(--text-muted);
-  }
 }

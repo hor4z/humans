@@ -13,7 +13,7 @@ import { timeAgo } from '@milo/ui/lib/time'
 import { Pagination } from '@milo/ui/pagination'
 import { Search } from '@milo/ui/search'
 import { Table } from '@milo/ui/table'
-import { A11y, Example, Footnote, Mono, Page, Practices, Props, Section, Stack } from '../kit'
+import { A11y, Demo, Page, Practices, Props, Section } from '../kit'
 import { person as p } from '../fixtures'
 
 const NOW = new Date('2026-03-09T15:00:00-03:00')
@@ -134,230 +134,332 @@ export function TableStory() {
     >
       <Section
         title="La tabla entera"
-        note="Una tabla de trabajo lleva tres cosas más que la grilla: el filtro, el total y la paginación. Van juntas porque se leen juntas: cuántas hay depende de con qué se recortó."
+        note="Una tabla de trabajo lleva tres cosas más que la grilla: el filtro, el total y la paginación."
       >
-        <Filter.Bar className={cls.filterGap}>
-          <Search
-            value={query}
-            onValueChange={narrow(setQuery)}
-            placeholder="Buscar por actividad o espacio"
-          />
-          <Filter
-            label="Estado"
-            value={statuses}
-            onValueChange={narrow(setStatuses)}
-            options={['Abierta', 'Corregida', 'Borrador'].map(v => ({ value: v, count: statusCounts[v] ?? 0 }))}
-          />
-          <Filter
-            label="Materia"
-            value={pickedSpaces}
-            onValueChange={narrow(setPickedSpaces)}
-            options={['Matemática', 'Ciencias', 'Lengua', 'Sociales'].map(v => ({ value: v, count: spaceCounts[v] ?? 0 }))}
-          />
-          <Filter
-            label="Estudiantes"
-            value={pickedPeople}
-            onValueChange={narrow(setPickedPeople)}
-            options={people.map(p => ({ value: p.name, count: peopleCounts[p.name] ?? 0, person: p }))}
-          />
-          {filtering && <Filter.Reset onClick={clear} />}
-          <ColumnPicker
-            columns={columns}
-            value={visible}
-            onValueChange={setVisible}
-          />
-        </Filter.Bar>
+        <Demo fill code={`<Filter.Bar>
+  <Search
+    value={query}
+    onValueChange={narrow(setQuery)}
+    placeholder="Buscar por actividad o espacio"
+  />
+  <Filter
+    label="Estado"
+    value={statuses}
+    onValueChange={narrow(setStatuses)}
+    options={['Abierta', 'Corregida', 'Borrador'].map(v => ({ value: v, count: statusCounts[v] ?? 0 }))}
+  />
+  <Filter
+    label="Materia"
+    value={pickedSpaces}
+    onValueChange={narrow(setPickedSpaces)}
+    options={['Matemática', 'Ciencias', 'Lengua', 'Sociales'].map(v => ({ value: v, count: spaceCounts[v] ?? 0 }))}
+  />
+  <Filter
+    label="Estudiantes"
+    value={pickedPeople}
+    onValueChange={narrow(setPickedPeople)}
+    options={people.map(p => ({ value: p.name, count: peopleCounts[p.name] ?? 0, person: p }))}
+  />
+  {filtering && <Filter.Reset onClick={clear} />}
+  <ColumnPicker columns={columns} value={visible} onValueChange={setVisible} />
+</Filter.Bar>
 
-        <Table
-          label="Actividades del espacio"
-          minWidth={980}
-        >
-          <Table.Footer>
-            <Pagination>
-                <Pagination.Status
-                  from={from + 1}
-                  to={from + onScreen.length}
-                  total={list.length}
-                  noun={['actividad', 'actividades']}
+<Table label="Actividades del espacio" minWidth={980}>
+  <Table.Footer>
+    <Pagination>
+      <Pagination.Status
+        from={from + 1}
+        to={from + onScreen.length}
+        total={list.length}
+        noun={['actividad', 'actividades']}
+      />
+      <Pagination.Prev disabled={page === 0} onClick={() => setPage(p => p - 1)} />
+      <Pagination.Next disabled={!hasMore} onClick={() => setPage(p => p + 1)} />
+    </Pagination>
+  </Table.Footer>
+  <Table.Header>
+    <Table.Row>
+      <Table.Head>Actividad</Table.Head>
+      {view('estudiantes') && <Table.Head>Estudiantes</Table.Head>}
+      {view('docente') && <Table.Head>Docente</Table.Head>}
+      {view('estado') && <Table.Head>Estado</Table.Head>}
+      {view('corregidas') && <Table.Head align="right">Corregidas</Table.Head>}
+      {view('entregas') && <Table.Head align="right">Entregas</Table.Head>}
+      {view('acciones') && <Table.Head><span className="sr-only">Acciones</span></Table.Head>}
+    </Table.Row>
+  </Table.Header>
+  <Table.Body>
+    {onScreen.map(a => (
+      <Table.Row key={a.name} onClick={() => open(a)}>
+        <Table.Cell>
+          <Table.Title>{a.name}</Table.Title>
+          <Table.Hint>{a.space}</Table.Hint>
+        </Table.Cell>
+        {view('estudiantes') && <Table.Cell><Avatar.Group people={a.students} /></Table.Cell>}
+        {view('docente') && (
+          <Table.Cell>
+            <span className={s.teacherCell}>
+              <Avatar name={a.teacher.name} src={a.teacher.src} size={24} />
+              <span className={s.teacherName}>{a.teacher.name}</span>
+            </span>
+          </Table.Cell>
+        )}
+        {view('estado') && <Table.Cell><Chip color={tone[a.status]}>{a.status}</Chip></Table.Cell>}
+        {view('corregidas') && (
+          <Table.Num>
+            {a.total ? <>{a.done}<span className={s.fractionTotal}> / {a.total}</span></> : '-'}
+          </Table.Num>
+        )}
+        {view('entregas') && <Table.Num>{a.total || '-'}</Table.Num>}
+        {view('acciones') && (
+          <Table.Cell fit>
+            <Dropdown
+              items={[
+                { label: 'Abrir', icon: 'open_in_new' },
+                { label: 'Duplicar', icon: 'content_copy' },
+                { label: 'Archivar', icon: 'inventory_2' },
+              ]}
+              trigger={({ onClick, ref, ...rest }) => (
+                <IconButton
+                  ref={ref}
+                  onClick={e => { e.stopPropagation(); onClick() }}
+                  {...rest}
+                  icon="more_horiz"
+                  label={\`Acciones de \${a.name}\`}
+                  size="sm"
                 />
-                <Pagination.Prev disabled={page === 0} onClick={() => setPage(p => p - 1)} />
-                <Pagination.Next disabled={!hasMore} onClick={() => setPage(p => p + 1)} />
-              </Pagination>
-          </Table.Footer>
-          <Table.Header>
-            <Table.Row>
-              <Table.Head>Actividad</Table.Head>
-              {view('estudiantes') && <Table.Head>Estudiantes</Table.Head>}
-              {view('docente') && <Table.Head>Docente</Table.Head>}
-              {view('estado') && <Table.Head>Estado</Table.Head>}
-              {view('corregidas') && <Table.Head align="right">Corregidas</Table.Head>}
-              {view('entregas') && <Table.Head align="right">Entregas</Table.Head>}
-              {view('acciones') && <Table.Head><span className="sr-only">Acciones</span></Table.Head>}
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {onScreen.map(a => (
-              <Table.Row key={a.name} onClick={() => {}}>
-                <Table.Cell>
-                  <Table.Title>{a.name}</Table.Title>
-                  <Table.Hint>{a.space}</Table.Hint>
-                </Table.Cell>
-                {view('estudiantes') && <Table.Cell><Avatar.Group people={a.students} /></Table.Cell>}
-                {view('docente') && (
-                  <Table.Cell>
-                    <span className={cls.teacherCell}>
-                      <Avatar name={a.teacher.name} src={a.teacher.src} size={24} />
-                      <span className={cls.teacherName}>{a.teacher.name}</span>
-                    </span>
-                  </Table.Cell>
-                )}
-                {view('estado') && <Table.Cell><Chip color={tone[a.status as keyof typeof tone]}>{a.status}</Chip></Table.Cell>}
-                {view('corregidas') && (
-                  <Table.Num>
-                    {a.total ? <>{a.done}<span className={cls.fractionTotal}> / {a.total}</span></> : '-'}
-                  </Table.Num>
-                )}
-                {view('entregas') && <Table.Num>{a.total || '-'}</Table.Num>}
-                {view('acciones') && (
-                <Table.Cell fit>
-                  <Dropdown
-                    items={[
-                      { label: 'Abrir', icon: 'open_in_new' },
-                      { label: 'Duplicar', icon: 'content_copy' },
-                      { label: 'Archivar', icon: 'inventory_2' },
-                    ]}
-                    trigger={({ onClick, ref, ...rest }) => (
-                      <IconButton
-                        ref={ref}
-                        onClick={e => { e.stopPropagation(); onClick() }}
-                        {...rest}
-                        icon="more_horiz"
-                        label={`Acciones de ${a.name}`}
-                        size="sm"
-                      />
+              )}
+            />
+          </Table.Cell>
+        )}
+      </Table.Row>
+    ))}
+    {onScreen.length === 0 && (
+      <Table.Empty colSpan={visible.length}>
+        <EmptyState size="sm" icon="search_off">
+          <EmptyState.Title>Ninguna actividad con eso</EmptyState.Title>
+          <EmptyState.Body>Probá con otras palabras, o sacá alguno de los filtros puestos.</EmptyState.Body>
+          <EmptyState.Action><Filter.Reset onClick={clear}>Limpiar los filtros</Filter.Reset></EmptyState.Action>
+        </EmptyState>
+      </Table.Empty>
+    )}
+  </Table.Body>
+  {onScreen.length > 0 && (
+    <Table.Foot>
+      <Table.Row>
+        <Table.Cell colSpan={1 + ['estudiantes', 'docente', 'estado'].filter(view).length}>
+          Total{filtering ? ' de lo filtrado' : ''}
+        </Table.Cell>
+        {view('corregidas') && <Table.Num>{list.reduce((n, a) => n + a.done, 0)}</Table.Num>}
+        {view('entregas') && <Table.Num>{list.reduce((n, a) => n + a.total, 0)}</Table.Num>}
+        {view('acciones') && <Table.Cell />}
+      </Table.Row>
+    </Table.Foot>
+  )}
+</Table>`}>
+          <div>
+            <Filter.Bar className={cls.filterGap}>
+              <Search
+                value={query}
+                onValueChange={narrow(setQuery)}
+                placeholder="Buscar por actividad o espacio"
+              />
+              <Filter
+                label="Estado"
+                value={statuses}
+                onValueChange={narrow(setStatuses)}
+                options={['Abierta', 'Corregida', 'Borrador'].map(v => ({ value: v, count: statusCounts[v] ?? 0 }))}
+              />
+              <Filter
+                label="Materia"
+                value={pickedSpaces}
+                onValueChange={narrow(setPickedSpaces)}
+                options={['Matemática', 'Ciencias', 'Lengua', 'Sociales'].map(v => ({ value: v, count: spaceCounts[v] ?? 0 }))}
+              />
+              <Filter
+                label="Estudiantes"
+                value={pickedPeople}
+                onValueChange={narrow(setPickedPeople)}
+                options={people.map(p => ({ value: p.name, count: peopleCounts[p.name] ?? 0, person: p }))}
+              />
+              {filtering && <Filter.Reset onClick={clear} />}
+              <ColumnPicker
+                columns={columns}
+                value={visible}
+                onValueChange={setVisible}
+              />
+            </Filter.Bar>
+
+            <Table
+              label="Actividades del espacio"
+              minWidth={980}
+            >
+              <Table.Footer>
+                <Pagination>
+                    <Pagination.Status
+                      from={from + 1}
+                      to={from + onScreen.length}
+                      total={list.length}
+                      noun={['actividad', 'actividades']}
+                    />
+                    <Pagination.Prev disabled={page === 0} onClick={() => setPage(p => p - 1)} />
+                    <Pagination.Next disabled={!hasMore} onClick={() => setPage(p => p + 1)} />
+                  </Pagination>
+              </Table.Footer>
+              <Table.Header>
+                <Table.Row>
+                  <Table.Head>Actividad</Table.Head>
+                  {view('estudiantes') && <Table.Head>Estudiantes</Table.Head>}
+                  {view('docente') && <Table.Head>Docente</Table.Head>}
+                  {view('estado') && <Table.Head>Estado</Table.Head>}
+                  {view('corregidas') && <Table.Head align="right">Corregidas</Table.Head>}
+                  {view('entregas') && <Table.Head align="right">Entregas</Table.Head>}
+                  {view('acciones') && <Table.Head><span className="sr-only">Acciones</span></Table.Head>}
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                {onScreen.map(a => (
+                  <Table.Row key={a.name} onClick={() => {}}>
+                    <Table.Cell>
+                      <Table.Title>{a.name}</Table.Title>
+                      <Table.Hint>{a.space}</Table.Hint>
+                    </Table.Cell>
+                    {view('estudiantes') && <Table.Cell><Avatar.Group people={a.students} /></Table.Cell>}
+                    {view('docente') && (
+                      <Table.Cell>
+                        <span className={cls.teacherCell}>
+                          <Avatar name={a.teacher.name} src={a.teacher.src} size={24} />
+                          <span className={cls.teacherName}>{a.teacher.name}</span>
+                        </span>
+                      </Table.Cell>
                     )}
-                  />
-                </Table.Cell>
+                    {view('estado') && <Table.Cell><Chip color={tone[a.status as keyof typeof tone]}>{a.status}</Chip></Table.Cell>}
+                    {view('corregidas') && (
+                      <Table.Num>
+                        {a.total ? <>{a.done}<span className={cls.fractionTotal}> / {a.total}</span></> : '-'}
+                      </Table.Num>
+                    )}
+                    {view('entregas') && <Table.Num>{a.total || '-'}</Table.Num>}
+                    {view('acciones') && (
+                    <Table.Cell fit>
+                      <Dropdown
+                        items={[
+                          { label: 'Abrir', icon: 'open_in_new' },
+                          { label: 'Duplicar', icon: 'content_copy' },
+                          { label: 'Archivar', icon: 'inventory_2' },
+                        ]}
+                        trigger={({ onClick, ref, ...rest }) => (
+                          <IconButton
+                            ref={ref}
+                            onClick={e => { e.stopPropagation(); onClick() }}
+                            {...rest}
+                            icon="more_horiz"
+                            label={`Acciones de ${a.name}`}
+                            size="sm"
+                          />
+                        )}
+                      />
+                    </Table.Cell>
+                    )}
+                  </Table.Row>
+                ))}
+                {onScreen.length === 0 && (
+                  <Table.Empty colSpan={visible.length}>
+                    <EmptyState size="sm" icon="search_off">
+                      <EmptyState.Title>Ninguna actividad con eso</EmptyState.Title>
+                      <EmptyState.Body>Probá con otras palabras, o sacá alguno de los filtros puestos.</EmptyState.Body>
+                      <EmptyState.Action><Filter.Reset onClick={clear}>Limpiar los filtros</Filter.Reset></EmptyState.Action>
+                    </EmptyState>
+                  </Table.Empty>
                 )}
-              </Table.Row>
-            ))}
-            {onScreen.length === 0 && (
-              <Table.Empty colSpan={visible.length}>
-                <EmptyState size="sm" icon="search_off">
-                  <EmptyState.Title>Ninguna actividad con eso</EmptyState.Title>
-                  <EmptyState.Body>Probá con otras palabras, o sacá alguno de los filtros puestos.</EmptyState.Body>
-                  <EmptyState.Action><Filter.Reset onClick={clear}>Limpiar los filtros</Filter.Reset></EmptyState.Action>
-                </EmptyState>
-              </Table.Empty>
-            )}
-          </Table.Body>
-          {onScreen.length > 0 && (
-            <Table.Foot>
-              <Table.Row>
-                <Table.Cell colSpan={1 + ['estudiantes', 'docente', 'estado'].filter(view).length}>
-                  Total{filtering ? ' de lo filtrado' : ''}
-                </Table.Cell>
-                {view('corregidas') && <Table.Num>{list.reduce((n, a) => n + a.done, 0)}</Table.Num>}
-                {view('entregas') && <Table.Num>{list.reduce((n, a) => n + a.total, 0)}</Table.Num>}
-                {view('acciones') && <Table.Cell />}
-              </Table.Row>
-            </Table.Foot>
-          )}
-        </Table>
+              </Table.Body>
+              {onScreen.length > 0 && (
+                <Table.Foot>
+                  <Table.Row>
+                    <Table.Cell colSpan={1 + ['estudiantes', 'docente', 'estado'].filter(view).length}>
+                      Total{filtering ? ' de lo filtrado' : ''}
+                    </Table.Cell>
+                    {view('corregidas') && <Table.Num>{list.reduce((n, a) => n + a.done, 0)}</Table.Num>}
+                    {view('entregas') && <Table.Num>{list.reduce((n, a) => n + a.total, 0)}</Table.Num>}
+                    {view('acciones') && <Table.Cell />}
+                  </Table.Row>
+                </Table.Foot>
+              )}
+            </Table>
+          </div>
+        </Demo>
       </Section>
 
       <Section
         title="La pieza"
-        note="La fila mide lo mismo que la de un panel, así que una tabla y un panel uno arriba del otro se ven del mismo sistema. Las filas alternan papel: en una tabla ancha, un divisor de un píxel no alcanza para seguir una fila hasta el final."
+        note="Las filas alternan papel: en una tabla ancha, un divisor de un píxel no alcanza para seguir una fila hasta el final."
       >
-        <Table label="Entregas por estudiante" minWidth={720}>
-          <Table.Header>
-            <Table.Row>
-              <Table.Head>Actividad</Table.Head>
-              <Table.Head>Estudiantes</Table.Head>
-              <Table.Head>Estado</Table.Head>
-              <Table.Head align="right">Entregas</Table.Head>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {spaces.map(a => (
-              <Table.Row key={a.name} onClick={() => {}}>
-                <Table.Cell>
-                  <Table.Title>{a.name}</Table.Title>
-                  <Table.Hint>{a.space}</Table.Hint>
-                </Table.Cell>
-                <Table.Cell>
-                  <Avatar.Group people={a.students} />
-                </Table.Cell>
-                <Table.Cell>
-                  <Chip color={tone[a.status as keyof typeof tone]}>{a.status}</Chip>
-                </Table.Cell>
-                <Table.Num>{a.total || '-'}</Table.Num>
-              </Table.Row>
-            ))}
-          </Table.Body>
-        </Table>
-      </Section>
-
-      <Section
-        title="La columna de estudiantes"
-        note="Se montan un tercio y llevan anillo, por el mismo motivo que en su propia vista. El resto va en un círculo neutro y no en otro color: un `+4` no identifica a nadie, y en la familia viva se leería como una persona más."
-      >
-        <Stack gap="lg">
-          <div className={`${cls.twoRow} bg-surface`}>
-            <Avatar.Group people={[p('Ana Pérez', 1), p('Bruno Díaz', 2)]} />
-            <Mono>2 de 3</Mono>
-          </div>
-          <div className={`${cls.threeRow} bg-surface`}>
-            <Avatar.Group people={[p('Ana Pérez', 1), p('Bruno Díaz', 2), p('Carla Sosa', 3)]} />
-            <Mono>3 de 3</Mono>
-          </div>
-          <div className={`${cls.fourRow} bg-surface`}>
-            <Avatar.Group people={[p('Ana Pérez', 1), p('Bruno Díaz', 2), p('Carla Sosa', 3), p('Damián Ruiz', 4)]} />
-            <Mono>4 · se muestra la cuarta cara, no un "+1"</Mono>
-          </div>
-          <div className={`${cls.fiveRow} bg-surface`}>
-            <Avatar.Group people={[p('Ana Pérez', 1), p('Bruno Díaz', 2), p('Carla Sosa', 3), p('Damián Ruiz', 4), p('Elena Vega', 5)]} />
-            <Mono>5 · tres caras y el resto</Mono>
-          </div>
-        </Stack>
-        <Footnote>
-          El sobrante de uno solo muestra la cuarta cara en vez de un "+1": el círculo ocupa
-          exactamente lo mismo que la persona que estaría escondiendo, así que no ahorra nada y
-          dice menos.
-        </Footnote>
-      </Section>
-
-      <Section
-        title="Sobre otro fondo"
-        note="El anillo es del color de la fila y no blanco fijo, así que sobre un fondo distinto hay que pasarle `ring`. Es la única forma: un avatar no puede saber sobre qué lo pusieron."
-      >
-        <div className={cls.mutedRow}>
-          <Avatar.Group people={[p('Ana Pérez', 1), p('Bruno Díaz', 2), p('Carla Sosa', 3), p('Damián Ruiz', 4)]} ring="var(--surface-muted)" />
-          <Mono>ring="var(--surface-muted)"</Mono>
-        </div>
-      </Section>
-
-      <Section title="Cómo se escribe">
-        <Example code={`<Table label="Actividades del espacio">
+        <Demo fill code={`<Table label="Entregas por estudiante" minWidth={720}>
   <Table.Header>
-    <Table.Row><Table.Head>Nombre</Table.Head><Table.Head>Entregas</Table.Head></Table.Row>
+    <Table.Row>
+      <Table.Head>Actividad</Table.Head>
+      <Table.Head>Estudiantes</Table.Head>
+      <Table.Head>Estado</Table.Head>
+      <Table.Head align="right">Entregas</Table.Head>
+    </Table.Row>
   </Table.Header>
   <Table.Body>
-    <Table.Row><Table.Cell>Fracciones</Table.Cell><Table.Num>18</Table.Num></Table.Row>
+    {spaces.map(a => (
+      <Table.Row key={a.name} onClick={() => open(a)}>
+        <Table.Cell>
+          <Table.Title>{a.name}</Table.Title>
+          <Table.Hint>{a.space}</Table.Hint>
+        </Table.Cell>
+        <Table.Cell>
+          <Avatar.Group people={a.students} />
+        </Table.Cell>
+        <Table.Cell>
+          <Chip color={tone[a.status]}>{a.status}</Chip>
+        </Table.Cell>
+        <Table.Num>{a.total || '-'}</Table.Num>
+      </Table.Row>
+    ))}
   </Table.Body>
-  <Table.Footer><Pagination>{paginacion}</Pagination></Table.Footer>
-</Table>`} />
+</Table>`}>
+          <Table label="Entregas por estudiante" minWidth={720}>
+            <Table.Header>
+              <Table.Row>
+                <Table.Head>Actividad</Table.Head>
+                <Table.Head>Estudiantes</Table.Head>
+                <Table.Head>Estado</Table.Head>
+                <Table.Head align="right">Entregas</Table.Head>
+              </Table.Row>
+            </Table.Header>
+            <Table.Body>
+              {spaces.map(a => (
+                <Table.Row key={a.name} onClick={() => {}}>
+                  <Table.Cell>
+                    <Table.Title>{a.name}</Table.Title>
+                    <Table.Hint>{a.space}</Table.Hint>
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Avatar.Group people={a.students} />
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Chip color={tone[a.status as keyof typeof tone]}>{a.status}</Chip>
+                  </Table.Cell>
+                  <Table.Num>{a.total || '-'}</Table.Num>
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </Table>
+        </Demo>
       </Section>
 
       <Section title="Props">
-        <Props of={['Table', 'Avatar']} />
+        <Props of="Table" />
       </Section>
 
       <Section title="Cómo se usa bien">
         <Practices>
           <Practices.Do>`label` dice de qué es: cuando scrollea se vuelve una región enfocable, y dos regiones con el mismo nombre se leen como una.</Practices.Do>
           <Practices.Do>La paginación va en `Table.Footer`, que vive adentro del marco pero fuera del scroll.</Practices.Do>
+          <Practices.Do>La columna de personas es un `Avatar.Group`: el monte, el sobrante y el `ring` sobre otro fondo están en [Avatar](#avatar).</Practices.Do>
           <Practices.Dont>{'`Table.Foot` es el `<tfoot>` y `Table.Footer` es la franja de abajo: no son lo mismo.'}</Practices.Dont>
         </Practices>
       </Section>

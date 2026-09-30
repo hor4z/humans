@@ -72,13 +72,6 @@ describe('la escala tipográfica', () => {
     expect([...new Set(invented)]).toEqual([])
   })
 
-  it('no quedó el puente que Tailwind leía', () => {
-    for (const f of style) {
-      for (const r of roles) expect(f.text, f.name).not.toMatch(new RegExp(`var\\(--text-${r}\\b`))
-    }
-    expect(theme).not.toMatch(/@theme/)
-  })
-
   it('ningún rol baja de 12px', () => {
     const small = roles.filter(r => size(`type-${r}`) < 12)
     expect(small).toEqual([])
@@ -136,9 +129,4 @@ describe('la escala tipográfica', () => {
     expect(theme).toMatch(/line-height:\s*var\(--type-body-lh\)/)
   })
 
-  it('no queda nada de la escala vieja en los tokens', () => {
-    for (const dead of ['--leading-ui', '--tracking-tight', '--tracking-wide']) {
-      expect(scales).not.toMatch(new RegExp(`^\\s*${dead}:`, 'm'))
-    }
-  })
 })

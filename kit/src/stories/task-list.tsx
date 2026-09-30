@@ -1,7 +1,6 @@
-import cls from './task-list.module.css'
 import { useState } from 'react'
 import { TaskList, type Task } from '@milo/ui/blocks/editor/task-list'
-import { A11y, Example, Note, Page, Practices, Props, Section } from '../kit'
+import { A11y, Demo, Note, Page, Practices, Props, Section } from '../kit'
 
 const initial: Task[] = [
   { id: 'leer', label: 'Leer la consigna entera antes de empezar', done: true },
@@ -22,18 +21,18 @@ export function TaskListStory() {
       lead="Cosas para hacer que se marcan al hacerlas: los pasos de una entrega, lo que falta de una actividad, el checklist de un experimento."
     >
       <Section title="La pieza" note="Marcá y desmarcá: lo hecho se apaga y se tacha, que son dos avisos y no uno.">
-        <div className={`${cls.pieceBox} bg-surface`}>
+        <Demo width="lg" fill code={`<TaskList items={tasks} onToggle={toggleTask} label="Pasos del experimento" />`}>
           <TaskList items={tasks} onToggle={toggleTask} label="Pasos del experimento" />
-        </div>
+        </Demo>
       </Section>
 
       <Section
         title="Solo de lectura"
         note="La consigna que escribió otro, o una entrega ya cerrada. Se lee igual y no se toca."
       >
-        <div className={`${cls.readOnlyBox} bg-surface`}>
+        <Demo width="lg" fill code={`<TaskList items={initial} onToggle={toggleTask} label="Pasos, ya cerrados" readOnly />`}>
           <TaskList items={initial} onToggle={() => {}} label="Pasos, ya cerrados" readOnly />
-        </div>
+        </Demo>
       </Section>
 
       <Note title="TaskList o Checkbox suelto">
@@ -42,22 +41,23 @@ export function TaskListStory() {
         Si al final hay un "Guardar", son casillas; si no, es esta lista.
       </Note>
 
-      <Section title="Cómo se escribe">
-        <Example code={`const [tareas, setTareas] = useState(pendientes)
-<TaskList label="Antes de publicar" tasks={tareas} onToggle={marcar} />`} />
+      <Section title="Props">
+        <Props of={['TaskList', 'Task']} />
       </Section>
 
-      <Props of={['TaskList', 'Task']} />
+      <Section title="Cómo se usa bien">
+        <Practices>
+          <Practices.Do>`label` dice de qué es: sin eso un lector anuncia "lista, cuatro elementos".</Practices.Do>
+        </Practices>
+      </Section>
 
-      <Practices>
-        <Practices.Do>`label` dice de qué es: sin eso un lector anuncia "lista, cuatro elementos".</Practices.Do>
-      </Practices>
-
-      <A11y>
-        <A11y.Item>La lista lleva nombre: "lista, cuatro elementos" no dice de qué.</A11y.Item>
-        <A11y.Item>Cada casilla se nombra con su propio texto, y el texto es zona de click, que es la mitad del área útil del control.</A11y.Item>
-        <A11y.Item>Lo hecho se dice con el tachado además del gris: quien no separa el gris del negro ve igual que la línea está cruzada.</A11y.Item>
-      </A11y>
+      <Section title="Accesibilidad">
+        <A11y>
+          <A11y.Item>La lista lleva nombre: "lista, cuatro elementos" no dice de qué.</A11y.Item>
+          <A11y.Item>Cada casilla se nombra con su propio texto, y el texto es zona de click, que es la mitad del área útil del control.</A11y.Item>
+          <A11y.Item>Lo hecho se dice con el tachado además del gris: quien no separa el gris del negro ve igual que la línea está cruzada.</A11y.Item>
+        </A11y>
+      </Section>
     </Page>
   )
 }

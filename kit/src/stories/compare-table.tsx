@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { CompareTable } from '@milo/ui/blocks/task/compare-table'
-import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
+import { A11y, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const fronts = [
   { id: 'producto', label: 'Producto' },
@@ -32,10 +32,17 @@ export function CompareTableStory() {
     >
       <Section
         title="Cómo se arma"
-        note="Las columnas y los renglones entran como dato, así que dos entregas del mismo curso se pueden leer una al lado de la otra. Si cada uno eligiera en qué comparar, no habría comparación: habría cuatro textos."
+        note="Las columnas y los renglones entran como dato, así que dos entregas del mismo curso se pueden leer una al lado de la otra."
       >
         <Panel>
-          <Variant name="completándolo" note="Cada celda es un campo de dos renglones que crece hasta cuatro: entra una frase, no un párrafo.">
+          <Variant
+            name="completándolo"
+            note="Cada celda es un campo de un renglón que crece hasta tres: entra una frase, no un párrafo."
+            code={`<CompareTable rows={fronts} columns={competitors} value={value} onValueChange={setValue}>
+  <CompareTable.Prompt>Contra quién competís</CompareTable.Prompt>
+  <CompareTable.Hint>Reales: con nombre, y con el precio que cobran de verdad.</CompareTable.Hint>
+</CompareTable>`}
+          >
             <Stack width="md">
               <CompareTable
                 rows={fronts}
@@ -48,7 +55,13 @@ export function CompareTableStory() {
               </CompareTable>
             </Stack>
           </Variant>
-          <Variant name="ya entregado" note="Una celda vacía lo dice: en un cuadro, el blanco no se distingue de lo que nadie miró.">
+          <Variant
+            name="ya entregado"
+            note="Una celda vacía lo dice: en un cuadro, el blanco no se distingue de lo que nadie miró."
+            code={`<CompareTable rows={fronts} columns={competitors} value={loaded}>
+  <CompareTable.Prompt>Contra quién competís</CompareTable.Prompt>
+</CompareTable>`}
+          >
             <Stack width="md">
               <CompareTable rows={fronts} columns={competitors} value={loaded}>
                 <CompareTable.Prompt>Contra quién competís</CompareTable.Prompt>
@@ -56,22 +69,6 @@ export function CompareTableStory() {
             </Stack>
           </Variant>
         </Panel>
-        <Note>
-          Con una sola columna deja de ser un cuadro comparativo y pasa a ser una lista de preguntas
-          cortas, que también sirve: los renglones son las preguntas y la columna es la respuesta.
-          Es la misma pieza porque es la misma grilla.
-        </Note>
-      </Section>
-
-      <Section title="Cómo se escribe">
-        <Example code={`<CompareTable
-  rows={frentes}
-  columns={competidores}
-  value={cuadro}
-  onValueChange={(fila, columna, texto) => guardar(fila, columna, texto)}
->
-  <CompareTable.Prompt>Contra quién competís</CompareTable.Prompt>
-</CompareTable>`} />
       </Section>
 
       <Section title="Props">

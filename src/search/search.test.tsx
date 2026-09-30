@@ -6,30 +6,30 @@ import { Search } from './search'
 
 describe('Search', () => {
   it('el atajo se ve mientras está vacío y lo tapa la cruz al escribir', () => {
-    const { rerender } = render(<Search value="" onValueChange={() => {}} shortcut="/" />)
+    const { rerender } = render(<Search placeholder="Buscar una actividad" value="" onValueChange={() => {}} shortcut="/" />)
     expect(screen.getByText('/')).toBeInTheDocument()
-    rerender(<Search value="frac" onValueChange={() => {}} shortcut="/" />)
+    rerender(<Search placeholder="Buscar una actividad" value="frac" onValueChange={() => {}} shortcut="/" />)
     expect(screen.queryByText('/')).toBeNull()
     expect(screen.getByRole('button', { name: 'Limpiar la búsqueda' })).toBeInTheDocument()
   })
 
   it('la cruz vacía el campo y le devuelve el foco', async () => {
     const onValueChange = vi.fn()
-    render(<Search value="frac" onValueChange={onValueChange} />)
+    render(<Search placeholder="Buscar una actividad" value="frac" onValueChange={onValueChange} />)
     await userEvent.click(screen.getByRole('button', { name: 'Limpiar la búsqueda' }))
     expect(onValueChange).toHaveBeenCalledWith('')
     expect(document.activeElement).toBe(screen.getByRole('textbox'))
   })
 
   it('la cruz está centrada: es cuadrada y centra su glifo', () => {
-    render(<Search value="frac" onValueChange={() => {}} />)
+    render(<Search placeholder="Buscar una actividad" value="frac" onValueChange={() => {}} />)
     const cross = screen.getByRole('button', { name: 'Limpiar la búsqueda' })
     expect(style(cross)).toContain('justify-content: center')
   })
 
   it('`inputRef` llega al input: es lo que un atajo necesita para enfocarlo', () => {
     const ref = { current: null as HTMLInputElement | null }
-    render(<Search value="" onValueChange={() => {}} ref={ref} />)
+    render(<Search placeholder="Buscar una actividad" value="" onValueChange={() => {}} ref={ref} />)
     expect(ref.current).toBe(screen.getByRole('textbox'))
   })
 })

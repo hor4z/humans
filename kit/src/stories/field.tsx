@@ -5,7 +5,7 @@ import { Select } from '@milo/ui/select'
 import { Switch } from '@milo/ui/switch'
 import { TextField } from '@milo/ui/text-field'
 import { Textarea } from '@milo/ui/textarea'
-import { A11y, Canvas, Example, Frame, Note, Page, Practices, Props, Section, Stack } from '../kit'
+import { A11y, Demo, Frame, Note, Page, Practices, Props, Section, Stack } from '../kit'
 
 export function FieldStory() {
   const [overdue, setOverdue] = useState(true)
@@ -25,9 +25,24 @@ export function FieldStory() {
     >
       <Section
         title="Nombre, ayuda y error"
-        note="La etiqueta enfoca el campo al tocarla, la ayuda se anuncia junto con el control y el error la reemplaza además de marcar el campo como inválido. Los campos del sistema se atan solos: no hay que pasarles `id` ni `aria-describedby`."
+        note="Los campos del sistema se atan solos: no hay que pasarles `id` ni `aria-describedby`. Tocá el nombre y salí sin escribir para ver el error."
       >
-        <Canvas>
+        <Demo code={`<Field required>
+  <Field.Label>Nombre de la actividad</Field.Label>
+  <Field.Hint>Lo ven los estudiantes</Field.Hint>
+  <Field.Error>{error}</Field.Error>
+  <TextField
+    value={name}
+    onValueChange={setName}
+    onBlur={() => setTouched(true)}
+    placeholder="Fracciones equivalentes"
+  />
+</Field>
+<Field>
+  <Field.Label>Consigna</Field.Label>
+  <Field.Hint>Podés pegar el texto que ya tenías</Field.Hint>
+  <Textarea rows={3} maxRows={8} placeholder="Escribí la consigna…" />
+</Field>`}>
           <Stack gap="xl" width="md">
             <Field required>
               <Field.Label>Nombre de la actividad</Field.Label>
@@ -46,14 +61,27 @@ export function FieldStory() {
               <Textarea rows={3} maxRows={8} placeholder="Escribí la consigna…" />
             </Field>
           </Stack>
-        </Canvas>
+        </Demo>
       </Section>
 
       <Section
         title="Sirve para cualquier control del sistema"
-        note="No solo para los campos de texto: el select, el switch y la casilla también toman el `id` y la descripción del Field. Es la diferencia entre una etiqueta que enfoca y una etiqueta que es texto al lado de un control."
+        note="El select, el switch y la casilla también toman el `id` y la descripción del Field."
       >
-        <Canvas>
+        <Demo code={`<Field>
+  <Field.Label>Espacio</Field.Label>
+  <Field.Hint>Dónde se publica</Field.Hint>
+  <Select value={space} onValueChange={setSpace} options={['Matemática · 4.º A', 'Lengua · 6.º']} />
+</Field>
+<Field>
+  <Field.Label>Entregas fuera de fecha</Field.Label>
+  <Field.Hint>Permitir que entreguen después del cierre</Field.Hint>
+  <Switch checked={overdue} onCheckedChange={setOverdue} />
+</Field>
+<Field>
+  <Field.Label>Avisar al publicar</Field.Label>
+  <Checkbox checked={notify} onCheckedChange={setNotify} />
+</Field>`}>
           <Stack gap="xl" width="md">
             <Field>
               <Field.Label>Espacio</Field.Label>
@@ -63,35 +91,48 @@ export function FieldStory() {
             <Field>
               <Field.Label>Entregas fuera de fecha</Field.Label>
               <Field.Hint>Permitir que entreguen después del cierre</Field.Hint>
-              <Switch checked={overdue} onCheckedChange={setOverdue} label="Entregas fuera de fecha" />
+              <Switch checked={overdue} onCheckedChange={setOverdue} />
             </Field>
             <Field>
               <Field.Label>Avisar al publicar</Field.Label>
-              <Checkbox checked={notify} onCheckedChange={setNotify} label="Avisar al publicar" />
+              <Checkbox checked={notify} onCheckedChange={setNotify} />
             </Field>
           </Stack>
-        </Canvas>
+        </Demo>
       </Section>
 
       <Section
         title="Lo obligatorio se dice con palabras"
-        note="El asterisco es una convención que no significa nada para quien no la conoce y que un lector de pantalla lee como 'asterisco'. Acá va el asterisco para la vista y la palabra 'obligatorio' para el lector."
+        note="El asterisco es para la vista; para el lector va la palabra 'obligatorio', que no depende de conocer la convención."
       >
-        <Canvas>
+        <Demo code={`<Field required>
+  <Field.Label>Espacio</Field.Label>
+  <Select value={where} onValueChange={setWhere} options={['Matemática · 4.º A', 'Lengua · 6.º']} />
+</Field>`}>
           <Frame width="sm">
             <Field required>
               <Field.Label>Espacio</Field.Label>
               <Select value={where} onValueChange={setWhere} options={['Matemática · 4.º A', 'Lengua · 6.º']} />
             </Field>
           </Frame>
-        </Canvas>
+        </Demo>
       </Section>
 
       <Section
         title="Field.Set"
-        note="Agrupa los campos que van juntos y les pone un título que el lector anuncia al entrar al grupo. En un formulario de tres campos sobra; en uno de doce es lo que lo hace legible."
+        note="Agrupa los campos que van juntos bajo un título que el lector anuncia al entrar. En un formulario de tres campos sobra; en uno de doce lo hace legible."
       >
-        <Canvas>
+        <Demo code={`<Field.Set legend="Lo básico">
+  <Field required>
+    <Field.Label>Nombre</Field.Label>
+    <TextField placeholder="Fracciones equivalentes" />
+  </Field>
+  <Field>
+    <Field.Label>Consigna</Field.Label>
+    <Field.Hint>Se puede editar después de publicar</Field.Hint>
+    <Textarea rows={3} maxRows={8} />
+  </Field>
+</Field.Set>`}>
           <Frame width="md">
             <Field.Set legend="Lo básico">
               <Field required>
@@ -105,7 +146,7 @@ export function FieldStory() {
               </Field>
             </Field.Set>
           </Frame>
-        </Canvas>
+        </Demo>
       </Section>
 
       <Note title="Field o Row">
@@ -113,14 +154,6 @@ export function FieldStory() {
         tocarlo (etiqueta a la izquierda, switch a la derecha) es un
         [Row](#row).
       </Note>
-
-      <Section title="Cómo se escribe">
-        <Example code={`<Field>
-  <Field.Label>Nombre de la actividad</Field.Label>
-  <Field.Hint>Lo ven los estudiantes</Field.Hint>
-  <TextField value={nombre} onValueChange={setNombre} />
-</Field>`} />
-      </Section>
 
       <Section title="Props">
         <Props of="Field" />

@@ -1,7 +1,7 @@
 import { Button } from '@milo/ui/button'
 import { Icon } from '@milo/ui/icon'
 import { useToast } from '@milo/ui/toast'
-import { A11y, Cluster, Demo, Example, Note, Page, Practices, Props, Section } from '../kit'
+import { A11y, Cluster, Demo, Note, Page, Practices, Props, Section } from '../kit'
 
 export function ToastStory() {
   const { toast } = useToast()
@@ -15,9 +15,25 @@ export function ToastStory() {
     >
       <Section
         title="Probalo"
-        note="`toast()` sale de `useToast()`, y el provider va una sola vez arriba de todo. Devuelve el id del aviso, que es lo único que hace falta para cerrarlo antes de tiempo."
+        note="El `ToastProvider` va una sola vez arriba de todo, y `toast()` sale de `useToast()` en cualquier lado del árbol."
       >
-        <Demo label="los cuatro casos">
+        <Demo label="los cinco casos" code={`const { toast } = useToast()
+
+<Button variant="brand" onClick={() => toast({ title: 'Actividad publicada', body: 'La ven los siete espacios', tone: 'ok' })}>
+  Publicar
+</Button>
+<Button variant="muted" onClick={() => toast({ title: 'Se guardó el borrador' })}>
+  Guardar
+</Button>
+<Button variant="muted" onClick={() => toast({ title: 'No se pudo subir el archivo', body: 'Pesa más de 20 MB', tone: 'bad' })}>
+  Error
+</Button>
+<Button variant="muted" onClick={() => toast({ title: 'Se archivaron 12 actividades', duration: 0 })}>
+  Sin vencimiento
+</Button>
+<Button variant="muted" onClick={() => toast({ title: 'Resumen de la semana', body: 'El lunes ya está listo.', meta: 'recién' })}>
+  Con hora
+</Button>`}>
           <Cluster gap="sm">
             <Button variant="brand" onClick={() => toast({ title: 'Actividad publicada', body: 'La ven los siete espacios', tone: 'ok' })}>
               Publicar
@@ -40,9 +56,19 @@ export function ToastStory() {
 
       <Section
         title="Deshacer"
-        note="Un toast con acción es lo que reemplaza al '¿estás seguro?' de lo que se puede revertir. Preguntar antes cuesta un click siempre; deshacer después cuesta un click solo cuando alguien se equivocó."
+        note="Un toast con acción reemplaza al '¿estás seguro?' de lo que se puede revertir."
       >
-        <Demo label="con salida">
+        <Demo label="con salida" code={`<Button
+  variant="muted"
+  iconStart={<Icon name="delete" />}
+  onClick={() => toast({
+    title: 'Se archivó "Fracciones equivalentes"',
+    action: { label: 'Deshacer', onClick: unarchive },
+    duration: 8000,
+  })}
+>
+  Archivar
+</Button>`}>
           <Button
             variant="muted"
             iconStart={<Icon name="delete" />}
@@ -59,9 +85,17 @@ export function ToastStory() {
 
       <Section
         title="Se apila hasta tres"
-        note="Más de tres avisos a la vez tapan la esquina y ya no se leen: el cuarto empuja al más viejo. Y el reloj se pausa mientras el mouse está encima o mientras algo adentro tiene el foco, porque leer un aviso no tiene que ser una carrera."
+        note="El cuarto empuja al más viejo, y el reloj se pausa mientras el mouse está encima."
       >
-        <Demo label="tirá cinco seguidos">
+        <Demo label="tirá cinco seguidos" code={`<Button
+  variant="muted"
+  onClick={() => {
+    const names = ['Fracciones', 'El sistema solar', 'Cuento policial', 'Mapa de América', 'Ecosistemas']
+    names.forEach((n, i) => setTimeout(() => toast({ title: \`Se corrigió "\${n}"\`, tone: 'ok' }), i * 260))
+  }}
+>
+  Cinco de una
+</Button>`}>
           <Button
             variant="muted"
             onClick={() => {
@@ -80,16 +114,6 @@ export function ToastStory() {
         dentro de un minuto, ¿tiene que seguir viendo el aviso? Si sí, no es un toast.
       </Note>
 
-      <Section title="Cómo se escribe">
-        <Example code={`const { toast } = useToast()
-
-toast({
-  tone: 'ok',
-  title: 'Actividad publicada',
-  action: { label: 'Deshacer', onClick: revertir },
-})`} />
-      </Section>
-
       <Section title="Props">
         <Props of={['ToastOptions', 'ToastProvider']} />
       </Section>
@@ -97,6 +121,7 @@ toast({
       <Section title="Cómo se usa bien">
         <Practices>
           <Practices.Do>Es para lo que pasó y no necesita respuesta: aparece, se lee y se va.</Practices.Do>
+          <Practices.Do>Lo que se puede revertir va con `action` de deshacer y no con una confirmación antes: preguntar cuesta un click siempre, deshacer solo cuando alguien se equivocó.</Practices.Do>
           <Practices.Dont>Con `duration: 0` poné una salida: sin X y sin acción, no hay forma de cerrarlo.</Practices.Dont>
         </Practices>
       </Section>

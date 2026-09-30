@@ -2,7 +2,7 @@ import cls from './radio.module.css'
 import { useState } from 'react'
 import { Checkbox } from '@milo/ui/checkbox'
 import { Radio } from '@milo/ui/radio'
-import { A11y, Example, Footnote, Page, Panel, Practices, Props, Section, Variant } from '../kit'
+import { A11y, Footnote, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function RadioStory() {
   const [compared, setCompared] = useState(true)
@@ -20,10 +20,15 @@ export function RadioStory() {
     >
       <Section
         title="El grupo"
-        note="Las opciones van sueltas sobre el papel, sin píldora gris detrás: esa es la receta del `Segmented`, y un radio metido ahí es el mismo control dibujado dos veces. Opciones cortas que se comparan de un vistazo son un Segmented; opciones que necesitan su propio texto al lado son este grupo."
+        note="Las opciones van sueltas sobre el papel, cada una con su texto al lado. Opciones cortas que se comparan de un vistazo son un `Segmented`."
       >
         <Panel>
-          <Variant name="dos opciones">
+          <Variant name="dos opciones" code={`<Radio.Group
+  label="Dos opciones"
+  value={one}
+  onValueChange={setOne}
+  options={[{ value: 'a', label: 'La primera' }, { value: 'b', label: 'La segunda' }]}
+/>`}>
             <Radio.Group
               label="Dos opciones"
               value={one}
@@ -31,7 +36,16 @@ export function RadioStory() {
               options={[{ value: 'a', label: 'La primera' }, { value: 'b', label: 'La segunda' }]}
             />
           </Variant>
-          <Variant name="tres">
+          <Variant name="tres" code={`<Radio.Group
+  label="Tres opciones"
+  value={mode}
+  onValueChange={setMode}
+  options={[
+    { value: 'todas', label: 'Todas' },
+    { value: 'abiertas', label: 'Abiertas' },
+    { value: 'cerradas', label: 'Cerradas' },
+  ]}
+/>`}>
             <Radio.Group
               label="Tres opciones"
               value={mode}
@@ -48,23 +62,24 @@ export function RadioStory() {
 
       <Section
         title="Es el checkbox en redondo"
-        note="Mismo relleno azul prendido, misma caja vacía con su línea apagado, misma medida de 18. Lo único que cambia es la marca de adentro: un tilde o un disco. Dos piezas que dicen lo mismo ('esto lo elegí yo') no pueden dibujarse con dos recetas distintas."
+        note="Mismo relleno azul prendido, misma caja vacía apagado, misma medida de 18. Lo único que cambia es la marca de adentro: un tilde o un disco."
       >
         <Panel>
-          <Variant name="radio vs checkbox">
+          <Variant name="radio vs checkbox" code={`<Radio checked={withHint} onCheckedChange={() => setWithHint(true)} label="Prendido" />
+<Radio checked={!withHint} onCheckedChange={() => setWithHint(false)} label="Apagado" />
+<Checkbox checked={compared} onCheckedChange={setCompared} label="Checkbox prendido" />
+<Checkbox checked={!compared} onCheckedChange={on => setCompared(!on)} label="Checkbox apagado" />`}>
             <Radio checked={withHint} onCheckedChange={() => setWithHint(true)} label="Prendido" />
             <Radio checked={!withHint} onCheckedChange={() => setWithHint(false)} label="Apagado" />
             <span className={cls.checkboxPair}>
               <Checkbox checked={compared} onCheckedChange={setCompared} label="Checkbox prendido" />
-              <Checkbox checked={!compared} onCheckedChange={v => setCompared(!v)} label="Checkbox apagado" />
+              <Checkbox checked={!compared} onCheckedChange={on => setCompared(!on)} label="Checkbox apagado" />
             </span>
           </Variant>
         </Panel>
         <Footnote>
-          El azul es el círculo de afuera y el blanco el de adentro, no al revés: con el papel
-          afuera y el punto azul adentro la pieza pesa lo mismo prendida que apagada, porque lo
-          único que cambia es el disco del medio. Con el relleno afuera, la elegida se ve de una en
-          toda la fila. Y va sin anillo, que era justo lo que lo separaba del checkbox.
+          El azul va afuera y el blanco adentro: con el relleno afuera, la elegida se ve de una en
+          toda la fila.
         </Footnote>
       </Section>
 
@@ -73,7 +88,14 @@ export function RadioStory() {
         note="El caso para el que existe el radio y no el Segmented: cada opción con su propio texto."
       >
         <Panel>
-          <Variant name="con etiqueta">
+          <Variant name="con etiqueta" code={`<label>
+  <Radio checked={loose === 'si'} onCheckedChange={() => setLoose('si')} label="Sí, avisarme" />
+  Sí, avisarme
+</label>
+<label>
+  <Radio checked={loose === 'no'} onCheckedChange={() => setLoose('no')} label="No hace falta" />
+  No hace falta
+</label>`}>
             <span className={cls.looseGroup}>
               <label className={cls.yesLabel}>
                 <Radio checked={loose === 'si'} onCheckedChange={() => setLoose('si')} label="Sí, avisarme" />
@@ -85,7 +107,8 @@ export function RadioStory() {
               </label>
             </span>
           </Variant>
-          <Variant name="deshabilitado">
+          <Variant name="deshabilitado" code={`<Radio checked onCheckedChange={select} disabled label="Prendido deshabilitado" />
+<Radio checked={false} onCheckedChange={select} disabled label="Apagado deshabilitado" />`}>
             <Radio checked onCheckedChange={() => {}} disabled label="Prendido deshabilitado" />
             <Radio checked={false} onCheckedChange={() => {}} disabled label="Apagado deshabilitado" />
           </Variant>
@@ -94,10 +117,19 @@ export function RadioStory() {
 
       <Section
         title="El teclado"
-        note="Es el de un grupo de radios y no el de una lista de botones: una sola parada de tabulación para todo el grupo, y las flechas mueven y eligen a la vez. El foco se mueve con la elección: si se quedara atrás, la flecha siguiente saldría del lugar equivocado."
+        note="Una sola parada de tabulación para todo el grupo, y las flechas mueven y eligen a la vez."
       >
         <Panel>
-          <Variant name="probalo">
+          <Variant name="probalo" code={`<Radio.Group
+  label="Probá las flechas"
+  value={mode}
+  onValueChange={setMode}
+  options={[
+    { value: 'todas', label: 'Todas' },
+    { value: 'abiertas', label: 'Abiertas' },
+    { value: 'cerradas', label: 'Cerradas' },
+  ]}
+/>`}>
             <Radio.Group
               label="Probá las flechas"
               value={mode}
@@ -110,20 +142,6 @@ export function RadioStory() {
             />
           </Variant>
         </Panel>
-      </Section>
-
-      <Section title="Cómo se escribe">
-        <Example code={`const [modo, setModo] = useState('individual')
-
-<Radio.Group
-  value={modo}
-  onValueChange={setModo}
-  label="Cómo se entrega"
-  options={[
-    { value: 'individual', label: 'Individual' },
-    { value: 'grupal', label: 'En grupo' },
-  ]}
-/>`} />
       </Section>
 
       <Section title="Props">

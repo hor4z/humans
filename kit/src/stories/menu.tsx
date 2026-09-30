@@ -4,7 +4,7 @@ import { Divider } from '@milo/ui/divider'
 import { Icon } from '@milo/ui/icon'
 import { Menu } from '@milo/ui/menu'
 import { Popover } from '@milo/ui/popover'
-import { A11y, Example, Footnote, Mono, Page, Panel, Practices, Props, Section, Variant } from '../kit'
+import { A11y, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function MenuStory() {
   const [view, setView] = useState<'grilla' | 'lista'>('grilla')
@@ -21,7 +21,12 @@ export function MenuStory() {
         note="A la derecha hay un solo lugar y cuatro cosas que pueden ocuparlo: el atajo, una línea de apoyo, el tilde o el chevron. Nunca dos, porque compiten por el mismo significado."
       >
         <Panel>
-          <Variant name="suelta">
+          <Variant name="suelta" code={`<Menu label="Acciones de la actividad" width={260}>
+  <Menu.Item icon="edit">Renombrar</Menu.Item>
+  <Menu.Item icon="content_copy">Duplicar<Menu.Shortcut>⌘D</Menu.Shortcut></Menu.Item>
+  <Menu.Item icon="group">Compartir<Menu.Hint>7</Menu.Hint></Menu.Item>
+  <Menu.Item icon="folder" submenu>Mover a</Menu.Item>
+</Menu>`}>
             <Menu label="Acciones de la actividad" width={260}>
               <Menu.Item icon="edit">Renombrar</Menu.Item>
               <Menu.Item icon="content_copy">Duplicar<Menu.Shortcut>⌘D</Menu.Shortcut></Menu.Item>
@@ -34,10 +39,25 @@ export function MenuStory() {
 
       <Section
         title="Rótulo, separador y opción destructiva"
-        note="El rótulo va en tinta y no en gris, igual que la cabecera de la Table: apagado, obliga a buscar de qué es cada grupo. La opción destructiva es la única que cambia de color en todo el sistema, y su icono no va en gris: el gris es lo que apaga y esto es lo contrario."
+        note="El rótulo va en tinta y no en gris: apagado, obliga a buscar de qué es cada grupo. La opción destructiva es la única que cambia de color, icono incluido."
       >
         <Panel>
-          <Variant name="armado entero">
+          <Variant name="armado entero" code={`<Menu label="Acciones con grupos" width={260}>
+  <Menu.Label>Esta actividad</Menu.Label>
+  <Menu.Item icon="edit">Editar<Menu.Shortcut>E</Menu.Shortcut></Menu.Item>
+  <Menu.Item icon="visibility">Ver como estudiante</Menu.Item>
+  <Divider />
+  <Menu.Label>Vista</Menu.Label>
+  <Menu.Item icon="grid_view" checked={view === 'grilla'} onSelect={() => setView('grilla')}>
+    Grilla
+  </Menu.Item>
+  <Menu.Item icon="view_list" checked={view === 'lista'} onSelect={() => setView('lista')}>
+    Lista
+  </Menu.Item>
+  <Divider />
+  <Menu.Item icon="inventory_2" disabled>Archivar</Menu.Item>
+  <Menu.Item icon="delete" danger>Eliminar</Menu.Item>
+</Menu>`}>
             <Menu label="Acciones con grupos" width={260}>
               <Menu.Label>Esta actividad</Menu.Label>
               <Menu.Item icon="edit">Editar<Menu.Shortcut>E</Menu.Shortcut></Menu.Item>
@@ -56,23 +76,34 @@ export function MenuStory() {
             </Menu>
           </Variant>
         </Panel>
-        <Footnote>
-          El separador se estira hasta el borde del panel, y esa cuenta la hace el panel porque es
-          el que conoce su padding. Si la hiciera el separador, cada call site tendría que
-          acordarse de un número que no es suyo.
-        </Footnote>
       </Section>
 
       <Section
         title="Adentro de un Popover"
-        note="El Menu es la caja y el Popover el comportamiento: uno no sabe abrirse y el otro no dibuja nada. Por eso se arman juntos y por eso cualquiera de los dos sirve solo: un menú se puede mostrar quieto, como acá arriba, y un Popover puede llevar adentro algo que no es un menú."
+        note="El Menu es la caja y el Popover el comportamiento: se arman juntos, y cada uno sirve solo."
       >
         <Panel>
-          <Variant name="abrí y probá Escape">
+          <Variant name="abrí y probá Escape" code={`<Popover
+  align="start"
+  trigger={props => (
+    <Button {...props} variant="muted" iconEnd={<Icon name="keyboard_arrow_down" />}>
+      Acciones
+    </Button>
+  )}
+>
+  {close => (
+    <Menu label="Acciones de la fila" width={240}>
+      <Menu.Item icon="edit" onSelect={close}>Editar<Menu.Shortcut>E</Menu.Shortcut></Menu.Item>
+      <Menu.Item icon="link" onSelect={close}>Copiar enlace<Menu.Shortcut>⌘L</Menu.Shortcut></Menu.Item>
+      <Divider />
+      <Menu.Item icon="delete" danger onSelect={close}>Eliminar</Menu.Item>
+    </Menu>
+  )}
+</Popover>`}>
             <Popover
               align="start"
-              trigger={({ ref, ...rest }) => (
-                <Button ref={ref} {...rest} variant="muted" iconEnd={<Icon name="keyboard_arrow_down" />}>
+              trigger={props => (
+                <Button {...props} variant="muted" iconEnd={<Icon name="keyboard_arrow_down" />}>
                   Acciones
                 </Button>
               )}
@@ -88,21 +119,6 @@ export function MenuStory() {
             </Popover>
           </Variant>
         </Panel>
-        <Footnote>
-          Sin <Mono>width</Mono> el Popover mide el panel ya montado para alinearlo y para que
-          entre en la ventana. Y si abajo del disparador no hay lugar y arriba sí, el panel sube
-          solo.
-        </Footnote>
-      </Section>
-
-      <Section title="Cómo se escribe">
-        <Example code={`<Menu label="Opciones de la actividad">
-  <Menu.Label>Editar</Menu.Label>
-  <Menu.Item icon="content_copy" onSelect={duplicar}>
-    Duplicar<Menu.Shortcut>⌘D</Menu.Shortcut>
-  </Menu.Item>
-  <Menu.Item icon="delete" danger onSelect={borrar}>Eliminar</Menu.Item>
-</Menu>`} />
       </Section>
 
       <Section title="Props">

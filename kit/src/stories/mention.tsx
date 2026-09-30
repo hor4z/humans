@@ -1,6 +1,6 @@
 import s from './mention.module.css'
 import { Mention } from '@milo/ui/blocks/editor/mention'
-import { A11y, Example, Note, Page, Practices, Props, Section } from '../kit'
+import { A11y, Demo, Note, Page, Practices, Props, Section } from '../kit'
 import { face } from '../fixtures'
 
 export function MentionStory() {
@@ -15,7 +15,15 @@ export function MentionStory() {
         title="En un párrafo"
         note="Adentro de un párrafo los renglones tienen que seguir a la misma distancia. Por eso la mención no lleva la caja de un `Chip`."
       >
-        <div className={`${s.paragraphBox} bg-surface`}>
+        <Demo width="xl" fill code={`<p>
+  Para el jueves, <Mention name="Ana Pérez" src={face(1)} href="#avatar" /> y{' '}
+  <Mention name="Bruno Díaz" src={face(2)} href="#avatar" /> tienen que subir el informe
+  del experimento a <Mention name="Ciencias · 5.º B" icon="folder" href="#folder" />. Si
+  algo no se entiende, escríbanlo en el bloque de dudas y lo vemos en clase: la consigna
+  entera está en <Mention name="Empuje y flotación" icon="description" href="#book" />, y
+  la parte de las mediciones la explicó <Mention name="Carla Sosa" src={face(3)} /> el
+  martes.
+</p>`}>
           <p className={s.paragraphText}>
             Para el jueves, <Mention name="Ana Pérez" src={face(1)} href="#avatar" /> y{' '}
             <Mention name="Bruno Díaz" src={face(2)} href="#avatar" /> tienen que subir el informe
@@ -25,16 +33,19 @@ export function MentionStory() {
             la parte de las mediciones la explicó <Mention name="Carla Sosa" src={face(3)} /> el
             martes.
           </p>
-        </div>
+        </Demo>
       </Section>
 
       <Section title="Sueltas" note="Una persona lleva su foto o su inicial; lo que no es una persona lleva un glifo.">
-        <div className={`${s.looseStrip} bg-surface`}>
+        <Demo className={s.looseStrip} code={`<Mention name="Ana Pérez" src={face(1)} href="#avatar" />
+<Mention name="Elena Vega" />
+<Mention name="Matemática · 4.º A" icon="folder" href="#folder" />
+<Mention name="Fracciones equivalentes" icon="description" />`}>
           <Mention name="Ana Pérez" src={face(1)} href="#avatar" />
           <Mention name="Elena Vega" />
           <Mention name="Matemática · 4.º A" icon="folder" href="#folder" />
           <Mention name="Fracciones equivalentes" icon="description" />
-        </div>
+        </Demo>
       </Section>
 
       <Note title="Mention o Chip">
@@ -43,22 +54,24 @@ export function MentionStory() {
         mención; si está en una barra, es chip.
       </Note>
 
-      <Section title="Cómo se escribe">
-        <Example code={`Le pedí a <Mention name="Ana Pérez" src="/avatars/01.webp" href="/personas/ana" /> que revise la consigna.`} />
+      <Section title="Props">
+        <Props of="Mention" />
       </Section>
 
-      <Props of="Mention" />
+      <Section title="Cómo se usa bien">
+        <Practices>
+          <Practices.Do>Pasale `href` solo cuando lleva a algún lado: sin `href` es texto, y una mención que no lleva a ningún lado no se finge enlace.</Practices.Do>
+        </Practices>
+      </Section>
 
-      <Practices>
-        <Practices.Do>Sin `href` es texto y no un enlace: una mención que no lleva a ningún lado no se finge enlace.</Practices.Do>
-      </Practices>
-
-      <A11y>
-        <A11y.Item>Sin `href` es texto: no promete un lugar al que ir ni recibe el foco.</A11y.Item>
-        <A11y.Item>La foto va con `alt` vacío: el nombre está escrito al lado, y anunciarlo dos veces es ruido.</A11y.Item>
-        <A11y.Item>Con `href` es un enlace de verdad, así que aparece en la lista de enlaces de la página con el nombre como texto.</A11y.Item>
-        <A11y.Item>Y lleva subrayado, como todo enlace del sistema: adentro de un párrafo, el fondo teñido lo distingue solo por color, y eso no le llega a quien no separa el azul del negro.</A11y.Item>
-      </A11y>
+      <Section title="Accesibilidad">
+        <A11y>
+          <A11y.Item>Sin `href` es texto: no promete un lugar al que ir ni recibe el foco.</A11y.Item>
+          <A11y.Item>La foto va con `alt` vacío: el nombre está escrito al lado, y anunciarlo dos veces es ruido.</A11y.Item>
+          <A11y.Item>Con `href` es un enlace de verdad, así que aparece en la lista de enlaces de la página con el nombre como texto.</A11y.Item>
+          <A11y.Item>Y lleva subrayado, como todo enlace del sistema: adentro de un párrafo, el fondo teñido lo distingue solo por color, y eso no le llega a quien no separa el azul del negro.</A11y.Item>
+        </A11y>
+      </Section>
     </Page>
   )
 }

@@ -1,31 +1,4 @@
 @layer milo.app {
-  .mdSample {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .mdCaption {
-    font-size: var(--type-meta);
-    line-height: var(--type-meta-lh);
-    letter-spacing: var(--type-meta-ls);
-    color: var(--text-muted);
-  }
-
-  .lgSample {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .lgCaption {
-    font-size: var(--type-meta);
-    line-height: var(--type-meta-lh);
-    letter-spacing: var(--type-meta-ls);
-    color: var(--text-muted);
-  }
-
-
   .rowSample {
     display: flex;
     width: 18rem;

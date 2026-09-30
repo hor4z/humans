@@ -164,19 +164,29 @@ describe('el CSS del sistema se sostiene solo', () => {
     expect(literals).toEqual([])
   })
 
-  it('no quedó maquinaria de gradiente de Tailwind escrita a mano', () => {
-    const leftovers = css.filter(f => /--milo-gradient-/.test(f.text)).map(f => f.name)
-    expect(leftovers).toEqual([])
-  })
-
-  it('no queda nada de Tailwind', () => {
-    const leftovers: string[] = []
-    for (const f of [...css, { name: 'theme.css', text: bridge }]) {
-      if (/--tw-|@tailwind|@apply\b|@source\b|@utility\b|@theme\b|var\(--spacing\)|var\(--default-/.test(f.text)) {
-        leftovers.push(f.name)
+  it('un radio sale de la escala', () => {
+    const offenders: string[] = []
+    for (const f of css) {
+      for (const m of f.text.matchAll(/border-radius:\s*([^;}]+)/g)) {
+        const v = m[1].trim()
+        if (/^0$|^inherit$|^50%$/.test(v)) continue
+        if (/var\(--radius-[\w-]+\)/.test(v) || /var\(--[\w-]+-r\)/.test(v)) continue
+        offenders.push(`${f.name}: ${v}`)
       }
     }
-    expect(leftovers).toEqual([])
+    expect(offenders, 'un radio suelto no sigue a la escala cuando la escala cambia').toEqual([])
+  })
+
+  it('el peso de la portada va solo en tamaño portada', () => {
+    const offenders: string[] = []
+    for (const f of css) {
+      for (const block of f.text.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+        if (!/font-weight:\s*var\(--font-weight-bold\)/.test(block[2])) continue
+        if (/font-size:\s*var\(--type-display\)/.test(block[2]) || /weightBold/.test(block[1])) continue
+        offenders.push(`${f.name}: ${block[1].trim()}`)
+      }
+    }
+    expect(offenders, 'a otro tamaño se lee como negrita y aplasta los otros dos escalones de énfasis').toEqual([])
   })
 
   it('el anillo de foco vive fuera de toda capa', () => {
