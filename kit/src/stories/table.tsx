@@ -502,10 +502,10 @@ export function TableStory() {
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>{'Es una <table> de verdad: encabezados con `scope`, filas y celdas con su semántica.'}</A11y.Item>
+          <A11y.Item>{'Es una `<table>` de verdad: encabezados con `scope`, filas y celdas con su semántica.'}</A11y.Item>
           <A11y.Item>Una fila que se toca entra en el orden de tabulación y contesta a Enter y a la barra: no es un click y nada más.</A11y.Item>
           <A11y.Item>Cuando las columnas no entran, el scroll lateral es una parada de tabulación con nombre: sin barra a la vista, es la única forma de llegar a la derecha sin mouse.</A11y.Item>
-          <A11y.Item>{'La franja de paginación es un <nav> con su nombre y anuncia el tramo con role="status" cuando cambia.'}</A11y.Item>
+          <A11y.Item>{'La franja de paginación es un `<nav>` con su nombre y anuncia el tramo con `role="status"` cuando cambia.'}</A11y.Item>
           <A11y.Item>Las opciones de filtros y columnas se nombran una por una.</A11y.Item>
         </A11y>
       </Section>

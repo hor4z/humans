@@ -50,7 +50,7 @@ export function TypographySection() {
               <code className={css.roleSize}>{r.px}/{r.lh}</code>
               <span className={`${r.cls} ${css.roleSample}`}>Doce actividades</span>
               <code className={css.roleToken}>{r.name} · {r.ls}</code>
-              <span className={css.roleUse}>{r.role}</span>
+              <span className={css.roleUse}><Rich text={r.role} /></span>
             </div>
           ))}
         </div>
@@ -67,7 +67,7 @@ export function TypographySection() {
           <Table.Body>
             {choose.map(([q, a]) => (
               <Table.Row key={a}>
-                <Table.Cell>{q}</Table.Cell>
+                <Table.Cell><Rich text={q} /></Table.Cell>
                 <Table.Cell><code className={css.tokenName}>{a}</code></Table.Cell>
               </Table.Row>
             ))}
@@ -100,9 +100,9 @@ export function TypographySection() {
         </Table>
       </Section>
 
-      <Section title="La familia" note="Una sola para todo. Inter v4 trae eje óptico (`opsz 14..32`): la letra se redibuja según el tamaño, más abierta a 12px y más cerrada a 40px, sin un segundo archivo.">
+      <Section title="La familia" note="Dos: Inter para todo lo que se lee y JetBrains Mono para el código. Inter v4 trae eje óptico (`opsz 14..32`): la letra se redibuja según el tamaño, más abierta a 12px y más cerrada a 40px, sin un segundo archivo. El código va aparte porque en una fuente proporcional no se alinea y se confunde con el texto que lo rodea.">
         <Stack>
-          {[['--font-sans', 'la interfaz y las portadas'], ['--font-mono', 'tokens, valores y atajos']].map(([t, role]) => (
+          {[['--font-sans', 'la interfaz y las portadas'], ['--font-mono', 'el código, los tokens y los atajos']].map(([t, role]) => (
             <div key={t} className={`${css.monoRow} bg-surface`}>
               <div className={css.monoMeta}>
                 <code className={css.monoToken}>{t}</code>

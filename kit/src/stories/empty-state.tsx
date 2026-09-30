@@ -29,7 +29,7 @@ export function EmptyStateStory() {
       </Anatomy>
 
       <Section title="Tamaños y marco">
-        <Demo label="md y sm: una pantalla, y una búsqueda sin resultados adentro de una pieza" code={`<EmptyState icon="inbox">
+        <Demo label="`md` y `sm`: una pantalla, y una búsqueda sin resultados adentro de una pieza" code={`<EmptyState icon="inbox">
   <EmptyState.Title>Todavía no llegó ninguna entrega</EmptyState.Title>
   <EmptyState.Body>Cuando alguien entregue una actividad de este espacio, la vas a ver acá con su estado.</EmptyState.Body>
   <EmptyState.Action><Button variant="brand">Crear una actividad</Button></EmptyState.Action>

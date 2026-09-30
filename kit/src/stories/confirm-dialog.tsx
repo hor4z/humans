@@ -15,7 +15,7 @@ export function ConfirmStory() {
       title="ConfirmDialog"
       kind="Superficies"
       imports="import { ConfirmDialog } from '@milo/ui/confirm-dialog'"
-      lead="La pregunta antes de algo que no se deshace. Mismas partes que el Modal, sin X: la salida segura ya está a la vista y es el botón de cancelar."
+      lead="La pregunta antes de algo que no se deshace. Mismas partes que el `Modal`, sin X: la salida segura ya está a la vista y es el botón de cancelar."
     >
       <Hero>
         <Button variant="bad" iconStart={<Icon name="delete" />} onClick={() => setHeroOpen(true)}>Borrar la actividad</Button>
@@ -130,8 +130,8 @@ export function ConfirmStory() {
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>Va como role="alertdialog": se anuncia con más urgencia que un diálogo común, y el nombre sale del título por `aria-labelledby`.</A11y.Item>
-          <A11y.Item>Con tone="bad" el foco arranca en Cancelar: con el foco en "Borrar", un Enter de más lo borra. Eso lo resuelven las dos partes de botón, no el call site.</A11y.Item>
+          <A11y.Item>Va como `role="alertdialog"`: se anuncia con más urgencia que un diálogo común, y el nombre sale del título por `aria-labelledby`.</A11y.Item>
+          <A11y.Item>Con `tone="bad"` el foco arranca en Cancelar: con el foco en "Borrar", un Enter de más lo borra. Eso lo resuelven las dos partes de botón, no el call site.</A11y.Item>
           <A11y.Item>El foco no se escapa del diálogo mientras está abierto.</A11y.Item>
           <A11y.Item>Escape cancela, que es la salida segura.</A11y.Item>
         </A11y>

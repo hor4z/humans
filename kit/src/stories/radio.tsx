@@ -104,7 +104,7 @@ export function RadioStory() {
       <Section title="Accesibilidad">
         <A11y>
           <A11y.Item>Una sola parada de tabulación para todo el grupo, y las flechas mueven y eligen a la vez.</A11y.Item>
-          <A11y.Item>role="radio" con aria-checked y nombre propio.</A11y.Item>
+          <A11y.Item>`role="radio"` con `aria-checked` y nombre propio.</A11y.Item>
           <A11y.Item>El anillo del control sin elegir va en tinta y no en gris: sobre un tinte, el gris se ve sucio.</A11y.Item>
         </A11y>
       </Section>

@@ -174,7 +174,7 @@ export function SheetStory() {
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>Es un role="dialog" modal con su nombre, y atrapa el foco mientras está abierto.</A11y.Item>
+          <A11y.Item>Es un `role="dialog"` modal con su nombre, y atrapa el foco mientras está abierto.</A11y.Item>
           <A11y.Item>Escape cierra por la pila global: cierra el panel de arriba y no todos los que haya detrás.</A11y.Item>
           <A11y.Item>Al cerrar, el foco vuelve al botón que lo abrió.</A11y.Item>
           <A11y.Item>Se enfoca el contenedor y no el primer campo, así que el panel no abre corrido con la primera fila tapada.</A11y.Item>

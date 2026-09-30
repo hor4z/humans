@@ -106,13 +106,13 @@ import { useState } from 'react'"
       <Section title="Cómo se usa bien">
         <Practices>
           <Practices.Do>El nombre va en `List.Title` y la línea de apoyo en `List.Hint`.</Practices.Do>
-          <Practices.Dont>Un contador no va en `List.Trailing`: el número ya está en el hint, y repetirlo obliga a leer dos veces.</Practices.Dont>
+          <Practices.Dont>Un contador no va en `List.Trailing`: el número ya está en el `hint`, y repetirlo obliga a leer dos veces.</Practices.Dont>
         </Practices>
       </Section>
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>{'Una fila con onClick es un <button>; sin él es un <div> que no se puede enfocar.'}</A11y.Item>
+          <A11y.Item>{'Una fila con `onClick` es un `<button>`; sin él es un `<div>` que no se puede enfocar.'}</A11y.Item>
           <A11y.Item>La marca de color no es la única señal: el título dice de qué es la fila.</A11y.Item>
         </A11y>
       </Section>

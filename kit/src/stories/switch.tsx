@@ -78,7 +78,7 @@ export function SwitchStory() {
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>role="switch" con aria-checked: un lector dice "activado" y no "casilla marcada".</A11y.Item>
+          <A11y.Item>`role="switch"` con `aria-checked`: un lector dice "activado" y no "casilla marcada".</A11y.Item>
           <A11y.Item>El `label` lo nombra aunque en pantalla no haya texto al lado.</A11y.Item>
         </A11y>
       </Section>

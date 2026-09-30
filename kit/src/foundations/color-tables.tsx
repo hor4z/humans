@@ -89,7 +89,7 @@ export function RoleTable({ label, rows }: { label: string; rows: readonly RoleR
               </span>
             </Table.Cell>
             <Table.Cell><code className="tabular">{vals[r.token] || '-'}</code></Table.Cell>
-            <Table.Cell>{r.use}</Table.Cell>
+            <Table.Cell><Rich text={r.use} /></Table.Cell>
           </Table.Row>
         ))}
       </Table.Body>

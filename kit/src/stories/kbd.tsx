@@ -52,7 +52,7 @@ export function KbdStory() {
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>{'Usa el elemento <kbd>, que es lo que un lector de pantalla anuncia como una tecla.'}</A11y.Item>
+          <A11y.Item>{'Usa el elemento `<kbd>`, que es lo que un lector de pantalla anuncia como una tecla.'}</A11y.Item>
           <A11y.Item>No es un botón: es texto que dice qué apretar, no algo que se toque.</A11y.Item>
         </A11y>
       </Section>

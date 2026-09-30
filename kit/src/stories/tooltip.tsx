@@ -94,9 +94,9 @@ export function TooltipStory() {
         <A11y>
           <A11y.Item>Aparece con el foco de teclado y no solo con el mouse, pero no con el foco de un click: si no, queda puesto encima de lo que acabás de tocar.</A11y.Item>
           <A11y.Item>Escape lo cierra, por la misma pila que los otros overlays.</A11y.Item>
-          <A11y.Item>Lleva role="tooltip" y el control que explica lo referencia con aria-describedby.</A11y.Item>
+          <A11y.Item>Lleva `role="tooltip"` y el control que explica lo referencia con `aria-describedby`.</A11y.Item>
           <A11y.Item>No recibe el puntero, así que nunca se mete entre el mouse y lo que describe.</A11y.Item>
-          <A11y.Item>En touch no aparece: lo que diga tiene que estar también en el aria-label del control.</A11y.Item>
+          <A11y.Item>En touch no aparece: lo que diga tiene que estar también en el `aria-label` del control.</A11y.Item>
         </A11y>
       </Section>
     </Page>

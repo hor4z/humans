@@ -32,6 +32,9 @@ comando.
 - **El código va en inglés y lo que se lee en castellano.** Identificadores, tipos, props y clases
   en inglés; comentarios, textos de la interfaz, nombres de los tests y contenido de ejemplo en
   castellano. No hay una tercera categoría.
+- **El código que se nombra en un texto va entre backticks**: un componente, una prop, un `role`,
+  un `aria-*`, una etiqueta o un token. Así sale en la fuente del código y con su color, y sin marca
+  se lee como una palabra más. `kit/src/highlight.ts` es el que colorea. Hay un test.
 - **El código no lleva comentarios.** Solo el docblock `/** */` de una línea por export y por prop,
   que es lo que lee `npm run props` y lo que muestra el editor. El porqué de una decisión va acá o
   en la nota de su vista del kit. Hay un test.

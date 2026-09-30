@@ -135,7 +135,7 @@ export function ButtonStory() {
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>{'Es un <button> real: entra en el orden de tabulación y responde a Enter y Espacio.'}</A11y.Item>
+          <A11y.Item>{'Es un `<button>` real: entra en el orden de tabulación y responde a Enter y Espacio.'}</A11y.Item>
           <A11y.Item>El anillo de foco se dibuja por fuera de la caja, con dos píxeles de superficie de por medio: no mueve el botón ni empuja a los de al lado.</A11y.Item>
           <A11y.Item>Deshabilitado deja de recibir el puntero y baja a 45% de opacidad, pero conserva su texto legible.</A11y.Item>
         </A11y>

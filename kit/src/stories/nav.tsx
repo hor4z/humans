@@ -139,7 +139,7 @@ export function NavStory() {
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>El item activo lo dice con aria-current, no solo con el fondo.</A11y.Item>
+          <A11y.Item>El item activo lo dice con `aria-current`, no solo con el fondo.</A11y.Item>
           <A11y.Item>El texto de un item inactivo va en tinta: en gris, una lista de siete espacios parece deshabilitada.</A11y.Item>
         </A11y>
       </Section>

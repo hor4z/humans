@@ -275,7 +275,10 @@ const looksLikeCode = /[=<>("'`{]|^\.\.\./
 
 /** El código dentro de un texto. Un token de CSS, un componente y una función van en su tinta, lo que tiene forma de código se resalta, y una palabra sola queda en la tinta del texto. */
 export function InlineCode({ children }: { children: string }) {
-  const body = /^--[\w-]+$/.test(children) ? <span className={s.codeToken}>{children}</span>
+  const pair = /^([a-z][\w-]*)(=)("[^"]*")$/.exec(children)
+  const body = pair ? <><span className={s.codeAttr}>{pair[1]}</span><span className={s.codePunct}>{pair[2]}</span><span className={s.codeString}>{pair[3]}</span></>
+    : /^(?:aria|data)-[\w-]+$/.test(children) ? <span className={s.codeAttr}>{children}</span>
+    : /^--[\w-]+$/.test(children) ? <span className={s.codeToken}>{children}</span>
     : /^(?:true|false|null|undefined|-?\d+(?:[.,]\d+)?)$/.test(children) ? <span className={s.codeNumber}>{children}</span>
     : /^[A-Z][A-Za-z0-9]*(?:\.[A-Z][A-Za-z0-9]*)*$/.test(children) ? <span className={s.codeComponent}>{children}</span>
     : /^[a-z][a-z0-9]*[A-Z][A-Za-z0-9]*$/.test(children) ? <span className={s.codeFn}>{children}</span>
@@ -534,7 +537,7 @@ export function Props({ of }: { of: string | readonly string[] }) {
             {rows.length === 0 ? (
               <p className={s.propsEmpty}>
                 No tiene props propias: toma los atributos de un{' '}
-                <code className={s.propsEmptyTag}>{`<${info?.html ?? 'div'}>`}</code>.
+                <code className={s.propsEmptyTag}>{paintLine(`<${info?.html ?? 'div'}>`)}</code>.
               </p>
             ) : (
             <table className={s.table}>
@@ -572,7 +575,7 @@ export function Props({ of }: { of: string | readonly string[] }) {
             {rows.length > 0 && info?.html && (
               <p className={s.propsHtmlNote}>
                 Y los atributos de un{' '}
-                <code className={s.propsHtmlTag}>{`<${info.html}>`}</code>.
+                <code className={s.propsHtmlTag}>{paintLine(`<${info.html}>`)}</code>.
               </p>
             )}
           </div>

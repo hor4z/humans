@@ -78,14 +78,6 @@
     color: var(--text-muted);
   }
 
-  .inlineCode {
-    font-family: var(--font-mono);
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    color: var(--text);
-  }
-
   .heroActions {
     display: flex;
     flex-wrap: wrap;

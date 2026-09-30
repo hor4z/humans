@@ -36,7 +36,7 @@ export function StatesSection() {
           {interaction.map(e => (
             <div key={e.name} className={cls.stateRow}>
               <code className={cls.stateName}>{e.name}</code>
-              <span className={cls.stateHow}>{e.how}</span>
+              <span className={cls.stateHow}><Rich text={e.how} /></span>
               <span className={cls.stateWhy}><Rich text={e.why} /></span>
             </div>
           ))}
@@ -165,7 +165,7 @@ function StateCard({ title, tag, note, children }: { title: string; tag: string;
         <span className={cls.optimisticTitle}>{title}</span>
         <Chip color="blue">{tag}</Chip>
       </div>
-      <p className={cls.optimisticNote}>{note}</p>
+      <p className={cls.optimisticNote}><Rich text={note} /></p>
       <div className={cls.optimisticSlot}>{children}</div>
     </Stack>
   )

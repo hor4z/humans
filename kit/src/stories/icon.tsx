@@ -126,7 +126,7 @@ export function IconStory() {
           </div>
         </Demo>
         <Footnote>
-          Click en un icono copia <Mono>{'<Icon name="…" />'}</Mono>. El title trae los tags con los
+          Click en un icono copia <Mono>{'<Icon name="…" />'}</Mono>. El `title` trae los tags con los
           que se puede buscar.
         </Footnote>
       </Section>
@@ -194,16 +194,16 @@ npm run icons -- check`}
       <Section title="Cómo se usa bien">
         <Practices>
           <Practices.Do>El gris se hereda del ancestro con `icon-muted`, no se pasa por prop.</Practices.Do>
-          <Practices.Do>El tamaño sale de la escala: 12 un badge o la cruz de un chip, 14 la marca de un Select, 16 adentro de un control chico, 18 adentro de un botón mediano, 20 la interfaz (el default), 22 una marca de lista, 24 adentro de un control de 44.</Practices.Do>
+          <Practices.Do>El tamaño sale de la escala: 12 un badge o la cruz de un chip, 14 la marca de un `Select`, 16 adentro de un control chico, 18 adentro de un botón mediano, 20 la interfaz (el default), 22 una marca de lista, 24 adentro de un control de 44.</Practices.Do>
           <Practices.Dont>El set crece solo por `npm run icons -- add`: no dibujes un path a mano. Antes de bajar nada pregunta si el nombre existe, si ya lo tenemos y si hay uno con los mismos tags; `--yes` saltea la tercera. `search` busca en el catálogo entero, que está versionado y funciona sin internet, y `check` lista los usados que faltan y los que no usa nadie.</Practices.Dont>
         </Practices>
       </Section>
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>Los glifos van aria-hidden: un icono es una imagen del texto que tiene al lado, no una segunda lectura.</A11y.Item>
-          <A11y.Item>Un icono sin texto vive dentro de un IconButton, que exige su label.</A11y.Item>
-          <A11y.Item>El glifo lleva translate="no": es texto, y un traductor automático puede reescribirlo.</A11y.Item>
+          <A11y.Item>Los glifos van `aria-hidden`: un icono es una imagen del texto que tiene al lado, no una segunda lectura.</A11y.Item>
+          <A11y.Item>Un icono sin texto vive dentro de un `IconButton`, que exige su `label`.</A11y.Item>
+          <A11y.Item>El glifo lleva `translate="no"`: es texto, y un traductor automático puede reescribirlo.</A11y.Item>
           <A11y.Item>Si alguien desactiva las fuentes de la página (Firefox lo permite, y hay quien lo usa por dislexia o baja visión), los iconos quedan en cuadraditos. Es el precio de que el peso sea un eje real y está dicho, no escondido.</A11y.Item>
         </A11y>
       </Section>

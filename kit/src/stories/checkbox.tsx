@@ -89,7 +89,7 @@ export function CheckboxStory() {
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>Es un botón con role="checkbox" y aria-checked, así que un lector lo anuncia con su estado.</A11y.Item>
+          <A11y.Item>Es un botón con `role="checkbox"` y `aria-checked`, así que un lector lo anuncia con su estado.</A11y.Item>
           <A11y.Item>El `label` lo nombra; sin él, un cuadrado tildado no dice de qué es.</A11y.Item>
           <A11y.Item>Espacio lo alterna, como cualquier casilla nativa.</A11y.Item>
         </A11y>

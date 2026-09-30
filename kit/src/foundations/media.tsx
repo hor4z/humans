@@ -48,7 +48,7 @@ export function MediaSection() {
               <Table.Row key={name}>
                 <Table.Cell><strong>{name}</strong></Table.Cell>
                 <Table.Cell><code className={cls.piece}>{piece}</code></Table.Cell>
-                <Table.Cell>{solves}</Table.Cell>
+                <Table.Cell><Rich text={solves} /></Table.Cell>
                 <Table.Cell><Rich text={needs} /></Table.Cell>
               </Table.Row>
             ))}
@@ -62,7 +62,7 @@ export function MediaSection() {
             {written.map(([name, what]) => (
               <Table.Row key={name}>
                 <Table.Cell><strong>{name}</strong></Table.Cell>
-                <Table.Cell>{what}</Table.Cell>
+                <Table.Cell><Rich text={what} /></Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>

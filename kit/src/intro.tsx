@@ -1,5 +1,5 @@
 import cls from './intro.module.css'
-import { Stack } from './kit'
+import { InlineCode, Stack } from './kit'
 import { Callout } from '@milo/ui/callout'
 import { Avatar } from '@milo/ui/avatar'
 import { Button } from '@milo/ui/button'
@@ -40,8 +40,8 @@ export function Intro({ go }: { go: (id: string) => void }) {
             </h1>
             <p className={cls.heroLead}>
               Cada pieza de acá es el componente real, con su teclado, sus estados y sus tests. La base
-              son las piezas elementales, <code className={cls.inlineCode}>@milo/ui/button</code>; los
-              bloques las ponen en contexto, <code className={cls.inlineCode}>@milo/ui/blocks/editor/quote</code>.
+              son las piezas elementales, <InlineCode>@milo/ui/button</InlineCode>; los
+              bloques las ponen en contexto, <InlineCode>@milo/ui/blocks/editor/quote</InlineCode>.
             </p>
           </Stack>
 

@@ -91,7 +91,7 @@ export function ProgressStory() {
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>Es un role="progressbar" con aria-valuenow, aria-valuemin, aria-valuemax y su nombre.</A11y.Item>
+          <A11y.Item>Es un `role="progressbar"` con `aria-valuenow`, `aria-valuemin`, `aria-valuemax` y su nombre.</A11y.Item>
           <A11y.Item>El número está a la vista además de en el atributo: no hay que pasar el mouse para saber cuánto va.</A11y.Item>
           <A11y.Item>El valor se recorta al rango: un 30 de 24 dibuja la barra llena y no se sale de la pista.</A11y.Item>
         </A11y>

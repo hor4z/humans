@@ -47,7 +47,7 @@ export function ModalStory() {
 
       <Section title="Ejemplos">
         <Grid min={300}>
-          <Demo label="md · 620, el de siempre" code={`<Button variant="muted" onClick={() => setOpen(true)}>Abrir modal</Button>
+          <Demo label="`md` · 620, el de siempre" code={`<Button variant="muted" onClick={() => setOpen(true)}>Abrir modal</Button>
 <Modal open={open} onOpenChange={setOpen} size="md">
   <Modal.Header>
     <Modal.Title>Un modal de 620</Modal.Title>
@@ -78,7 +78,7 @@ export function ModalStory() {
             </Modal>
           </Demo>
 
-          <Demo label="sm · 420, una pregunta o un campo" code={`<Button variant="muted" onClick={() => setOpen(true)}>Renombrar</Button>
+          <Demo label="`sm` · 420, una pregunta o un campo" code={`<Button variant="muted" onClick={() => setOpen(true)}>Renombrar</Button>
 <Modal open={open} onOpenChange={setOpen} size="sm">
   <Modal.Header>
     <Modal.Title>Renombrar el espacio</Modal.Title>
@@ -114,7 +114,7 @@ export function ModalStory() {
             </Modal>
           </Demo>
 
-          <Demo label="md · el caso real" code={`<Button variant="muted" iconStart={<Icon name="tune" />} onClick={() => setOpen(true)}>Ajustes</Button>
+          <Demo label="`md` · el caso real" code={`<Button variant="muted" iconStart={<Icon name="tune" />} onClick={() => setOpen(true)}>Ajustes</Button>
 <SettingsModal
   open={open}
   onOpenChange={setOpen}
@@ -155,7 +155,7 @@ export function ModalStory() {
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>role="dialog" con aria-modal, y el nombre sale del `Modal.Title` por `aria-labelledby`: una sola fuente, y la que se ve es la que se anuncia.</A11y.Item>
+          <A11y.Item>`role="dialog"` con `aria-modal`, y el nombre sale del `Modal.Title` por `aria-labelledby`: una sola fuente, y la que se ve es la que se anuncia.</A11y.Item>
           <A11y.Item>Atrapa el foco mientras está abierto y lo devuelve al cerrarse.</A11y.Item>
           <A11y.Item>Se enfoca el contenedor y no el primer control: el navegador scrollea a lo que enfoca, y eso abría el panel corrido.</A11y.Item>
           <A11y.Item>Bloquea el scroll de la página compensando el ancho de la barra, así que nada salta al abrir.</A11y.Item>

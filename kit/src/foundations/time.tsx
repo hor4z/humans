@@ -38,10 +38,10 @@ export function TimeSection() {
           <Table.Body>
             {which.map(([q, f, v, r]) => (
               <Table.Row key={q}>
-                <Table.Cell>{q}</Table.Cell>
-                <Table.Cell>{f}</Table.Cell>
+                <Table.Cell><Rich text={q} /></Table.Cell>
+                <Table.Cell><Rich text={f} /></Table.Cell>
                 <Table.Cell><Rich text={v} /></Table.Cell>
-                <Table.Cell>{r}</Table.Cell>
+                <Table.Cell><Rich text={r} /></Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>

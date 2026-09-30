@@ -137,7 +137,7 @@ export function DropdownStory() {
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>El panel es role="menu" y cada opción un menuitem.</A11y.Item>
+          <A11y.Item>El panel es `role="menu"` y cada opción un `menuitem`.</A11y.Item>
           <A11y.Item>Las flechas recorren las opciones y dan la vuelta; Home y End van a los extremos, y las dos saltean lo apagado.</A11y.Item>
           <A11y.Item>El disparador dice si está abierto con `aria-expanded`, y al cerrar el foco vuelve a él.</A11y.Item>
           <A11y.Item>Escape cierra solo este menú y deja abierto lo que haya detrás, por la pila global.</A11y.Item>

@@ -92,7 +92,7 @@ export function AccordionStory() {
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>{'Es <details> y <summary>, así que el estado abierto o cerrado lo anuncia el navegador sin ayuda.'}</A11y.Item>
+          <A11y.Item>{'Es `<details>` y `<summary>`, así que el estado abierto o cerrado lo anuncia el navegador sin ayuda.'}</A11y.Item>
           <A11y.Item>Enter y espacio abren y cierran, y el foco se ve con el mismo anillo que el resto del sistema.</A11y.Item>
           <A11y.Item>El contenido cerrado sigue estando en el documento: Ctrl+F lo encuentra.</A11y.Item>
         </A11y>
