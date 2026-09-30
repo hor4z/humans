@@ -1,10 +1,11 @@
 import cls from './date-picker.module.css'
-import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { useField } from '../lib/field-ctx'
 import { Icon } from '../icon/icon'
 import { fieldSizes } from '../lib/control'
 import { cx } from '../lib/cx'
 import { useEscape } from '../lib/esc'
+import { useAnchor } from '../lib/anchor'
 import { useDismiss } from '../lib/dismiss'
 import { useFocusTrap } from '../lib/overlay-hooks'
 import { Portal } from '../portal/portal'
@@ -56,7 +57,6 @@ export function DatePicker({ value, onValueChange, min, max, placeholder = 'Eleg
   const [cursor, setCursor] = useState(() => value || today())
   const btn = useRef<HTMLButtonElement>(null)
   const panel = useRef<HTMLDivElement>(null)
-  const [pos, setPos] = useState({ top: 0, left: 0 })
   const gridId = useId()
   const titleId = useId()
 
@@ -66,21 +66,7 @@ export function DatePicker({ value, onValueChange, min, max, placeholder = 'Eleg
 
   useEffect(() => { if (open) setCursor(value || today()) }, [open, value])
 
-  useLayoutEffect(() => {
-    if (!open) return
-    const measure = () => {
-      const r = btn.current?.getBoundingClientRect()
-      if (!r) return
-      const height = panel.current?.offsetHeight ?? 0
-      const panelWidth = panel.current?.offsetWidth ?? 300
-      const fitsBelow = r.bottom + 8 + height <= window.innerHeight - 8
-      setPos({
-        top: fitsBelow ? r.bottom + 8 : Math.max(8, r.top - 8 - height),
-        left: Math.min(Math.max(8, r.left), window.innerWidth - panelWidth - 8),
-      })
-    }
-    measure()
-  }, [open, cursor])
+  const pos = useAnchor(open, btn, panel, {}, [cursor])
 
   useDismiss(open, () => setOpen(false), [panel, btn])
 
