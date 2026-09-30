@@ -23,18 +23,6 @@
     transition-timing-function: var(--ease-out);
   }
 
-  .disabled {
-    &:disabled {
-      pointer-events: none;
-      opacity: .45;
-    }
-  }
-
-
-  .buttonPlain {
-    color: var(--text-muted);
-  }
-
   .separator {
     margin-inline: 0.25rem;
     height: 1.25rem;
@@ -43,12 +31,6 @@
     background-color: var(--border);
   }
 
-  @media (hover:hover) {
-    .buttonPlain:hover {
-        background-color: var(--surface-hover);
-        color: var(--text);
-    }
-  }
   @media (pointer: coarse) {
     .button {
       width: 2.5rem;

@@ -1,8 +1,7 @@
-import s from './callout.module.css'
 import type { ReactNode } from 'react'
-import { Icon, type IconName } from '../../../icon/icon'
-import { labelSoft, type LabelColor } from '../../../lib/colors'
-import { cx } from '../../../lib/cx'
+import { Alert } from '../../../alert/alert'
+import type { IconName } from '../../../icon/icon'
+import type { LabelColor } from '../../../lib/colors'
 import { takePart } from '../../../lib/parts'
 
 type CalloutProps = {
@@ -14,29 +13,15 @@ type CalloutProps = {
   className?: string
 }
 
-const paper: Record<LabelColor | 'neutral', string> = {
-  neutral: s.neutral,
-  ...labelSoft,
-}
-
-function Title({ children }: { children: ReactNode }) {
-  return <span className={s.title}>{children}</span>
-}
+const Title = Alert.Title
 
 function Root({ icon, color = 'neutral', children, className }: CalloutProps) {
   const [title, text] = takePart(children, Title)
   return (
-    <aside role="note" className={cx(s.root, paper[color], className)}>
-      {icon && (
-        <span className={s.icon}>
-          <Icon name={icon} size={20} />
-        </span>
-      )}
-      <div className={s.body}>
-        {title}
-        <div className={s.text}>{text}</div>
-      </div>
-    </aside>
+    <Alert role="note" color={color} icon={icon ?? null} className={className}>
+      {title}
+      <Alert.Body>{text}</Alert.Body>
+    </Alert>
   )
 }
 

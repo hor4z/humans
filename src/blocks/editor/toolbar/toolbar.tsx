@@ -1,7 +1,7 @@
 import s from './toolbar.module.css'
 import { useLayoutEffect, useRef, type FocusEvent, type KeyboardEvent, type ReactNode } from 'react'
-import { Icon, type IconName } from '../../../icon/icon'
-import { control } from '../../../lib/control'
+import { IconButton } from '../../../icon-button/icon-button'
+import type { IconName } from '../../../icon/icon'
 import { cx } from '../../../lib/cx'
 import { ToggleButton } from '../../../toggle-button/toggle-button'
 
@@ -67,15 +67,14 @@ function Button({ icon, label, pressed, onPressedChange, disabled, onClick }: {
 }) {
   if (pressed === undefined) {
     return (
-      <button
-        type="button"
-        aria-label={label}
+      <IconButton
+        icon={icon}
+        label={label}
+        size="sm"
         disabled={disabled}
         onClick={onClick}
-        className={cx(s.button, s.disabled, s.buttonPlain)}
-      >
-        <Icon name={icon} size={control.sm.icon} />
-      </button>
+        className={s.button}
+      />
     )
   }
   return (
