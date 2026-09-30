@@ -95,7 +95,8 @@ export const sitePropsByComponent: Record<string, ComponentDoc> = {
       {
         "name": "className",
         "type": "string",
-        "required": false
+        "required": false,
+        "doc": "Para el color y el margen, que dependen de dónde esté."
       }
     ],
     "doc": "La flor de humans: ocho pétalos y una sonrisa calada, en el color del texto que la rodea."

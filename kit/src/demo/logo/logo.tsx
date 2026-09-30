@@ -6,6 +6,7 @@ export function Logo({ size = 32, label, className }: {
   size?: number
   /** Solo si va sola: al lado del nombre es decorativa y el lector no la anuncia. */
   label?: string
+  /** Para el color y el margen, que dependen de dónde esté. */
   className?: string
 }) {
   return (
