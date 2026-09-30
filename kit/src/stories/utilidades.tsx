@@ -39,8 +39,17 @@ export function UtilidadesStory() {
       title="Utilidades"
       kind="Fundamentos"
       imports="import { timeAgo } from '@milo/ui/lib/time'"
-      lead="Las funciones que escriben una fecha, un número o un color. Acá está la API; cuándo usar cada formato está en [Fecha y hora](#time) y en [Números y valores](#numbers)."
+      lead="Funciones y hooks compartidos para dar formato a los datos y resolver comportamientos frecuentes."
     >
+      <Section title="Tablas en memoria" note="`useTable` combina búsqueda, filtros, orden y paginación. El ejemplo completo está en [Table](#table).">
+        <TableFixture label="Utilidades de tabla">
+          <RowFixture call="useTable({ rows, search, fields, sorters, pageSize })" out="Estado y filas derivadas, sin modificar los datos originales." />
+          <RowFixture call="setQuery(text) · setFilters(values)" out="Actualizan la búsqueda o las condiciones y vuelven a la primera página." />
+          <RowFixture call="toggleSort(key) · setPage(index)" out="Alternan el orden y cambian la página dentro del rango válido." />
+          <RowFixture call="counts(key)" out="Cuenta opciones respetando los otros filtros, sin aplicar el filtro consultado." />
+          <RowFixture call="rows · filteredRows · from · to · total" out="Filas de la página, conjunto filtrado e intervalo para la paginación." />
+        </TableFixture>
+      </Section>
       <Section
         title="Fecha y hora"
         note="Todas escriben en es-AR y toman la zona del contenido, no la del navegador. Sin `zone` usan la de quien mira, que es lo correcto cuando el dato es suyo."

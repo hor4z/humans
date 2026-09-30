@@ -19,7 +19,7 @@ export function DatePickerStory() {
       title="DatePicker"
       kind="Formularios"
       imports="import { DatePicker } from '@milo/ui/date-picker'"
-      lead="Un campo que abre un mes para elegir un día. El valor es el texto `AAAA-MM-DD` y no un `Date`: una fecha de entrega no tiene hora ni zona, y un `Date` arrastra las dos."
+      lead="Permite elegir una fecha en un calendario. Usa valores `AAAA-MM-DD`, sin hora ni zona horaria."
     >
       <Hero>
         <DatePicker value={loose} onValueChange={setLoose} label="Fecha del examen" width={260} />

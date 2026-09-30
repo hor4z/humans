@@ -7,7 +7,7 @@ export function AccordionStory() {
       title="Accordion"
       kind="Navegación"
       imports="import { Accordion } from '@milo/ui/accordion'"
-      lead="Filas que se leen de a una y que la mayoría no va a abrir: las preguntas frecuentes, los detalles de una configuración, lo que está de más en la pantalla pero tiene que estar en algún lado."
+      lead="Agrupa contenido que se puede expandir, como preguntas frecuentes o detalles de una configuración."
     >
       <Hero>
         <Accordion>

@@ -5,6 +5,11 @@ import userEvent from '@testing-library/user-event'
 import { Search } from './search'
 
 describe('Search', () => {
+  it('usa el propósito de búsqueda como nombre accesible por defecto', () => {
+    render(<Search placeholder="Buscar actividades" value="" onValueChange={() => {}} />)
+    expect(screen.getByRole('textbox', { name: 'Buscar actividades' })).toBeInTheDocument()
+  })
+
   it('el atajo se ve mientras está vacío y lo tapa la cruz al escribir', () => {
     const { rerender } = render(<Search placeholder="Buscar una actividad" value="" onValueChange={() => {}} shortcut="/" />)
     expect(screen.getByText('/')).toBeInTheDocument()

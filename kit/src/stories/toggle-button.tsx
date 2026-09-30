@@ -12,7 +12,7 @@ export function ToggleButtonStory() {
       title="ToggleButton"
       kind="Acciones"
       imports="import { ToggleButton } from '@milo/ui/toggle-button'"
-      lead="Un botón que queda hundido. Dice en qué estado está algo, no que algo pasó: la negrita del editor, el filtro que está puesto, la vista que se está mirando."
+      lead="Activa o desactiva una opción y mantiene visible su estado."
     >
       <Hero>
         <ToggleButton size="sm" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />

@@ -14,7 +14,7 @@ export function MenuStory() {
       title="Menu"
       kind="Acciones"
       imports="import { Menu } from '@milo/ui/menu'"
-      lead="Un panel y filas que se escriben adentro, no una lista de opciones por prop. Es el mismo corte que la `Table`: la lista alcanza hasta el primer menú que necesita un separador, un rótulo de grupo o un atajo, y a partir de ahí cada necesidad nueva es una prop nueva en un objeto."
+      lead="Agrupa acciones con iconos, atajos, separadores y rótulos de sección."
     >
       <Hero>
         <Menu label="Acciones de la actividad" width={260}>

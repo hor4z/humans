@@ -21,8 +21,11 @@ function WithAction({ onUndo, duration = 0 }: { onUndo: () => void; duration?: n
 describe('Toast', () => {
   it('aparece al pedirlo y se anuncia', async () => {
     render(<ToastProvider><Trigger duration={0} /></ToastProvider>)
+    const region = screen.getByRole('list', { name: 'Avisos' })
+    expect(region).toBeEmptyDOMElement()
     await userEvent.click(screen.getByRole('button', { name: 'Guardar' }))
-    expect(screen.getByRole('list', { name: 'Avisos' })).toHaveTextContent('Guardado')
+    expect(screen.getByRole('list', { name: 'Avisos' })).toBe(region)
+    expect(region).toHaveTextContent('Guardado')
   })
 
   it('se va solo cuando tiene duración', async () => {

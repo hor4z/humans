@@ -2,12 +2,12 @@
   .root {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--space-1);
     border-radius: var(--radius-lg);
     border-style: solid;
     border-width: 1px;
     border-color: var(--border);
-    padding: 0.25rem;
+    padding: var(--space-1);
     box-shadow: var(--relief-toolbar);
   }
 
@@ -24,7 +24,7 @@
   }
 
   .separator {
-    margin-inline: 0.25rem;
+    margin-inline: var(--space-1);
     height: 1.25rem;
     width: 1px;
     flex-shrink: 0;

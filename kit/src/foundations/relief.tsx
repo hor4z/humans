@@ -15,7 +15,7 @@ const recipes = [
     back: css.plateMark,
     token: '--relief-mark',
     role: 'una marca de fila o la inicial de un avatar',
-    detail: 'canto adentro, labio abajo y una caída de un píxel, todo en el tono de la marca',
+    detail: 'contorno interior tenue en el tono de la marca, sin degradado ni sombra exterior',
     used: 'Avatar · Chip · List',
   },
 ] as const
@@ -31,7 +31,7 @@ export function ReliefSection() {
     <Page
       title="Relieve"
       kind="Fundamentos"
-      lead="Mezcla luz interior arriba y sombra abajo para decir cuánto se levanta algo. Los botones no lo usan: van planos, y lo que los separa del fondo es el relleno. Lo que sí lleva volumen es lo que flota sobre la página, que son trece piezas, y lo hundido, que es donde el relieve dice algo que el color no puede decir."
+      lead="Bordes discretos y sombras cortas separan las superficies. Reservá las sombras para elementos flotantes."
     >
       <Section title="Las recetas que se tocan">
         <div className={css.recipeGrid}>
@@ -70,23 +70,23 @@ export function ReliefSection() {
 
       <Section
         title="Dos cosas que costaron"
-        note="Las dos están escritas al lado de su token."
+        note="La separación depende del contexto, no de agregar más sombra."
       >
         <div className={css.lessonGrid}>
           <div className={`${css.edgeCard} bg-surface`}>
-            <span className={css.edgeTitle}>El canto no es un escalón de la rampa</span>
+            <span className={css.edgeTitle}>Un borde antes que una sombra</span>
             <p className={css.edgeText}>
-              <code className={css.tokenName}>--edge</code> es más oscuro que el borde más oscuro, porque tiene
-              que dibujar el filo de algo que sobresale. Con el paso 05 puesto ahí, el botón gris se ve
-              plano sobre un fondo casi blanco.
+              <code className={css.tokenName}>--border</code> separa las superficies con una línea discreta.
+              La sombra acompaña a los paneles elevados; los controles se reconocen por su forma,
+              su relleno y su estado.
             </p>
           </div>
           <div className={`${css.sunkenCard} bg-surface`}>
             <span className={css.sunkenTitle}>Hundido son dos cosas distintas</span>
             <p className={css.sunkenText}>
-              Una marca lleva canto, labio y caída, y todo eso en su propio tono; algo que solo está
-              apagado lleva el canto y nada más. Mezclarlas hace que un kbd y la inicial de un avatar
-              se vean igual, que son dos cosas que no tienen nada que ver.
+              Una marca usa un contorno en su propio tono. Una tecla usa un borde neutro y una
+              sombra interior suave. El color identifica a la primera y el relieve distingue
+              a la segunda sin competir con el contenido.
             </p>
           </div>
         </div>

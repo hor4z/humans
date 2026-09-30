@@ -1,14 +1,76 @@
 @layer milo.components {
-  .waveSm {
-    height: 2rem;
+  .root {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    min-width: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-3);
+    box-shadow: var(--relief-card);
+    transition: border-color var(--duration-fast) var(--ease-out);
   }
 
-  .waveMd {
-    height: 2.5rem;
+  .playing {
+    border-color: var(--brand-border);
   }
 
-  .waveLg {
-    height: 3rem;
+  .errored {
+    border-color: var(--bad-border);
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .sm { padding: var(--space-2); }
+  .md { padding: var(--space-2) var(--space-3); }
+  .lg { padding: var(--space-3) var(--space-4); }
+
+  .title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: var(--type-label);
+    line-height: var(--type-label-lh);
+    letter-spacing: var(--type-label-ls);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text);
+  }
+
+  .playSlot,
+  .playButton {
+    flex-shrink: 0;
+    border-radius: var(--radius-full);
+  }
+
+  .playSlot {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--brand-soft);
+  }
+
+  .waveSm { height: 1.5rem; }
+  .waveMd { height: 1.75rem; }
+  .waveLg { height: 2rem; }
+
+  .timeline {
+    position: relative;
+    display: flex;
+    flex: 1;
+    min-width: 2rem;
+    align-items: center;
+    border-radius: var(--radius-sm);
+    &:has(:focus-visible) {
+      box-shadow: var(--focus-ring);
+    }
+  }
+
+  .loading {
+    opacity: 0.5;
   }
 
   .wave {
@@ -23,16 +85,16 @@
   .waveSlot {
     display: flex;
     flex: 1;
+    min-width: 0;
     align-items: center;
     justify-content: center;
   }
 
   .peak {
-    width: 50%;
+    width: 55%;
+    max-width: 4px;
     border-radius: var(--radius-full);
-    transition-property: color,background-color,border-color,outline-color,text-decoration-color,fill,stroke;
-    transition-duration: var(--duration-fast);
-    transition-timing-function: var(--ease-out);
+    transition: background-color var(--duration-fast) var(--ease-out);
   }
 
   .peakPlayed {
@@ -40,7 +102,7 @@
   }
 
   .peakAhead {
-    background-color: var(--border-strong);
+    background-color: var(--icon-muted);
   }
 
   .bareTrack {
@@ -51,7 +113,7 @@
     height: 0.25rem;
     translate: 0 -50%;
     border-radius: var(--radius-full);
-    background-color: var(--border-strong);
+    background-color: var(--surface-sunken);
   }
 
   .bareFill {
@@ -62,93 +124,35 @@
     background-color: var(--chart-fill);
   }
 
-  .root {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    border-radius: var(--radius-xl);
-    border-style: solid;
-    border-width: 1px;
-    border-color: var(--border);
-    padding-inline: 0.75rem;
-    padding-block: 0.5rem;
-  }
-
-  .errored {
-    border-color: var(--bad-border);
-  }
-
-  .title {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    font-weight: var(--font-weight-medium);
-    color: var(--text);
-  }
-
-  .controls {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .playSlot {
-    display: inline-flex;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .playButton {
-    flex-shrink: 0;
-  }
-
-  .errorText {
-    display: flex;
-    flex: 1;
-    align-items: center;
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    color: var(--bad-ink);
-  }
-
-  .timeline {
-    position: relative;
-    display: flex;
-    min-width: 0;
-    flex: 1;
-    align-items: center;
+  .bareFill::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    translate: 50% -50%;
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: var(--radius-full);
+    background-color: var(--chart-fill);
   }
 
   .seek {
     position: absolute;
     inset: 0;
+    margin: 0;
     height: 100%;
     width: 100%;
     cursor: pointer;
-    appearance: none;
-    background-color: transparent;
     opacity: 0;
+    &:disabled { cursor: default; }
   }
 
-  .seekDisabled {
-    &:disabled {
-      cursor: default;
-    }
-  }
-
-  .seekFocus {
-    &:focus-visible {
-      border-radius: var(--radius-md);
-      opacity: 1;
-      --milo-outline-style: none;
-      outline-style: none;
-      box-shadow: var(--focus-ring);
-    }
+  .footer {
+    display: flex;
+    min-width: 0;
+    flex-shrink: 0;
+    align-items: center;
+    column-gap: var(--space-3);
   }
 
   .time {
@@ -161,8 +165,44 @@
 
   .actions {
     display: flex;
-    flex-shrink: 0;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--space-1);
+    margin-left: auto;
+    &:empty { display: none; }
+  }
+
+  .speed {
+    padding-inline: var(--space-2);
+    color: var(--text-muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .errorText {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    gap: var(--space-1);
+    font-size: var(--type-body);
+    line-height: var(--type-body-lh);
+    letter-spacing: var(--type-body-ls);
+    color: var(--bad-ink);
+  }
+
+  .errorHint {
+    color: var(--text-muted);
+  }
+
+  @media (pointer: coarse) {
+    .timeline { min-height: 2.75rem; }
+  }
+
+  @media (max-width: 30rem) {
+    .controls { gap: var(--space-2); }
+    .footer {
+      flex-direction: column;
+      gap: 0;
+    }
   }
 }

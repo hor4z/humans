@@ -11,7 +11,7 @@ export function DividerStory() {
       title="Divider"
       kind="Superficies"
       imports="import { Divider } from '@milo/ui/divider'"
-      lead="La línea del sistema, para separar dos cosas del mismo tipo. Existe como pieza porque escrita a mano en cada lugar se desincroniza."
+      lead="Separa grupos de contenido relacionados cuando el espaciado no alcanza."
     >
       <Hero>
         <Frame width="md">

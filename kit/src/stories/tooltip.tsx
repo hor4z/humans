@@ -10,7 +10,7 @@ export function TooltipStory() {
       title="Tooltip"
       kind="Avisos"
       imports="import { Tooltip } from '@milo/ui/tooltip'"
-      lead="La etiqueta que dice qué hace un control que no lo dice solo. Se abre sola, con el mouse o con el foco de teclado, y no recibe el puntero: taparía justo el botón que explica."
+      lead="Explica un control al pasar el puntero o enfocarlo con el teclado. No contiene acciones."
     >
       <Hero>
         <Cluster gap="xs" align="center">
@@ -76,6 +76,18 @@ export function TooltipStory() {
               <IconButton icon="chevron_right" label="Derecha" variant="muted" />
             </Tooltip>
           </div>
+        </Demo>
+      </Section>
+
+      <Section title="Posición" note="Elegí el lado con `side`, la alineación con `align` y la separación con `offset`. Si no entra, cambia al lado opuesto y respeta el borde de la ventana.">
+        <Demo label="Cuatro lados" code={`<Tooltip label="Arriba" side="top"><Button>Arriba</Button></Tooltip>
+<Tooltip label="Abajo" side="bottom"><Button>Abajo</Button></Tooltip>
+<Tooltip label="Izquierda" side="left"><Button>Izquierda</Button></Tooltip>
+<Tooltip label="Derecha" side="right" align="center" offset={8}><Button>Derecha</Button></Tooltip>`}>
+          <Tooltip label="Arriba" side="top"><Button size="sm">Arriba</Button></Tooltip>
+          <Tooltip label="Abajo" side="bottom"><Button size="sm">Abajo</Button></Tooltip>
+          <Tooltip label="Izquierda" side="left"><Button size="sm">Izquierda</Button></Tooltip>
+          <Tooltip label="Derecha" side="right" align="center" offset={8}><Button size="sm">Derecha</Button></Tooltip>
         </Demo>
       </Section>
 

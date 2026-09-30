@@ -219,7 +219,7 @@ recetas de sombra, no pantallas. No seguir igualándolo: el conjunto armado es l
 - **Una superficie es 16** (`--radius-xl`): tarjeta, fila, panel flotante, modal, diálogo.
 - **Un radio se elige contra el alto de la pieza, no contra su tipo.** Sobre un item de 40, 16 se
   lee como pastilla: va `lg`, que es el radio del panel menos su relleno.
-- **Un item elegido se marca con una barra de 2px a la izquierda**, sin fondo ni borde, en el `Nav`
+- **Un item elegido se marca con una barra de 2px a la izquierda**, fondo azul suave y texto destacado, en el `Nav`
   y en el riel de Ajustes.
 - **Las tarjetas no se mueven en hover** ni tienen acciones que aparecen al pasar el mouse.
 - **El movimiento dice de dónde vino algo y adónde se fue.** `--duration-fast` (120) acompaña al

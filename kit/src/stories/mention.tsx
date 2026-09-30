@@ -9,7 +9,7 @@ export function MentionStory() {
       title="Mention"
       kind="Editor"
       imports="import { Mention } from '@milo/ui/blocks/editor/mention'"
-      lead="Una referencia adentro del texto: quién o qué. Va en el renglón y no lo interrumpe."
+      lead="Identifica a una persona o un recurso dentro de un texto."
     >
       <Hero>
         <p className={s.paragraphText}>

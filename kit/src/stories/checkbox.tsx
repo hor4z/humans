@@ -15,7 +15,7 @@ export function CheckboxStory() {
       title="Checkbox"
       kind="Formularios"
       imports="import { Checkbox } from '@milo/ui/checkbox'"
-      lead="Una casilla para marcar o no marcar una opción, sola o dentro de una lista donde se marcan varias. Lleva el radio `xs`: con el escalón siguiente la caja se lee redonda, que es la forma de la opción única."
+      lead="Permite activar una opción independiente o seleccionar varias opciones de una lista."
     >
       <Hero>
         <Checkbox checked={unchecked} onCheckedChange={setUnchecked} label="Sin marcar" />

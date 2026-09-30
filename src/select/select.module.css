@@ -21,7 +21,7 @@
     display: flex;
     min-width: 0;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
   }
 
   .leading {
@@ -51,7 +51,7 @@
     border-style: solid;
     border-width: 1px;
     border-color: var(--border);
-    padding: 0.5rem;
+    padding: var(--space-2);
     box-shadow: var(--relief-popover);
   }
 
@@ -59,10 +59,10 @@
     display: flex;
     width: 100%;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
     border-radius: var(--radius-sm);
-    padding-inline: 0.5rem;
-    padding-block: 0.5rem;
+    padding-inline: var(--space-2);
+    padding-block: var(--space-2);
     text-align: left;
     font-size: var(--type-body);
     line-height: var(--type-body-lh);

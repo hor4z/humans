@@ -7,7 +7,7 @@ export function BreadcrumbStory() {
       title="Breadcrumb"
       kind="Navegación"
       imports="import { Breadcrumb } from '@milo/ui/breadcrumb'"
-      lead="Dónde estás parado y cómo volver, cuando lo que estás mirando vive adentro de algo: una actividad adentro de un espacio."
+      lead="Muestra la ubicación dentro de una jerarquía y permite volver a sus niveles anteriores."
     >
       <Hero>
         <Breadcrumb label="Ruta completa" items={[

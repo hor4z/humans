@@ -28,7 +28,7 @@ export function ChoiceStory() {
       title="Choice"
       kind="Consigna"
       imports="import { Choice } from '@milo/ui/blocks/task/choice'"
-      lead="Una pregunta con opciones: el enunciado y las tarjetas. Responder no dice si estuvo bien, y eso es la pieza y no un olvido: quien contesta elige, y la corrección llega después y la decide otro."
+      lead="Presenta una pregunta con opciones de respuesta. La selección y la corrección son estados independientes."
     >
       <Hero>
         <Stack width="md" gap="lg">

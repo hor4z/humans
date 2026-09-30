@@ -13,7 +13,7 @@ export function TextFieldStory() {
       title="TextField"
       kind="Formularios"
       imports="import { TextField } from '@milo/ui/text-field'"
-      lead="El campo de una línea: un fondo y una línea de un píxel, sin relieve, porque el relieve dice 'esto sobresale' o 'esto se aprieta' y un campo no es ninguna de las dos. Al enfocarse se le tiñe el borde que ya tenía."
+      lead="Recoge texto en una línea, con iconos o contenido complementario opcional."
     >
       <Hero>
         <Stack gap="md" width="sm">

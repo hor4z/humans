@@ -20,7 +20,7 @@ export function TimeSection() {
     <Page
       title="Fecha y hora"
       kind="Fundamentos"
-      lead="Una fecha mal escrita hace perder una entrega. Todo lo que dice cuándo pasa por las mismas funciones: el reloj es de veinticuatro horas, la coma y el punto son los de acá, y la hora es la del curso y no la del navegador de quien mira. Las funciones están en [Utilidades](#utilidades), con lo que devuelve cada una."
+      lead="Fechas y horas con formato local, reloj de 24 horas y zona horaria explícita. Consultá las funciones en [Utilidades](#utilidades)."
     >
       <Section
         title="Cuál va"

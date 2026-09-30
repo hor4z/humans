@@ -32,7 +32,7 @@ export function IconButton({
         s.pressed,
         s.disabled,
         variants[variant === 'ghost' && active ? 'muted' : variant],
-        c.square, s.radius,
+        c.square, c.radius,
         className,
       )}
       {...rest}

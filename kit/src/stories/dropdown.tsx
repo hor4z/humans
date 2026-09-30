@@ -8,7 +8,7 @@ export function DropdownStory() {
   return (
     <Page
       title="Dropdown"
-      lead="Un menú de cuatro items escrito como lista. No lleva velo: el velo va para lo que pide leerse entero, y un menú corto no lo pide."
+      lead="Abre un menú de acciones a partir de una lista de opciones."
       kind="Acciones"
       imports="import { Dropdown } from '@milo/ui/dropdown'"
     >

@@ -15,7 +15,7 @@ const sizes = [
   { px: 12, role: 'un badge, la cruz de un chip' },
   { px: 14, role: 'la marca de un Select, un tilde' },
   { px: 16, role: 'adentro de un control chico' },
-  { px: 18, role: 'adentro de un botón mediano' },
+  { px: 18, role: 'detalles de densidad intermedia' },
   { px: 20, role: 'el default: la interfaz' },
   { px: 22, role: 'el glifo de una marca de lista' },
   { px: 24, role: 'adentro de un control de 44' },
@@ -29,7 +29,7 @@ const weights = [
 export function IconStory() {
   const [q, setQ] = useState('')
   const [size, setSize] = useState(24)
-  const [weight, setWeight] = useState<'300' | '400' | '500' | '700'>('300')
+  const [weight, setWeight] = useState<'300' | '400' | '500' | '700'>('400')
   const [copied, setCopied] = useState<string | null>(null)
 
   const visible = useMemo(() => {
@@ -49,7 +49,7 @@ export function IconStory() {
       title="Icon"
       kind="Fundamentos"
       imports="import { Icon } from '@milo/ui/icon'"
-      lead="Material Symbols Rounded, subseteado a lo que usamos y servido desde el repo. Peso 300 de base."
+      lead="Iconos de Material Symbols Rounded, alojados localmente y con peso base 400."
     >
       <Hero>
         <Icon name="search" size={28} />
@@ -75,7 +75,7 @@ export function IconStory() {
           <div>
           <Cluster gap="lg" align="center">
             <span className={cls.searchSlot}>
-              <TextField icon="search" value={q} onValueChange={setQ} placeholder="buscar por nombre o por tag…" />
+              <TextField icon="search" value={q} onValueChange={setQ} aria-label="Buscar iconos" placeholder="Buscar por nombre o etiqueta" />
             </span>
             <Segmented
               label="Peso del glifo"
@@ -163,7 +163,7 @@ export function IconStory() {
           </Variant>
           <Variant
             name="Gris"
-            note="En tinta queda en peso 300. Con `icon-muted` el peso sube a 400 solo, sin prop. Un gris sin la utilidad queda en 300 y se apaga."
+            note="El peso base es 400, tanto en tinta como en gris. `icon-muted` ajusta el color sin cambiar el trazo ni mover el glifo entre estados."
             code={`<Icon name="search" size={20} />
 <Icon name="search" size={20} className="icon-muted" />
 <Icon name="search" size={20} className={styles.gray} />`}
@@ -194,8 +194,8 @@ npm run icons -- check`}
       <Section title="Cómo se usa bien">
         <Practices>
           <Practices.Do>El gris se hereda del ancestro con `icon-muted`, no se pasa por prop.</Practices.Do>
-          <Practices.Do>El tamaño sale de la escala: 12 un badge o la cruz de un chip, 14 la marca de un `Select`, 16 adentro de un control chico, 18 adentro de un botón mediano, 20 la interfaz (el default), 22 una marca de lista, 24 adentro de un control de 44.</Practices.Do>
-          <Practices.Dont>El set crece solo por `npm run icons -- add`: no dibujes un path a mano. Antes de bajar nada pregunta si el nombre existe, si ya lo tenemos y si hay uno con los mismos tags; `--yes` saltea la tercera. `search` busca en el catálogo entero, que está versionado y funciona sin internet, y `check` lista los usados que faltan y los que no usa nadie.</Practices.Dont>
+          <Practices.Do>Usá 16, 20 y 24 px en controles `sm`, `md` y `lg`. Reservá 12 y 14 px para marcas secundarias.</Practices.Do>
+          <Practices.Dont>Buscá con `npm run icons -- search`, agregá con `add` y verificá con `check`. Evitá duplicar iconos o dibujar variantes a mano.</Practices.Dont>
         </Practices>
       </Section>
 

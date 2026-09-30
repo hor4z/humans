@@ -11,17 +11,17 @@ export function ToastStory() {
       title="Toast"
       kind="Avisos"
       imports="import { ToastProvider, useToast } from '@milo/ui/toast'"
-      lead="El acuse de recibo de algo que la persona acaba de hacer. Va abajo a la derecha y se va solo: no pide respuesta y no interrumpe. El `ToastProvider` va una sola vez arriba de todo, y `toast()` sale de `useToast()` en cualquier lado del árbol."
+      lead="Confirma el resultado de una acción mediante un aviso temporal y una acción opcional."
     >
       <Hero>
         <Cluster gap="sm">
-          <Button variant="brand" onClick={() => toast({ title: 'Actividad publicada', body: 'La ven los siete espacios', tone: 'ok' })}>
+          <Button variant="brand" onClick={() => toast({ title: 'Actividad publicada', body: 'Ya está disponible en los siete espacios.', tone: 'ok' })}>
             Publicar
           </Button>
-          <Button variant="muted" onClick={() => toast({ title: 'Se guardó el borrador' })}>
+          <Button variant="muted" onClick={() => toast({ title: 'Borrador guardado', tone: 'ok' })}>
             Guardar
           </Button>
-          <Button variant="muted" onClick={() => toast({ title: 'No se pudo subir el archivo', body: 'Pesa más de 20 MB', tone: 'bad' })}>
+          <Button variant="muted" onClick={() => toast({ title: 'No se pudo subir el archivo', body: 'Elegí un archivo de hasta 20 MB.', tone: 'bad' })}>
             Error
           </Button>
         </Cluster>
@@ -39,13 +39,13 @@ export function ToastStory() {
       <Section title="Probalo">
         <Demo label="los casos, y cinco seguidos para ver la pila" code={`const { toast } = useToast()
 
-<Button variant="brand" onClick={() => toast({ title: 'Actividad publicada', body: 'La ven los siete espacios', tone: 'ok' })}>
+<Button variant="brand" onClick={() => toast({ title: 'Actividad publicada', body: 'Ya está disponible en los siete espacios.', tone: 'ok' })}>
   Publicar
 </Button>
-<Button variant="muted" onClick={() => toast({ title: 'Se guardó el borrador' })}>
+<Button variant="muted" onClick={() => toast({ title: 'Borrador guardado', tone: 'ok' })}>
   Guardar
 </Button>
-<Button variant="muted" onClick={() => toast({ title: 'No se pudo subir el archivo', body: 'Pesa más de 20 MB', tone: 'bad' })}>
+<Button variant="muted" onClick={() => toast({ title: 'No se pudo subir el archivo', body: 'Elegí un archivo de hasta 20 MB.', tone: 'bad' })}>
   Error
 </Button>
 <Button variant="muted" onClick={() => toast({ title: 'Se archivaron 12 actividades', duration: 0 })}>
@@ -64,13 +64,13 @@ export function ToastStory() {
   Cinco de una
 </Button>`}>
           <Cluster gap="sm">
-            <Button variant="brand" onClick={() => toast({ title: 'Actividad publicada', body: 'La ven los siete espacios', tone: 'ok' })}>
+            <Button variant="brand" onClick={() => toast({ title: 'Actividad publicada', body: 'Ya está disponible en los siete espacios.', tone: 'ok' })}>
               Publicar
             </Button>
-            <Button variant="muted" onClick={() => toast({ title: 'Se guardó el borrador' })}>
+            <Button variant="muted" onClick={() => toast({ title: 'Borrador guardado', tone: 'ok' })}>
               Guardar
             </Button>
-            <Button variant="muted" onClick={() => toast({ title: 'No se pudo subir el archivo', body: 'Pesa más de 20 MB', tone: 'bad' })}>
+            <Button variant="muted" onClick={() => toast({ title: 'No se pudo subir el archivo', body: 'Elegí un archivo de hasta 20 MB.', tone: 'bad' })}>
               Error
             </Button>
             <Button variant="muted" onClick={() => toast({ title: 'Se archivaron 12 actividades', duration: 0 })}>

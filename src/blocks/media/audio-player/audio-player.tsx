@@ -1,5 +1,6 @@
 import cls from './audio-player.module.css'
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react'
+import { Button } from '../../../button/button'
 import { IconButton } from '../../../icon-button/icon-button'
 import { Spinner } from '../../../spinner/spinner'
 import { control } from '../../../lib/control'
@@ -11,6 +12,7 @@ type Status = 'loading' | 'ready' | 'error'
 
 /** El alto de la onda. No sale de la escalera de controles: eso mide botones, y esto es un gráfico que hay que poder leer. */
 const waveHeight = { sm: cls.waveSm, md: cls.waveMd, lg: cls.waveLg } as const
+const padding = { sm: cls.sm, md: cls.md, lg: cls.lg } as const
 
 const playing = new Set<HTMLAudioElement>()
 
@@ -25,7 +27,7 @@ function Wave({ peaks, progress }: { peaks: readonly number[]; progress: number 
               cls.peak,
               i / peaks.length < progress ? cls.peakPlayed : cls.peakAhead,
             )}
-            style={{ height: `${Math.max(p, 0.04) * 100}%`, minHeight: 2 }}
+            style={{ height: `${Math.min(1, Math.max(Number.isFinite(p) ? p : 0, 0.04)) * 100}%`, minHeight: 2 }}
           />
         </span>
       ))}
@@ -70,9 +72,11 @@ function Root({ src, title, peaks, children, size = 'md', className }: AudioPlay
   const [isPlaying, setIsPlaying] = useState(false)
   const [t, setT] = useState(0)
   const [dur, setDur] = useState(0)
+  const [rate, setRate] = useState(1)
 
   const loaded = (el: HTMLAudioElement) => {
-    setDur(el.duration)
+    setDur(Number.isFinite(el.duration) ? Math.max(0, el.duration) : 0)
+    el.playbackRate = rate
     setStatus('ready')
   }
 
@@ -117,6 +121,21 @@ function Root({ src, title, peaks, children, size = 'md', className }: AudioPlay
     void el.play().catch(() => setStatus('error'))
   }
 
+  const retry = () => {
+    setStatus('loading')
+    setIsPlaying(false)
+    setT(0)
+    setDur(0)
+    audio.current?.load()
+  }
+
+  const changeRate = () => {
+    const rates = [1, 1.25, 1.5, 2]
+    const next = rates[(rates.indexOf(rate) + 1) % rates.length]
+    setRate(next)
+    if (audio.current) audio.current.playbackRate = next
+  }
+
   const seek = (v: number) => {
     const el = audio.current
     if (!el) return
@@ -128,7 +147,9 @@ function Root({ src, title, peaks, children, size = 'md', className }: AudioPlay
     <div
       className={cx(
         `${cls.root} bg-surface`,
+        padding[size],
         status === 'error' && cls.errored,
+        isPlaying && cls.playing,
         className,
       )}
     >
@@ -151,34 +172,38 @@ function Root({ src, title, peaks, children, size = 'md', className }: AudioPlay
           playing.delete(e.currentTarget)
           setIsPlaying(false)
         }}
-        onError={() => setStatus('error')}
+        onError={() => { setStatus('error'); setIsPlaying(false) }}
       />
 
-      {title && <span className={cls.title}>{title}</span>}
+      {title && <span className={cls.title} title={title}>{title}</span>}
 
       <div className={cls.controls}>
         {status === 'loading'
           ? (
             <span className={cx(cls.playSlot, control[size].square)}>
-              <Spinner size={size === 'sm' ? 16 : 18} label="Cargando el audio" />
+              <Spinner size={size === 'sm' ? 16 : 20} label="Cargando el audio" />
             </span>
           )
           : (
             <IconButton
-              icon={isPlaying ? 'pause' : 'play_arrow'}
-              label={isPlaying ? 'Pausar' : 'Reproducir'}
-              variant="muted"
+              icon={status === 'error' ? 'refresh' : isPlaying ? 'pause' : 'play_arrow'}
+              label={status === 'error' ? 'Reintentar la carga' : isPlaying ? 'Pausar' : 'Reproducir'}
+              variant={status === 'error' ? 'muted' : 'brand'}
               size={size}
-              disabled={status === 'error'}
-              onClick={toggle}
+              onClick={status === 'error' ? retry : toggle}
               className={`${cls.playButton} icon-filled`}
             />
           )}
 
         {status === 'error'
-          ? <span className={cx(cls.errorText, waveHeight[size])}>No se pudo cargar el audio</span>
+          ? (
+            <div className={cls.errorText} role="status">
+              <span>No se pudo cargar el audio</span>
+              <span className={cls.errorHint}>Volvé a intentarlo con el botón de recarga.</span>
+            </div>
+          )
           : (
-            <span className={cx(cls.timeline, waveHeight[size])}>
+            <span className={cx(cls.timeline, waveHeight[size], !ready && cls.loading)}>
               {peaks?.length ? <Wave peaks={peaks} progress={progress} /> : <BareTrack progress={progress} />}
               <input
                 id={seekId}
@@ -191,20 +216,33 @@ function Root({ src, title, peaks, children, size = 'md', className }: AudioPlay
                 aria-label={title ? `Buscar en ${title}` : 'Buscar en el audio'}
                 aria-valuetext={`${duration(t)} de ${ready ? duration(dur) : '--:--'}`}
                 onChange={e => seek(Number(e.target.value))}
-                className={cx(
-                  cls.seek,
-                  cls.seekDisabled,
-                  cls.seekFocus,
-                )}
+                className={cls.seek}
               />
             </span>
           )}
 
-        <span className={`${cls.time} tabular`}>
-          {duration(t)} / {ready ? duration(dur) : '--:--'}
-        </span>
-
-        {actions.length > 0 && <span className={cls.actions}>{actions}</span>}
+        <div className={cls.footer}>
+          {status !== 'error' && (
+            <span className={`${cls.time} tabular`}>
+              {duration(t)} / {ready ? duration(dur) : '--:--'}
+            </span>
+          )}
+          <span className={cls.actions}>
+            {status !== 'error' && (
+              <Button
+                size="sm"
+                variant="ghost"
+                disabled={!ready}
+                onClick={changeRate}
+                aria-label={`Velocidad de reproducción: ${rate}×. Cambiar velocidad`}
+                className={cls.speed}
+              >
+                {rate}×
+              </Button>
+            )}
+            {actions}
+          </span>
+        </div>
       </div>
     </div>
   )

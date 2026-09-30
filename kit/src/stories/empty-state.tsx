@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import cls from './empty-state.module.css'
 import { Button } from '@milo/ui/button'
 import { EmptyState } from '@milo/ui/empty-state'
@@ -5,18 +6,19 @@ import { Filter } from '@milo/ui/filter'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section, Stack } from '../kit'
 
 export function EmptyStateStory() {
+  const [filtered, setFiltered] = useState(true)
   return (
     <Page
       title="EmptyState"
       kind="Avisos"
       imports="import { EmptyState } from '@milo/ui/empty-state'"
-      lead="Lo que se ve cuando no hay nada, siempre con una salida: un vacío que no dice qué hacer es una pantalla rota con buena redacción."
+      lead="Explica por qué no hay contenido y ofrece un próximo paso cuando corresponde."
     >
       <Hero>
         <EmptyState icon="inbox">
           <EmptyState.Title>Todavía no llegó ninguna entrega</EmptyState.Title>
           <EmptyState.Body>Cuando alguien entregue una actividad de este espacio, la vas a ver acá con su estado.</EmptyState.Body>
-          <EmptyState.Action><Button variant="brand">Crear una actividad</Button></EmptyState.Action>
+          <EmptyState.Action><Button variant="brand" onClick={() => { window.location.hash = 'documento' }}>Crear una actividad</Button></EmptyState.Action>
         </EmptyState>
       </Hero>
 
@@ -32,7 +34,7 @@ export function EmptyStateStory() {
         <Demo label="`md` y `sm`: una pantalla, y una búsqueda sin resultados adentro de una pieza" code={`<EmptyState icon="inbox">
   <EmptyState.Title>Todavía no llegó ninguna entrega</EmptyState.Title>
   <EmptyState.Body>Cuando alguien entregue una actividad de este espacio, la vas a ver acá con su estado.</EmptyState.Body>
-  <EmptyState.Action><Button variant="brand">Crear una actividad</Button></EmptyState.Action>
+  <EmptyState.Action><Button variant="brand" onClick={() => { window.location.hash = 'documento' }}>Crear una actividad</Button></EmptyState.Action>
 </EmptyState>
 <EmptyState size="sm" icon="search_off">
   <EmptyState.Title>Ninguna actividad con eso</EmptyState.Title>
@@ -43,14 +45,14 @@ export function EmptyStateStory() {
             <EmptyState icon="inbox">
               <EmptyState.Title>Todavía no llegó ninguna entrega</EmptyState.Title>
               <EmptyState.Body>Cuando alguien entregue una actividad de este espacio, la vas a ver acá con su estado.</EmptyState.Body>
-              <EmptyState.Action><Button variant="brand">Crear una actividad</Button></EmptyState.Action>
+              <EmptyState.Action><Button variant="brand" onClick={() => { window.location.hash = 'documento' }}>Crear una actividad</Button></EmptyState.Action>
             </EmptyState>
             <div className={`${cls.insetBox} bg-surface`}>
-              <EmptyState size="sm" icon="search_off">
-                <EmptyState.Title>Ninguna actividad con eso</EmptyState.Title>
-                <EmptyState.Body>Probá con otras palabras, o sacá alguno de los filtros puestos.</EmptyState.Body>
-                <EmptyState.Action><Filter.Reset onClick={() => {}}>Limpiar los filtros</Filter.Reset></EmptyState.Action>
-              </EmptyState>
+              {filtered ? <EmptyState size="sm" icon="search_off">
+                <EmptyState.Title>No hay actividades con esos filtros</EmptyState.Title>
+                <EmptyState.Body>Probá con otras palabras o quitá los filtros.</EmptyState.Body>
+                <EmptyState.Action><Filter.Reset onClick={() => setFiltered(false)}>Limpiar filtros</Filter.Reset></EmptyState.Action>
+              </EmptyState> : <Stack><p role="status">Filtros eliminados. Hay 3 actividades disponibles.</p><Button size="sm" variant="muted" onClick={() => setFiltered(true)}>Restablecer ejemplo</Button></Stack>}
             </div>
           </Stack>
         </Demo>
@@ -62,7 +64,7 @@ export function EmptyStateStory() {
 <EmptyState>
   <EmptyState.Title>Acá no hay nada</EmptyState.Title>
   <EmptyState.Body>La dirección existe pero no lleva a ninguna pantalla.</EmptyState.Body>
-  <EmptyState.Action><Button variant="muted">Volver</Button></EmptyState.Action>
+  <EmptyState.Action><Button variant="muted" onClick={() => { window.location.hash = 'intro' }}>Volver al inicio</Button></EmptyState.Action>
 </EmptyState>`}>
           <Stack gap="lg">
             <div className={`${cls.raisedBox} bg-surface`}>
@@ -74,7 +76,7 @@ export function EmptyStateStory() {
             <EmptyState>
               <EmptyState.Title>Acá no hay nada</EmptyState.Title>
               <EmptyState.Body>La dirección existe pero no lleva a ninguna pantalla.</EmptyState.Body>
-              <EmptyState.Action><Button variant="muted">Volver</Button></EmptyState.Action>
+              <EmptyState.Action><Button variant="muted" onClick={() => { window.location.hash = 'intro' }}>Volver al inicio</Button></EmptyState.Action>
             </EmptyState>
           </Stack>
         </Demo>

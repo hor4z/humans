@@ -1,3 +1,4 @@
+import { useToast } from '@milo/ui/toast'
 import cls from './folder.module.css'
 import { Card } from '@milo/ui/card'
 import { Folder } from '../demo/folder/folder'
@@ -6,24 +7,25 @@ import { A11y, Anatomy, Demo, Hero, Mono, Page, Panel, Practices, Props, Section
 import { person } from '../fixtures'
 
 export function FolderStory() {
+  const { toast } = useToast()
   return (
     <Page
       title="Folder"
       kind="Del sitio"
       imports="import { Folder } from './demo/folder/folder'"
-      lead="Una carpeta que se abre: al pasar por encima las hojas suben desde adentro y se abanican, y ahí se ve qué hay sin tener que entrar. Es la pieza grande, para mirar; para identificar un espacio en una lista está `Icon.Folder`."
+      lead="Representa un espacio con sus archivos y participantes. La vista previa se despliega al pasar el puntero."
     >
       <Hero>
         <Card surface="muted" className={cls.shelf}>
-          <Folder onClick={() => {}}>
+          <Folder onClick={() => toast({ title: 'Carpeta seleccionada', body: 'Vista previa del componente Folder.' })}>
             <Folder.Label>Onboarding</Folder.Label>
             <Folder.Meta>15 archivos</Folder.Meta>
           </Folder>
-          <Folder onClick={() => {}}>
+          <Folder onClick={() => toast({ title: 'Carpeta seleccionada', body: 'Vista previa del componente Folder.' })}>
             <Folder.Label>Matemática · 4.º A</Folder.Label>
             <Folder.Meta>8 actividades</Folder.Meta>
           </Folder>
-          <Folder sheets={2} onClick={() => {}}>
+          <Folder sheets={2} onClick={() => toast({ title: 'Carpeta seleccionada', body: 'Vista previa del componente Folder.' })}>
             <Folder.Label>Sin abrir</Folder.Label>
             <Folder.Meta>2 archivos</Folder.Meta>
           </Folder>

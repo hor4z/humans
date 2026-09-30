@@ -2,12 +2,16 @@ import { useEffect } from 'react'
 
 /** Bloquear el scroll del fondo mientras hay un overlay abierto. */
 let lockCount = 0
+let originalOverflow = ''
+let originalPaddingRight = ''
 
 export function useScrollLock(active: boolean) {
   useEffect(() => {
     if (!active) return
     lockCount++
     if (lockCount === 1) {
+      originalOverflow = document.body.style.overflow
+      originalPaddingRight = document.body.style.paddingRight
       const gap = window.innerWidth - document.documentElement.clientWidth
       document.body.style.overflow = 'hidden'
       if (gap > 0) document.body.style.paddingRight = `${gap}px`
@@ -15,8 +19,8 @@ export function useScrollLock(active: boolean) {
     return () => {
       lockCount--
       if (lockCount === 0) {
-        document.body.style.overflow = ''
-        document.body.style.paddingRight = ''
+        document.body.style.overflow = originalOverflow
+        document.body.style.paddingRight = originalPaddingRight
       }
     }
   }, [active])
@@ -46,10 +50,11 @@ export function useFocusTrap(active: boolean, ref: React.RefObject<HTMLElement |
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== 'Tab' || !node) return
       const items = [...node.querySelectorAll<HTMLElement>(FOCUSABLE)].filter(el => el.offsetParent !== null)
-      if (!items.length) return
+      if (!items.length) { e.preventDefault(); node.focus(); return }
       const firstEl = items[0]
       const lastEl = items[items.length - 1]
-      if (e.shiftKey && document.activeElement === firstEl) { e.preventDefault(); lastEl.focus() }
+      if (document.activeElement === node) { e.preventDefault(); (e.shiftKey ? lastEl : firstEl).focus() }
+      else if (e.shiftKey && document.activeElement === firstEl) { e.preventDefault(); lastEl.focus() }
       else if (!e.shiftKey && document.activeElement === lastEl) { e.preventDefault(); firstEl.focus() }
     }
     document.addEventListener('keydown', onKey)

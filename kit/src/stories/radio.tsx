@@ -16,7 +16,7 @@ export function RadioStory() {
       title="Radio"
       kind="Formularios"
       imports="import { Radio } from '@milo/ui/radio'"
-      lead="La elección de una entre varias, cada una con su propio texto al lado. Es la misma medida del `Checkbox`, así una fila con los dos queda pareja."
+      lead="Permite elegir una única opción dentro de un grupo."
     >
       <Hero>
         <Radio.Group

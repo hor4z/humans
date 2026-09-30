@@ -57,7 +57,7 @@ export function RubricStory() {
       title="Rubric"
       kind="Rúbrica"
       imports="import { Rubric } from '@milo/ui/blocks/rubric/rubric'"
-      lead="Con qué se mira un trabajo: los aspectos, cuánto vale cada uno y qué se ve en cada renglón. La escribe quien corrige y la lee quien entrega, así que dice lo mismo de los dos lados."
+      lead="Organiza criterios, niveles y ponderaciones de una evaluación."
     >
       <Hero>
         <Stack width="sm">

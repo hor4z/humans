@@ -41,7 +41,7 @@ function Root({ tone, color, icon, onDismiss, size = 'md', className, children, 
     <div role={role} className={cx(s.root, size === 'sm' && s.compact, paper, className)} {...props}>
       {glyph && (
         <span className={cx(s.icon, !paint && tone && toneInk[tone])}>
-          <Icon name={glyph} size={size === 'sm' ? 16 : 18} />
+          <Icon name={glyph} size={size === 'sm' ? 16 : 20} />
         </span>
       )}
       <div className={s.body}>
@@ -50,7 +50,7 @@ function Root({ tone, color, icon, onDismiss, size = 'md', className, children, 
         {actions}
       </div>
       {onDismiss && (
-        <IconButton icon="close" label="Descartar" size="sm" variant="ghost" onClick={onDismiss} className={s.dismiss} />
+        <IconButton icon="close" label="Cerrar el aviso" size="sm" variant="ghost" onClick={onDismiss} className={s.dismiss} />
       )}
     </div>
   )

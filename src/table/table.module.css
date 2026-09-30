@@ -2,17 +2,15 @@
   .root {
     position: relative;
     overflow: hidden;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-xl);
     box-shadow: 0 0 0 1px var(--border);
   }
 
   .scroller {
-    scrollbar-width: none;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-strong) transparent;
     overflow-x: auto;
     overflow-y: hidden;
-    &::-webkit-scrollbar {
-      display: none;
-    }
   }
 
   .table {
@@ -32,7 +30,7 @@
   }
 
   .head {
-    background-color: var(--surface-muted);
+    background-color: color-mix(in oklab, var(--surface-muted) 65%, var(--surface));
   }
 
   .foot {
@@ -50,6 +48,7 @@
   }
 
   .row {
+    &:focus-visible { outline: 2px solid var(--brand); outline-offset: -2px; }
     border-bottom-style: solid;
     border-bottom-width: 1px;
     border-color: var(--border);
@@ -63,7 +62,7 @@
   }
 
   .active {
-    background-color: var(--surface-muted);
+    background-color: var(--brand-soft);
   }
 
   .clickable {
@@ -72,33 +71,34 @@
 
   .headCell {
     height: 2.5rem;
-    padding-inline: 1rem;
+    padding-inline: var(--space-4);
     font-size: var(--type-label);
     line-height: var(--type-label-lh);
     letter-spacing: var(--type-label-ls);
     font-weight: var(--font-weight-semibold);
     color: var(--text);
     &:first-child {
-      padding-left: 1.5rem;
+      padding-left: var(--space-6);
     }
     &:last-child {
-      padding-right: 1.5rem;
+      padding-right: var(--space-6);
     }
   }
 
   .cell {
+    padding-block: var(--space-3);
     height: 3.5rem;
-    padding-inline: 1rem;
+    padding-inline: var(--space-4);
     font-size: var(--type-body);
     line-height: var(--type-body-lh);
     letter-spacing: var(--type-body-ls);
     font-weight: var(--font-weight-medium);
     color: var(--text);
     &:first-child {
-      padding-left: 1.5rem;
+      padding-left: var(--space-6);
     }
     &:last-child {
-      padding-right: 1.5rem;
+      padding-right: var(--space-6);
     }
   }
 
@@ -120,9 +120,9 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
+    font-size: var(--type-label);
+    line-height: var(--type-label-lh);
+    letter-spacing: var(--type-label-ls);
     font-weight: var(--font-weight-medium);
     color: var(--text-muted);
   }
@@ -133,17 +133,17 @@
 
   .fitCell {
     width: 0;
-    padding-right: 1rem;
+    padding-right: var(--space-4);
   }
 
   .emptyCell {
-    padding-inline: 1.5rem;
-    padding-block: 2.5rem;
+    padding-inline: var(--space-6);
+    padding-block: var(--space-10);
   }
 
   .numberCell {
     height: 3.5rem;
-    padding-inline: 1rem;
+    padding-inline: var(--space-4);
     text-align: right;
     font-size: var(--type-body);
     line-height: var(--type-body-lh);
@@ -151,14 +151,27 @@
     font-weight: var(--font-weight-medium);
     color: var(--text);
     &:first-child {
-      padding-left: 1.5rem;
+      padding-left: var(--space-6);
     }
     &:last-child {
-      padding-right: 1.5rem;
+      padding-right: var(--space-6);
     }
   }
 
+  .scrollHint { display: flex; align-items: center; justify-content: flex-end; gap: var(--space-2); padding: var(--space-2) var(--space-4); border-top: 1px solid var(--border); color: var(--text-muted); font-size: var(--type-meta); line-height: var(--type-meta-lh); letter-spacing: var(--type-meta-ls); }
+  .sortButton { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 40px; color: inherit; border-radius: var(--radius-sm); }
+  .columnCount { color: var(--text-muted); font-size: var(--type-meta); line-height: var(--type-meta-lh); letter-spacing: var(--type-meta-ls); font-variant-numeric: tabular-nums; }
+  .columnPanel { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-4); border: 1px solid var(--border); border-radius: var(--radius-xl); box-shadow: var(--relief-popover); }
+  .columnHeader { display: flex; flex-direction: column; gap: var(--space-1); color: var(--text); font-size: var(--type-body); line-height: var(--type-body-lh); letter-spacing: var(--type-body-ls); }
+  .columnHeader > span, .columnRequired { color: var(--text-muted); font-size: var(--type-meta); line-height: var(--type-meta-lh); letter-spacing: var(--type-meta-ls); }
+  .columnOptions { max-height: 280px; overflow-y: auto; }
+  .columnOption { display: flex; align-items: center; gap: var(--space-3); min-height: 40px; padding-inline: var(--space-2); border-radius: var(--radius-sm); color: var(--text); font-size: var(--type-body); line-height: var(--type-body-lh); letter-spacing: var(--type-body-ls); }
+  .columnOption .columnRequired { margin-left: auto; }
+  .columnActions { display: flex; justify-content: space-between; gap: var(--space-2); border-top: 1px solid var(--border); padding-top: var(--space-3); }
+  @media (pointer: coarse) { .columnOption, .sortButton { min-height: 44px; } }
   @media (hover:hover) {
+    .columnOption:hover { background: var(--surface-hover); }
+
     .clickable:hover {
         background-color: var(--surface-muted);
     }

@@ -13,7 +13,7 @@ export function CalloutStory() {
       title="Callout"
       kind="Avisos"
       imports="import { Callout } from '@milo/ui/callout'"
-      lead="El bloque que pide detenerse. Sin tono es contenido: una aclaración, una pista, algo para recordar, que escribe quien arma el material. Con tono es un aviso fijo del sistema: algo está roto, algo falta, algo está por vencer."
+      lead="Destaca una aclaración o un aviso persistente. El tono distingue información, éxito, advertencia y error."
     >
       <Hero>
         <Stack width="xl">

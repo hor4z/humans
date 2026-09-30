@@ -12,7 +12,7 @@ export function NavStory() {
       title="Nav"
       kind="Navegación"
       imports="import { Nav } from '@milo/ui/nav'"
-      lead="El riel de una app y sus items. `Nav.Item` es un botón; para el link de un router van `Nav.itemClass` y `Nav.Body`, que son las mismas dos mitades por separado."
+      lead="Organiza los destinos de navegación y destaca la ubicación actual."
     >
       <Hero>
         <div className={cls.itemRail}>
@@ -130,7 +130,7 @@ export function NavStory() {
 
       <Section title="Cómo se usa bien">
         <Practices>
-          <Practices.Do>El activo se marca con la barra de 2px: sin fondo y sin borde. En un riel de doce items, un activo en gris hay que buscarlo.</Practices.Do>
+          <Practices.Do>El destino actual combina una barra de 2 px, fondo azul suave y texto destacado. Usá `aria-current` para anunciarlo.</Practices.Do>
           <Practices.Do>Contraído, a 72 de ancho, el item se centra y pierde etiqueta y contador: el `title` pasa a ser lo único que dice qué es.</Practices.Do>
           <Practices.Do>{'Para un `NavLink` o un `<a>`, `Nav.itemClass` le pone las clases del item y `Nav.Body` dibuja lo de adentro.'}</Practices.Do>
           <Practices.Dont>No alternes la clase del icono entre estados: cambia el peso de la fuente y el glifo se mueve adentro de su caja.</Practices.Dont>

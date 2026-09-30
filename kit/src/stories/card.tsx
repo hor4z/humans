@@ -12,7 +12,7 @@ export function CardStory() {
       title="Card"
       kind="Superficies"
       imports="import { Card } from '@milo/ui/card'"
-      lead="La superficie de una grilla: una cosa por tarjeta, y la tarjeta entera es la unidad que se escanea."
+      lead="Agrupa información y acciones sobre un mismo elemento en una superficie."
     >
       <Hero>
         <Card className={cls.partsCard}>
@@ -37,7 +37,7 @@ export function CardStory() {
       </Hero>
 
       <Anatomy>
-        <Anatomy.Part name="Superficie" required>El papel con su sombra: radio 16 y 8 de padding, así que lo que va adentro lleva 8.</Anatomy.Part>
+        <Anatomy.Part name="Superficie" required>El papel con su sombra: radio 16, un marco de 8 y partes con 16 de espacio lateral.</Anatomy.Part>
         <Anatomy.Part name="Encabezado">`Card.Header`: el título y, a la derecha, lo que lo acompaña, como una etiqueta.</Anatomy.Part>
         <Anatomy.Part name="Título">`Card.Title`, un `h3`. Con `Card.Hint` debajo va la línea de apoyo.</Anatomy.Part>
         <Anatomy.Part name="Cuerpo">`Card.Body`: el contenido. Acepta cualquier cosa suelta, una portada, un gráfico, una grilla de fotos.</Anatomy.Part>

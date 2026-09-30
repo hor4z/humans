@@ -5,6 +5,25 @@ const box = (top: number, left: number, w = 100, h = 40) =>
   ({ top, left, right: left + w, bottom: top + h, width: w, height: h }) as DOMRect
 
 describe('place', () => {
+  it('sitúa el panel a la derecha y lo centra verticalmente', () => {
+    expect(place(box(100, 50), 120, 60, { prefer: 'right', align: 'center' })).toEqual({ top: 90, left: 158 })
+  })
+
+  it('cambia de lado cuando el borde no deja espacio', () => {
+    const right = box(100, window.innerWidth - 110)
+    expect(place(right, 120, 60, { prefer: 'right' }).left).toBe(right.left - 128)
+    expect(place(box(100, 10), 120, 60, { prefer: 'left' }).left).toBe(118)
+  })
+
+  it('respeta alineación y separación para los lados horizontales', () => {
+    expect(place(box(100, 300), 120, 60, { prefer: 'left', align: 'end', gap: 12 })).toEqual({ top: 80, left: 168 })
+  })
+
+  it('acota también el eje vertical si ninguno de los lados alcanza', () => {
+    const result = place(box(-40, 10), 120, window.innerHeight + 20, { prefer: 'right' })
+    expect(result.top).toBe(8)
+  })
+
   it('va debajo del disparador si entra', () => {
     expect(place(box(100, 50), 200, 100)).toEqual({ top: 148, left: 50 })
   })

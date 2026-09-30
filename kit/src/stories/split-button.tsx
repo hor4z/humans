@@ -1,31 +1,33 @@
+import { useToast } from '@milo/ui/toast'
 import { SplitButton } from '@milo/ui/split-button'
 import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function SplitButtonStory() {
+  const { toast } = useToast()
   return (
     <Page
       title="SplitButton"
       kind="Acciones"
       imports="import { SplitButton } from '@milo/ui/split-button'"
-      lead="La acción que se hace casi siempre, y al lado las que casi nunca. El que manda queda a un clic y el resto a dos: evita una fila de cinco botones donde cuatro no se tocan nunca."
+      lead="Combina una acción principal con un menú de acciones relacionadas."
     >
       <Hero>
         <SplitButton size="sm">
-          <SplitButton.Action onClick={() => {}}>Publicar</SplitButton.Action>
-          <SplitButton.Item icon="draft" onSelect={() => {}}>Guardar como borrador</SplitButton.Item>
-          <SplitButton.Item icon="schedule" onSelect={() => {}}>Programar</SplitButton.Item>
+          <SplitButton.Action onClick={() => toast({ title: 'Acción seleccionada: Publicar', body: 'Demostración del menú de acciones.' })}>Publicar</SplitButton.Action>
+          <SplitButton.Item icon="draft" onSelect={() => toast({ title: 'Acción seleccionada: Guardar como borrador', body: 'Demostración del menú de acciones.' })}>Guardar como borrador</SplitButton.Item>
+          <SplitButton.Item icon="schedule" onSelect={() => toast({ title: 'Acción seleccionada: Programar', body: 'Demostración del menú de acciones.' })}>Programar</SplitButton.Item>
         </SplitButton>
         <SplitButton size="sm" variant="muted">
-          <SplitButton.Action onClick={() => {}}>Exportar</SplitButton.Action>
-          <SplitButton.Item onSelect={() => {}}>Como PDF</SplitButton.Item>
-          <SplitButton.Item onSelect={() => {}}>Como planilla</SplitButton.Item>
+          <SplitButton.Action onClick={() => toast({ title: 'Acción seleccionada: Exportar', body: 'Demostración del menú de acciones.' })}>Exportar</SplitButton.Action>
+          <SplitButton.Item onSelect={() => toast({ title: 'Acción seleccionada: Como PDF', body: 'Demostración del menú de acciones.' })}>Como PDF</SplitButton.Item>
+          <SplitButton.Item onSelect={() => toast({ title: 'Acción seleccionada: Como planilla', body: 'Demostración del menú de acciones.' })}>Como planilla</SplitButton.Item>
         </SplitButton>
       </Hero>
 
       <Anatomy>
-        <Anatomy.Part name="Acción principal" required>`SplitButton.Action`: la mitad ancha, la que se toca directo.</Anatomy.Part>
+        <Anatomy.Part name="Acción principal" required>`SplitButton.Action`: ejecuta la acción principal.</Anatomy.Part>
         <Anatomy.Part name="Flecha">La mitad angosta: abre el menú y tiene su propio nombre, "Más opciones de" seguido de la acción.</Anatomy.Part>
-        <Anatomy.Part name="Opciones" required>`SplitButton.Item`: las que casi nunca, adentro del menú que abre la flecha.</Anatomy.Part>
+        <Anatomy.Part name="Opciones" required>`SplitButton.Item`: acciones secundarias dentro del menú.</Anatomy.Part>
       </Anatomy>
 
       <Section title="Variantes">
@@ -49,18 +51,18 @@ export function SplitButtonStory() {
 </SplitButton>`}
           >
             <SplitButton size="sm">
-              <SplitButton.Action onClick={() => {}}>Publicar</SplitButton.Action>
-              <SplitButton.Item icon="draft" onSelect={() => {}}>Guardar como borrador</SplitButton.Item>
-              <SplitButton.Item icon="schedule" onSelect={() => {}}>Programar</SplitButton.Item>
+              <SplitButton.Action onClick={() => toast({ title: 'Acción seleccionada: Publicar', body: 'Demostración del menú de acciones.' })}>Publicar</SplitButton.Action>
+              <SplitButton.Item icon="draft" onSelect={() => toast({ title: 'Acción seleccionada: Guardar como borrador', body: 'Demostración del menú de acciones.' })}>Guardar como borrador</SplitButton.Item>
+              <SplitButton.Item icon="schedule" onSelect={() => toast({ title: 'Acción seleccionada: Programar', body: 'Demostración del menú de acciones.' })}>Programar</SplitButton.Item>
             </SplitButton>
             <SplitButton size="sm" variant="muted">
-              <SplitButton.Action onClick={() => {}}>Exportar</SplitButton.Action>
-              <SplitButton.Item onSelect={() => {}}>Como PDF</SplitButton.Item>
-              <SplitButton.Item onSelect={() => {}}>Como planilla</SplitButton.Item>
+              <SplitButton.Action onClick={() => toast({ title: 'Acción seleccionada: Exportar', body: 'Demostración del menú de acciones.' })}>Exportar</SplitButton.Action>
+              <SplitButton.Item onSelect={() => toast({ title: 'Acción seleccionada: Como PDF', body: 'Demostración del menú de acciones.' })}>Como PDF</SplitButton.Item>
+              <SplitButton.Item onSelect={() => toast({ title: 'Acción seleccionada: Como planilla', body: 'Demostración del menú de acciones.' })}>Como planilla</SplitButton.Item>
             </SplitButton>
             <SplitButton size="sm" variant="muted" disabled>
-              <SplitButton.Action onClick={() => {}}>Publicar</SplitButton.Action>
-              <SplitButton.Item icon="draft" onSelect={() => {}}>Guardar como borrador</SplitButton.Item>
+              <SplitButton.Action onClick={() => toast({ title: 'Acción seleccionada: Publicar', body: 'Demostración del menú de acciones.' })}>Publicar</SplitButton.Action>
+              <SplitButton.Item icon="draft" onSelect={() => toast({ title: 'Acción seleccionada: Guardar como borrador', body: 'Demostración del menú de acciones.' })}>Guardar como borrador</SplitButton.Item>
             </SplitButton>
           </Variant>
         </Panel>
@@ -73,7 +75,7 @@ export function SplitButtonStory() {
       <Section title="Cómo se usa bien">
         <Practices>
           <Practices.Do>La acción de adelante es la que se hace casi siempre; el resto va al menú.</Practices.Do>
-          <Practices.Dont>Si las dos acciones pesan lo mismo, van dos botones y se acabó.</Practices.Dont>
+          <Practices.Dont>Si las acciones tienen la misma importancia, usá dos botones.</Practices.Dont>
         </Practices>
       </Section>
 

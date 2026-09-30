@@ -2,12 +2,16 @@ import { render, screen, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeAll, describe, expect, it, vi } from 'vitest'
 import { AudioPlayer } from './audio-player'
+import { IconButton } from '../../../icon-button/icon-button'
+import { Tooltip } from '../../../tooltip/tooltip'
 
 const play = vi.fn(() => Promise.resolve())
 const pause = vi.fn()
+const reload = vi.fn()
 beforeAll(() => {
   HTMLMediaElement.prototype.play = play as unknown as HTMLMediaElement['play']
   HTMLMediaElement.prototype.pause = pause
+  HTMLMediaElement.prototype.load = reload
 })
 
 function load(dur = 90) {
@@ -67,11 +71,16 @@ describe('AudioPlayer', () => {
     expect(screen.getByText('0:07 / 1:30')).toBeInTheDocument()
   })
 
-  it('si el archivo no carga lo dice y apaga los controles', () => {
+  it('si el archivo no carga lo dice y permite volver a intentarlo', async () => {
     render(<AudioPlayer src="/no-existe.mp3" />)
     fireEvent.error(document.querySelector('audio')!)
     expect(screen.getByText('No se pudo cargar el audio')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Reproducir' })).toBeDisabled()
+    expect(screen.queryByRole('slider')).not.toBeInTheDocument()
+    await userEvent.click(screen.getByRole('button', { name: 'Reintentar la carga' }))
+    expect(reload).toHaveBeenCalled()
+    expect(screen.getByRole('status', { name: 'Cargando el audio' })).toBeInTheDocument()
+    load(90)
+    expect(screen.getByRole('button', { name: 'Reproducir' })).toBeEnabled()
   })
 
   it('mientras carga no afirma una duración que no sabe', () => {
@@ -120,8 +129,43 @@ describe('AudioPlayer', () => {
     expect(pause.mock.calls.length).toBe(paused + 1)
   })
 
+  it('conserva una acción de icono dentro de un tooltip', () => {
+    render(
+      <AudioPlayer src="/x.mp3">
+        <AudioPlayer.Actions>
+          <Tooltip label="Descargar">
+            <IconButton icon="download" label="Descargar el audio" />
+          </Tooltip>
+        </AudioPlayer.Actions>
+      </AudioPlayer>,
+    )
+    expect(screen.getByRole('button', { name: 'Descargar el audio' })).toBeInTheDocument()
+  })
+
   it('las acciones de al lado se muestran', () => {
     render(<AudioPlayer src="/x.mp3"><AudioPlayer.Actions><button type="button">Descargar</button></AudioPlayer.Actions></AudioPlayer>)
     expect(screen.getByRole('button', { name: 'Descargar' })).toBeInTheDocument()
+  })
+})
+
+
+describe('velocidad del audio', () => {
+  it('recorre las velocidades y vuelve a la normal sin reiniciar el tiempo', async () => {
+    render(<AudioPlayer src="/x.mp3" />)
+    const el = load(90)
+    el.currentTime = 20
+    for (const rate of [1.25, 1.5, 2, 1]) {
+      await userEvent.click(screen.getByRole('button', { name: /Velocidad de reproducción/ }))
+      expect(el.playbackRate).toBe(rate)
+      expect(el.currentTime).toBe(20)
+      expect(screen.getByRole('button', { name: /Velocidad de reproducción/ })).toHaveTextContent(`${rate}×`)
+    }
+  })
+
+  it('una duración no finita no habilita una búsqueda inválida', () => {
+    render(<AudioPlayer src="/x.mp3" />)
+    load(Infinity)
+    expect(screen.getByRole('slider')).toBeDisabled()
+    expect(screen.getByText('0:00 / --:--')).toBeInTheDocument()
   })
 })

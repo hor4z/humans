@@ -36,6 +36,6 @@
 
   .inputPad {
     margin-inline: calc(0.25rem * -2);
-    padding-inline: 0.5rem;
+    padding-inline: var(--space-2);
   }
 }

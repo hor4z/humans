@@ -19,7 +19,7 @@ export function ModalStory() {
       title="Modal"
       kind="Superficies"
       imports="import { Modal } from '@milo/ui/modal'"
-      lead="El diálogo centrado para lo que pide hacer algo: un formulario corto, unos ajustes, elegir. El ancho sale de tres, no de un número suelto."
+      lead="Abre un diálogo para una tarea breve, manteniendo el contexto de la página."
     >
       <Hero>
         <Button variant="muted" onClick={() => setHeroOpen(true)}>Abrir modal</Button>

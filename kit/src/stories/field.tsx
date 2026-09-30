@@ -20,7 +20,7 @@ export function FieldStory() {
       title="Field"
       kind="Formularios"
       imports="import { Field } from '@milo/ui/field'"
-      lead="Un campo suelto no es un formulario: le falta el nombre, la ayuda y el error, y los tres tienen que estar atados al control para que un lector de pantalla los lea con él. `Field` hace ese trabajo una vez y en un solo lugar."
+      lead="Asocia una etiqueta, una ayuda y un mensaje de error con un control de formulario."
     >
       <Hero>
         <Stack gap="xl" width="md">

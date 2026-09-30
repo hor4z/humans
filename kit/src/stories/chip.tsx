@@ -6,6 +6,8 @@ import { labelColors } from '@milo/ui/lib/colors'
 import { A11y, Anatomy, Cluster, Demo, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function ChipStory() {
+  const [selected, setSelected] = useState('')
+  const [showRemovable, setShowRemovable] = useState(true)
   const [chips, setChips] = useState(['Indagación', 'Proyecto', 'Taller'])
   const [subjects, setSubjects] = useState([{ name: 'Matemática', color: 'blue' as const }, { name: 'Lengua', color: 'pink' as const }])
 
@@ -14,7 +16,7 @@ export function ChipStory() {
       title="Chip"
       kind="Datos"
       imports="import { Chip } from '@milo/ui/chip'"
-      lead="La marca chica de texto, y hay una sola. Dice en qué estado está una actividad, o nombra una categoría, un método o una persona. Siempre con texto: un punto de color no dice el estado, y menos para quien no distingue colores."
+      lead="Identifica un estado, una categoría o una selección mediante texto y un color de apoyo."
     >
       <Hero>
         <Chip>Borrador</Chip>
@@ -22,7 +24,7 @@ export function ChipStory() {
         <Chip color="warn" icon="schedule">Vence mañana</Chip>
         <Chip color="blue" dot>En curso</Chip>
         <Chip avatar={{ name: 'Ana Pérez', src: '/avatars/04.webp' }}>Ana Pérez</Chip>
-        <Chip color="pink" onRemove={() => {}}>Lengua</Chip>
+        {showRemovable && <Chip color="pink" onRemove={() => setShowRemovable(false)}>Lengua</Chip>}
       </Hero>
 
       <Anatomy>
@@ -90,21 +92,21 @@ export function ChipStory() {
             name="activo, clickeable y removible"
             note="Sin `onClick` ni `onRemove` es un texto; con uno, un botón; con los dos, dos botones hermanos."
             code={`<Chip active>Elegido</Chip>
-<Chip onClick={openFilter}>Se toca</Chip>
+<Chip active={selected === 'chip'} onClick={() => setSelected(selected === 'chip' ? '' : 'chip')}>Se toca</Chip>
 {chips.map(c => (
   <Chip key={c} onRemove={() => setChips(cs => cs.filter(x => x !== c))}>{c}</Chip>
 ))}
 {subjects.map(x => (
-  <Chip key={x.name} color={x.color} onClick={openSubject} onRemove={() => removeSubject(x)}>{x.name}</Chip>
+  <Chip key={x.name} color={x.color} active={selected === x.name} onClick={() => setSelected(x.name)} onRemove={() => removeSubject(x)}>{x.name}</Chip>
 ))}`}
           >
             <Chip active>Elegido</Chip>
-            <Chip onClick={() => {}}>Se toca</Chip>
+            <Chip active={selected === 'chip'} onClick={() => setSelected(selected === 'chip' ? '' : 'chip')}>Se toca</Chip>
             {chips.map(c => (
               <Chip key={c} onRemove={() => setChips(cs => cs.filter(x => x !== c))}>{c}</Chip>
             ))}
             {subjects.map(x => (
-              <Chip key={x.name} color={x.color} onClick={() => {}} onRemove={() => setSubjects(xs => xs.filter(y => y !== x))}>{x.name}</Chip>
+              <Chip key={x.name} color={x.color} active={selected === x.name} onClick={() => setSelected(x.name)} onRemove={() => setSubjects(xs => xs.filter(y => y !== x))}>{x.name}</Chip>
             ))}
             {chips.length === 0 && <span className={cls.emptyNote}>se fueron todos: recargá para volver a verlos</span>}
           </Variant>

@@ -36,7 +36,7 @@ function Root({ required, children, className }: FieldProps) {
   const labelId = `${id}-label`
   const hintId = `${id}-hint`
   const errorId = `${id}-error`
-  const describedBy = [hint.length && hintId, error.length && errorId].filter(Boolean).join(' ') || undefined
+  const describedBy = [hint.length && !error.length && hintId, error.length && errorId].filter(Boolean).join(' ') || undefined
 
   return (
     <FieldCtx.Provider value={{ id, labelId, describedBy, invalid: error.length > 0 }}>

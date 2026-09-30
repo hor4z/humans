@@ -17,7 +17,7 @@ export function NumbersSection() {
     <Page
       title="Números y valores"
       kind="Fundamentos"
-      lead="En un producto donde se corrige, se mide y se calcula, un número mal escrito se lee como otro número. La coma es el decimal y el punto separa los miles, que es como se escribe acá: un 1,250 escrito a mano se lee 1250 en media América y 1,25 en la otra. Las funciones están en [Utilidades](#utilidades), con lo que devuelve cada una."
+      lead="Números con formato argentino: coma decimal y punto de miles. Consultá las funciones en [Utilidades](#utilidades)."
     >
       <Section
         title="Cuál va"

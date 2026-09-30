@@ -22,7 +22,7 @@ export function LayoutSection() {
     <Page
       title="Layout"
       kind="Fundamentos"
-      lead="Dónde se apoya cada cosa: el mueble de la pantalla, los cuatro cortes y las dos reglas que rompen una grilla cuando faltan."
+      lead="Grillas, anchos de lectura y puntos de quiebre para organizar pantallas adaptables."
     >
       <Section
         title="Cuatro cortes, y cada uno hace algo distinto"

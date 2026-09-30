@@ -41,7 +41,7 @@ export function ChartStory() {
       title="BarChart"
       kind="Datos"
       imports="import { BarChart } from '@milo/ui/chart'"
-      lead="Cada barra son dos cosas: el gris es el total y el azul es lo hecho, una parte adentro de su todo. Apoyados uno al lado del otro habría que compararlos a ojo; metido adentro, lo que falta es el gris que sobra arriba."
+      lead="Compara cantidades con barras. Cuando hay un total, muestra el avance dentro de ese total."
     >
       <Hero>
         <Card className={cls.plainCard}>

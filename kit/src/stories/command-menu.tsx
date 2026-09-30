@@ -47,7 +47,7 @@ export function CommandMenuStory() {
       title="CommandMenu"
       kind="Editor"
       imports="import { CommandMenu } from '@milo/ui/blocks/editor/command-menu'"
-      lead="La lista de comandos: se escribe, se filtra y se elige con las flechas. Es el menú que abre la barra en un editor, y la paleta de atajos de una app."
+      lead="Permite buscar y ejecutar comandos con el teclado o el puntero."
     >
       <Hero>
         <Stack align="start">

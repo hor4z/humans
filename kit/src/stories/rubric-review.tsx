@@ -70,7 +70,7 @@ export function RubricReviewStory() {
       title="RubricReview"
       kind="Rúbrica"
       imports="import { RubricReview } from '@milo/ui/blocks/rubric/rubric-review'"
-      lead="Cómo le fue a un trabajo contra su rúbrica: qué cumplió de cada aspecto y qué le dijeron. La misma pieza sirve para corregir y para leer la devolución, porque es la misma información vista desde los dos lados."
+      lead="Permite evaluar un trabajo con una rúbrica y consultar la devolución."
     >
       <Hero>
         <Stack width="sm">

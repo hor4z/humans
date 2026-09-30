@@ -15,8 +15,8 @@ const roles = [
 
 const weights = [
   ['--font-weight-medium', '400', 'La interfaz.'],
-  ['--font-weight-semibold', '500', 'Lo elegido y los títulos. Lo lleva el elegido, no la lista. Con 400 de base, 500 alcanza para la jerarquía sin verse como negrita.'],
-  ['--font-weight-bold', '600', 'Solo portada.'],
+  ['--font-weight-semibold', '600', 'Títulos, etiquetas y acciones. Se distingue del cuerpo en 400 incluso en tamaños pequeños.'],
+  ['--font-weight-bold', '700', 'Solo portada.'],
 ] as const
 
 const rules = [
@@ -41,7 +41,7 @@ export function TypographySection() {
     <Page
       title="Tipografía"
       kind="Fundamentos"
-      lead="Una familia (Inter) y siete roles, cada uno con tamaño, interlineado y tracking juntos. La base es 14 y hay un escalón de 16 para lo que se lee de corrido."
+      lead="Inter y siete roles tipográficos que combinan tamaño, interlineado y espaciado. Base de 14 px y lectura continua de 16 px."
     >
       <Section title="Los siete roles" note="El rol escribe los tres valores de una: por separado se despegan.">
         <div tabIndex={0} role="region" aria-label="La escala de texto" className={`${css.roleList} bg-surface`}>

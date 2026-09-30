@@ -7,7 +7,7 @@ export function QuoteStory() {
       title="Quote"
       kind="Editor"
       imports="import { Quote } from '@milo/ui/blocks/editor/quote'"
-      lead="Palabras de otro: lo que dijo alguien, un fragmento de un texto, la respuesta de un estudiante que vale leer en clase."
+      lead="Destaca una cita y, cuando corresponde, identifica su fuente."
     >
       <Hero>
         <Stack width="xl">

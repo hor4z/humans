@@ -22,7 +22,7 @@ export function ReorderStory() {
       title="Reorder"
       kind="Navegación"
       imports="import { Reorder } from '@milo/ui/reorder'"
-      lead="Una lista que cambia de orden: los bloques de una consigna, las etapas de una entrega. Se arrastra con el dedo o el mouse, y se mueve con el teclado."
+      lead="Permite cambiar el orden de una lista con el puntero o el teclado."
     >
       <Hero>
         <Frame width="lg">

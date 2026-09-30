@@ -39,7 +39,7 @@
   }
 
   .padSm {
-    padding-inline: 1rem;
+    padding-inline: var(--space-4);
   }
 
   .textSm {
@@ -49,7 +49,7 @@
   }
 
   .gapSm {
-    gap: 0.5rem;
+    gap: var(--space-2);
   }
 
   .radiusSm {
@@ -67,7 +67,7 @@
   }
 
   .padMd {
-    padding-inline: 1.25rem;
+    padding-inline: var(--space-5);
   }
 
   .textMd {
@@ -77,7 +77,7 @@
   }
 
   .gapMd {
-    gap: 0.5rem;
+    gap: var(--space-2);
   }
 
   .radiusMd {
@@ -95,7 +95,7 @@
   }
 
   .padLg {
-    padding-inline: 1.5rem;
+    padding-inline: var(--space-6);
   }
 
   .textLg {
@@ -105,7 +105,7 @@
   }
 
   .gapLg {
-    gap: 0.5rem;
+    gap: var(--space-2);
   }
 
   .radiusLg {
@@ -115,9 +115,9 @@
 
   .fieldSm {
     height: 2.25rem;
-    gap: 0.75rem;
+    gap: var(--space-3);
     border-radius: var(--radius-md);
-    padding-inline: 0.75rem;
+    padding-inline: var(--space-3);
     font-size: var(--type-body);
     line-height: var(--type-body-lh);
     letter-spacing: var(--type-body-ls);
@@ -125,9 +125,9 @@
 
   .fieldMd {
     height: 2.5rem;
-    gap: 0.75rem;
+    gap: var(--space-3);
     border-radius: var(--radius-lg);
-    padding-inline: 0.75rem;
+    padding-inline: var(--space-3);
     font-size: var(--type-body);
     line-height: var(--type-body-lh);
     letter-spacing: var(--type-body-ls);
@@ -135,9 +135,9 @@
 
   .fieldLg {
     height: 2.75rem;
-    gap: 0.75rem;
+    gap: var(--space-3);
     border-radius: var(--radius-lg);
-    padding-inline: 0.75rem;
+    padding-inline: var(--space-3);
     font-size: var(--type-body);
     line-height: var(--type-body-lh);
     letter-spacing: var(--type-body-ls);

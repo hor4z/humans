@@ -13,7 +13,7 @@ export function SegmentedStory() {
       title="Segmented"
       kind="Formularios"
       imports="import { Segmented } from '@milo/ui/segmented'"
-      lead="Elegir una entre pocas opciones que se comparan de un vistazo: un filtro de texto o el conmutador de grilla y lista."
+      lead="Permite elegir entre pocas opciones relacionadas que conviene mantener visibles."
     >
       <Hero>
         <Segmented label="Filtro" value={filter} onValueChange={setFilter}

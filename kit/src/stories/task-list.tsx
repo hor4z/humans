@@ -17,7 +17,7 @@ export function TaskListStory() {
       title="TaskList"
       kind="Editor"
       imports="import { TaskList } from '@milo/ui/blocks/editor/task-list'"
-      lead="Cosas para hacer que se marcan al hacerlas: los pasos de una entrega, lo que falta de una actividad, el checklist de un experimento."
+      lead="Organiza tareas que se pueden marcar como completadas."
     >
       <Hero>
         <Stack width="lg">

@@ -3,6 +3,7 @@ import { useRef, type ComponentPropsWithoutRef, type Ref } from 'react'
 import { Icon } from '../icon/icon'
 import { Kbd } from '../kbd/kbd'
 import { TextField } from '../text-field/text-field'
+import { useField } from '../lib/field-ctx'
 import { cx } from '../lib/cx'
 
 type SearchProps = Omit<ComponentPropsWithoutRef<'input'>, 'size' | 'onChange' | 'value'> & {
@@ -27,6 +28,7 @@ export function Search({
   value, onValueChange, placeholder, size = 'md',
   shortcut, block, className, ref, ...rest
 }: SearchProps) {
+  const field = useField()
   const boxRef = useRef<HTMLDivElement>(null)
   const focusInput = () => boxRef.current?.querySelector('input')?.focus()
 
@@ -39,6 +41,7 @@ export function Search({
       value={value}
       onValueChange={onValueChange}
       placeholder={placeholder}
+      aria-label={field.id ? undefined : placeholder}
       className={cx(block ? cls.root : cls.inline, className)}
       suffix={value
         ? (

@@ -26,13 +26,20 @@ const longPeaks = [
 const AUDIO = '/audio/consigna.mp3'
 const LONG = '/audio/explicacion.mp3'
 
+function downloadAudio() {
+  const link = document.createElement('a')
+  link.href = AUDIO
+  link.download = 'consigna.mp3'
+  link.click()
+}
+
 export function AudioPlayerStory() {
   return (
     <Page
       title="AudioPlayer"
       kind="Medios"
       imports="import { AudioPlayer } from '@milo/ui/blocks/media/audio-player'"
-      lead="Un archivo de audio con su onda: play, una línea de tiempo que se arrastra y el reloj. Para una consigna grabada o la devolución hablada de una corrección."
+      lead="Reproduce un archivo de audio con controles de pausa, posición y velocidad. Puede mostrar la onda del archivo."
     >
       <Hero>
         <Stack width="lg">
@@ -42,10 +49,11 @@ export function AudioPlayerStory() {
       </Hero>
 
       <Anatomy>
-        <Anatomy.Part name="Botón de reproducir" required>Play y pausa, en un solo botón que cambia de nombre según lo que va a hacer.</Anatomy.Part>
-        <Anatomy.Part name="Onda">Con `peaks`: es el archivo y no un adorno, los huecos son las pausas entre frases. Sin `peaks` va una pista pelada, porque no se inventa una onda que no es la de ese audio.</Anatomy.Part>
-        <Anatomy.Part name="Línea de tiempo" required>Se arrastra para saltar a un lugar del archivo, y viaja encima de la onda.</Anatomy.Part>
-        <Anatomy.Part name="Reloj" required>El tiempo que va y el total.</Anatomy.Part>
+        <Anatomy.Part name="Botón de reproducir" required>Play y pausa en un botón circular destacado. Si falla la carga, cambia a reintentar.</Anatomy.Part>
+        <Anatomy.Part name="Onda">`peaks` representa la amplitud real del archivo. Si se omite, se muestra una pista simple.</Anatomy.Part>
+        <Anatomy.Part name="Línea de tiempo" required>Permite cambiar la posición con el puntero o las flechas del teclado.</Anatomy.Part>
+        <Anatomy.Part name="Reloj" required>Muestra el tiempo transcurrido y la duración total.</Anatomy.Part>
+        <Anatomy.Part name="Velocidad">El botón visible recorre 1×, 1.25×, 1.5× y 2×, sin perder la posición.</Anatomy.Part>
         <Anatomy.Part name="Acciones">`AudioPlayer.Actions`: lo que va al costado, como descargar o borrar.</Anatomy.Part>
       </Anatomy>
 
@@ -57,17 +65,24 @@ export function AudioPlayerStory() {
           <AudioPlayer src={AUDIO} peaks={peaks} />
           <AudioPlayer src={AUDIO} peaks={peaks} size="lg" />
         </Demo>
-        <Demo label="Con una acción al costado" width="lg" fill code={`<AudioPlayer src="/audio/consigna.mp3" title="Devolución para Ana Pérez" peaks={peaks}>
+        <Demo label="Con una acción al costado" width="lg" fill code={`function downloadAudio() {
+  const link = document.createElement('a')
+  link.href = '/audio/consigna.mp3'
+  link.download = 'consigna.mp3'
+  link.click()
+}
+
+<AudioPlayer src="/audio/consigna.mp3" title="Devolución para Ana Pérez" peaks={peaks}>
   <AudioPlayer.Actions>
     <Tooltip label="Descargar">
-      <IconButton icon="download" label="Descargar el audio" size="sm" />
+      <IconButton icon="download" label="Descargar el audio" size="sm" onClick={downloadAudio} />
     </Tooltip>
   </AudioPlayer.Actions>
 </AudioPlayer>`}>
           <AudioPlayer src={AUDIO} title="Devolución para Ana Pérez" peaks={peaks}>
             <AudioPlayer.Actions>
               <Tooltip label="Descargar">
-                <IconButton icon="download" label="Descargar el audio" size="sm" />
+                <IconButton icon="download" label="Descargar el audio" size="sm" onClick={downloadAudio} />
               </Tooltip>
             </AudioPlayer.Actions>
           </AudioPlayer>
@@ -80,7 +95,7 @@ export function AudioPlayerStory() {
           <AudioPlayer src={AUDIO} title="Devolución para Ana Pérez" peaks={peaks} size="sm" />
           <AudioPlayer src={LONG} title="Devolución para Bruno Díaz" peaks={longPeaks} size="sm" />
         </Demo>
-        <Demo label="Cuando el archivo no está lo dice con palabras y apaga lo que no se puede usar" width="lg" fill code={`<AudioPlayer src="/audio/no-existe.mp3" title="Consigna · Matemática 4.º A" />`}>
+        <Demo label="Si falla la carga, explica qué pasó y permite reintentar" width="lg" fill code={`<AudioPlayer src="/audio/no-existe.mp3" title="Consigna · Matemática 4.º A" />`}>
           <AudioPlayer src="/audio/no-existe.mp3" title="Consigna · Matemática 4.º A" />
         </Demo>
       </Section>
@@ -104,8 +119,9 @@ export function AudioPlayerStory() {
           <A11y.Item>El botón cambia de nombre según lo que va a hacer: "Reproducir" y "Pausar".</A11y.Item>
           <A11y.Item>La línea de tiempo es un `slider` de verdad: flechas, Home, End y las dos de página, todas del navegador.</A11y.Item>
           <A11y.Item>El `aria-valuetext` dice "0:45 de 1:30" y no "45": un número suelto no significa nada cuando el rango es un archivo.</A11y.Item>
+          <A11y.Item>La velocidad se cambia con un botón cuyo nombre accesible incluye el valor actual. La onda tiene al menos 44 px de área táctil.</A11y.Item>
           <A11y.Item>La onda va `aria-hidden` y el significado lo lleva el slider. Escuchar la forma (lo que un gráfico resolvería con un audio graph) acá ya lo hace el botón de play.</A11y.Item>
-          <A11y.Item>Mientras carga hay un `status` que lo anuncia; si el archivo no está, el error va en texto y no solo en el color del borde.</A11y.Item>
+          <A11y.Item>Mientras carga hay un `status` que lo anuncia; el error también se anuncia y ofrece un botón para reintentar.</A11y.Item>
         </A11y>
       </Section>
     </Page>

@@ -8,7 +8,7 @@ export function IndicatorStory() {
     <Page
       title="Indicator"
       kind="Datos"
-      lead="Una marca chica pegada a la esquina de otra cosa. Envuelve a la que sí es una pieza (un botón, un avatar, una carpeta) y le agrega un punto, un contador o un glifo sin cambiarla."
+      lead="Añade un punto, un contador o un icono de estado a otro elemento."
       imports="import { Indicator } from '@milo/ui/indicator'"
     >
       <Hero>

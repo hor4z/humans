@@ -7,7 +7,7 @@ export function ProgressStory() {
       title="Progress"
       kind="Datos"
       imports="import { Progress } from '@milo/ui/progress'"
-      lead="Cuánto va hecho de algo que tiene un final. La pista es el resto y va clarísima: con el mismo peso que el relleno, la barra se lee como dos datos apilados y no como una parte de un todo."
+      lead="Muestra el avance de una tarea con un total conocido."
     >
       <Hero>
         <Stack gap="xl" width="md">

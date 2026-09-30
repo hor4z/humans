@@ -12,7 +12,7 @@ export function IconButtonStory() {
       kind="Acciones"
       imports="import { IconButton } from '@milo/ui/icon-button'
 import { Indicator } from '@milo/ui/indicator'"
-      lead="Un botón que es solo un glifo, cuadrado del alto de su paso: al lado de un `Button` del mismo `size` apoya en la misma línea sin que nadie lo calcule. El radio es 10 y no el 12 del `Button`, porque sobre un cuadrado chico esos dos píxeles lo hacen leerse redondo."
+      lead="Ejecuta una acción mediante un icono. Requiere un nombre accesible que describa esa acción."
     >
       <Hero>
         <IconButton icon="tune" label="Ajustes" />

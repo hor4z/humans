@@ -9,7 +9,7 @@ export function AvatarStory() {
       title="Avatar"
       kind="Datos"
       imports="import { Avatar } from '@milo/ui/avatar'"
-      lead="Una persona en el lugar de un nombre. Con foto o con la inicial sobre una etiqueta de color, y las dos pesan lo mismo: en una fila donde algunos subieron foto y otros no, el que no subió no puede leerse como un error."
+      lead="Identifica a una persona con su foto o sus iniciales. Ambas variantes comparten tamaño y jerarquía."
     >
       <Hero>
         <Avatar name="Horacio Rivero" size={44} />

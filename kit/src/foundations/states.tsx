@@ -26,7 +26,7 @@ export function StatesSection() {
     <Page
       title="Estados"
       kind="Fundamentos"
-      lead="Lo que una pieza hace cuando algo le pasa: se toca, se está cargando, se rompió, no tiene nada adentro. Es la mitad de la experiencia y la mitad que se documenta menos, porque la pantalla del caso feliz es la que se dibuja primero."
+      lead="Estados de interacción, carga, error y contenido vacío, con respuestas visuales y textuales consistentes."
     >
       <Section
         title="La regla que ordena todo esto"
@@ -189,7 +189,7 @@ function Live() {
           <Button variant="ghost" disabled={off}>Descartar</Button>
         </div>
         <div className={cls.playgroundFieldRow}>
-          <TextField placeholder="Nombre de la actividad" disabled={off} />
+          <TextField aria-label="Nombre de la actividad" placeholder="Nombre de la actividad" disabled={off} />
           <Chip color="green" icon="check">Corregida</Chip>
           <Chip color="orange" dot>En curso</Chip>
         </div>

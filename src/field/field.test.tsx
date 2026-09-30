@@ -31,6 +31,9 @@ describe('Field', () => {
     const field = screen.getByRole('textbox')
     expect(field).toHaveAttribute('aria-invalid', 'true')
     expect(field).toHaveAccessibleDescription('Poné un nombre')
+    for (const id of field.getAttribute('aria-describedby')!.split(' ')) {
+      expect(document.getElementById(id)).not.toBeNull()
+    }
     expect(screen.queryByText('Lo ven los estudiantes')).not.toBeInTheDocument()
   })
 

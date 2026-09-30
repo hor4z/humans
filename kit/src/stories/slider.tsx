@@ -13,7 +13,7 @@ export function SliderStory() {
       title="Slider"
       kind="Formularios"
       imports="import { Slider } from '@milo/ui/slider'"
-      lead="Para elegir un valor dentro de un rango, cuando lo que importa es más o menos y no el número exacto."
+      lead="Permite ajustar un valor dentro de un rango cuando importa más la aproximación que la precisión."
     >
       <Hero>
         <Frame width="sm">
