@@ -82,7 +82,6 @@ strong, b { font-weight: var(--font-weight-semibold); }
   inherits: false;
 }
 
-.pressed { --relief: var(--relief-pressed); box-shadow: var(--relief); }
 
 .inset-relief { --relief: var(--relief-inset); box-shadow: var(--relief); }
 

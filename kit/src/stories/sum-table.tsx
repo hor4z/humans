@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { SumTable, type SumCell } from '@milo/ui/sum-table'
+import { SumTable, type SumCell } from '@milo/ui/blocks/task/sum-table'
 import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const gastos = [
@@ -21,8 +21,8 @@ export function SumTableStory() {
   return (
     <Page
       title="SumTable"
-      kind="Datos"
-      imports="import { SumTable } from '@milo/ui/sum-table'"
+      kind="Consigna"
+      imports="import { SumTable } from '@milo/ui/blocks/task/sum-table'"
       lead="Una tabla que se completa y se suma sola: un presupuesto, una lista de materiales, un costeo. El total no se escribe, y por eso no puede estar mal sumado."
     >
       <Section

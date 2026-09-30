@@ -86,6 +86,24 @@
     padding-bottom: 1rem;
   }
 
+  .railSection {
+    margin-top: 1rem;
+    & + & {
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+  }
+
+  .railSectionLabel {
+    padding-inline: 0.5rem;
+    font-size: var(--type-body);
+    line-height: var(--type-body-lh);
+    letter-spacing: var(--type-body-ls);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text);
+  }
+
   .navGroup {
     margin-top: 1.25rem;
     &:first-child {

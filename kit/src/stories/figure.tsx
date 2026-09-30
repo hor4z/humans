@@ -1,5 +1,5 @@
 import s from './figure.module.css'
-import { Figure } from '@milo/ui/figure'
+import { Figure } from '@milo/ui/blocks/editor/figure'
 import { A11y, Example, Note, Page, Practices, Props, Section } from '../kit'
 
 export function FigureStory() {
@@ -7,7 +7,7 @@ export function FigureStory() {
     <Page
       title="Figure"
       kind="Editor"
-      imports="import { Figure } from '@milo/ui/figure'"
+      imports="import { Figure } from '@milo/ui/blocks/editor/figure'"
       lead="Una imagen con su pie: lo que ilustra una consigna, la foto de un experimento, el gráfico que alguien dibujó a mano."
     >
       <Section

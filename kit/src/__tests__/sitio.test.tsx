@@ -2,7 +2,7 @@ import { render, screen, act } from '@testing-library/react'
 import { beforeAll, describe, expect, it } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { PrefsProvider } from '@milo/ui/prefs'
+import { PrefsProvider } from '../demo/prefs/prefs'
 import { App } from '../app'
 
 const app = readFileSync(join(import.meta.dirname, '../app.tsx'), 'utf8')

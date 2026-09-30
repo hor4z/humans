@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { OpenQuestion } from '@milo/ui/open-question'
+import { OpenQuestion } from '@milo/ui/blocks/task/open-question'
 import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 export function OpenQuestionStory() {
@@ -8,8 +8,8 @@ export function OpenQuestionStory() {
   return (
     <Page
       title="OpenQuestion"
-      kind="Formularios"
-      imports="import { OpenQuestion } from '@milo/ui/open-question'"
+      kind="Consigna"
+      imports="import { OpenQuestion } from '@milo/ui/blocks/task/open-question'"
       lead="Una pregunta que se responde escribiendo. No la corrige nadie solo: lo que se escribe acá lo lee una persona, y por eso la pieza no tiene noción de respuesta correcta."
     >
       <Section

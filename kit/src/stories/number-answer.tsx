@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Button } from '@milo/ui/button'
-import { NumberAnswer } from '@milo/ui/number-answer'
+import { NumberAnswer } from '@milo/ui/blocks/task/number-answer'
 import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 export function NumberAnswerStory() {
@@ -10,8 +10,8 @@ export function NumberAnswerStory() {
   return (
     <Page
       title="NumberAnswer"
-      kind="Formularios"
-      imports="import { NumberAnswer } from '@milo/ui/number-answer'"
+      kind="Consigna"
+      imports="import { NumberAnswer } from '@milo/ui/blocks/task/number-answer'"
       lead="Un número que sale de una cuenta: un promedio, una diferencia, una métrica. La tolerancia existe porque una medición no da siempre lo mismo, así que la respuesta es un rango y no un valor."
     >
       <Section

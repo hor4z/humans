@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { SelfAssessment, type Criterion } from '@milo/ui/self-assessment'
+import { SelfAssessment, type Criterion } from '@milo/ui/blocks/rubric/self-assessment'
 import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const criteria: Criterion[] = [
@@ -47,8 +47,8 @@ export function SelfAssessmentStory() {
   return (
     <Page
       title="SelfAssessment"
-      kind="Datos"
-      imports="import { SelfAssessment } from '@milo/ui/self-assessment'"
+      kind="Rúbrica"
+      imports="import { SelfAssessment } from '@milo/ui/blocks/rubric/self-assessment'"
       lead="Dónde se ubica quien entrega, aspecto por aspecto, contra la misma rúbrica con la que lo van a mirar. No es la nota que se va a sacar: es para ver qué falta antes de entregar."
     >
       <Section

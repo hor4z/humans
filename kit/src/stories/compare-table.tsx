@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CompareTable } from '@milo/ui/compare-table'
+import { CompareTable } from '@milo/ui/blocks/task/compare-table'
 import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const frentes = [
@@ -26,8 +26,8 @@ export function CompareTableStory() {
   return (
     <Page
       title="CompareTable"
-      kind="Datos"
-      imports="import { CompareTable } from '@milo/ui/compare-table'"
+      kind="Consigna"
+      imports="import { CompareTable } from '@milo/ui/blocks/task/compare-table'"
       lead="Un cuadro comparativo que se completa: dos o tres cosas en las columnas, en qué se las mira en los renglones. La grilla es de quien arma la consigna y las celdas son de quien la resuelve."
     >
       <Section

@@ -96,7 +96,6 @@ export function ColorSection() {
         <div className={cls.blueRamp}>
           <Swatch token="--brand" note="el relleno del botón que manda" />
           <Swatch token="--brand-hover" note="el mismo, un paso más" />
-          <Swatch token="--brand-edge" note="el filo y el labio" />
           <Swatch token="--brand-soft" note="el fondo de lo elegido" />
           <Swatch token="--brand-ink" note="la tinta sobre el suave" />
           <Swatch token="--brand-border" note="la línea de una pieza de marca" />

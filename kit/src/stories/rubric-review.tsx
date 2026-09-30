@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { RubricReview, type Criterion, type Mark } from '@milo/ui/rubric-review'
+import { RubricReview, type Criterion, type Mark } from '@milo/ui/blocks/rubric/rubric-review'
 import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const criteria: Criterion[] = [
@@ -68,8 +68,8 @@ export function RubricReviewStory() {
   return (
     <Page
       title="RubricReview"
-      kind="Datos"
-      imports="import { RubricReview } from '@milo/ui/rubric-review'"
+      kind="Rúbrica"
+      imports="import { RubricReview } from '@milo/ui/blocks/rubric/rubric-review'"
       lead="Cómo le fue a un trabajo contra su rúbrica: qué cumplió de cada aspecto y qué le dijeron. La misma pieza sirve para corregir y para leer la devolución, porque es la misma información vista desde los dos lados."
     >
       <Section

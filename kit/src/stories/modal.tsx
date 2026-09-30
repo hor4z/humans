@@ -3,7 +3,7 @@ import { Button } from '@milo/ui/button'
 import { Field } from '@milo/ui/field'
 import { Icon } from '@milo/ui/icon'
 import { Modal } from '@milo/ui/modal'
-import { SettingsModal } from '@milo/ui/settings-modal'
+import { SettingsModal } from '../demo/settings-modal/settings-modal'
 import { TextField } from '@milo/ui/text-field'
 import { A11y, Demo, Example, Grid, Note, Page, Practices, Props, Section } from '../kit'
 

@@ -1,11 +1,14 @@
 /** Saca la tabla de props de cada pieza del código: el tipo y el default del componente, la descripción del docblock de la prop. Con `--check` falla si lo escrito quedó viejo. */
 import ts from 'typescript'
-import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs'
+import { readFileSync, writeFileSync, statSync } from 'node:fs'
+import { pieces, demos } from './pieces.mjs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const src = join(dirname(fileURLToPath(import.meta.url)), '../src')
+const kitSrc = join(src, '../kit/src')
 const out = join(src, 'props.gen.ts')
+const siteOut = join(kitSrc, 'demo/props.gen.ts')
 
 /** Lo que el kit necesita de una prop para dibujar su fila. */
 const extract = (file) => {
@@ -158,19 +161,16 @@ const extract = (file) => {
   return pieces
 }
 
-const folders = readdirSync(src)
-  .filter(f => statSync(join(src, f)).isDirectory())
-  .filter(f => f !== '__tests__' && f !== 'lib' && f !== 'assets')
-  .sort()
-
 const todo = {}
-for (const c of folders) {
-  const file = join(src, c, `${c}.tsx`)
-  try { statSync(file) } catch { continue }
-  Object.assign(todo, extract(file))
+for (const p of pieces(src).sort((a, b) => a.name.localeCompare(b.name))) if (p.file?.endsWith('.tsx')) Object.assign(todo, extract(p.file))
+
+const site = {}
+for (const d of demos(kitSrc)) {
+  try { statSync(d.file) } catch { continue }
+  Object.assign(site, extract(d.file))
 }
 
-const body = `/* Generado por scripts/props.mjs: no se edita a mano.
+const render = (map) => `/* Generado por scripts/props.mjs: no se edita a mano.
    La descripción de cada prop vive en su docblock, al lado del tipo. */
 
 export type PropDoc = {
@@ -188,17 +188,25 @@ export type ComponentDoc = {
   doc?: string
 }
 
-export const propsByComponent: Record<string, ComponentDoc> = ${JSON.stringify(todo, null, 2)}
+export const propsByComponent: Record<string, ComponentDoc> = ${JSON.stringify(map, null, 2)}
 `
 
+const siteBody = `/* Generado por scripts/props.mjs: no se edita a mano. */
+
+import type { ComponentDoc } from '@milo/ui/props'
+
+export const sitePropsByComponent: Record<string, ComponentDoc> = ${JSON.stringify(site, null, 2)}
+`
+const outputs = [[out, render(todo)], [siteOut, siteBody]]
+
 if (process.argv.includes('--check')) {
-  const stale = readFileSync(out, 'utf8')
-  if (stale !== body) {
-    console.error('✗ props.gen.ts quedó viejo: corré `npm run props -w @milo/ui`')
+  const stale = outputs.filter(([file, body]) => { try { return readFileSync(file, 'utf8') !== body } catch { return true } })
+  if (stale.length) {
+    console.error('✗ props.gen.ts quedó viejo: corré `npm run props`')
     process.exit(1)
   }
-  console.log(`✓ props.gen.ts al día (${Object.keys(todo).length} piezas)`)
+  console.log(`✓ props.gen.ts al día (${Object.keys(todo).length} piezas, ${Object.keys(site).length} del sitio)`)
 } else {
-  writeFileSync(out, body)
-  console.log(`✓ ${Object.keys(todo).length} piezas, ${Object.values(todo).flatMap(p => p.props).length} props`)
+  for (const [file, body] of outputs) writeFileSync(file, body)
+  console.log(`✓ ${Object.keys(todo).length} piezas, ${Object.values(todo).flatMap(p => p.props).length} props, ${Object.keys(site).length} del sitio`)
 }

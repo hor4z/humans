@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CriterionCard, type Criterion } from '@milo/ui/criterion-card'
+import { CriterionCard, type Criterion } from '@milo/ui/blocks/rubric/criterion-card'
 import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const grafico: Criterion = {
@@ -35,8 +35,8 @@ export function CriterionCardStory() {
   return (
     <Page
       title="CriterionCard"
-      kind="Datos"
-      imports="import { CriterionCard } from '@milo/ui/criterion-card'"
+      kind="Rúbrica"
+      imports="import { CriterionCard } from '@milo/ui/blocks/rubric/criterion-card'"
       lead="Un aspecto adentro de una rúbrica: la marca, el nombre y, plegados, sus renglones. Cerrada ocupa una fila, así que una rúbrica de ocho aspectos mide lo mismo que una de dos."
     >
       <Section

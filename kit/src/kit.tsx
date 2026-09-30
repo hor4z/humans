@@ -7,7 +7,10 @@ import type { LabelColor } from '@milo/ui/lib/colors'
 import { toneIcon, toneInk, toneSurface, type Tone } from '@milo/ui/lib/tone'
 import { Icon, type IconName } from '@milo/ui/icon'
 import { cx } from '@milo/ui/lib/cx'
-import { propsByComponent } from '@milo/ui/props'
+import { propsByComponent as packageProps } from '@milo/ui/props'
+import { sitePropsByComponent } from './demo/props.gen'
+
+const propsByComponent = { ...packageProps, ...sitePropsByComponent }
 
 export function useTokens(names: readonly string[]) {
   const [vals, setVals] = useState<Record<string, string>>({})
@@ -79,6 +82,10 @@ const kindColor: Record<string, LabelColor> = {
   Datos: 'blue',
   Avisos: 'pink',
   Superficies: 'purple',
+  Consigna: 'green',
+  'Rúbrica': 'orange',
+  Medios: 'pink',
+  'Del sitio': 'teal',
 }
 
 /** La cabecera de una pieza y el cuerpo de su página. */

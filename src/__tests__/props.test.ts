@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest'
 import { execFileSync } from 'node:child_process'
-import { readFileSync, readdirSync, statSync } from 'node:fs'
+import { readFileSync, readdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { propsByComponent } from '../props.gen'
+import { pieces } from '../../scripts/pieces.mjs'
 
 const root = join(import.meta.dirname, '../..')
 
@@ -11,16 +12,14 @@ describe('la tabla de props sale del código', () => {
     expect(() => execFileSync('node', ['scripts/props.mjs', '--check'], { cwd: root, stdio: 'pipe' })).not.toThrow()
   })
 
-  it('el paths de tsconfig.json está al día', () => {
+  it('el paths de tsconfig.json y el exports de package.json están al día', () => {
     expect(() => execFileSync('node', ['scripts/paths.mjs', '--check'], { cwd: root, stdio: 'pipe' })).not.toThrow()
   })
 
   it('cada pieza que el kit documenta existe en el paquete', () => {
     const src = join(root, 'src')
     const declarado = new Set<string>()
-    for (const folder of readdirSync(src)) {
-      const dir = join(src, folder)
-      if (!statSync(dir).isDirectory() || ['__tests__', 'styles', 'assets'].includes(folder)) continue
+    for (const dir of [...pieces(src).map(p => p.dir), join(src, 'lib')]) {
       for (const file of readdirSync(dir)) {
         if (!/\.tsx?$/.test(file) || file.endsWith('.test.ts') || file.endsWith('.test.tsx')) continue
         const text = readFileSync(join(dir, file), 'utf8')

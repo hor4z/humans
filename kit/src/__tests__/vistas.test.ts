@@ -1,7 +1,10 @@
 import { describe, expect, it } from 'vitest'
 import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
-import { propsByComponent } from '@milo/ui/props'
+import { propsByComponent as packageProps } from '@milo/ui/props'
+import { sitePropsByComponent } from '../demo/props.gen'
+
+const propsByComponent = { ...packageProps, ...sitePropsByComponent }
 
 const stories = join(import.meta.dirname, '../stories')
 const files = readdirSync(stories).filter((f: string) => f.endsWith('.tsx'))

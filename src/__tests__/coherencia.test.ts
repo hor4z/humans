@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
+import { demos, pieces } from '../../scripts/pieces.mjs'
 
 const dir = join(import.meta.dirname, '..')
 type Source = { name: string; text: string }
@@ -15,9 +16,10 @@ function walk(base: string, prefix = ''): string[] {
 
 const sources: Source[] = walk(dir).map((f): Source => ({ name: f, text: readFileSync(join(dir, f), 'utf8') }))
 
-const folders = readdirSync(dir)
-  .filter((f: string) => statSync(join(dir, f)).isDirectory())
-  .filter((f: string) => !['__tests__', 'lib', 'assets', 'styles'].includes(f))
+const folders = [
+  ...pieces(dir).map(p => ({ name: p.name, dir: p.dir })),
+  ...demos(join(dir, '../kit/src')).map(d => ({ name: d.name, dir: d.dir })),
+]
 
 describe('coherencia del sistema', () => {
   it('ningún componente escribe un color a mano', () => {
@@ -223,11 +225,14 @@ describe('coherencia del sistema', () => {
         .filter(n => /^[A-Z]/.test(n) || n.startsWith('use'))
       if (!exported.length) continue
 
-      const [folder, file] = f.name.split('/')
+      const parts = f.name.split('/')
       const quien = `${f.name} (${exported.join(', ')})`
 
-      if (!file) { if (!sueltos.has(folder.replace(/\.tsx?$/, ''))) unreachable.push(quien); continue }
-      if (folder === 'lib') { if (!exports['./lib/*']) unreachable.push(quien); continue }
+      if (parts.length === 1) { if (!sueltos.has(parts[0].replace(/\.tsx?$/, ''))) unreachable.push(quien); continue }
+      if (parts[0] === 'lib') { if (!exports['./lib/*']) unreachable.push(quien); continue }
+      const [folder, file] = parts.slice(-2)
+      const family = parts[0] === 'blocks' && parts.length === 4 ? parts[1] : undefined
+      if (parts[0] === 'blocks' && (!family || !exports[`./blocks/${family}/*`])) { unreachable.push(quien); continue }
       if (file.replace(/\.tsx?$/, '') !== folder) unreachable.push(quien)
     }
 
@@ -255,8 +260,30 @@ describe('coherencia del sistema', () => {
   })
 
   it('cada carpeta tiene el componente que le da nombre', () => {
-    const missing = folders.filter(c => !readdirSync(join(dir, c)).includes(`${c}.tsx`))
+    const missing = folders.filter(c => !readdirSync(c.dir).includes(`${c.name}.tsx`)).map(c => c.name)
     expect(missing).toEqual([])
+  })
+
+  it('la base no importa un bloque', () => {
+    const offenders = sources
+      .filter(f => !f.name.startsWith('blocks/'))
+      .filter(f => /from '[^']*\/blocks\/|from '@milo\/ui\/blocks\//.test(f.text))
+      .map(f => f.name)
+    expect(offenders, 'un bloque se arma con la base; si la base lo necesita, no es un bloque').toEqual([])
+  })
+
+  it('un bloque no declara tokens del sistema', () => {
+    const offenders: string[] = []
+    const recorrer = (base: string, prefijo: string) => {
+      for (const e of readdirSync(base, { withFileTypes: true })) {
+        if (e.isDirectory()) { recorrer(join(base, e.name), `${prefijo}${e.name}/`); continue }
+        if (!e.name.endsWith('.css')) continue
+        const text = readFileSync(join(base, e.name), 'utf8')
+        for (const m of text.matchAll(/(?:^|[;{\s])(:root|html|body)\b[^{]*\{/g)) offenders.push(`${prefijo}${e.name}: ${m[1]}`)
+      }
+    }
+    recorrer(join(dir, 'blocks'), 'blocks/')
+    expect(offenders, 'un bloque usa los tokens de la base: si le falta un rol, el rol es de la base').toEqual([])
   })
 
   it('ningún botón se olvida el type, que adentro de un form manda el form', () => {
@@ -271,7 +298,7 @@ describe('coherencia del sistema', () => {
   })
 
   it('cada componente tiene su test al lado', () => {
-    const missing = folders.filter(c => !readdirSync(join(dir, c)).includes(`${c}.test.tsx`))
+    const missing = folders.filter(c => !readdirSync(c.dir).includes(`${c.name}.test.tsx`)).map(c => c.name)
     expect(missing).toEqual([])
   })
 })

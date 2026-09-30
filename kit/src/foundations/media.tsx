@@ -1,6 +1,6 @@
 import cls from './media.module.css'
-import { AudioPlayer } from '@milo/ui/audio-player'
-import { Figure } from '@milo/ui/figure'
+import { AudioPlayer } from '@milo/ui/blocks/media/audio-player'
+import { Figure } from '@milo/ui/blocks/editor/figure'
 import { Icon } from '@milo/ui/icon'
 import { A11y, Cluster, Footnote, Note, Page, Rich, Section, Stack } from '../kit'
 

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Button } from '@milo/ui/button'
-import { Choice } from '@milo/ui/choice'
+import { Choice } from '@milo/ui/blocks/task/choice'
 import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const lugares = [
@@ -25,8 +25,8 @@ export function ChoiceStory() {
   return (
     <Page
       title="Choice"
-      kind="Formularios"
-      imports="import { Choice } from '@milo/ui/choice'"
+      kind="Consigna"
+      imports="import { Choice } from '@milo/ui/blocks/task/choice'"
       lead="Una pregunta con opciones: el enunciado y las tarjetas. Responder no dice si estuvo bien, y eso es la pieza y no un olvido: quien contesta elige, y la corrección llega después y la decide otro."
     >
       <Section

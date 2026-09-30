@@ -1,5 +1,5 @@
 import s from './callout.module.css'
-import { Callout } from '@milo/ui/callout'
+import { Callout } from '@milo/ui/blocks/editor/callout'
 import { A11y, Example, Frame, Note, Page, Practices, Props, Section, Stack } from '../kit'
 
 export function CalloutStory() {
@@ -7,7 +7,7 @@ export function CalloutStory() {
     <Page
       title="Callout"
       kind="Editor"
-      imports="import { Callout } from '@milo/ui/callout'"
+      imports="import { Callout } from '@milo/ui/blocks/editor/callout'"
       lead="Un bloque de contenido que pide detenerse: una aclaración, una pista, algo para recordar. Lo escribe quien arma el material, no el sistema."
     >
       <Section title="La pieza">

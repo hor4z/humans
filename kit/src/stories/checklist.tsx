@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Checklist } from '@milo/ui/checklist'
+import { Checklist } from '@milo/ui/blocks/editor/checklist'
 import { A11y, Example, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 export function ChecklistStory() {
@@ -9,8 +9,8 @@ export function ChecklistStory() {
   return (
     <Page
       title="Checklist"
-      kind="Datos"
-      imports="import { Checklist } from '@milo/ui/checklist'"
+      kind="Editor"
+      imports="import { Checklist } from '@milo/ui/blocks/editor/checklist'"
       lead="Los primeros pasos de algo, con cuánto va hecho a la vista y el detalle plegado. Es lo que acompaña a alguien la primera semana y desaparece cuando ya no hace falta."
     >
       <Section

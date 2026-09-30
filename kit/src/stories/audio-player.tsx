@@ -1,5 +1,5 @@
 import cls from './audio-player.module.css'
-import { AudioPlayer } from '@milo/ui/audio-player'
+import { AudioPlayer } from '@milo/ui/blocks/media/audio-player'
 import { IconButton } from '@milo/ui/icon-button'
 import { Tooltip } from '@milo/ui/tooltip'
 import { A11y, Example, Note, Page, Panel, Practices, Props, Rich, Section } from '../kit'
@@ -40,8 +40,8 @@ export function AudioPlayerStory() {
   return (
     <Page
       title="AudioPlayer"
-      kind="Datos"
-      imports="import { AudioPlayer } from '@milo/ui/audio-player'"
+      kind="Medios"
+      imports="import { AudioPlayer } from '@milo/ui/blocks/media/audio-player'"
       lead="Un archivo de audio con su onda: play, una línea de tiempo que se arrastra y el reloj. Para una consigna grabada o la devolución hablada de una corrección."
     >
       <Section

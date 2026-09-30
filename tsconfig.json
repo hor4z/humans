@@ -21,9 +21,6 @@
       "@milo/ui/alert": [
         "./src/alert/alert.tsx"
       ],
-      "@milo/ui/audio-player": [
-        "./src/audio-player/audio-player.tsx"
-      ],
       "@milo/ui/avatar": [
         "./src/avatar/avatar.tsx"
       ],
@@ -36,9 +33,6 @@
       "@milo/ui/button-group": [
         "./src/button-group/button-group.tsx"
       ],
-      "@milo/ui/callout": [
-        "./src/callout/callout.tsx"
-      ],
       "@milo/ui/card": [
         "./src/card/card.tsx"
       ],
@@ -48,32 +42,17 @@
       "@milo/ui/checkbox": [
         "./src/checkbox/checkbox.tsx"
       ],
-      "@milo/ui/checklist": [
-        "./src/checklist/checklist.tsx"
-      ],
       "@milo/ui/chip": [
         "./src/chip/chip.tsx"
       ],
-      "@milo/ui/choice": [
-        "./src/choice/choice.tsx"
-      ],
       "@milo/ui/column-picker": [
         "./src/column-picker/column-picker.tsx"
-      ],
-      "@milo/ui/command-menu": [
-        "./src/command-menu/command-menu.tsx"
-      ],
-      "@milo/ui/compare-table": [
-        "./src/compare-table/compare-table.tsx"
       ],
       "@milo/ui/confirm-dialog": [
         "./src/confirm-dialog/confirm-dialog.tsx"
       ],
       "@milo/ui/copy-button": [
         "./src/copy-button/copy-button.tsx"
-      ],
-      "@milo/ui/criterion-card": [
-        "./src/criterion-card/criterion-card.tsx"
       ],
       "@milo/ui/date-picker": [
         "./src/date-picker/date-picker.tsx"
@@ -90,14 +69,8 @@
       "@milo/ui/field": [
         "./src/field/field.tsx"
       ],
-      "@milo/ui/figure": [
-        "./src/figure/figure.tsx"
-      ],
       "@milo/ui/filter": [
         "./src/filter/filter.tsx"
-      ],
-      "@milo/ui/folder": [
-        "./src/folder/folder.tsx"
       ],
       "@milo/ui/icon": [
         "./src/icon/icon.tsx"
@@ -117,9 +90,6 @@
       "@milo/ui/list": [
         "./src/list/list.tsx"
       ],
-      "@milo/ui/mention": [
-        "./src/mention/mention.tsx"
-      ],
       "@milo/ui/menu": [
         "./src/menu/menu.tsx"
       ],
@@ -128,12 +98,6 @@
       ],
       "@milo/ui/nav": [
         "./src/nav/nav.tsx"
-      ],
-      "@milo/ui/number-answer": [
-        "./src/number-answer/number-answer.tsx"
-      ],
-      "@milo/ui/open-question": [
-        "./src/open-question/open-question.tsx"
       ],
       "@milo/ui/pagination": [
         "./src/pagination/pagination.tsx"
@@ -144,14 +108,8 @@
       "@milo/ui/portal": [
         "./src/portal/portal.tsx"
       ],
-      "@milo/ui/prefs": [
-        "./src/prefs/prefs.tsx"
-      ],
       "@milo/ui/progress": [
         "./src/progress/progress.tsx"
-      ],
-      "@milo/ui/quote": [
-        "./src/quote/quote.tsx"
       ],
       "@milo/ui/radio": [
         "./src/radio/radio.tsx"
@@ -162,12 +120,6 @@
       "@milo/ui/row": [
         "./src/row/row.tsx"
       ],
-      "@milo/ui/rubric": [
-        "./src/rubric/rubric.tsx"
-      ],
-      "@milo/ui/rubric-review": [
-        "./src/rubric-review/rubric-review.tsx"
-      ],
       "@milo/ui/search": [
         "./src/search/search.tsx"
       ],
@@ -176,12 +128,6 @@
       ],
       "@milo/ui/select": [
         "./src/select/select.tsx"
-      ],
-      "@milo/ui/self-assessment": [
-        "./src/self-assessment/self-assessment.tsx"
-      ],
-      "@milo/ui/settings-modal": [
-        "./src/settings-modal/settings-modal.tsx"
       ],
       "@milo/ui/sheet": [
         "./src/sheet/sheet.tsx"
@@ -201,9 +147,6 @@
       "@milo/ui/steps": [
         "./src/steps/steps.tsx"
       ],
-      "@milo/ui/sum-table": [
-        "./src/sum-table/sum-table.tsx"
-      ],
       "@milo/ui/switch": [
         "./src/switch/switch.tsx"
       ],
@@ -212,9 +155,6 @@
       ],
       "@milo/ui/tabs": [
         "./src/tabs/tabs.tsx"
-      ],
-      "@milo/ui/task-list": [
-        "./src/task-list/task-list.tsx"
       ],
       "@milo/ui/text-field": [
         "./src/text-field/text-field.tsx"
@@ -228,11 +168,62 @@
       "@milo/ui/toggle-button": [
         "./src/toggle-button/toggle-button.tsx"
       ],
-      "@milo/ui/toolbar": [
-        "./src/toolbar/toolbar.tsx"
-      ],
       "@milo/ui/tooltip": [
         "./src/tooltip/tooltip.tsx"
+      ],
+      "@milo/ui/blocks/editor/callout": [
+        "./src/blocks/editor/callout/callout.tsx"
+      ],
+      "@milo/ui/blocks/editor/checklist": [
+        "./src/blocks/editor/checklist/checklist.tsx"
+      ],
+      "@milo/ui/blocks/editor/command-menu": [
+        "./src/blocks/editor/command-menu/command-menu.tsx"
+      ],
+      "@milo/ui/blocks/editor/figure": [
+        "./src/blocks/editor/figure/figure.tsx"
+      ],
+      "@milo/ui/blocks/editor/mention": [
+        "./src/blocks/editor/mention/mention.tsx"
+      ],
+      "@milo/ui/blocks/editor/quote": [
+        "./src/blocks/editor/quote/quote.tsx"
+      ],
+      "@milo/ui/blocks/editor/task-list": [
+        "./src/blocks/editor/task-list/task-list.tsx"
+      ],
+      "@milo/ui/blocks/editor/toolbar": [
+        "./src/blocks/editor/toolbar/toolbar.tsx"
+      ],
+      "@milo/ui/blocks/media/audio-player": [
+        "./src/blocks/media/audio-player/audio-player.tsx"
+      ],
+      "@milo/ui/blocks/rubric/criterion-card": [
+        "./src/blocks/rubric/criterion-card/criterion-card.tsx"
+      ],
+      "@milo/ui/blocks/rubric/rubric": [
+        "./src/blocks/rubric/rubric/rubric.tsx"
+      ],
+      "@milo/ui/blocks/rubric/rubric-review": [
+        "./src/blocks/rubric/rubric-review/rubric-review.tsx"
+      ],
+      "@milo/ui/blocks/rubric/self-assessment": [
+        "./src/blocks/rubric/self-assessment/self-assessment.tsx"
+      ],
+      "@milo/ui/blocks/task/choice": [
+        "./src/blocks/task/choice/choice.tsx"
+      ],
+      "@milo/ui/blocks/task/compare-table": [
+        "./src/blocks/task/compare-table/compare-table.tsx"
+      ],
+      "@milo/ui/blocks/task/number-answer": [
+        "./src/blocks/task/number-answer/number-answer.tsx"
+      ],
+      "@milo/ui/blocks/task/open-question": [
+        "./src/blocks/task/open-question/open-question.tsx"
+      ],
+      "@milo/ui/blocks/task/sum-table": [
+        "./src/blocks/task/sum-table/sum-table.tsx"
       ]
     }
   },

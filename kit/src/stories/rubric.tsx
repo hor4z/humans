@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Rubric, type Criterion } from '@milo/ui/rubric'
+import { Rubric, type Criterion } from '@milo/ui/blocks/rubric/rubric'
 import { labelColors } from '@milo/ui/lib/colors'
 import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
@@ -49,8 +49,8 @@ export function RubricStory() {
   return (
     <Page
       title="Rubric"
-      kind="Datos"
-      imports="import { Rubric } from '@milo/ui/rubric'"
+      kind="Rúbrica"
+      imports="import { Rubric } from '@milo/ui/blocks/rubric/rubric'"
       lead="Con qué se mira un trabajo: los aspectos, cuánto vale cada uno y qué se ve en cada renglón. La escribe quien corrige y la lee quien entrega, así que dice lo mismo de los dos lados."
     >
       <Section

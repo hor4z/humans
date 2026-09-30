@@ -18,7 +18,7 @@ const shortcuts: { id: string; icon: IconName; title: string; body: string }[] =
   { id: 'accessibility', icon: 'accessibility', title: 'Accesibilidad', body: 'Contraste, teclado y lectores, que es lo que hay que leer antes de tocar nada.' },
   { id: 'color', icon: 'palette', title: 'Color', body: 'Una rampa casi neutra y cuatro familias acotadas.' },
   { id: 'dashboard', icon: 'dashboard', title: 'Dashboard', body: 'Las piezas de la app, juntas en una pantalla real.' },
-  { id: 'documento', icon: 'description', title: 'Documento', body: 'Las del editor, juntas en una consigna de verdad.' },
+  { id: 'documento', icon: 'description', title: 'Documento', body: 'Los bloques, juntos en una consigna de verdad.' },
 ]
 
 export function Intro({ go }: { go: (id: string) => void }) {
@@ -40,8 +40,9 @@ export function Intro({ go }: { go: (id: string) => void }) {
               El sistema de milo, funcionando
             </h1>
             <p className={cls.heroLead}>
-              Cada pieza de acá es el componente real, con su teclado, sus estados y sus tests. Se
-              importa una por una: <code className={cls.inlineCode}>@milo/ui/button</code>.
+              Cada pieza de acá es el componente real, con su teclado, sus estados y sus tests. La base
+              son las piezas elementales, <code className={cls.inlineCode}>@milo/ui/button</code>; los
+              bloques las ponen en contexto, <code className={cls.inlineCode}>@milo/ui/blocks/editor/callout</code>.
             </p>
           </Stack>
 
