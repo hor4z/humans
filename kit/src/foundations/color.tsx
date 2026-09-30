@@ -93,7 +93,7 @@ export function ColorSection() {
         <RoleTable label="Los roles de color de uso más común" rows={roles} />
       </Section>
 
-      <Section title="Estado" note="Cuatro, y ninguno viaja solo: cada uno trae su glifo y su texto.">
+      <Section title="Estado" note="Cuatro, y ninguno viaja solo: cada uno trae su glifo y su texto. En claro, el fondo suave va siempre debajo del papel: más claro que la tarjeta se lee translúcido.">
         <div className={`${cls.states} bg-surface`}>
           <Chip size="sm" color="info" icon="info">En prueba</Chip>
           <Chip size="sm" color="ok" icon="check_circle">Corregida</Chip>
