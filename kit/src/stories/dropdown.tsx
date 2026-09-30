@@ -2,19 +2,53 @@ import { Button } from '@milo/ui/button'
 import { Dropdown } from '@milo/ui/dropdown'
 import { Icon } from '@milo/ui/icon'
 import { IconButton } from '@milo/ui/icon-button'
-import { A11y, Cluster, Demo, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function DropdownStory() {
   return (
     <Page
       title="Dropdown"
-      lead="Un menú de cuatro items. No lleva velo: el velo va para lo que pide leerse entero, y un menú corto no lo pide. Cierra con Escape, que usa una pila global: cierra el overlay de arriba y no todos."
+      lead="Un menú de cuatro items escrito como lista. No lleva velo: el velo va para lo que pide leerse entero, y un menú corto no lo pide."
       kind="Acciones"
       imports="import { Dropdown } from '@milo/ui/dropdown'"
     >
-      <Section title="Vivo" note="El disparador puede ser cualquier botón del sistema.">
-        <Cluster align="start">
-          <Demo label="align end · width 220" code={`<Dropdown
+      <Hero>
+        <Dropdown
+          width={220}
+          items={[
+            { label: 'Mi perfil', icon: 'person' },
+            { label: 'Plan', icon: 'credit_card' },
+            { label: 'Ajustes', icon: 'tune' },
+            { label: 'Salir', icon: 'logout' },
+          ]}
+          trigger={props => (
+            <Button {...props} variant="muted" iconEnd={<Icon name="keyboard_arrow_down" />}>Abrir menú</Button>
+          )}
+        />
+        <Dropdown
+          label="Más opciones"
+          items={[
+            { label: 'Duplicar', icon: 'content_copy', onSelect: () => {} },
+            { label: 'Eliminar', icon: 'delete', danger: true, onSelect: () => {} },
+          ]}
+          trigger={props => <IconButton {...props} icon="more_horiz" label="Más opciones" />}
+        />
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Disparador" required>`trigger`: cualquier botón del sistema, que recibe `onClick`, `ref` y `aria-expanded`.</Anatomy.Part>
+        <Anatomy.Part name="Panel">La lista que se abre anclada al disparador, alineada al comienzo o al final.</Anatomy.Part>
+        <Anatomy.Part name="Opción" required>Un `DropdownItem` de `items`: su `label` y su `onSelect`.</Anatomy.Part>
+        <Anatomy.Part name="Icono">`icon`: el glifo de la izquierda, en gris.</Anatomy.Part>
+        <Anatomy.Part name="Atajo">`shortcut`: la tecla, a la derecha, en un `Kbd`.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Disparador y opciones">
+        <Panel>
+          <Variant
+            name="con un botón y con un IconButton"
+            note="El disparador puede ser cualquier botón del sistema. `align` elige de qué lado se ancla el panel."
+            code={`<Dropdown
   width={220}
   items={[
     { label: 'Mi perfil', icon: 'person' },
@@ -25,7 +59,16 @@ export function DropdownStory() {
   trigger={props => (
     <Button {...props} variant="muted" iconEnd={<Icon name="keyboard_arrow_down" />}>Abrir menú</Button>
   )}
-/>`}>
+/>
+<Dropdown
+  label="Más opciones"
+  items={[
+    { label: 'Duplicar', icon: 'content_copy', onSelect: duplicate },
+    { label: 'Eliminar', icon: 'delete', danger: true, onSelect: remove },
+  ]}
+  trigger={props => <IconButton {...props} icon="more_horiz" label="Más opciones" />}
+/>`}
+          >
             <Dropdown
               width={220}
               items={[
@@ -38,40 +81,6 @@ export function DropdownStory() {
                 <Button {...props} variant="muted" iconEnd={<Icon name="keyboard_arrow_down" />}>Abrir menú</Button>
               )}
             />
-          </Demo>
-          <Demo label="align start" code={`<Dropdown
-  align="start"
-  width={200}
-  items={[
-    { label: 'Duplicar', icon: 'content_copy' },
-    { label: 'Descargar', icon: 'download' },
-    { label: 'Eliminar', icon: 'delete' },
-  ]}
-  trigger={props => (
-    <Button {...props} variant="muted" iconStart={<Icon name="more_horiz" />}>Acciones</Button>
-  )}
-/>`}>
-            <Dropdown
-              align="start"
-              width={200}
-              items={[
-                { label: 'Duplicar', icon: 'content_copy' },
-                { label: 'Descargar', icon: 'download' },
-                { label: 'Eliminar', icon: 'delete' },
-              ]}
-              trigger={props => (
-                <Button {...props} variant="muted" iconStart={<Icon name="more_horiz" />}>Acciones</Button>
-              )}
-            />
-          </Demo>
-          <Demo label="con un IconButton" code={`<Dropdown
-  label="Más opciones"
-  items={[
-    { label: 'Duplicar', icon: 'content_copy', onSelect: duplicate },
-    { label: 'Eliminar', icon: 'delete', danger: true, onSelect: remove },
-  ]}
-  trigger={props => <IconButton {...props} icon="more_horiz" label="Más opciones" />}
-/>`}>
             <Dropdown
               label="Más opciones"
               items={[
@@ -80,16 +89,12 @@ export function DropdownStory() {
               ]}
               trigger={props => <IconButton {...props} icon="more_horiz" label="Más opciones" />}
             />
-          </Demo>
-        </Cluster>
-      </Section>
-
-      <Section
-        title="Lo que puede llevar una opción"
-        note="Un glifo adelante, el atajo de teclado a la derecha y el rojo de lo que no se deshace."
-      >
-        <Cluster align="start">
-          <Demo label="con atajos y una peligrosa" code={`<Dropdown
+          </Variant>
+          <Variant
+            name="con atajos y una peligrosa"
+            note="Un glifo adelante, el atajo de teclado a la derecha y el rojo de lo que no se deshace."
+            code={`<Dropdown
+  align="start"
   width={240}
   items={[
     { label: 'Duplicar', icon: 'content_copy', shortcut: '⌘D' },
@@ -100,8 +105,10 @@ export function DropdownStory() {
   trigger={props => (
     <Button {...props} variant="muted" iconStart={<Icon name="more_horiz" />}>Acciones</Button>
   )}
-/>`}>
+/>`}
+          >
             <Dropdown
+              align="start"
               width={240}
               items={[
                 { label: 'Duplicar', icon: 'content_copy', shortcut: '⌘D' },
@@ -113,8 +120,8 @@ export function DropdownStory() {
                 <Button {...props} variant="muted" iconStart={<Icon name="more_horiz" />}>Acciones</Button>
               )}
             />
-          </Demo>
-        </Cluster>
+          </Variant>
+        </Panel>
       </Section>
 
       <Section title="Props">

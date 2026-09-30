@@ -66,35 +66,7 @@
     color: var(--text-muted);
   }
 
-  .sizeRole {
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    color: var(--text-muted);
-  }
-
-  .defaultNote {
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    color: var(--text-muted);
-  }
-
-  .mutedNote {
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    color: var(--text-muted);
-  }
-
   .plainGrayIcon {
-    color: var(--text-muted);
-  }
-
-  .plainGrayNote {
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
     color: var(--text-muted);
   }
 

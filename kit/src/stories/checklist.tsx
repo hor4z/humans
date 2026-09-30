@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Checklist } from '@milo/ui/blocks/editor/checklist'
-import { A11y, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
+import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 export function ChecklistStory() {
   const [connected, setConnected] = useState(false)
@@ -14,10 +14,25 @@ export function ChecklistStory() {
       imports="import { Checklist } from '@milo/ui/blocks/editor/checklist'"
       lead="Los primeros pasos de algo, con cuánto va hecho a la vista y el detalle plegado. Es lo que acompaña a alguien la primera semana y desaparece cuando ya no hace falta."
     >
-      <Section
-        title="Cuándo va"
-        note="Para una secuencia que alguien recorre una sola vez y a su ritmo: configurar un espacio, dejar listo un aula. Si no tiene orden, es una `TaskList`."
-      >
+      <Hero>
+        <Stack width="md">
+          <Checklist defaultOpen>
+            <Checklist.Title>Los cuatro estados</Checklist.Title>
+            <Checklist.Item state="done">Hecho</Checklist.Item>
+            <Checklist.Item state="doing">En curso</Checklist.Item>
+            <Checklist.Item state="todo">Todavía no</Checklist.Item>
+            <Checklist.Item state="blocked" hint="Falta el anterior">Trabado</Checklist.Item>
+          </Checklist>
+        </Stack>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Cabecera" required>`Checklist.Title` con el contador y la barra de cuánto va hecho. Es el botón que pliega y despliega.</Anatomy.Part>
+        <Anatomy.Part name="Paso" required>`Checklist.Item` con su marca. `done` ya está, `doing` es el de ahora, `todo` es el que falta y `blocked` el que todavía no se puede hacer.</Anatomy.Part>
+        <Anatomy.Part name="Aviso del paso">`hint` de un paso trabado: dice por qué no se puede hacer todavía.</Anatomy.Part>
+        <Anatomy.Part name="Pie">`Checklist.Footer`: una aclaración al final, con `hint` para la letra chica.</Anatomy.Part>
+      </Anatomy>
+      <Section title="Plegada, abierta y compacta">
         <Panel>
           <Variant
             name="plegada"
@@ -102,14 +117,11 @@ export function ChecklistStory() {
         </Panel>
       </Section>
 
-      <Section
-        title="Como escalera"
-        note="Con `value` y `onValueChange` cada paso incluye a los de arriba: tocar el tercero marca los tres, y volver a tocarlo desmarca de ahí para abajo."
-      >
+      <Section title="Como escalera">
         <Panel>
           <Variant
             name="tres de cuatro"
-            note="El contador y la barra salen del mismo número."
+            note="Con `value` y `onValueChange` cada paso incluye a los de arriba: tocar el tercero marca los tres, y volver a tocarlo desmarca de ahí para abajo. El contador y la barra salen del mismo número."
             code={`<Checklist defaultOpen value={level} onValueChange={setLevel}>
   <Checklist.Title>Toma de datos</Checklist.Title>
   <Checklist.Item>Una sola medición anotada</Checklist.Item>
@@ -137,40 +149,13 @@ export function ChecklistStory() {
         </Panel>
       </Section>
 
-      <Section
-        title="Los cuatro estados de un paso"
-        note="`done` ya está, `doing` es el de ahora, `todo` es el que falta y `blocked` el que todavía no se puede hacer."
-      >
-        <Panel>
-          <Variant
-            name="uno de cada"
-            code={`<Checklist defaultOpen>
-  <Checklist.Title>Los cuatro</Checklist.Title>
-  <Checklist.Item state="done">Hecho</Checklist.Item>
-  <Checklist.Item state="doing">En curso</Checklist.Item>
-  <Checklist.Item state="todo">Todavía no</Checklist.Item>
-  <Checklist.Item state="blocked" hint="Falta el anterior">Trabado</Checklist.Item>
-</Checklist>`}
-          >
-            <Stack width="md">
-              <Checklist defaultOpen>
-                <Checklist.Title>Los cuatro</Checklist.Title>
-                <Checklist.Item state="done">Hecho</Checklist.Item>
-                <Checklist.Item state="doing">En curso</Checklist.Item>
-                <Checklist.Item state="todo">Todavía no</Checklist.Item>
-                <Checklist.Item state="blocked" hint="Falta el anterior">Trabado</Checklist.Item>
-              </Checklist>
-            </Stack>
-          </Variant>
-        </Panel>
-      </Section>
-
       <Section title="Props">
         <Props of="Checklist" />
       </Section>
 
       <Section title="Cómo se usa bien">
         <Practices>
+          <Practices.Do>Usala para una secuencia que alguien recorre una sola vez y a su ritmo: configurar un espacio, dejar listo un aula. Si no tiene orden, es una `TaskList`.</Practices.Do>
           <Practices.Do>El contador sale de los pasos, así que no hay un número que pueda despegarse de la lista.</Practices.Do>
           <Practices.Do>Un paso `blocked` lleva `hint`: si no se puede hacer, hay que decir por qué.</Practices.Do>
           <Practices.Do>Cuando los pasos se recorren en orden, pasale `value` y `onValueChange`: la escalera no deja estados imposibles, como el tercero hecho y el segundo no.</Practices.Do>

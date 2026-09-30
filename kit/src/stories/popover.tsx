@@ -1,48 +1,43 @@
 import cls from './popover.module.css'
 import { Button } from '@milo/ui/button'
 import { Popover } from '@milo/ui/popover'
-import { A11y, Demo, Grid, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Demo, Hero, Page, Panel, Practices, Props, Section } from '../kit'
 
 export function PopoverStory() {
   return (
     <Page
       title="Popover"
-      lead="El panel anclado. Cierra con `pointerdown` y no con `click`: con click, el mismo gesto que abre otro panel lo cierra y lo reabre, y parpadea. Y el scroll de la página lo cierra, pero el de su propio contenido no: el listener va en captura y se filtra por origen."
+      lead="El panel anclado a un disparador, para lo que se lee sin salir de la pantalla. Pone la posición, el cierre y el velo, no el aspecto."
       kind="Superficies"
       imports="import { Popover } from '@milo/ui/popover'"
     >
-      <Section title="Vivo" note="El panel lo dibujás vos: `Popover` pone la posición, el cierre y el velo, no el aspecto.">
-        <Grid min={300}>
-          <Demo label="sin velo" code={`<Popover
-  width={320}
-  trigger={props => <Button {...props} variant="muted">Panel anclado</Button>}
->
-  {close => (
-    <div className={s.panel}>
-      <div>Un panel de 320</div>
-      <p>Cierra con Escape, con un click afuera, o al scrollear la página, pero no al scrollear su propio contenido. Un resize sí lo cierra siempre.</p>
-      <Button size="sm" variant="muted" onClick={close}>Cerrar</Button>
-    </div>
-  )}
-</Popover>`}>
-            <Popover
-              width={320}
-              trigger={props => <Button {...props} variant="muted">Panel anclado</Button>}
-            >
-              {close => (
-                <div className={`${cls.plainPanel} ui-pop bg-popover`}>
-                  <div className={cls.plainTitle}>Un panel de 320</div>
-                  <p className={cls.plainText}>
-                    Cierra con Escape, con un click afuera, o al scrollear la página, pero no al
-                    scrollear su propio contenido. Un resize sí lo cierra siempre.
-                  </p>
-                  <div className={cls.plainActions}><Button size="sm" variant="muted" onClick={close}>Cerrar</Button></div>
-                </div>
-              )}
-            </Popover>
-          </Demo>
+      <Hero>
+        <Popover
+          width={320}
+          trigger={props => <Button {...props} variant="muted">Panel anclado</Button>}
+        >
+          {close => (
+            <div className={`${cls.plainPanel} ui-pop bg-popover`}>
+              <div className={cls.plainTitle}>Un panel de 320</div>
+              <p className={cls.plainText}>
+                Cierra con Escape, con un click afuera, o al scrollear la página, pero no al
+                scrollear su propio contenido.
+              </p>
+              <div className={cls.plainActions}><Button size="sm" variant="muted" onClick={close}>Cerrar</Button></div>
+            </div>
+          )}
+        </Popover>
+      </Hero>
 
-          <Demo label="veil" code={`<Popover
+      <Anatomy>
+        <Anatomy.Part name="Disparador" required>`trigger`: recibe las props que tiene que llevar el botón (`aria-expanded`, el click) y lo dibujás vos.</Anatomy.Part>
+        <Anatomy.Part name="Panel" required>Lo que devuelven los hijos, que reciben `close`. La pieza pone la posición y el cierre; el aspecto es tuyo.</Anatomy.Part>
+        <Anatomy.Part name="Velo">Con `veil`, apaga el resto de la pantalla, sin blur.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Ejemplos">
+        <Panel>
+          <Demo label="Con `veil`" code={`<Popover
   width={340}
   veil
   trigger={props => <Button {...props} variant="muted">Con velo</Button>}
@@ -72,7 +67,7 @@ export function PopoverStory() {
               )}
             </Popover>
           </Demo>
-        </Grid>
+        </Panel>
       </Section>
 
       <Section title="Props">
@@ -89,8 +84,9 @@ export function PopoverStory() {
       <Section title="Accesibilidad">
         <A11y>
           <A11y.Item>El disparador declara aria-expanded, así que se anuncia si está abierto.</A11y.Item>
+          <A11y.Item>Cierra con `pointerdown` y no con `click`: con click, el mismo gesto que abre otro panel lo cierra y lo reabre, y parpadea.</A11y.Item>
           <A11y.Item>Escape cierra el de arriba y no todos.</A11y.Item>
-          <A11y.Item>El scroll de la página lo cierra; el de su propio contenido, no.</A11y.Item>
+          <A11y.Item>El scroll de la página lo cierra; el de su propio contenido, no: el listener va en captura y se filtra por origen.</A11y.Item>
         </A11y>
       </Section>
     </Page>

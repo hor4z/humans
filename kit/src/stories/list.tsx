@@ -2,7 +2,7 @@ import { Icon, type IconName } from '@milo/ui/icon'
 import { type MarkColor } from '@milo/ui/lib/colors'
 import { List } from '@milo/ui/list'
 import { useState } from 'react'
-import { A11y, Demo, Footnote, Frame, Mono, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Demo, Frame, Hero, Page, Practices, Props, Section } from '../kit'
 
 const onboarding: { icon: IconName; color: MarkColor; title: string; hint: string }[] = [
   { icon: 'check', color: 'green', title: 'Completá tu perfil', hint: 'Una foto y en qué materias das clase.' },
@@ -26,13 +26,37 @@ export function ListStory() {
       kind="Datos"
       imports="import { List } from '@milo/ui/list'
 import { useState } from 'react'"
-      lead="Filas altas, cada una con una marca de color, un título y una línea de apoyo. No es `Row`: acá no hay divisores (cada fila es su propia caja con aire alrededor), el título sube a 16 porque es lo que se lee primero, y la marca de color es lo que te deja encontrar una fila de reojo sin leerla."
+      lead="Filas altas, cada una con una marca de color, un título y una línea de apoyo. No es `Row`: no hay divisores, cada fila es su propia caja con aire alrededor, y la marca de color deja encontrar una fila de reojo sin leerla."
     >
-      <Section
-        title="La pieza"
-        note="Cada fila es una pieza apoyada en la página, con el mismo canto que una `Card`."
-      >
-        <Demo code={`<List>
+      <Hero>
+        <Frame width="md">
+          <List>
+            <List.Item icon="check" color="green">
+              <List.Title>En reposo</List.Title>
+              <List.Hint>Fondo apagado, sin sombra.</List.Hint>
+            </List.Item>
+            <List.Item icon="menu_book" color="purple" active>
+              <List.Title>Elegida</List.Title>
+              <List.Hint>Hundida un paso.</List.Hint>
+            </List.Item>
+            <List.Item icon="star_shine" color="blue" onClick={() => {}}>
+              <List.Title>Se toca</List.Title>
+              <List.Hint>Pasá el mouse: sube al papel y toma sombra.</List.Hint>
+            </List.Item>
+          </List>
+        </Frame>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Marca" required>La marca de color con su glifo (`icon` y `color`): es lo que identifica la fila de reojo.</Anatomy.Part>
+        <Anatomy.Part name="Título" required>`List.Title`, en 16: es lo que se lee primero.</Anatomy.Part>
+        <Anatomy.Part name="Línea de apoyo">`List.Hint`, debajo del título.</Anatomy.Part>
+        <Anatomy.Part name="Contenido final">`List.Trailing`, a la derecha: un chevron, una acción.</Anatomy.Part>
+        <Anatomy.Part name="Fila elegida">Con `active` queda hundida y no teñida, porque el color ya lo gasta la marca.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Elegir y navegar">
+        <Demo label="Tocá una fila para elegirla" code={`<List>
   {onboarding.map(i => (
     <List.Item key={i.title} icon={i.icon} color={i.color} active={i.title === current} onClick={() => setCurrent(i.title)}>
       <List.Title>{i.title}</List.Title>
@@ -51,48 +75,8 @@ import { useState } from 'react'"
             </List>
           </Frame>
         </Demo>
-        <Footnote>
-          La fila elegida está en <Mono>active</Mono>: queda hundida, no teñida, el color ya lo gasta la marca.
-          Tocá otra para elegirla, o pasale el mouse para ver el hover.
-        </Footnote>
-      </Section>
 
-      <Section title="Estados de una fila">
-        <Demo code={`<List>
-  <List.Item icon="check" color="green">
-    <List.Title>En reposo</List.Title>
-    <List.Hint>Fondo apagado, sin sombra.</List.Hint>
-  </List.Item>
-  <List.Item icon="menu_book" color="purple" active>
-    <List.Title>Elegida</List.Title>
-    <List.Hint>Hundida un paso.</List.Hint>
-  </List.Item>
-  <List.Item icon="star_shine" color="blue" onClick={open}>
-    <List.Title>Se toca</List.Title>
-    <List.Hint>Pasá el mouse: sube al papel y toma sombra.</List.Hint>
-  </List.Item>
-</List>`}>
-          <Frame width="md">
-            <List>
-              <List.Item icon="check" color="green">
-                <List.Title>En reposo</List.Title>
-                <List.Hint>Fondo apagado, sin sombra.</List.Hint>
-              </List.Item>
-              <List.Item icon="menu_book" color="purple" active>
-                <List.Title>Elegida</List.Title>
-                <List.Hint>Hundida un paso.</List.Hint>
-              </List.Item>
-              <List.Item icon="star_shine" color="blue" onClick={() => {}}>
-                <List.Title>Se toca</List.Title>
-                <List.Hint>Pasá el mouse: sube al papel y toma sombra.</List.Hint>
-              </List.Item>
-            </List>
-          </Frame>
-        </Demo>
-      </Section>
-
-      <Section title="Como índice" note="Acá el color identifica el espacio, no el estado.">
-        <Demo code={`<List>
+        <Demo label="Como índice: el color identifica el espacio, no el estado" code={`<List>
   {spaces.map(e => (
     <List.Item key={e.title} icon={e.icon} color={e.color} onClick={() => openSpace(e)}>
       <List.Title>{e.title}</List.Title>

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { SelfAssessment, type Criterion } from '@milo/ui/blocks/rubric/self-assessment'
-import { A11y, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
+import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const criteria: Criterion[] = [
   {
@@ -51,14 +51,25 @@ export function SelfAssessmentStory() {
       imports="import { SelfAssessment } from '@milo/ui/blocks/rubric/self-assessment'"
       lead="Dónde se ubica quien entrega, aspecto por aspecto, contra la misma rúbrica con la que lo van a mirar. No es la nota que se va a sacar: es para ver qué falta antes de entregar."
     >
-      <Section
-        title="Cómo se arma"
-        note="El mismo marco y el mismo `CriterionCard` que el panel del docente, con los mismos `Criterion`. Lo que cambia es el gesto: acá no se corrige, se dice dónde estoy."
-      >
+      <Hero>
+        <Stack width="sm">
+          <SelfAssessment criteria={criteria} value={value} onValueChange={setValue}>
+            <SelfAssessment.Title>Dónde estás</SelfAssessment.Title>
+          </SelfAssessment>
+        </Stack>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Cabecera" required>`SelfAssessment.Title` con el botón que pliega el panel y cuántos aspectos se ubicaron.</Anatomy.Part>
+        <Anatomy.Part name="Barra">Cuenta aspectos ubicados, no niveles alcanzados: es el progreso de llenar la autoevaluación. Es de un solo color.</Anatomy.Part>
+        <Anatomy.Part name="Aspecto">Una tarjeta plegable por aspecto que dice en cuál quedó o que está sin ubicar.</Anatomy.Part>
+        <Anatomy.Part name="Niveles">Los cuatro renglones del aspecto, con opción única.</Anatomy.Part>
+      </Anatomy>
+      <Section title="A medio ubicar">
         <Panel>
           <Variant
             name="a medio ubicar"
-            note="Elegí un nivel en otro aspecto: el de arriba se cierra y el tramo de la barra se llena."
+            note="El mismo marco y el mismo `CriterionCard` que el panel del docente, con los mismos `Criterion`: acá no se corrige, se dice dónde estoy. Elegí un nivel en otro aspecto: el de arriba se cierra y el tramo de la barra se llena."
             code={`<SelfAssessment criteria={criteria} value={value} onValueChange={setValue}>
   <SelfAssessment.Title>Dónde estás</SelfAssessment.Title>
 </SelfAssessment>`}
@@ -74,18 +85,6 @@ export function SelfAssessmentStory() {
             </Stack>
           </Variant>
         </Panel>
-        <Note>
-          Los cuatro niveles son excluyentes y por eso van con opción única: son cuatro
-          descripciones del mismo estado y solo una es cierta. Nadie logra Inicial camino a
-          Excelente, así que marcar uno no puede dejar marcados los de arriba. Para lo que sí se va
-          cumpliendo de a pasos está `Checklist`, que es otra cosa y tiene su propia vista.
-        </Note>
-        <Note>
-          La barra de arriba cuenta aspectos ubicados, no niveles alcanzados: es el progreso de
-          llenar la autoevaluación y no una calificación. Por eso es de un solo color y no del color
-          de cada aspecto como en la vista del docente, donde el color ata cada tramo con su
-          tarjeta.
-        </Note>
       </Section>
 
       <Section title="Props">
@@ -94,6 +93,7 @@ export function SelfAssessmentStory() {
 
       <Section title="Cómo se usa bien">
         <Practices>
+          <Practices.Do>Dejá los cuatro niveles como opción única: son descripciones del mismo estado y solo una es cierta. Nadie logra Inicial camino a Excelente, así que marcar uno no puede dejar marcados los de arriba. Para lo que se cumple de a pasos está `Checklist`.</Practices.Do>
           <Practices.Do>Pasale los mismos aspectos que la rúbrica del docente: en cuanto los textos se separan, el estudiante se prepara para otra cosa de la que lo van a mirar.</Practices.Do>
           <Practices.Do>Dejala abierta antes de entregar y no después: sirve para corregir el trabajo, no para adivinar la nota.</Practices.Do>
           <Practices.Dont>No la uses para corregir: lo que acá se elige es de quien entrega, y mezclarlo con lo que puso el docente borra de quién era cada cosa. Para corregir está `RubricReview`.</Practices.Dont>

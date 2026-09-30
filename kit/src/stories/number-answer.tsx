@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Button } from '@milo/ui/button'
 import { NumberAnswer } from '@milo/ui/blocks/task/number-answer'
-import { A11y, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
+import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 export function NumberAnswerStory() {
   const [value, setValue] = useState('')
@@ -15,10 +15,23 @@ export function NumberAnswerStory() {
       imports="import { NumberAnswer } from '@milo/ui/blocks/task/number-answer'"
       lead="Un número que sale de una cuenta: un promedio, una diferencia, una métrica. La tolerancia existe porque una medición no da siempre lo mismo, así que la respuesta es un rango y no un valor."
     >
-      <Section
-        title="Calculando"
-        note="El campo acepta la coma y el punto: acá se escribe 72,3 y el teclado del celular manda un punto."
-      >
+      <Hero>
+        <Stack width="sm">
+          <NumberAnswer value={value} onValueChange={setValue} unit="dB" expected={72.3} tolerance={0.2}>
+            <NumberAnswer.Prompt>El promedio del patio en los tres momentos</NumberAnswer.Prompt>
+            <NumberAnswer.Hint>Sumá los tres valores de la fila y dividí por tres.</NumberAnswer.Hint>
+          </NumberAnswer>
+        </Stack>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Enunciado" required>`NumberAnswer.Prompt`: qué cuenta hay que hacer.</Anatomy.Part>
+        <Anatomy.Part name="Aclaración">`NumberAnswer.Hint`: de dónde sale el número.</Anatomy.Part>
+        <Anatomy.Part name="Campo" required>Acepta la coma y el punto: se escribe 72,3 y el teclado del celular manda un punto.</Anatomy.Part>
+        <Anatomy.Part name="Unidad">`unit`: al final del campo, para que 40 y 40 dB no sean dos respuestas distintas.</Anatomy.Part>
+        <Anatomy.Part name="Veredicto">Al revelar dice en texto si cae adentro del margen o cuál era el valor.</Anatomy.Part>
+      </Anatomy>
+      <Section title="Calculando y corrigiendo">
         <Panel>
           <Variant
             name="antes y después"

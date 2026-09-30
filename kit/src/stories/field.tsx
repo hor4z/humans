@@ -5,14 +5,13 @@ import { Select } from '@milo/ui/select'
 import { Switch } from '@milo/ui/switch'
 import { TextField } from '@milo/ui/text-field'
 import { Textarea } from '@milo/ui/textarea'
-import { A11y, Demo, Frame, Note, Page, Practices, Props, Section, Stack } from '../kit'
+import { A11y, Anatomy, Demo, Frame, Hero, Page, Panel, Practices, Props, Section, Stack } from '../kit'
 
 export function FieldStory() {
   const [overdue, setOverdue] = useState(true)
   const [notify, setNotify] = useState(true)
   const [name, setName] = useState('')
   const [space, setSpace] = useState('Matemática · 4.º A')
-  const [where, setWhere] = useState('Matemática · 4.º A')
   const [touched, setTouched] = useState(false)
   const error = touched && !name.trim() ? 'Poné un nombre para la actividad' : undefined
 
@@ -21,12 +20,39 @@ export function FieldStory() {
       title="Field"
       kind="Formularios"
       imports="import { Field } from '@milo/ui/field'"
-      lead="Un campo suelto no es un formulario: le falta el nombre, la ayuda y el error, y los tres tienen que estar atados al control para que un lector de pantalla los lea con él. Field hace ese trabajo una vez y en un solo lugar."
+      lead="Un campo suelto no es un formulario: le falta el nombre, la ayuda y el error, y los tres tienen que estar atados al control para que un lector de pantalla los lea con él. `Field` hace ese trabajo una vez y en un solo lugar."
     >
-      <Section
-        title="Nombre, ayuda y error"
-        note="Los campos del sistema se atan solos: no hay que pasarles `id` ni `aria-describedby`. Tocá el nombre y salí sin escribir para ver el error."
-      >
+      <Hero>
+        <Stack gap="xl" width="md">
+          <Field required>
+            <Field.Label>Nombre de la actividad</Field.Label>
+            <Field.Hint>Lo ven los estudiantes</Field.Hint>
+            <Field.Error>{error}</Field.Error>
+            <TextField
+              value={name}
+              onValueChange={setName}
+              onBlur={() => setTouched(true)}
+              placeholder="Fracciones equivalentes"
+            />
+          </Field>
+          <Field>
+            <Field.Label>Espacio</Field.Label>
+            <Select value={space} onValueChange={setSpace} options={['Matemática · 4.º A', 'Lengua · 6.º']} />
+          </Field>
+        </Stack>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Etiqueta" required>`Field.Label`: el nombre del control; tocarla lo enfoca.</Anatomy.Part>
+        <Anatomy.Part name="Asterisco">Con `required`, la marca de lo obligatorio, que para el lector se dice con la palabra.</Anatomy.Part>
+        <Anatomy.Part name="Ayuda">`Field.Hint`: una línea de apoyo debajo de la etiqueta.</Anatomy.Part>
+        <Anatomy.Part name="Error">`Field.Error`: lo que está mal, con su glifo; reemplaza a la ayuda.</Anatomy.Part>
+        <Anatomy.Part name="Control" required>El campo del sistema que va adentro, que toma el `id` y la descripción solo.</Anatomy.Part>
+        <Anatomy.Part name="Grupo">`Field.Set` con su `Field.Legend`: agrupa los campos que van juntos bajo un título.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Con cualquier control y en grupo">
+        <Panel>
         <Demo code={`<Field required>
   <Field.Label>Nombre de la actividad</Field.Label>
   <Field.Hint>Lo ven los estudiantes</Field.Hint>
@@ -42,7 +68,7 @@ export function FieldStory() {
   <Field.Label>Consigna</Field.Label>
   <Field.Hint>Podés pegar el texto que ya tenías</Field.Hint>
   <Textarea rows={3} maxRows={8} placeholder="Escribí la consigna…" />
-</Field>`}>
+</Field>`} label="Nombre, ayuda y error: tocá el nombre y salí sin escribir">
           <Stack gap="xl" width="md">
             <Field required>
               <Field.Label>Nombre de la actividad</Field.Label>
@@ -62,13 +88,7 @@ export function FieldStory() {
             </Field>
           </Stack>
         </Demo>
-      </Section>
-
-      <Section
-        title="Sirve para cualquier control del sistema"
-        note="El select, el switch y la casilla también toman el `id` y la descripción del Field."
-      >
-        <Demo code={`<Field>
+        <Demo label="El select, el switch y la casilla toman el id solos" code={`<Field required>
   <Field.Label>Espacio</Field.Label>
   <Field.Hint>Dónde se publica</Field.Hint>
   <Select value={space} onValueChange={setSpace} options={['Matemática · 4.º A', 'Lengua · 6.º']} />
@@ -83,7 +103,7 @@ export function FieldStory() {
   <Checkbox checked={notify} onCheckedChange={setNotify} />
 </Field>`}>
           <Stack gap="xl" width="md">
-            <Field>
+            <Field required>
               <Field.Label>Espacio</Field.Label>
               <Field.Hint>Dónde se publica</Field.Hint>
               <Select value={space} onValueChange={setSpace} options={['Matemática · 4.º A', 'Lengua · 6.º']} />
@@ -99,30 +119,7 @@ export function FieldStory() {
             </Field>
           </Stack>
         </Demo>
-      </Section>
-
-      <Section
-        title="Lo obligatorio se dice con palabras"
-        note="El asterisco es para la vista; para el lector va la palabra 'obligatorio', que no depende de conocer la convención."
-      >
-        <Demo code={`<Field required>
-  <Field.Label>Espacio</Field.Label>
-  <Select value={where} onValueChange={setWhere} options={['Matemática · 4.º A', 'Lengua · 6.º']} />
-</Field>`}>
-          <Frame width="sm">
-            <Field required>
-              <Field.Label>Espacio</Field.Label>
-              <Select value={where} onValueChange={setWhere} options={['Matemática · 4.º A', 'Lengua · 6.º']} />
-            </Field>
-          </Frame>
-        </Demo>
-      </Section>
-
-      <Section
-        title="Field.Set"
-        note="Agrupa los campos que van juntos bajo un título que el lector anuncia al entrar. En un formulario de tres campos sobra; en uno de doce lo hace legible."
-      >
-        <Demo code={`<Field.Set>
+        <Demo label="Field.Set: en un formulario de tres campos sobra, en uno de doce lo hace legible" code={`<Field.Set>
   <Field.Legend>Lo básico</Field.Legend>
   <Field required>
     <Field.Label>Nombre</Field.Label>
@@ -149,13 +146,8 @@ export function FieldStory() {
             </Field.Set>
           </Frame>
         </Demo>
+        </Panel>
       </Section>
-
-      <Note title="Field o Row">
-        El Field es para un formulario que se completa y se envía. Un ajuste que se guarda solo al
-        tocarlo (etiqueta a la izquierda, switch a la derecha) es un
-        [Row](#row).
-      </Note>
 
       <Section title="Props">
         <Props of="Field" />
@@ -165,6 +157,7 @@ export function FieldStory() {
         <Practices>
           <Practices.Do>La etiqueta va en `Field.Label`, el apoyo en `Field.Hint` y lo que está mal en `Field.Error`.</Practices.Do>
           <Practices.Do>El control de adentro toma el id solo: no le pongas `label` también, se nombra dos veces.</Practices.Do>
+          <Practices.Do>`Field` es para un formulario que se completa y se envía. Un ajuste que se guarda solo al tocarlo, con la etiqueta a la izquierda y el switch a la derecha, es un [Row](#row).</Practices.Do>
           <Practices.Dont>El error reemplaza al hint, no se apila: dos líneas de apoyo compiten por la misma mirada.</Practices.Dont>
         </Practices>
       </Section>

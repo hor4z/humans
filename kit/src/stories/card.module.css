@@ -8,111 +8,34 @@
     flex-direction: column;
   }
 
-  .looseCard {
-    width: 320px;
-  }
-
-  .looseText {
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    font-weight: var(--font-weight-medium);
-    color: var(--text-muted);
-  }
-
-  .stillCard {
+  .plainCard {
     width: 260px;
   }
 
-  .stillCover {
+  .surfaceCard {
+    width: 260px;
+    padding: 1rem;
+  }
+
+  .cover {
     border-radius: var(--radius-sm);
     background-color: var(--tint-2);
   }
 
-  .stillBody {
+  .coverBody {
     padding-inline: 0.5rem;
     padding-top: 0.75rem;
     padding-bottom: 0.5rem;
   }
 
-  .stillTitle {
+  .cardTitle {
     font-size: var(--type-body);
     line-height: var(--type-body-lh);
     letter-spacing: var(--type-body-ls);
     font-weight: var(--font-weight-semibold);
   }
 
-  .stillMeta {
-    margin-top: 0.25rem;
-    font-size: var(--type-meta);
-    line-height: var(--type-meta-lh);
-    letter-spacing: var(--type-meta-ls);
-    color: var(--text-muted);
-  }
-
-  .hoverCard {
-    width: 260px;
-  }
-
-  .hoverCover {
-    border-radius: var(--radius-sm);
-    background-color: var(--tint-3);
-  }
-
-  .hoverBody {
-    padding-inline: 0.5rem;
-    padding-top: 0.75rem;
-    padding-bottom: 0.5rem;
-  }
-
-  .hoverTitle {
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    font-weight: var(--font-weight-semibold);
-  }
-
-  .hoverMeta {
-    margin-top: 0.25rem;
-    font-size: var(--type-meta);
-    line-height: var(--type-meta-lh);
-    letter-spacing: var(--type-meta-ls);
-    color: var(--text-muted);
-  }
-
-  .paperCard {
-    width: 260px;
-    padding: 1rem;
-  }
-
-  .paperTitle {
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    font-weight: var(--font-weight-semibold);
-  }
-
-  .paperMeta {
-    margin-top: 0.25rem;
-    font-size: var(--type-meta);
-    line-height: var(--type-meta-lh);
-    letter-spacing: var(--type-meta-ls);
-    color: var(--text-muted);
-  }
-
-  .mutedCard {
-    width: 260px;
-    padding: 1rem;
-  }
-
-  .mutedTitle {
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    font-weight: var(--font-weight-semibold);
-  }
-
-  .mutedMeta {
+  .cardMeta {
     margin-top: 0.25rem;
     font-size: var(--type-meta);
     line-height: var(--type-meta-lh);

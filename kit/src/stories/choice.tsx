@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Button } from '@milo/ui/button'
 import { Choice } from '@milo/ui/blocks/task/choice'
-import { A11y, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
+import { A11y, Anatomy, Demo, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const places = [
   { id: 'patio', label: 'El patio en el recreo' },
@@ -30,47 +30,47 @@ export function ChoiceStory() {
       imports="import { Choice } from '@milo/ui/blocks/task/choice'"
       lead="Una pregunta con opciones: el enunciado y las tarjetas. Responder no dice si estuvo bien, y eso es la pieza y no un olvido: quien contesta elige, y la corrección llega después y la decide otro."
     >
-      <Section
-        title="Una o varias"
-        note="Con `multiple` las tarjetas pasan a ser casillas y se pueden marcar varias."
-      >
-        <Panel>
-          <Variant
-            name="una sola"
-            code={`<Choice options={places} value={one} onValueChange={setOne}>
+      <Hero>
+        <Stack width="md" gap="lg">
+          <Choice options={places} value={one} onValueChange={setOne}>
+            <Choice.Prompt>¿Dónde esperás que dé más alto?</Choice.Prompt>
+            <Choice.Hint>Todavía no midieron nada: se contesta con lo que cada uno cree.</Choice.Hint>
+          </Choice>
+          <Choice multiple options={care} value={many} onValueChange={setMany}>
+            <Choice.Prompt>¿Qué hay que cuidar para que los números se puedan comparar?</Choice.Prompt>
+          </Choice>
+        </Stack>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Enunciado" required>`Choice.Prompt`: la pregunta, que nombra al grupo de opciones.</Anatomy.Part>
+        <Anatomy.Part name="Aclaración">`Choice.Hint`: lo que conviene saber antes de contestar, como que hay más de una correcta.</Anatomy.Part>
+        <Anatomy.Part name="Tarjeta de opción" required>Una por opción, y toda la tarjeta es zona de toque. Es un círculo con una sola correcta y una casilla con `multiple`.</Anatomy.Part>
+        <Anatomy.Part name="Veredicto">Al revelar, cada tarjeta dice en texto si iba, con el tilde en las que iban y la raya amarilla en las marcadas de más.</Anatomy.Part>
+      </Anatomy>
+      <Section title="Una o varias">
+        <Demo label="Con multiple las tarjetas pasan a ser casillas" code={`<Choice options={places} value={one} onValueChange={setOne}>
   <Choice.Prompt>¿Dónde esperás que dé más alto?</Choice.Prompt>
-  <Choice.Hint>Todavía no midieron nada: se contesta con lo que cada uno cree.</Choice.Hint>
-</Choice>`}
-          >
-            <Stack width="sm">
-              <Choice options={places} value={one} onValueChange={setOne}>
-                <Choice.Prompt>¿Dónde esperás que dé más alto?</Choice.Prompt>
-                <Choice.Hint>Todavía no midieron nada: se contesta con lo que cada uno cree.</Choice.Hint>
-              </Choice>
-            </Stack>
-          </Variant>
-          <Variant
-            name="varias correctas"
-            code={`<Choice multiple options={care} value={many} onValueChange={setMany}>
+</Choice>
+<Choice multiple options={care} value={many} onValueChange={setMany}>
   <Choice.Prompt>¿Qué hay que cuidar para que los números se puedan comparar?</Choice.Prompt>
-</Choice>`}
-          >
-            <Stack width="sm">
-              <Choice multiple options={care} value={many} onValueChange={setMany}>
-                <Choice.Prompt>¿Qué hay que cuidar para que los números se puedan comparar?</Choice.Prompt>
-              </Choice>
-            </Stack>
-          </Variant>
-        </Panel>
+</Choice>`}>
+          <Stack width="sm">
+            <Choice options={places} value={one} onValueChange={setOne}>
+              <Choice.Prompt>¿Dónde esperás que dé más alto?</Choice.Prompt>
+            </Choice>
+            <Choice multiple options={care} value={many} onValueChange={setMany}>
+              <Choice.Prompt>¿Qué hay que cuidar para que los números se puedan comparar?</Choice.Prompt>
+            </Choice>
+          </Stack>
+        </Demo>
       </Section>
 
-      <Section
-        title="Corregir es otro momento"
-        note="Al revelar, las que iban quedan con el tilde y las marcadas de más con la raya amarilla, que es el tono de un consejo."
-      >
+      <Section title="Corregir es otro momento">
         <Panel>
           <Variant
             name="antes y después"
+            note="Al revelar, las que iban quedan con el tilde y las marcadas de más con la raya amarilla, que es el tono de un consejo."
             code={`<Choice
   multiple
   options={care}

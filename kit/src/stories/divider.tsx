@@ -3,7 +3,7 @@ import { Avatar } from '@milo/ui/avatar'
 import { Divider } from '@milo/ui/divider'
 import { Icon } from '@milo/ui/icon'
 import { Kbd } from '@milo/ui/kbd'
-import { A11y, Footnote, Frame, Page, Panel, Practices, Props, Section, Variant } from '../kit'
+import { A11y, Anatomy, Frame, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function DividerStory() {
   return (
@@ -11,39 +11,28 @@ export function DividerStory() {
       title="Divider"
       kind="Superficies"
       imports="import { Divider } from '@milo/ui/divider'"
-      lead="Un píxel de `--border`, y nada más. Existe como pieza porque la línea estaba escrita a mano en varios lugares y no todas con el mismo gris: cuál es la línea del sistema es una decisión, y una decisión escrita seis veces se desincroniza a la quinta."
+      lead="La línea del sistema, para separar dos cosas del mismo tipo. Existe como pieza porque escrita a mano en cada lugar se desincroniza."
     >
-      <Section title="Las dos orientaciones">
-        <Panel>
-          <Variant name="horizontal" code={`<div>Doce actividades en siete espacios</div>
-<Divider />
-<div>Cuatro esperan que alguien las mire</div>`}>
-            <Frame width="md">
-              <div className={cls.aboveText}>Doce actividades en siete espacios</div>
-              <Divider />
-              <div className={cls.belowText}>Cuatro esperan que alguien las mire</div>
-            </Frame>
-          </Variant>
-          <Variant name="vertical" code={`<span>Matemática</span>
-<Divider orientation="vertical" />
-<span>4.º A</span>
-<Divider orientation="vertical" />
-<span>18 entregas</span>`}>
-            <div className={cls.inlineStrip}>
-              <span className={cls.inlineSubject}>Matemática</span>
-              <Divider orientation="vertical" />
-              <span className={cls.inlineGroup}>4.º A</span>
-              <Divider orientation="vertical" />
-              <span className={cls.inlineCount}>18 entregas</span>
-            </div>
-          </Variant>
-        </Panel>
-      </Section>
+      <Hero>
+        <Frame width="md">
+          <div className={cls.aboveText}>Doce actividades en siete espacios</div>
+          <Divider />
+          <div className={cls.belowText}>Cuatro esperan que alguien las mire</div>
+        </Frame>
+        <div className={cls.inlineStrip}>
+          <span className={cls.inlineSubject}>Matemática</span>
+          <Divider orientation="vertical" />
+          <span className={cls.inlineGroup}>4.º A</span>
+          <Divider orientation="vertical" />
+          <span className={cls.inlineCount}>18 entregas</span>
+        </div>
+      </Hero>
 
-      <Section
-        title="Entre piezas"
-        note="Entre dos cosas del mismo tipo. Cuando lo de abajo es de otro tipo, el cambio de fondo dice más que una línea."
-      >
+      <Anatomy>
+        <Anatomy.Part name="Línea" required>Un píxel de `--border`, horizontal o vertical. Lleva `data-divider`, de lo que se agarra un contenedor con padding (un `Menu`, un panel) para estirarla hasta los bordes.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Ejemplos">
         <Panel>
           <Variant name="una barra" code={`<Icon name="search" size={18} className="icon-muted" />
 <span>Buscar</span>
@@ -61,12 +50,6 @@ export function DividerStory() {
             </div>
           </Variant>
         </Panel>
-        <Footnote>
-          Adentro de un contenedor con padding (un Menu, un panel) la línea se estira hasta los
-          bordes, y esa cuenta la hace el contenedor: es el que conoce su propio padding. Por eso
-          el Divider lleva <code className={cls.attributeName}>data-divider</code>, que es de lo único que
-          se agarra el padre para hacerla.
-        </Footnote>
       </Section>
 
       <Section title="Props">
@@ -76,6 +59,7 @@ export function DividerStory() {
       <Section title="Cómo se usa bien">
         <Practices>
           <Practices.Do>Separá dos cosas que ya se distinguen; si no se distinguen, lo que falta es aire.</Practices.Do>
+          <Practices.Do>Usala entre dos cosas del mismo tipo. Cuando lo de abajo es de otro tipo, el cambio de fondo dice más que una línea.</Practices.Do>
         </Practices>
       </Section>
 

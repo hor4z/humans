@@ -75,8 +75,4 @@
   .afterShortcut {
     margin-inline: 0.25rem;
   }
-
-  .attributeName {
-    font-family: var(--font-mono);
-  }
 }

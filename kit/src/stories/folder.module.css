@@ -1,5 +1,5 @@
 @layer milo.app {
-  .hoverShelf {
+  .shelf {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
@@ -25,21 +25,7 @@
     padding-block: 2rem;
   }
 
-  .emphasis {
-    font-weight: var(--font-weight-semibold);
-    color: var(--text);
-  }
-
-  .avatarShelf {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    padding-inline: 1.5rem;
-    padding-block: 2rem;
-  }
-
   .badgeIcon {
     color: var(--text);
   }
-
 }

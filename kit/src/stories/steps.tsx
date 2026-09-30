@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Button } from '@milo/ui/button'
 import { Icon } from '@milo/ui/icon'
 import { Steps } from '@milo/ui/steps'
-import { A11y, Demo, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 const design = [
   { label: 'Empatizar', hint: 'Escuchar a quien tiene el problema' },
@@ -31,8 +31,26 @@ export function StepsStory() {
       imports="import { Steps } from '@milo/ui/steps'"
       lead="Por dónde va algo que tiene etapas: una actividad en partes, un proceso de diseño, un formulario largo. Dice dónde estás y cuánto falta, que es lo que una barra de progreso no puede decir."
     >
-      <Section title="La pieza" note="Las anteriores quedan hechas, la actual se marca, las que siguen esperan.">
-        <Demo fill code={`<Steps steps={design} current={current} label="Etapas del proyecto" />
+      <Hero>
+        <div>
+          <Steps steps={design} current={current} label="Etapas del proyecto" />
+          <div className={cls.pieceActions}>
+            <Button size="sm" variant="muted" iconStart={<Icon name="arrow_back" />} disabled={current === 0} onClick={() => setCurrent(n => n - 1)}>Atrás</Button>
+            <Button size="sm" variant="muted" iconEnd={<Icon name="arrow_forward" />} disabled={current === design.length - 1} onClick={() => setCurrent(n => n + 1)}>Siguiente</Button>
+          </div>
+        </div>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Etapa" required>Cada paso de la secuencia, con su número y su nombre. Las anteriores quedan hechas, la actual se marca, las que siguen esperan.</Anatomy.Part>
+        <Anatomy.Part name="Marca">El número de la etapa, o el tilde cuando está hecha.</Anatomy.Part>
+        <Anatomy.Part name="Nombre" required>El `label` de la etapa.</Anatomy.Part>
+        <Anatomy.Part name="Aclaración">El `hint`: una línea abajo para lo que el nombre no dice.</Anatomy.Part>
+        <Anatomy.Part name="Línea">El tramo que une una etapa con la siguiente.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Ejemplos">
+        <Demo fill label="Acostada, con botones de afuera" code={`<Steps steps={design} current={current} label="Etapas del proyecto" />
 <Button size="sm" variant="muted" iconStart={<Icon name="arrow_back" />} disabled={current === 0} onClick={back}>
   Atrás
 </Button>
@@ -47,24 +65,12 @@ export function StepsStory() {
             </div>
           </div>
         </Demo>
-      </Section>
-
-      <Section
-        title="Parada"
-        note="Cuando cada etapa necesita su propio texto al lado, o cuando la secuencia va en una columna angosta. En pantalla chica la acostada se para sola."
-      >
-        <Demo fill code={`<Steps orientation="vertical" steps={handIn} current={1} label="Cómo se entrega" />`}>
+        <Demo fill label="Parada, para etapas con su propio texto o una columna angosta" code={`<Steps orientation="vertical" steps={handIn} current={1} label="Cómo se entrega" />`}>
           <div className={cls.stoppedBox}>
             <Steps orientation="vertical" steps={handIn} current={1} label="Cómo se entrega" />
           </div>
         </Demo>
-      </Section>
-
-      <Section
-        title="Indicador o navegación"
-        note="Con `onSelect` cada etapa es un botón, y eso solo va cuando volver atrás es de verdad posible."
-      >
-        <Demo fill code={`<Steps steps={handIn} current={step} label="Cómo se entrega, navegable" onSelect={setStep} />`}>
+        <Demo fill label="Navegable: cada etapa es un botón" code={`<Steps steps={handIn} current={step} label="Cómo se entrega, navegable" onSelect={setStep} />`}>
           <Steps steps={handIn} current={step} label="Cómo se entrega, navegable" onSelect={setStep} />
         </Demo>
       </Section>
@@ -75,6 +81,7 @@ export function StepsStory() {
 
       <Section title="Cómo se usa bien">
         <Practices>
+          <Practices.Do>`onSelect` vuelve cada etapa un botón, y eso solo va cuando volver atrás es de verdad posible. Sin él es un indicador. En pantalla chica la acostada se para sola.</Practices.Do>
           <Practices.Do>`current` es dónde estás parado, que no es lo mismo que lo elegido ni que el cursor del teclado.</Practices.Do>
           <Practices.Dont>No lo uses para un proceso de dos pasos: dos pasos se cuentan solos.</Practices.Dont>
           <Practices.Dont>Si las partes son intercambiables (once de dieciocho entregas), no va `Steps`: va un `Progress`, que dice cuánto de un total está hecho.</Practices.Dont>

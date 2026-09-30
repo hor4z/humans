@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { OpenQuestion } from '@milo/ui/blocks/task/open-question'
-import { A11y, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
+import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 export function OpenQuestionStory() {
   const [text, setText] = useState('')
@@ -12,37 +12,27 @@ export function OpenQuestionStory() {
       imports="import { OpenQuestion } from '@milo/ui/blocks/task/open-question'"
       lead="Una pregunta que se responde escribiendo. No la corrige nadie solo: lo que se escribe acá lo lee una persona, y por eso la pieza no tiene noción de respuesta correcta."
     >
-      <Section
-        title="Respondiendo"
-        note="El tope no frena la tecla en silencio: el campo avisa recién cuando quedan pocos caracteres."
-      >
+      <Hero>
+        <Stack width="md" gap="lg">
+          <OpenQuestion value={text} onValueChange={setText} rows={3} maxLength={240} placeholder="Porque ahí se junta todo el curso y además está el eco del techo">
+            <OpenQuestion.Prompt>¿Por qué ese y no otro?</OpenQuestion.Prompt>
+            <OpenQuestion.Hint>Dos renglones alcanzan.</OpenQuestion.Hint>
+          </OpenQuestion>
+          <OpenQuestion value="">
+            <OpenQuestion.Prompt>¿Por qué ese y no otro?</OpenQuestion.Prompt>
+          </OpenQuestion>
+        </Stack>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Enunciado" required>`OpenQuestion.Prompt`: la pregunta, que nombra al campo.</Anatomy.Part>
+        <Anatomy.Part name="Aclaración">`OpenQuestion.Hint`: qué tiene que aparecer en la respuesta.</Anatomy.Part>
+        <Anatomy.Part name="Campo" required>Donde se escribe, con `placeholder` y `rows`. Sin `onValueChange` se convierte en un párrafo de lectura.</Anatomy.Part>
+        <Anatomy.Part name="Contador">Con `maxLength`: avisa recién cuando quedan pocos caracteres, en vez de frenar la tecla en silencio.</Anatomy.Part>
+        <Anatomy.Part name="Sin responder">Una respuesta vacía en lectura lo dice con todas las letras: una caja en blanco no se distingue de un campo que nadie tocó.</Anatomy.Part>
+      </Anatomy>
+      <Section title="Respondiendo y ya entregada">
         <Panel>
-          <Variant
-            name="en blanco"
-            code={`<OpenQuestion
-  value={text}
-  onValueChange={setText}
-  rows={3}
-  maxLength={240}
-  placeholder="Porque ahí se junta todo el curso y además está el eco del techo"
->
-  <OpenQuestion.Prompt>¿Por qué ese y no otro?</OpenQuestion.Prompt>
-  <OpenQuestion.Hint>Dos renglones alcanzan.</OpenQuestion.Hint>
-</OpenQuestion>`}
-          >
-            <Stack width="sm">
-              <OpenQuestion
-                value={text}
-                onValueChange={setText}
-                rows={3}
-                maxLength={240}
-                placeholder="Porque ahí se junta todo el curso y además está el eco del techo"
-              >
-                <OpenQuestion.Prompt>¿Por qué ese y no otro?</OpenQuestion.Prompt>
-                <OpenQuestion.Hint>Dos renglones alcanzan.</OpenQuestion.Hint>
-              </OpenQuestion>
-            </Stack>
-          </Variant>
           <Variant
             name="ya entregada"
             note="Sin `onValueChange` se lee y no se escribe."
@@ -56,25 +46,7 @@ export function OpenQuestionStory() {
               </OpenQuestion>
             </Stack>
           </Variant>
-          <Variant
-            name="sin responder"
-            note="Una caja en blanco no se distingue de un campo que nadie tocó, así que lo dice con todas las letras."
-            code={`<OpenQuestion value="">
-  <OpenQuestion.Prompt>¿Por qué ese y no otro?</OpenQuestion.Prompt>
-</OpenQuestion>`}
-          >
-            <Stack width="sm">
-              <OpenQuestion value="">
-                <OpenQuestion.Prompt>¿Por qué ese y no otro?</OpenQuestion.Prompt>
-              </OpenQuestion>
-            </Stack>
-          </Variant>
         </Panel>
-        <Note>
-          No tiene `correct` y no lo va a tener. En cuanto una pregunta abierta sabe la respuesta,
-          lo que se está evaluando es si adivinaste las palabras: para lo que se corrige solo está
-          `Choice`, y para lo que mira una persona está la rúbrica.
-        </Note>
       </Section>
 
       <Section title="Props">
@@ -85,6 +57,7 @@ export function OpenQuestionStory() {
         <Practices>
           <Practices.Do>Poné en el `Hint` qué tiene que aparecer en la respuesta: sin eso, el que escribe adivina cuánto se espera.</Practices.Do>
           <Practices.Do>Dale un tope acorde a lo que pedís: 240 para una justificación de dos renglones, 600 para una conclusión.</Practices.Do>
+          <Practices.Dont>No le pidas que sepa la respuesta: no tiene `correct` y no lo va a tener, porque en cuanto una pregunta abierta sabe la respuesta lo que se evalúa es si adivinaste las palabras. Lo que se corrige solo es `Choice`, y lo que mira una persona va con una rúbrica.</Practices.Dont>
           <Practices.Dont>No la uses para un dato que se puede calcular: para un número va `NumberAnswer`, que sabe de unidad y de margen.</Practices.Dont>
           <Practices.Dont>No pongas la respuesta esperada en el `placeholder`: se copia tal cual y deja de decir nada.</Practices.Dont>
         </Practices>

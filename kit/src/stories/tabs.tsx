@@ -1,7 +1,7 @@
 import cls from './tabs.module.css'
 import { useState } from 'react'
 import { Tabs } from '@milo/ui/tabs'
-import { A11y, Demo, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function TabsStory() {
   const [range, setRange] = useState('semana')
@@ -11,13 +11,36 @@ export function TabsStory() {
       title="Tabs"
       kind="Navegación"
       imports="import { Tabs } from '@milo/ui/tabs'"
-      lead="Un mismo lugar que muestra contenidos que se comparan entre sí: las entregas, la rúbrica y los ajustes de una actividad. Lo que no se compara no va en solapas: va en una pantalla aparte o en un `Accordion`."
+      lead="Un mismo lugar que muestra contenidos que se comparan entre sí: las entregas, la rúbrica y los ajustes de una actividad."
     >
-      <Section
-        title="Cómo se arma"
-        note="El activo se marca con la línea **y** con el azul: unas solapas dicen dónde estás. Un `Segmented` se le parece y no lleva azul, porque ahí se elige un filtro y no un lugar."
-      >
-        <Demo fill code={`<Tabs defaultValue="entregas">
+      <Hero>
+        <Tabs defaultValue="entregas">
+          <Tabs.List label="Secciones de la actividad">
+            <Tabs.Tab value="entregas">Entregas</Tabs.Tab>
+            <Tabs.Tab value="rubrica">Rúbrica</Tabs.Tab>
+            <Tabs.Tab value="ajustes">Ajustes</Tabs.Tab>
+          </Tabs.List>
+          <Tabs.Panel value="entregas">
+            <p className={cls.handedText}>Dieciocho entregas, cuatro sin mirar.</p>
+          </Tabs.Panel>
+          <Tabs.Panel value="rubrica">
+            <p className={cls.handedText}>Cuatro aspectos, cada uno de 1 a 4.</p>
+          </Tabs.Panel>
+          <Tabs.Panel value="ajustes">
+            <p className={cls.handedText}>Quién puede ver la actividad y hasta cuándo.</p>
+          </Tabs.Panel>
+        </Tabs>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Lista" required>`Tabs.List` agrupa las solapas y lleva el nombre del conjunto con `label`.</Anatomy.Part>
+        <Anatomy.Part name="Solapa" required>`Tabs.Tab`: el botón de cada sección, atado a su panel por `value`.</Anatomy.Part>
+        <Anatomy.Part name="Línea activa">La solapa abierta se marca con una línea y con el azul.</Anatomy.Part>
+        <Anatomy.Part name="Panel" required>`Tabs.Panel`: el contenido de una solapa. Cerrado sigue montado y oculto.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Ejemplos">
+        <Demo fill label="Cómo se arma" code={`<Tabs defaultValue="entregas">
   <Tabs.List label="Secciones de la actividad">
     <Tabs.Tab value="entregas">Entregas</Tabs.Tab>
     <Tabs.Tab value="rubrica">Rúbrica</Tabs.Tab>
@@ -43,20 +66,14 @@ export function TabsStory() {
               <p className={cls.handedText}>Dieciocho entregas, cuatro sin mirar.</p>
             </Tabs.Panel>
             <Tabs.Panel value="rubrica">
-              <p className={cls.rubricText}>Cuatro aspectos, cada uno de 1 a 4.</p>
+              <p className={cls.handedText}>Cuatro aspectos, cada uno de 1 a 4.</p>
             </Tabs.Panel>
             <Tabs.Panel value="ajustes">
-              <p className={cls.accessText}>Quién puede ver la actividad y hasta cuándo.</p>
+              <p className={cls.handedText}>Quién puede ver la actividad y hasta cuándo.</p>
             </Tabs.Panel>
           </Tabs>
         </Demo>
-      </Section>
-
-      <Section
-        title="Controlado"
-        note="Con `value` y `onValueChange` la decisión es de afuera: cuando la solapa abierta sale de la URL, o cuando algo más de la pantalla la cambia."
-      >
-        <Demo fill code={`<Tabs value={range} onValueChange={setRange}>
+        <Demo fill label="Controlado: la decide la pantalla" code={`<Tabs value={range} onValueChange={setRange}>
   <Tabs.List label="Rango del panel">
     <Tabs.Tab value="semana">Esta semana</Tabs.Tab>
     <Tabs.Tab value="mes">Este mes</Tabs.Tab>
@@ -79,13 +96,13 @@ export function TabsStory() {
               <Tabs.Tab value="todo">Todo</Tabs.Tab>
             </Tabs.List>
             <Tabs.Panel value="semana">
-              <p className={cls.weekText}>79 entregas en cuatro espacios.</p>
+              <p className={cls.handedText}>79 entregas en cuatro espacios.</p>
             </Tabs.Panel>
             <Tabs.Panel value="mes">
-              <p className={cls.monthText}>312 entregas, 289 corregidas.</p>
+              <p className={cls.handedText}>312 entregas, 289 corregidas.</p>
             </Tabs.Panel>
             <Tabs.Panel value="todo">
-              <p className={cls.allText}>Desde marzo: 1.204 entregas.</p>
+              <p className={cls.handedText}>Desde marzo: 1.204 entregas.</p>
             </Tabs.Panel>
           </Tabs>
         </Demo>
@@ -97,6 +114,8 @@ export function TabsStory() {
 
       <Section title="Cómo se usa bien">
         <Practices>
+          <Practices.Do>El activo se marca con la línea **y** con el azul: unas solapas dicen dónde estás. Un [Segmented](#segmented) se le parece y no lleva azul, porque ahí se elige un filtro y no un lugar.</Practices.Do>
+          <Practices.Do>Con `value` y `onValueChange` la decisión es de afuera: cuando la solapa abierta sale de la URL, o cuando algo más de la pantalla la cambia.</Practices.Do>
           <Practices.Do>El panel y su solapa se atan por el mismo `value`.</Practices.Do>
           <Practices.Dont>Si son preguntas sueltas que se leen de a una y la mayoría no se va a abrir nunca, no van solapas: va un [Accordion](#accordion).</Practices.Dont>
         </Practices>

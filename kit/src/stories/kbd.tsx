@@ -1,6 +1,6 @@
 import cls from './kbd.module.css'
 import { Kbd } from '@milo/ui/kbd'
-import { A11y, Demo, Note, Page, Panel, Practices, Props, Section, Variant } from '../kit'
+import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function KbdStory() {
   return (
@@ -8,49 +8,36 @@ export function KbdStory() {
       title="Kbd"
       kind="Superficies"
       imports="import { Kbd } from '@milo/ui/kbd'"
-      lead="La tecla dibujada. Es una marca hundida (la misma receta que la pista de un segmented) porque una tecla es algo que se aprieta: lleva canto, luz arriba y una sombra de caída corta."
+      lead="La tecla dibujada, para recordar un atajo: en el buscador del riel, en la paleta de comandos o como sufijo de un campo cuando lo que sigue es una unidad."
     >
-      <Section
-        title="Cómo se ve"
-        note="Radio 6, el más chico de la escala. Un radio grande en una caja de 20 de alto la convierte en una pastilla y deja de parecer una tecla."
-      >
-        <Panel>
-          <Variant name="una tecla" code={`<Kbd>K</Kbd>`}><Kbd>K</Kbd></Variant>
-          <Variant name="con modificador" code={`<Kbd>⌘K</Kbd>
-<Kbd>⌥</Kbd>
-<Kbd>⇧</Kbd>`}><Kbd>⌘K</Kbd><Kbd>⌥</Kbd><Kbd>⇧</Kbd></Variant>
-          <Variant name="con nombre" code={`<Kbd>Esc</Kbd>
-<Kbd>Enter</Kbd>
-<Kbd>Tab</Kbd>`}><Kbd>Esc</Kbd><Kbd>Enter</Kbd><Kbd>Tab</Kbd></Variant>
-          <Variant name="una unidad" code={`<Kbd>min</Kbd>
-<Kbd>px</Kbd>`}><Kbd>min</Kbd><Kbd>px</Kbd></Variant>
-        </Panel>
-      </Section>
+      <Hero>
+        <Kbd>K</Kbd>
+        <Kbd>⌘K</Kbd>
+        <Kbd>⌥</Kbd>
+        <Kbd>Esc</Kbd>
+        <Kbd>Enter</Kbd>
+        <Kbd>min</Kbd>
+      </Hero>
 
-      <Section
-        title="Dónde aparece"
-        note="En el buscador del riel, en la paleta de comandos y como sufijo de un campo cuando lo que sigue es una unidad."
-      >
-        <Demo code={`<span>Buscar una pieza <Kbd>/</Kbd></span>
+      <Anatomy>
+        <Anatomy.Part name="Tecla" required>La caja hundida con el símbolo, el nombre o la unidad adentro: radio 6, canto, luz arriba y una sombra de caída corta.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Ejemplos">
+        <Demo label="Dónde aparece" code={`<span>Buscar una pieza <Kbd>/</Kbd></span>
 <span>Abrir la paleta <Kbd>⌘K</Kbd></span>
 <span>Cerrar <Kbd>Esc</Kbd></span>`}>
-          <span className={cls.searchHint}>
+          <span className={cls.hint}>
             Buscar una pieza <Kbd>/</Kbd>
           </span>
-          <span className={cls.paletteHint}>
+          <span className={cls.hint}>
             Abrir la paleta <Kbd>⌘K</Kbd>
           </span>
-          <span className={cls.closeHint}>
+          <span className={cls.hint}>
             Cerrar <Kbd>Esc</Kbd>
           </span>
         </Demo>
       </Section>
-
-      <Note title="El símbolo antes que el nombre">
-        <Kbd>⌘</Kbd> y no "Cmd", <Kbd>⇧</Kbd> y no "Shift": el símbolo es lo que está impreso en la
-        tecla que hay que apretar. La excepción son las que no tienen símbolo (Esc, Tab, Enter) donde
-        el nombre es lo que está impreso.
-      </Note>
 
       <Section title="Props">
         <Props of="Kbd" />
@@ -58,6 +45,7 @@ export function KbdStory() {
 
       <Section title="Cómo se usa bien">
         <Practices>
+          <Practices.Do>El símbolo antes que el nombre: <Kbd>⌘</Kbd> y no "Cmd", <Kbd>⇧</Kbd> y no "Shift", porque es lo que está impreso en la tecla. La excepción son las que no tienen símbolo (Esc, Tab, Enter).</Practices.Do>
           <Practices.Do>Es un recordatorio de la tecla, no la tecla: el atajo lo escucha quien lo pone.</Practices.Do>
         </Practices>
       </Section>

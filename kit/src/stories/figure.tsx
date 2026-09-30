@@ -1,6 +1,6 @@
 import s from './figure.module.css'
 import { Figure } from '@milo/ui/blocks/editor/figure'
-import { A11y, Demo, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function FigureStory() {
   return (
@@ -10,39 +10,32 @@ export function FigureStory() {
       imports="import { Figure } from '@milo/ui/blocks/editor/figure'"
       lead="Una imagen con su pie: lo que ilustra una consigna, la foto de un experimento, el gráfico que alguien dibujó a mano."
     >
-      <Section
-        title="La pieza"
-        note="`cover` para una foto, `contain` para un dibujo."
-      >
-        <Demo fill code={`<Figure src="/avatars/03.webp" alt="Una persona sonriendo, de frente">
-  <Figure.Caption>Con una foto va cover: llena el hueco y el borde no importa</Figure.Caption>
-</Figure>
-<Figure src="/mascotas/otto.webp" alt="Otto, una nutria de pie con un pañuelo azul" fit="contain">
-  <Figure.Caption>Con un dibujo va contain: recortar se lleva justo lo que hay que ver</Figure.Caption>
-</Figure>`}>
-          <div className={s.pieceGrid}>
-            <Figure
-              src="/avatars/03.webp"
-              alt="Una persona sonriendo, de frente"
-            >
-              <Figure.Caption>Con una foto va cover: llena el hueco y el borde no importa</Figure.Caption>
-            </Figure>
-            <Figure
-              src="/mascotas/otto.webp"
-              alt="Otto, una nutria de pie con un pañuelo azul"
-              fit="contain"
-            >
-              <Figure.Caption>Con un dibujo va contain: recortar se lleva justo lo que hay que ver</Figure.Caption>
-            </Figure>
-          </div>
-        </Demo>
-      </Section>
+      <Hero>
+        <div className={s.pieceGrid}>
+          <Figure
+            src="/avatars/03.webp"
+            alt="Una persona sonriendo, de frente"
+          >
+            <Figure.Caption>Con una foto va cover: llena el hueco y el borde no importa</Figure.Caption>
+          </Figure>
+          <Figure
+            src="/mascotas/otto.webp"
+            alt="Otto, una nutria de pie con un pañuelo azul"
+            fit="contain"
+          >
+            <Figure.Caption>Con un dibujo va contain: recortar se lleva justo lo que hay que ver</Figure.Caption>
+          </Figure>
+        </div>
+      </Hero>
 
-      <Section
-        title="Las proporciones"
-        note="Cuatro, y la elige quien arma la pantalla. Una grilla donde cada imagen trae la suya se ve como una pila de recortes."
-      >
-        <Demo fill code={`<Figure src="/avatars/01.webp" alt="" ratio="16/9">
+      <Anatomy>
+        <Anatomy.Part name="Imagen" required>`src` y `alt`. `fit` es `cover` para una foto y `contain` para un dibujo, donde recortar se lleva justo lo que hay que ver.</Anatomy.Part>
+        <Anatomy.Part name="Epígrafe">`Figure.Caption`: qué hay que mirar, en un `figcaption` atado a la figura.</Anatomy.Part>
+        <Anatomy.Part name="Hueco reservado">`ratio` fija la proporción antes de que cargue la imagen.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Ejemplos">
+        <Demo fill label="Las cuatro proporciones" code={`<Figure src="/avatars/01.webp" alt="" ratio="16/9">
   <Figure.Caption>16/9</Figure.Caption>
 </Figure>
 <Figure src="/avatars/02.webp" alt="" ratio="4/3">
@@ -71,6 +64,7 @@ export function FigureStory() {
       <Section title="Cómo se usa bien">
         <Practices>
           <Practices.Do>`alt` es qué se ve y `Figure.Caption` es qué hay que mirar: no son lo mismo.</Practices.Do>
+          <Practices.Do>La proporción la elige quien arma la pantalla, una por grilla: si cada imagen trae la suya se ve como una pila de recortes.</Practices.Do>
           <Practices.Do>`ratio` reserva el hueco, así que la página no salta cuando la imagen carga.</Practices.Do>
           <Practices.Dont>Si la imagen no aporta nada que el texto no diga, `alt` va vacío y queda decorativa.</Practices.Dont>
         </Practices>

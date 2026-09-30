@@ -100,14 +100,18 @@ function Tab({ value, className, children, ...props }: ComponentPropsWithoutRef<
 }
 
 /** El contenido de una solapa. */
-function Panel({ value, className, children, ...props }: ComponentPropsWithoutRef<'div'> & {
+function Panel({ value, keepMounted, className, children, ...props }: ComponentPropsWithoutRef<'div'> & {
   /** El mismo valor que su solapa. */
   value: string
+  /** Cerrado sigue montado y oculto, así conserva su estado: un formulario a medio llenar, un video. */
+  keepMounted?: boolean
 }) {
   const { value: current, name } = useTabs('Panel')
-  if (current !== value) return null
+  const closed = current !== value
+  if (closed && !keepMounted) return null
   return (
     <div
+      hidden={closed}
       role="tabpanel"
       id={`${name}-panel-${value}`}
       aria-labelledby={`${name}-tab-${value}`}

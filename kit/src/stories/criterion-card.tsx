@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { CriterionCard, type Criterion } from '@milo/ui/blocks/rubric/criterion-card'
-import { A11y, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
+import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const chart: Criterion = {
   id: 'grafico',
@@ -42,10 +42,22 @@ export function CriterionCardStory() {
       imports="import { CriterionCard } from '@milo/ui/blocks/rubric/criterion-card'"
       lead="Un aspecto adentro de una rúbrica: la marca, el nombre y, plegados, sus renglones. Cerrada ocupa una fila, así que una rúbrica de ocho aspectos mide lo mismo que una de dos."
     >
-      <Section
-        title="Cómo se arma"
-        note="Es controlada a propósito: quien la contiene decide cuál está abierta, así que puede dejar una sola y mantener el alto del panel."
-      >
+      <Hero>
+        <Stack width="sm">
+          <CriterionCard criterion={chart} total={15} open={open === 'grafico'} onOpenChange={() => toggle('grafico')} onRemove={() => {}} />
+          <CriterionCard criterion={measurement} total={15} open={open === 'medicion'} onOpenChange={() => toggle('medicion')} onRemove={() => {}} />
+        </Stack>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Marca" required>El glifo en el color del aspecto, que lo ata con su tramo de la barra. Es decorativa.</Anatomy.Part>
+        <Anatomy.Part name="Nombre" required>`label`: lo único que se ve plegada, así que entra en una línea. Tope de 56.</Anatomy.Part>
+        <Anatomy.Part name="Flecha" required>Pliega y despliega la tarjeta. Es controlada: quien la contiene decide cuál está abierta.</Anatomy.Part>
+        <Anatomy.Part name="Tacho">Con `onRemove`: saca el aspecto. Sin él, la tarjeta es de solo lectura.</Anatomy.Part>
+        <Anatomy.Part name="Descripción">`detail`: se lee recién al abrirla, arriba de los renglones. Tope de 220.</Anatomy.Part>
+        <Anatomy.Part name="Renglones" required>Los `levels` del aspecto, visibles al abrir.</Anatomy.Part>
+      </Anatomy>
+      <Section title="Abierta, con descripción y de solo lectura">
         <Panel>
           <Variant
             name="una abierta por vez"
@@ -83,30 +95,17 @@ export function CriterionCardStory() {
             </Stack>
           </Variant>
           <Variant
-            name="con descripción"
-            note="`detail` se lee recién al abrirla, arriba de los renglones."
-            code={`<CriterionCard criterion={measurement} total={15} open={open} onOpenChange={setOpen} />`}
+            name="con descripción y de solo lectura"
+            note="`detail` se lee recién al abrirla, arriba de los renglones. Sin `onRemove` no hay tacho: es la misma tarjeta para quien no escribió la rúbrica."
+            code={`<CriterionCard criterion={measurement} total={15} open={detailOpen} onOpenChange={setDetailOpen} />
+<CriterionCard criterion={chart} total={15} open={readOpen} onOpenChange={setReadOpen} />`}
           >
             <Stack width="sm">
               <CriterionCard criterion={measurement} total={15} open={detailOpen} onOpenChange={setDetailOpen} />
-            </Stack>
-          </Variant>
-          <Variant
-            name="de solo lectura"
-            note="Sin `onRemove` no hay tacho: es la misma tarjeta para quien no escribió la rúbrica."
-            code={`<CriterionCard criterion={chart} total={15} open={open} onOpenChange={setOpen} />`}
-          >
-            <Stack width="sm">
               <CriterionCard criterion={chart} total={15} open={readOpen} onOpenChange={setReadOpen} />
             </Stack>
           </Variant>
         </Panel>
-        <Note>
-          El nombre y la descripción son dos campos y no uno porque se leen en momentos distintos:
-          el nombre es lo único que se ve con el aspecto plegado, así que entra en una línea, y la
-          descripción se lee al abrirlo. Los dos tienen tope, y los dos topes los declara la pieza
-          en `criterionLimits`: 56 y 220. Un aspecto que necesita más que eso son dos aspectos.
-        </Note>
       </Section>
 
       <Section title="Props">
@@ -115,6 +114,7 @@ export function CriterionCardStory() {
 
       <Section title="Cómo se usa bien">
         <Practices>
+          <Practices.Do>Dejá el nombre y la descripción como dos campos: se leen en momentos distintos, y `criterionLimits` declara los topes (56 y 220). Un aspecto que necesita más que eso son dos aspectos.</Practices.Do>
           <Practices.Do>Dejá una sola abierta: la rúbrica se lee de arriba abajo y el panel no crece con cada aspecto.</Practices.Do>
           <Practices.Do>Si el nombre no entra en una línea, lo que sobra va en `detail` y no adentro del nombre: plegada la tarjeta muestra el nombre solo, y uno de cuatro renglones deja de ser una fila.</Practices.Do>
           <Practices.Do>Pasale `total` aunque no lo muestres: sin él, el porcentaje que escucha un lector de pantalla sería otro.</Practices.Do>

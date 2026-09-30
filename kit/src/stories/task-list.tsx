@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { TaskList, type Task } from '@milo/ui/blocks/editor/task-list'
-import { A11y, Demo, Note, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Demo, Grid, Hero, Page, Practices, Props, Section, Stack } from '../kit'
 
 const initial: Task[] = [
   { id: 'leer', label: 'Leer la consigna entera antes de empezar', done: true },
@@ -19,26 +19,27 @@ export function TaskListStory() {
       imports="import { TaskList } from '@milo/ui/blocks/editor/task-list'"
       lead="Cosas para hacer que se marcan al hacerlas: los pasos de una entrega, lo que falta de una actividad, el checklist de un experimento."
     >
-      <Section title="La pieza" note="Marcá y desmarcá: lo hecho se apaga y se tacha, que son dos avisos y no uno.">
-        <Demo width="lg" fill code={`<TaskList value={tasks} onValueChange={setTasks} label="Pasos del experimento" />`}>
+      <Hero>
+        <Stack width="lg">
           <TaskList value={tasks} onValueChange={setTasks} label="Pasos del experimento" />
-        </Demo>
-      </Section>
+        </Stack>
+      </Hero>
 
-      <Section
-        title="Solo de lectura"
-        note="Sin `onValueChange`, o con `readOnly`: la consigna de otro, una entrega ya cerrada."
-      >
-        <Demo width="lg" fill code={`<TaskList value={steps} label="Pasos, ya cerrados" />`}>
-          <TaskList value={initial} label="Pasos, ya cerrados" />
-        </Demo>
+      <Anatomy>
+        <Anatomy.Part name="Casilla" required>Una por tarea: marca lo hecho con el tilde.</Anatomy.Part>
+        <Anatomy.Part name="Texto de la tarea" required>Se apaga y se tacha cuando la tarea está hecha, y es parte de la zona de click.</Anatomy.Part>
+        <Anatomy.Part name="Nombre de la lista" required>`label`: no se ve, pero dice de qué es la lista.</Anatomy.Part>
+      </Anatomy>
+      <Section title="Editable y de solo lectura">
+        <Grid>
+          <Demo label="Marcá y desmarcá" fill code={`<TaskList value={tasks} onValueChange={setTasks} label="Pasos del experimento" />`}>
+            <TaskList value={tasks} onValueChange={setTasks} label="Pasos del experimento" />
+          </Demo>
+          <Demo label="Solo de lectura" fill code={`<TaskList value={steps} label="Pasos, ya cerrados" />`}>
+            <TaskList value={initial} label="Pasos, ya cerrados" />
+          </Demo>
+        </Grid>
       </Section>
-
-      <Note title="TaskList o Checkbox suelto">
-        Un `Checkbox` solo es una decisión dentro de un formulario: se confirma con un botón. Una
-        `TaskList` es una lista de cosas que se van haciendo, y cada marca vale sola en el momento.
-        Si al final hay un "Guardar", son casillas; si no, es esta lista.
-      </Note>
 
       <Section title="Props">
         <Props of={['TaskList', 'Task']} />
@@ -46,6 +47,8 @@ export function TaskListStory() {
 
       <Section title="Cómo se usa bien">
         <Practices>
+          <Practices.Do>Usala para cosas que se van haciendo y cuya marca vale sola. Si al final hay un "Guardar", son casillas de un formulario: un `Checkbox` es una decisión que se confirma con un botón.</Practices.Do>
+          <Practices.Do>Sin `onValueChange`, o con `readOnly`, es de solo lectura: la consigna de otro, una entrega ya cerrada.</Practices.Do>
           <Practices.Do>`label` dice de qué es: sin eso un lector anuncia "lista, cuatro elementos".</Practices.Do>
         </Practices>
       </Section>

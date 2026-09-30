@@ -3,10 +3,11 @@ import { Button } from '@milo/ui/button'
 import { ConfirmDialog } from '@milo/ui/confirm-dialog'
 import { Icon } from '@milo/ui/icon'
 import { useToast } from '@milo/ui/toast'
-import { A11y, Demo, Grid, Note, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Demo, Grid, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function ConfirmStory() {
   const [open, setOpen] = useState(false)
+  const [heroOpen, setHeroOpen] = useState(false)
   const [publishOpen, setPublishOpen] = useState(false)
   const { toast } = useToast()
   return (
@@ -16,10 +17,31 @@ export function ConfirmStory() {
       imports="import { ConfirmDialog } from '@milo/ui/confirm-dialog'"
       lead="La pregunta antes de algo que no se deshace. Mismas partes que el Modal, sin X: la salida segura ya está a la vista y es el botón de cancelar."
     >
-      <Section
-        title="Vivo"
-        note="El título nombra lo que se va a tocar."
-      >
+      <Hero>
+        <Button variant="bad" iconStart={<Icon name="delete" />} onClick={() => setHeroOpen(true)}>Borrar la actividad</Button>
+        <ConfirmDialog open={heroOpen} onOpenChange={setHeroOpen} onConfirm={() => setHeroOpen(false)} tone="bad">
+          <ConfirmDialog.Header>
+            <ConfirmDialog.Title>¿Borrar "Fracciones equivalentes"?</ConfirmDialog.Title>
+          </ConfirmDialog.Header>
+          <ConfirmDialog.Body>
+            Se borran también las 18 entregas que ya llegaron. No se puede deshacer.
+          </ConfirmDialog.Body>
+          <ConfirmDialog.Footer>
+            <ConfirmDialog.Cancel />
+            <ConfirmDialog.Confirm>Borrar</ConfirmDialog.Confirm>
+          </ConfirmDialog.Footer>
+        </ConfirmDialog>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Velo" required>Apaga lo que hay atrás; tocarlo cancela.</Anatomy.Part>
+        <Anatomy.Part name="Título" required>`ConfirmDialog.Title`: la pregunta, con el nombre de lo que se va a tocar. Va en `ConfirmDialog.Header`, que no lleva X.</Anatomy.Part>
+        <Anatomy.Part name="Cuerpo">`ConfirmDialog.Body`: qué más se lleva puesto.</Anatomy.Part>
+        <Anatomy.Part name="Cancelar" required>`ConfirmDialog.Cancel`: la salida segura.</Anatomy.Part>
+        <Anatomy.Part name="Confirmar" required>`ConfirmDialog.Confirm`: el verbo de lo que va a pasar. Con `tone="bad"` se pinta de rojo.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Ejemplos">
         <Grid min={300}>
           <Demo label='tone="bad"' code={`<Button variant="bad" iconStart={<Icon name="delete" />} onClick={() => setOpen(true)}>Borrar la actividad</Button>
 <ConfirmDialog open={open} onOpenChange={setOpen} onConfirm={remove} tone="bad">
@@ -94,12 +116,6 @@ export function ConfirmStory() {
         </Grid>
       </Section>
 
-      <Note title="Antes de preguntar, fijate si se puede deshacer">
-        Preguntar cuesta un click siempre; deshacer cuesta un click solo cuando alguien se equivocó.
-        Si la acción se puede revertir, va derecho con un [Toast](#toast) que ofrezca "Deshacer". El
-        diálogo se guarda para lo que no tiene vuelta.
-      </Note>
-
       <Section title="Props">
         <Props of="ConfirmDialog" />
       </Section>
@@ -107,6 +123,7 @@ export function ConfirmStory() {
       <Section title="Cómo se usa bien">
         <Practices>
           <Practices.Do>Los botones van con `ConfirmDialog.Cancel` y `ConfirmDialog.Confirm`: la regla de foco la ponen ellos, no el call site.</Practices.Do>
+          <Practices.Do>Si la acción se puede revertir, va derecho con un [Toast](#toast) que ofrezca "Deshacer": preguntar cuesta un click siempre, deshacer solo cuando alguien se equivocó.</Practices.Do>
           <Practices.Dont>No le pongas una X: la salida segura ya está a la vista y es cancelar.</Practices.Dont>
         </Practices>
       </Section>

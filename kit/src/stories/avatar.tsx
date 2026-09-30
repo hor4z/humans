@@ -1,6 +1,6 @@
 import cls from './avatar.module.css'
 import { Avatar } from '@milo/ui/avatar'
-import { A11y, Demo, Grid, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 import { face, person } from '../fixtures'
 
 export function AvatarStory() {
@@ -9,50 +9,41 @@ export function AvatarStory() {
       title="Avatar"
       kind="Datos"
       imports="import { Avatar } from '@milo/ui/avatar'"
-      lead="Una persona en el lugar de un nombre. Con foto o con la inicial sobre una etiqueta de color, y las dos tienen que pesar lo mismo: en una fila donde algunos subieron foto y otros no, el que no subió no puede leerse como un error."
+      lead="Una persona en el lugar de un nombre. Con foto o con la inicial sobre una etiqueta de color, y las dos pesan lo mismo: en una fila donde algunos subieron foto y otros no, el que no subió no puede leerse como un error."
     >
-      <Section
-        title="Sin foto"
-        note="Círculo pastel con la inicial en el mismo tono, que es la familia de las marcas de fila."
-      >
+      <Hero>
+        <Avatar name="Horacio Rivero" size={44} />
+        <Avatar name="Ana Pérez" src={face(1)} size={44} />
+        <Avatar name="Melina Duarte" size={34} />
+        <Avatar name="Bruno Díaz" src={face(2)} size={34} />
+        <Avatar.Group people={[person('Ana Pérez', 1), person('Bruno Díaz', 2), person('Carla Sosa', 3), person('Damián Ruiz', 4), person('Elena Vega', 5)]} />
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Inicial" required>Sin foto, un círculo pastel con la inicial en el mismo tono: la familia de las marcas de fila.</Anatomy.Part>
+        <Anatomy.Part name="Foto">Con `src`, la etiqueta de color se queda de fondo: es lo que se ve mientras la imagen carga y lo que queda si no carga nunca.</Anatomy.Part>
+        <Anatomy.Part name="Grupo">`Avatar.Group`: las caras se montan un tercio y cada una lleva un anillo del color del fondo.</Anatomy.Part>
+        <Anatomy.Part name="Sobrante">Pasadas las tres caras, el resto va en un círculo neutro con su cuenta. Con un solo sobrante va la cuarta cara, no un "+1".</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Con y sin foto">
         <Demo code={`<Avatar name="Horacio Rivero" size={24} />
 <Avatar name="Horacio Rivero" size={34} />
-<Avatar name="Horacio Rivero" size={44} />
-<Avatar name="Melina Duarte" size={44} />
-<Avatar name="Equipo Timonel" size={44} />`}>
+<Avatar name="Equipo Timonel" size={44} />
+<Avatar name="Ana Pérez" src="/avatars/01.webp" size={24} />
+<Avatar name="Ana Pérez" src="/avatars/01.webp" size={34} />
+<Avatar name="Bruno Díaz" src="/avatars/02.webp" size={44} />`}>
           <Avatar name="Horacio Rivero" size={24} />
           <Avatar name="Horacio Rivero" size={34} />
-          <Avatar name="Horacio Rivero" size={44} />
-          <Avatar name="Melina Duarte" size={44} />
           <Avatar name="Equipo Timonel" size={44} />
-        </Demo>
-      </Section>
-
-      <Section
-        title="Con foto"
-        note="Con `src`, la etiqueta de color se queda de fondo: es lo que se ve mientras la imagen carga y lo que queda si no carga nunca."
-      >
-        <Demo code={`<Avatar name="Ana Pérez" src="/avatars/01.webp" size={24} />
-<Avatar name="Ana Pérez" src="/avatars/01.webp" size={34} />
-<Avatar name="Ana Pérez" src="/avatars/01.webp" size={44} />
-<Avatar name="Bruno Díaz" src="/avatars/02.webp" size={44} />
-<Avatar name="Carla Sosa" src="/avatars/03.webp" size={44} />
-<Avatar name="Damián Ruiz" src="/avatars/04.webp" size={44} />`}>
           <Avatar name="Ana Pérez" src={face(1)} size={24} />
           <Avatar name="Ana Pérez" src={face(1)} size={34} />
-          <Avatar name="Ana Pérez" src={face(1)} size={44} />
           <Avatar name="Bruno Díaz" src={face(2)} size={44} />
-          <Avatar name="Carla Sosa" src={face(3)} size={44} />
-          <Avatar name="Damián Ruiz" src={face(4)} size={44} />
         </Demo>
       </Section>
 
-      <Section
-        title="El grupo"
-        note="Se montan un tercio y cada uno lleva un anillo del color del fondo de atrás. Tres caras y el resto en un círculo neutro."
-      >
-        <Grid min={320}>
-          <Demo label="todos con foto" code={`<Avatar.Group
+      <Section title="El grupo">
+        <Demo label="cinco con foto, mezclados (el caso que importa mirar) y cuatro" code={`<Avatar.Group
   people={[
     { name: 'Ana Pérez', src: '/avatars/01.webp' },
     { name: 'Bruno Díaz', src: '/avatars/02.webp' },
@@ -60,10 +51,15 @@ export function AvatarStory() {
     { name: 'Damián Ruiz', src: '/avatars/04.webp' },
     { name: 'Elena Vega', src: '/avatars/05.webp' },
   ]}
-/>`}>
-            <Avatar.Group people={[person('Ana Pérez', 1), person('Bruno Díaz', 2), person('Carla Sosa', 3), person('Damián Ruiz', 4), person('Elena Vega', 5)]} />
-          </Demo>
-          <Demo label="ninguno con foto" code={`<Avatar.Group
+/>
+<Avatar.Group
+  people={[
+    { name: 'Mora Tello', src: '/avatars/06.webp' },
+    { name: 'Nico Arce' },
+    { name: 'Olivia Rey', src: '/avatars/07.webp' },
+  ]}
+/>
+<Avatar.Group
   people={[
     { name: 'Irene Lopez' },
     { name: 'Julián Cruz' },
@@ -71,35 +67,17 @@ export function AvatarStory() {
     { name: 'Leo Nuñez' },
   ]}
 />`}>
-            <Avatar.Group people={[person('Irene Lopez'), person('Julián Cruz'), person('Karen Ortiz'), person('Leo Nuñez')]} />
-          </Demo>
-          <Demo label="mezclados · el caso que importa mirar" code={`<Avatar.Group
-  people={[
-    { name: 'Mora Tello', src: '/avatars/06.webp' },
-    { name: 'Nico Arce' },
-    { name: 'Olivia Rey', src: '/avatars/07.webp' },
-  ]}
-/>`}>
-            <Avatar.Group people={[person('Mora Tello', 6), person('Nico Arce'), person('Olivia Rey', 7)]} />
-          </Demo>
-          <Demo label="con un solo sobrante va la cuarta cara, no un '+1'" code={`<Avatar.Group
-  people={[
-    { name: 'Ana Pérez', src: '/avatars/01.webp' },
-    { name: 'Bruno Díaz', src: '/avatars/02.webp' },
-    { name: 'Carla Sosa', src: '/avatars/03.webp' },
-    { name: 'Damián Ruiz', src: '/avatars/04.webp' },
-  ]}
-/>`}>
-            <Avatar.Group people={[person('Ana Pérez', 1), person('Bruno Díaz', 2), person('Carla Sosa', 3), person('Damián Ruiz', 4)]} />
-          </Demo>
-        </Grid>
+          <Avatar.Group people={[person('Ana Pérez', 1), person('Bruno Díaz', 2), person('Carla Sosa', 3), person('Damián Ruiz', 4), person('Elena Vega', 5)]} />
+          <Avatar.Group people={[person('Mora Tello', 6), person('Nico Arce'), person('Olivia Rey', 7)]} />
+          <Avatar.Group people={[person('Irene Lopez'), person('Julián Cruz'), person('Karen Ortiz'), person('Leo Nuñez')]} />
+        </Demo>
       </Section>
 
       <Section
         title="Sobre otro fondo"
         note="Fuera del papel hay que pasarle `ring`: un avatar no puede saber sobre qué lo pusieron."
       >
-        <Demo label='ring="var(--surface-muted)" sobre una superficie apagada' code={`<Avatar.Group
+        <Demo label='ring="var(--surface-muted)" arriba, y el anillo por default abajo: se corta contra el fondo' code={`<Avatar.Group
   people={[
     { name: 'Ana Pérez', src: '/avatars/01.webp' },
     { name: 'Bruno Díaz', src: '/avatars/02.webp' },
@@ -109,16 +87,8 @@ export function AvatarStory() {
   ]}
   size={40}
   ring="var(--surface-muted)"
-/>`}>
-          <span className={cls.ringedPlate}>
-            <Avatar.Group
-              people={[person('Ana Pérez', 1), person('Bruno Díaz', 2), person('Carla Sosa', 3), person('Damián Ruiz', 4), person('Elena Vega', 5)]}
-              size={40}
-              ring="var(--surface-muted)"
-            />
-          </span>
-        </Demo>
-        <Demo label="el mismo grupo con el anillo por default: se corta contra el fondo" code={`<Avatar.Group
+/>
+<Avatar.Group
   people={[
     { name: 'Ana Pérez', src: '/avatars/01.webp' },
     { name: 'Bruno Díaz', src: '/avatars/02.webp' },
@@ -128,6 +98,13 @@ export function AvatarStory() {
   ]}
   size={40}
 />`}>
+          <span className={cls.ringedPlate}>
+            <Avatar.Group
+              people={[person('Ana Pérez', 1), person('Bruno Díaz', 2), person('Carla Sosa', 3), person('Damián Ruiz', 4), person('Elena Vega', 5)]}
+              size={40}
+              ring="var(--surface-muted)"
+            />
+          </span>
           <span className={cls.defaultRingPlate}>
             <Avatar.Group
               people={[person('Ana Pérez', 1), person('Bruno Díaz', 2), person('Carla Sosa', 3), person('Damián Ruiz', 4), person('Elena Vega', 5)]}

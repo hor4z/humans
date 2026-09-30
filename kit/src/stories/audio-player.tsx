@@ -1,7 +1,7 @@
 import { AudioPlayer } from '@milo/ui/blocks/media/audio-player'
 import { IconButton } from '@milo/ui/icon-button'
 import { Tooltip } from '@milo/ui/tooltip'
-import { A11y, Demo, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
+import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section, Stack } from '../kit'
 
 /** Salen de `npm run picos -- kit/public/audio/consigna.mp3 --barras 64`. */
 const peaks = [
@@ -34,54 +34,30 @@ export function AudioPlayerStory() {
       imports="import { AudioPlayer } from '@milo/ui/blocks/media/audio-player'"
       lead="Un archivo de audio con su onda: play, una línea de tiempo que se arrastra y el reloj. Para una consigna grabada o la devolución hablada de una corrección."
     >
-      <Section
-        title="La pieza"
-        note="La onda es el archivo, no un adorno: los huecos son las pausas entre frases, así que se puede volver a la segunda sin escuchar la primera."
-      >
-        <Demo width="lg" fill code={`<AudioPlayer src="/audio/consigna.mp3" title="Consigna · Matemática 4.º A" peaks={peaks} />`}>
+      <Hero>
+        <Stack width="lg">
           <AudioPlayer src={AUDIO} title="Consigna · Matemática 4.º A" peaks={peaks} />
-        </Demo>
-      </Section>
-
-      <Section title="Sin los picos" note="Sin `peaks` va una pista pelada: no se inventa una onda que no es la de ese audio.">
-        <Demo width="lg" fill code={`<AudioPlayer src="/audio/consigna.mp3" title="Consigna · Matemática 4.º A" />`}>
           <AudioPlayer src={AUDIO} title="Consigna · Matemática 4.º A" />
+        </Stack>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Botón de reproducir" required>Play y pausa, en un solo botón que cambia de nombre según lo que va a hacer.</Anatomy.Part>
+        <Anatomy.Part name="Onda">Con `peaks`: es el archivo y no un adorno, los huecos son las pausas entre frases. Sin `peaks` va una pista pelada, porque no se inventa una onda que no es la de ese audio.</Anatomy.Part>
+        <Anatomy.Part name="Línea de tiempo" required>Se arrastra para saltar a un lugar del archivo, y viaja encima de la onda.</Anatomy.Part>
+        <Anatomy.Part name="Reloj" required>El tiempo que va y el total.</Anatomy.Part>
+        <Anatomy.Part name="Acciones">`AudioPlayer.Actions`: lo que va al costado, como descargar o borrar.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Talles y acciones">
+        <Demo label="Los tres talles" width="lg" fill code={`<AudioPlayer src="/audio/consigna.mp3" peaks={peaks} size="sm" />
+<AudioPlayer src="/audio/consigna.mp3" peaks={peaks} />
+<AudioPlayer src="/audio/consigna.mp3" peaks={peaks} size="lg" />`}>
+          <AudioPlayer src={AUDIO} peaks={peaks} size="sm" />
+          <AudioPlayer src={AUDIO} peaks={peaks} />
+          <AudioPlayer src={AUDIO} peaks={peaks} size="lg" />
         </Demo>
-      </Section>
-
-      <Section
-        title="Los tres talles"
-        note="Cambian el botón y el alto de la onda. El ancho lo pone siempre lo que la contiene."
-      >
-        <Panel>
-          <Variant name="sm" code={`<AudioPlayer src="/audio/consigna.mp3" peaks={peaks} size="sm" />`}>
-            <Stack width="md"><AudioPlayer src={AUDIO} peaks={peaks} size="sm" /></Stack>
-          </Variant>
-          <Variant name="md" code={`<AudioPlayer src="/audio/consigna.mp3" peaks={peaks} />`}>
-            <Stack width="md"><AudioPlayer src={AUDIO} peaks={peaks} /></Stack>
-          </Variant>
-          <Variant name="lg" code={`<AudioPlayer src="/audio/consigna.mp3" peaks={peaks} size="lg" />`}>
-            <Stack width="md"><AudioPlayer src={AUDIO} peaks={peaks} size="lg" /></Stack>
-          </Variant>
-        </Panel>
-      </Section>
-
-      <Section title="Un archivo largo" note="Cuarenta y nueve segundos con las mismas sesenta y cuatro barras.">
-        <Demo width="lg" fill code={`<AudioPlayer src="/audio/explicacion.mp3" title="Explicación grabada" peaks={longPeaks} />`}>
-          <AudioPlayer src={LONG} title="Explicación grabada" peaks={longPeaks} />
-        </Demo>
-      </Section>
-
-      <Section title="Uno por vez" note="Arrancar el segundo pausa el primero.">
-        <Demo width="lg" fill code={`<AudioPlayer src="/audio/consigna.mp3" title="Devolución para Ana Pérez" peaks={peaks} size="sm" />
-<AudioPlayer src="/audio/explicacion.mp3" title="Devolución para Bruno Díaz" peaks={longPeaks} size="sm" />`}>
-          <AudioPlayer src={AUDIO} title="Devolución para Ana Pérez" peaks={peaks} size="sm" />
-          <AudioPlayer src={LONG} title="Devolución para Bruno Díaz" peaks={longPeaks} size="sm" />
-        </Demo>
-      </Section>
-
-      <Section title="Lo que va al costado" note="Descargar, un menú, borrar. Entra por `AudioPlayer.Actions` y no como props propias.">
-        <Demo width="lg" fill code={`<AudioPlayer src="/audio/consigna.mp3" title="Devolución para Ana Pérez" peaks={peaks}>
+        <Demo label="Con una acción al costado" width="lg" fill code={`<AudioPlayer src="/audio/consigna.mp3" title="Devolución para Ana Pérez" peaks={peaks}>
   <AudioPlayer.Actions>
     <Tooltip label="Descargar">
       <IconButton icon="download" label="Descargar el audio" size="sm" />
@@ -98,17 +74,16 @@ export function AudioPlayerStory() {
         </Demo>
       </Section>
 
-      <Section title="Cuando el archivo no está" note="Lo dice con palabras y apaga lo que no se puede usar.">
-        <Demo width="lg" fill code={`<AudioPlayer src="/audio/no-existe.mp3" title="Consigna · Matemática 4.º A" />`}>
+      <Section title="Comportamiento">
+        <Demo label="Uno por vez: arrancar el segundo pausa el primero" width="lg" fill code={`<AudioPlayer src="/audio/consigna.mp3" title="Devolución para Ana Pérez" peaks={peaks} size="sm" />
+<AudioPlayer src="/audio/explicacion.mp3" title="Devolución para Bruno Díaz" peaks={longPeaks} size="sm" />`}>
+          <AudioPlayer src={AUDIO} title="Devolución para Ana Pérez" peaks={peaks} size="sm" />
+          <AudioPlayer src={LONG} title="Devolución para Bruno Díaz" peaks={longPeaks} size="sm" />
+        </Demo>
+        <Demo label="Cuando el archivo no está lo dice con palabras y apaga lo que no se puede usar" width="lg" fill code={`<AudioPlayer src="/audio/no-existe.mp3" title="Consigna · Matemática 4.º A" />`}>
           <AudioPlayer src="/audio/no-existe.mp3" title="Consigna · Matemática 4.º A" />
         </Demo>
       </Section>
-
-      <Note title="La línea de tiempo no es el `Slider`">
-        El `Slider` dice "elegí un valor"; acá se mira un archivo y se salta a un lugar. Lo que sí
-        comparten es el fondo: los dos son un `input type=range` transparente encima de lo que se
-        ve, así que el teclado y el arrastre son los del navegador.
-      </Note>
 
       <Section title="Props">
         <Props of="AudioPlayer" />
@@ -118,6 +93,7 @@ export function AudioPlayerStory() {
         <Practices>
           <Practices.Do>Usala cuando hace falta ver la onda: es lo único que da sobre el reproductor del navegador. Si nadie necesita saltar a una parte, va un `audio` con los controles de siempre.</Practices.Do>
           <Practices.Do>Pasale `title`: mientras suena, play, pausa y salto quedan registrados en el sistema, y el botón del auricular controla este audio y no otra cosa.</Practices.Do>
+          <Practices.Dont>No la uses para elegir un valor: la línea de tiempo no es un `Slider`. El `Slider` dice "elegí un valor"; acá se mira un archivo y se salta a un lugar.</Practices.Dont>
           <Practices.Dont>No le sumes un control de volumen: lo pone el sistema, y uno adentro compite con el de afuera y pierde.</Practices.Dont>
           <Practices.Dont>No lo hagas arrancar solo: nada suena sin que alguien lo pida, y por eso no hay prop para eso.</Practices.Dont>
         </Practices>

@@ -5,10 +5,11 @@ import { Icon } from '@milo/ui/icon'
 import { Modal } from '@milo/ui/modal'
 import { SettingsModal } from '../demo/settings-modal/settings-modal'
 import { TextField } from '@milo/ui/text-field'
-import { A11y, Demo, Grid, Note, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Demo, Grid, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function ModalStory() {
   const [open, setOpen] = useState(false)
+  const [heroOpen, setHeroOpen] = useState(false)
   const [narrowOpen, setNarrowOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
   const [name, setName] = useState('Física · 5.º B')
@@ -18,12 +19,33 @@ export function ModalStory() {
       title="Modal"
       kind="Superficies"
       imports="import { Modal } from '@milo/ui/modal'"
-      lead="Tres partes: la cabecera con el título y la X, el cuerpo, y los botones abajo. El panel es una columna, así que el cuerpo es lo único que scrollea y las acciones siguen a la vista. El ancho sale de tres, no de un número suelto."
+      lead="El diálogo centrado para lo que pide hacer algo: un formulario corto, unos ajustes, elegir. El ancho sale de tres, no de un número suelto."
     >
-      <Section
-        title="Vivo"
-        note="Probá Escape, y probá scrollear la página de atrás."
-      >
+      <Hero>
+        <Button variant="muted" onClick={() => setHeroOpen(true)}>Abrir modal</Button>
+        <Modal open={heroOpen} onOpenChange={setHeroOpen} size="sm">
+          <Modal.Header>
+            <Modal.Title>Un modal</Modal.Title>
+            <Modal.Hint>Probá Escape, o tocar el velo.</Modal.Hint>
+          </Modal.Header>
+          <Modal.Body>El cuerpo es lo que scrollea cuando el contenido no entra.</Modal.Body>
+          <Modal.Footer>
+            <Button variant="ghost" onClick={() => setHeroOpen(false)}>Cancelar</Button>
+            <Button variant="brand" onClick={() => setHeroOpen(false)}>Entendido</Button>
+          </Modal.Footer>
+        </Modal>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Velo" required>Apaga lo que hay atrás; tocarlo cierra.</Anatomy.Part>
+        <Anatomy.Part name="Panel" required>Una columna: la cabecera y los botones no se mueven y el cuerpo scrollea. El ancho es `sm` 420, `md` 620 o `lg` 820.</Anatomy.Part>
+        <Anatomy.Part name="Cabecera">`Modal.Header`: aloja el título y su línea de apoyo, y pone la X.</Anatomy.Part>
+        <Anatomy.Part name="Título">`Modal.Title`: el nombre del diálogo. `Modal.Hint` va debajo, en gris.</Anatomy.Part>
+        <Anatomy.Part name="Cuerpo">`Modal.Body`: el contenido, y lo único que scrollea.</Anatomy.Part>
+        <Anatomy.Part name="Pie">`Modal.Footer`: los botones, contra el borde derecho.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Ejemplos">
         <Grid min={300}>
           <Demo label="md · 620, el de siempre" code={`<Button variant="muted" onClick={() => setOpen(true)}>Abrir modal</Button>
 <Modal open={open} onOpenChange={setOpen} size="md">
@@ -118,13 +140,6 @@ export function ModalStory() {
         </Grid>
       </Section>
 
-      <Note title="Modal o ConfirmDialog">
-        El modal es para lo que pide hacer algo: un formulario corto, unos ajustes, elegir. Si lo
-        único que hace es preguntar "¿seguro?" y ofrecer dos salidas, eso es un
-        [ConfirmDialog](#confirm), que además pone el foco donde corresponde y se anuncia como
-        `alertdialog`.
-      </Note>
-
       <Section title="Props">
         <Props of="Modal" />
       </Section>
@@ -133,6 +148,7 @@ export function ModalStory() {
         <Practices>
           <Practices.Do>El nombre sale de `Modal.Title`, que se ata solo. `label` es para el modal sin título a la vista.</Practices.Do>
           <Practices.Do>El ancho sale de `sm`, `md` o `lg`: más de 820 deja de ser un diálogo y es una pantalla.</Practices.Do>
+          <Practices.Do>Si lo único que hace es preguntar "¿seguro?" y ofrecer dos salidas, usá [ConfirmDialog](#confirm): pone el foco donde corresponde y se anuncia como `alertdialog`.</Practices.Do>
           <Practices.Dont>No armes el interior a mano: el cuerpo es el que scrollea, y eso lo sabe `Modal.Body`.</Practices.Dont>
         </Practices>
       </Section>

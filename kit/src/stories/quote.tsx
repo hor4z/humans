@@ -1,5 +1,5 @@
 import { Quote } from '@milo/ui/blocks/editor/quote'
-import { A11y, Demo, Note, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section, Stack } from '../kit'
 
 export function QuoteStory() {
   return (
@@ -9,26 +9,22 @@ export function QuoteStory() {
       imports="import { Quote } from '@milo/ui/blocks/editor/quote'"
       lead="Palabras de otro: lo que dijo alguien, un fragmento de un texto, la respuesta de un estudiante que vale leer en clase."
     >
-      <Section
-        title="La pieza"
-        note="La barra va del lado de la lectura y no alrededor, y en el azul de marca: lo que tiene que hacer es cortar la lectura, no cerrar una caja."
-      >
-        <Demo label="Con de quién es" width="xl" fill code={`<Quote>
-  <Quote.Source>Ana, 6.º B</Quote.Source>
-  Me di cuenta de que si dibujaba el triángulo adentro del rectángulo, la mitad se veía
-  sola y no hacía falta la fórmula.
-</Quote>`}>
+      <Hero>
+        <Stack width="xl">
           <Quote>
             <Quote.Source>Ana, 6.º B</Quote.Source>
             Me di cuenta de que si dibujaba el triángulo adentro del rectángulo, la mitad se veía
             sola y no hacía falta la fórmula.
           </Quote>
-        </Demo>
-        <Demo label="Sin fuente" width="xl" fill code={`<Quote>Lo que no se mide no se puede mejorar, pero no todo lo que importa se puede medir.</Quote>`}>
           <Quote>Lo que no se mide no se puede mejorar, pero no todo lo que importa se puede medir.</Quote>
-        </Demo>
-      </Section>
+        </Stack>
+      </Hero>
 
+      <Anatomy>
+        <Anatomy.Part name="Barra" required>La línea en el azul de marca, del lado de la lectura: corta el texto en vez de cerrar una caja.</Anatomy.Part>
+        <Anatomy.Part name="Texto" required>Las palabras citadas, que van como hijo.</Anatomy.Part>
+        <Anatomy.Part name="Fuente">`Quote.Source`: de quién es la cita.</Anatomy.Part>
+      </Anatomy>
       <Section title="Con la fuente declarada">
         <Demo width="xl" fill code={`<Quote cite="https://es.wikipedia.org/wiki/Principio_de_Arquímedes">
   <Quote.Source>Principio de Arquímedes</Quote.Source>
@@ -43,18 +39,13 @@ export function QuoteStory() {
         </Demo>
       </Section>
 
-      <Note title="Quote o Callout">
-        La `Quote` son palabras de otro y por eso lleva de quién. El `Callout` son palabras de quien
-        escribe, puestas aparte para que no se pasen de largo. Si lo que va adentro se puede
-        atribuir, es una cita; si es una aclaración propia, no.
-      </Note>
-
       <Section title="Props">
         <Props of="Quote" />
       </Section>
 
       <Section title="Cómo se usa bien">
         <Practices>
+          <Practices.Do>Usala para palabras que se pueden atribuir. Si es una aclaración propia puesta aparte, va un `Callout`: la `Quote` son palabras de otro y por eso lleva de quién.</Practices.Do>
           <Practices.Do>Pasale `cite` cuando la cita sale de un lugar que se puede visitar: no se ve, y es lo que permite que alguien la recupere.</Practices.Do>
         </Practices>
       </Section>

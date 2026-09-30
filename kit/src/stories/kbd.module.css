@@ -1,27 +1,5 @@
 @layer milo.app {
-  .searchHint {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    font-weight: var(--font-weight-medium);
-    color: var(--text-muted);
-  }
-
-  .paletteHint {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    font-weight: var(--font-weight-medium);
-    color: var(--text-muted);
-  }
-
-  .closeHint {
+  .hint {
     display: flex;
     align-items: center;
     gap: 0.5rem;

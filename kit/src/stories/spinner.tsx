@@ -1,7 +1,7 @@
 import cls from './spinner.module.css'
 import { Button } from '@milo/ui/button'
 import { Spinner } from '@milo/ui/spinner'
-import { A11y, Demo, Grid, Page, Panel, Practices, Props, Section, Variant } from '../kit'
+import { A11y, Anatomy, Demo, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function SpinnerStory() {
   return (
@@ -9,12 +9,22 @@ export function SpinnerStory() {
       title="Spinner"
       kind="Avisos"
       imports="import { Spinner } from '@milo/ui/spinner'"
-      lead="Pista completa más un arco encima, los dos del mismo grosor. La pista no es decorativa: sin ella, un arco suelto girando no dice 'esperá', dice que falta un trozo de la interfaz. El arco es de largo fijo y lo único que pasa es que gira, parejo."
+      lead="La espera de algo que no se sabe cuánto tarda. Pista completa más un arco encima del mismo grosor, que gira parejo: sin la pista, un arco suelto no dice 'esperá', dice que falta un trozo de la interfaz."
     >
-      <Section
-        title="Tamaños"
-        note="El trazo crece con el diámetro, así que el mismo spinner se lee igual adentro de un botón chico que en el medio de una pantalla."
-      >
+      <Hero>
+        <Spinner size={16} />
+        <Spinner size={28} />
+        <Spinner size={44} />
+        <Button variant="brand" loading>Guardar</Button>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Pista" required>El círculo completo, apagado.</Anatomy.Part>
+        <Anatomy.Part name="Arco" required>De largo fijo: lo único que hace es girar. El trazo crece con el diámetro, así que se lee igual adentro de un botón chico que en el medio de una pantalla.</Anatomy.Part>
+        <Anatomy.Part name="Nombre">`label`: lo que se está cargando, para quien no lo ve.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Tamaños y contexto">
         <Panel>
           <Variant name="16 · 20 · 28 · 44" code={`<Spinner size={16} />
 <Spinner size={20} />
@@ -25,35 +35,25 @@ export function SpinnerStory() {
             <Spinner size={28} />
             <Spinner size={44} />
           </Variant>
-        </Panel>
-      </Section>
-
-      <Section
-        title="En contexto"
-        note="Adentro de un botón oscuro va `on=&quot;solid&quot;`, o el filo blanco se ve como un halo."
-      >
-        <Panel>
-          <Variant name="en un botón" code={`<Button variant="solid" aria-busy><Spinner size={16} on="solid" />Guardando</Button>
-<Button variant="muted" aria-busy><Spinner size={16} />Guardando</Button>`}>
+          <Variant
+            name="en un botón y en una fila"
+            note="Adentro de un botón oscuro va `on=&quot;solid&quot;`, o el filo blanco se ve como un halo."
+            code={`<Button variant="solid" aria-busy><Spinner size={16} on="solid" />Guardando</Button>
+<Button variant="muted" aria-busy><Spinner size={16} />Guardando</Button>
+<Spinner size={16} />
+Buscando en siete espacios`}
+          >
             <Button variant="solid" aria-busy><Spinner size={16} on="solid" />Guardando</Button>
             <Button variant="muted" aria-busy><Spinner size={16} />Guardando</Button>
-          </Variant>
-          <Variant name="en una fila" code={`<Spinner size={16} />
-Buscando en siete espacios`}>
             <span className={cls.inlineWait}>
               <Spinner size={16} />
               Buscando en siete espacios
             </span>
           </Variant>
         </Panel>
-        <Grid>
-          <Demo label="Con lo que está cargando" code={`<Spinner label="Cargando las entregas" />`}>
-            <Spinner label="Cargando las entregas" />
-          </Demo>
-          <Demo label="En un botón, con `loading`" code={`<Button variant="brand" loading>Guardar</Button>`}>
-            <Button variant="brand" loading>Guardar</Button>
-          </Demo>
-        </Grid>
+        <Demo label="Con lo que está cargando" code={`<Spinner label="Cargando las entregas" />`}>
+          <Spinner label="Cargando las entregas" />
+        </Demo>
       </Section>
 
       <Section title="Props">

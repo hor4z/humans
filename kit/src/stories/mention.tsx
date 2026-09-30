@@ -1,6 +1,6 @@
 import s from './mention.module.css'
 import { Mention } from '@milo/ui/blocks/editor/mention'
-import { A11y, Demo, Note, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 import { face } from '../fixtures'
 
 export function MentionStory() {
@@ -11,11 +11,21 @@ export function MentionStory() {
       imports="import { Mention } from '@milo/ui/blocks/editor/mention'"
       lead="Una referencia adentro del texto: quién o qué. Va en el renglón y no lo interrumpe."
     >
-      <Section
-        title="En un párrafo"
-        note="Adentro de un párrafo los renglones tienen que seguir a la misma distancia. Por eso la mención no lleva la caja de un `Chip`."
-      >
-        <Demo width="xl" fill code={`<p>
+      <Hero>
+        <p className={s.paragraphText}>
+          Para el jueves, <Mention name="Ana Pérez" src={face(1)} href="#avatar" /> y{' '}
+          <Mention name="Matemática · 4.º A" icon="folder" href="#folder" /> tienen que leer{' '}
+          <Mention name="Fracciones equivalentes" icon="description" /> antes de la clase.
+        </p>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Foto o inicial">Una persona lleva su foto (`src`) o la inicial de su nombre.</Anatomy.Part>
+        <Anatomy.Part name="Icono">`icon`: lo que no es una persona lleva un glifo en su lugar.</Anatomy.Part>
+        <Anatomy.Part name="Nombre" required>`name`: el texto que se lee dentro de la oración. Con `href` es un enlace subrayado.</Anatomy.Part>
+      </Anatomy>
+      <Section title="En un párrafo y sueltas">
+        <Demo label="En un párrafo" width="xl" fill code={`<p>
   Para el jueves, <Mention name="Ana Pérez" src={face(1)} href="#avatar" /> y{' '}
   <Mention name="Bruno Díaz" src={face(2)} href="#avatar" /> tienen que subir el informe
   del experimento a <Mention name="Ciencias · 5.º B" icon="folder" href="#folder" />. Si
@@ -34,10 +44,7 @@ export function MentionStory() {
             martes.
           </p>
         </Demo>
-      </Section>
-
-      <Section title="Sueltas" note="Una persona lleva su foto o su inicial; lo que no es una persona lleva un glifo.">
-        <Demo className={s.looseStrip} code={`<Mention name="Ana Pérez" src={face(1)} href="#avatar" />
+        <Demo label="Sueltas" className={s.looseStrip} code={`<Mention name="Ana Pérez" src={face(1)} href="#avatar" />
 <Mention name="Elena Vega" />
 <Mention name="Matemática · 4.º A" icon="folder" href="#folder" />
 <Mention name="Fracciones equivalentes" icon="description" />`}>
@@ -48,18 +55,13 @@ export function MentionStory() {
         </Demo>
       </Section>
 
-      <Note title="Mention o Chip">
-        El `Chip` es una pieza de una fila: un filtro, una categoría, algo que se saca con una cruz.
-        La `Mention` vive adentro de una oración y se lee con ella. Si está en un párrafo, es
-        mención; si está en una barra, es chip.
-      </Note>
-
       <Section title="Props">
         <Props of="Mention" />
       </Section>
 
       <Section title="Cómo se usa bien">
         <Practices>
+          <Practices.Do>Usala adentro de una oración: los renglones tienen que seguir a la misma distancia, por eso no lleva la caja de un `Chip`. En una barra o una fila, con algo que se saca con una cruz, va el `Chip`.</Practices.Do>
           <Practices.Do>Pasale `href` solo cuando lleva a algún lado: sin `href` es texto, y una mención que no lleva a ningún lado no se finge enlace.</Practices.Do>
         </Practices>
       </Section>

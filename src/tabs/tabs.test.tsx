@@ -67,4 +67,24 @@ describe('Tabs', () => {
     expect(onValueChange).toHaveBeenCalledWith('b')
     expect(screen.getByText('Uno')).toBeInTheDocument()
   })
+
+  it('con keepMounted el panel cerrado sigue en el documento, oculto, y conserva su estado', async () => {
+    render(
+      <Tabs defaultValue="a">
+        <Tabs.List>
+          <Tabs.Tab value="a">A</Tabs.Tab>
+          <Tabs.Tab value="b">B</Tabs.Tab>
+        </Tabs.List>
+        <Tabs.Panel value="a">uno</Tabs.Panel>
+        <Tabs.Panel value="b" keepMounted><input aria-label="nota" /></Tabs.Panel>
+      </Tabs>,
+    )
+    expect(screen.getByLabelText('nota', { selector: 'input' })).not.toBeVisible()
+    await userEvent.click(screen.getByRole('tab', { name: 'B' }))
+    await userEvent.type(screen.getByLabelText('nota'), 'hola')
+    await userEvent.click(screen.getByRole('tab', { name: 'A' }))
+    await userEvent.click(screen.getByRole('tab', { name: 'B' }))
+    expect(screen.getByLabelText('nota')).toHaveValue('hola')
+  })
+
 })
