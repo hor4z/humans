@@ -57,7 +57,7 @@ export function ColorSection() {
     <Page
       title="Color"
       kind="Fundamentos"
-      lead="Un primario, un acento y una rampa slate. Todo lo demás es una familia acotada que contesta una pregunta distinta. El color de una persona sale de su nombre con `colorForName`, en [Utilidades](#utilidades)."
+      lead="Un primario, un acento y una rampa gray. Todo lo demás es una familia acotada que contesta una pregunta distinta. El color de una persona sale de su nombre con `colorForName`, en [Utilidades](#utilidades)."
     >
       <Section title="Cuál va" note="La pregunta no es qué color queda bien: es qué está diciendo esto.">
         <Table label="Qué rol usar según qué se quiere decir" minWidth={560}>
@@ -85,7 +85,7 @@ export function ColorSection() {
           <Scale title="Azul" note="El 600 está anclado: el blanco encima llega a 4,5:1, y de ahí sale `--brand`." tokens={blue} />
           <Scale title="Amarillo" note="Lleva tinta oscura: contra blanco su mejor paso da 1,31:1. Se ancla en el 100." tokens={yellow} />
           <Scale title="Naranja" note="El acento, acotado a propósito: si aparece en botones y fondos deja de señalar." tokens={amber} />
-          <Scale title="Gris" note="Slate: gris frío con el azul apenas insinuado. Todo neutro del sistema sale de acá." tokens={gray} />
+          <Scale title="Gris" note="Gray: gris frío con el azul apenas insinuado. Todo neutro del sistema sale de acá." tokens={gray} />
         </Stack>
       </Section>
 

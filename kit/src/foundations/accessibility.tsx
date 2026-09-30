@@ -86,7 +86,7 @@ export function AccessibilitySection() {
       </Section>
 
       <A11y>
-        <A11y.Item>El objetivo es AA y no AAA: subir el gris secundario a 7:1 lo deja pegado al texto principal y se pierde la jerarquía.</A11y.Item>
+        <A11y.Item>El piso es AA (4,5:1) y el texto secundario lo supera con margen en los dos temas.</A11y.Item>
         <A11y.Item>Un error va como `role="alert"` y interrumpe; todo lo demás va como `role="status"` y espera su turno.</A11y.Item>
         <A11y.Item>Un menú abierto marca `region` en axe porque su panel vive en un portal: se acepta, porque una landmark por menú llenaría la lista de saltos.</A11y.Item>
         <A11y.Item>{'El sitio declara `lang="es"` y el riel es un `<nav>` con nombre y `aria-current`.'}</A11y.Item>

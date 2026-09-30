@@ -150,7 +150,7 @@ describe('el texto sugerido de un campo se lee', () => {
 const labels = ['--label-green', '--label-teal', '--label-blue', '--label-purple', '--label-pink', '--label-orange']
 
 describe('el texto de una etiqueta de color se lee', () => {
-  const ink = '#121212'
+  const ink = '#111827'
   for (const theme of ['light', 'dark'] as const) {
     for (const label of labels) {
       it(`${label} en ${theme} aguanta la tinta encima`, () => {
@@ -175,7 +175,7 @@ describe('el texto de una etiqueta de color se lee', () => {
 
   it('la tinta del rol es la misma que se mide acá', () => {
     const semantic = readFileSync(join(import.meta.dirname, '../styles/tokens/semantic.css'), 'utf8')
-    expect(semantic).toMatch(/--on-label:\s*#121212/)
+    expect(semantic).toMatch(/--on-label:\s*#111827/)
   })
 })
 
