@@ -16,7 +16,7 @@ export function NavStory() {
     >
       <Hero>
         <div className={cls.itemRail}>
-          <Nav label="Principal" className={cls.itemList}>
+          <Nav label="Vista previa de la navegación" className={cls.itemList}>
             <Nav.Item icon="explore" current={active === 'explorar'} onClick={() => setActive('explorar')}>Explorar</Nav.Item>
             <Nav.Item icon="layers" badge="84" current={active === 'recursos'} onClick={() => setActive('recursos')}>Recursos</Nav.Item>
             <Nav.Item icon="favorite" current={active === 'guardadas'} onClick={() => setActive('guardadas')}>Guardadas</Nav.Item>
@@ -34,7 +34,7 @@ export function NavStory() {
       </Anatomy>
 
       <Section title="Ejemplos">
-        <Demo label="Completo: items, encabezado y espacios" code={`<Nav label="Principal">
+        <Demo label="Completo: items, encabezado y espacios" code={`<Nav label="Principal del ejemplo">
   <Nav.Item icon="explore" current={active === 'explorar'} onClick={() => setActive('explorar')}>Explorar</Nav.Item>
   <Nav.Item icon="layers" badge="84" current={active === 'recursos'} onClick={() => setActive('recursos')}>Recursos</Nav.Item>
   <Nav.Item icon="favorite" current={active === 'guardadas'} onClick={() => setActive('guardadas')}>Guardadas</Nav.Item>
@@ -55,7 +55,7 @@ export function NavStory() {
   </Nav.Item>
 </Nav>`}>
           <div className={cls.itemRail}>
-            <Nav label="Principal" className={cls.itemList}>
+            <Nav label="Principal del ejemplo" className={cls.itemList}>
               {[
                 { id: 'explorar', icon: 'explore', label: 'Explorar' },
                 { id: 'recursos', icon: 'layers', label: 'Recursos', badge: '84' },

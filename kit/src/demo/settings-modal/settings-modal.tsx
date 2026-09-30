@@ -1,5 +1,5 @@
 import cls from './settings-modal.module.css'
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { cx } from '@milo/ui/lib/cx'
 import { Callout } from '@milo/ui/callout'
 import { Button } from '@milo/ui/button'
@@ -226,6 +226,7 @@ function NoticesSection() {
 
 /** El campo editable inline: se ve como texto hasta que lo tocás. */
 function EditableRow({ label, value: initial }: { label: string; value: string }) {
+  const inputId = useId()
   const [value, setValue] = useState(initial)
   const [editing, setEditing] = useState(false)
   const [draft, setDraft] = useState(initial)
@@ -237,6 +238,8 @@ function EditableRow({ label, value: initial }: { label: string; value: string }
       <div className={cls.rowLabel}>{label}</div>
       {editing ? (
         <input
+          id={inputId}
+          aria-label={label}
           autoFocus
           value={draft}
           onChange={e => setDraft(e.target.value)}

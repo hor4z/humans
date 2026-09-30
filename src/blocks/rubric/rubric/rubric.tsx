@@ -163,8 +163,10 @@ function Root({ criteria, onAdd, onRemove, defaultOpen = true, children, classNa
                   if (!panel.open) panel.onOpen()
                   requestAnimationFrame(() => bring(c.id))
                 }}
-                className={cx(s.weightBand, labelFill[c.color], active && active !== c.id && s.weightDim)}
-              />
+                className={s.weightTrigger}
+              >
+                <span className={cx(s.weightBand, labelFill[c.color], active && active !== c.id && s.weightDim)} />
+              </button>
             </Tooltip>
           </span>
         ))}

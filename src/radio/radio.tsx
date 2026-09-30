@@ -32,19 +32,16 @@ function Root({
       disabled={disabled}
       tabIndex={tabIndex}
       onClick={() => onCheckedChange(true)}
-      className={cx(
-        s.root,
-        s.motion,
-        s.disabled,
-        checked ? s.on : s.off,
-      )}
+      className={cx(s.root, s.disabled)}
     >
-      <span
-        className={cx(
-          s.dot,
-          checked ? s.dotOn : s.dotOff,
-        )}
-      />
+      <span className={cx(s.control, s.motion, checked ? s.on : s.off)}>
+        <span
+          className={cx(
+            s.dot,
+            checked ? s.dotOn : s.dotOff,
+          )}
+        />
+      </span>
     </button>
   )
 }

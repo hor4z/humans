@@ -2,7 +2,7 @@ import s from './switch.module.css'
 import { useField } from '../lib/field-ctx'
 import { cx } from '../lib/cx'
 
-/** El switch: pista de 40×22 con 2 de padding, así que el pulgar es de 18 y viaja 18 exactos. */
+/** El switch: pista de 40×24 con 3 de padding, así que el pulgar es de 18 y viaja 16. Mide 24 de alto porque es el mínimo de WCAG 2.2 para lo que se toca. */
 export function Switch({
   checked, onCheckedChange, label, disabled, id,
 }: {

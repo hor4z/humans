@@ -196,7 +196,12 @@ export function Page({ title, lead, imports, kind, children }: PageProps) {
 
 /** El ejemplo que abre el Resumen: lo esencial de la pieza en un lienzo grande. Sin código, porque los ejemplos de más abajo lo llevan. */
 export function Hero({ children }: { children: ReactNode }) {
-  return <div className={s.hero}>{children}</div>
+  return (
+    <>
+      <h2 className="sr-only">Vista previa</h2>
+      <div className={s.hero}>{children}</div>
+    </>
+  )
 }
 
 /** Las partes de la pieza, una por fila. */
@@ -291,7 +296,7 @@ export function InlineCode({ children }: { children: string }) {
 export function Example({ code, lang, className }: { code: string; lang?: Lang; className?: string }) {
   return (
     <div className={cx(s.codeBlock, 'group', className)}>
-      <pre className={s.codePre}>
+      <pre className={s.codePre} tabIndex={0}>
         <code>
           {highlight(code.trim(), lang).map((line, i) => (
             <span key={i} className={s.codeLine}><Painted tokens={line} /></span>

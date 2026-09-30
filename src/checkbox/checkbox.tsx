@@ -3,7 +3,7 @@ import { useField } from '../lib/field-ctx'
 import { Icon } from '../icon/icon'
 import { cx } from '../lib/cx'
 
-/** La caja de 18, la misma medida del pulgar del switch, así una fila con los dos no tiene dos tamaños de "marca". */
+/** La caja de 18, la misma medida del pulgar del switch, así una fila con los dos no tiene dos tamaños de "marca". Se toca en 24, que es el mínimo de WCAG 2.2, sin mover el renglón. */
 export function Checkbox({
   checked, onCheckedChange, label, disabled, id, indeterminate,
 }: {
@@ -32,22 +32,19 @@ export function Checkbox({
       aria-label={field.id ? undefined : label}
       disabled={disabled}
       onClick={() => onCheckedChange(!checked)}
-      className={cx(
-        s.root,
-        s.motion,
-        s.disabled,
-        on ? s.on : s.off,
-      )}
+      className={cx(s.root, s.disabled)}
     >
-      <span
-        className={cx(
-          s.glyph,
-          on ? s.glyphOn : s.glyphOff,
-        )}
-      >
-        {indeterminate
-          ? <span className={s.dash} />
-          : <Icon name="check" size={14} weight={700} />}
+      <span className={cx(s.control, s.motion, on ? s.on : s.off)}>
+        <span
+          className={cx(
+            s.glyph,
+            on ? s.glyphOn : s.glyphOff,
+          )}
+        >
+          {indeterminate
+            ? <span className={s.dash} />
+            : <Icon name="check" size={14} weight={700} />}
+        </span>
       </span>
     </button>
   )

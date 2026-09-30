@@ -1,6 +1,6 @@
 import cls from './textarea.module.css'
 import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type TextareaHTMLAttributes } from 'react'
-import { useField } from '../lib/field-ctx'
+import { useControlId, useField } from '../lib/field-ctx'
 import { cx } from '../lib/cx'
 
 type TextareaProps = Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'rows' | 'style' | 'resize'> & {
@@ -44,6 +44,7 @@ export function Textarea({
 }: TextareaProps) {
   const ref = useRef<HTMLTextAreaElement>(null)
   const field = useField()
+  const id = useControlId(rest.id)
   const counterId = useId()
   const [ownValue, setOwnValue] = useState(String(defaultValue ?? ''))
   const text = value == null ? ownValue : String(value)
@@ -108,6 +109,7 @@ export function Textarea({
         {...field}
         aria-describedby={describedBy}
         {...rest}
+        id={id}
       />
       {counterLabel && (
         <span

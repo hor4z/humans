@@ -19,7 +19,10 @@
 
   .trigger {
     display: inline-flex;
-    height: var(--band);
+    height: max(24px, var(--band));
+    min-width: 24px;
+    margin-inline: -2px;
+    margin-block: min(0px, calc((var(--band) - 24px) / 2));
     flex-shrink: 0;
     align-items: center;
     justify-content: center;

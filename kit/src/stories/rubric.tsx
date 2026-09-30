@@ -80,7 +80,7 @@ export function RubricStory() {
             name="editable"
             note="Probá agregar uno: la barra se reparte de nuevo mientras movés el peso."
             code={`<Rubric criteria={criteria} onAdd={addCriterion} onRemove={removeCriterion}>
-  <Rubric.Title>Qué vamos a mirar</Rubric.Title>
+  <Rubric.Title>Qué vamos a mirar, para editar</Rubric.Title>
 </Rubric>`}
           >
             <Stack width="sm">
@@ -89,7 +89,7 @@ export function RubricStory() {
                 onAdd={addCriterion}
                 onRemove={removeCriterion}
               >
-                <Rubric.Title>Qué vamos a mirar</Rubric.Title>
+                <Rubric.Title>Qué vamos a mirar, para editar</Rubric.Title>
               </Rubric>
             </Stack>
           </Variant>
@@ -97,12 +97,12 @@ export function RubricStory() {
             name="de solo lectura"
             note="Sin los dos callbacks la rúbrica se lee y nada más, que es como la ve quien no la escribió."
             code={`<Rubric criteria={base} defaultOpen={false}>
-  <Rubric.Title>Qué vamos a mirar</Rubric.Title>
+  <Rubric.Title>Qué vamos a mirar, para leer</Rubric.Title>
 </Rubric>`}
           >
             <Stack width="sm">
               <Rubric criteria={base} defaultOpen={false}>
-                <Rubric.Title>Qué vamos a mirar</Rubric.Title>
+                <Rubric.Title>Qué vamos a mirar, para leer</Rubric.Title>
               </Rubric>
             </Stack>
           </Variant>

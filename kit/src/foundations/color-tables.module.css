@@ -20,6 +20,10 @@
     font-weight: var(--font-weight-semibold);
   }
 
+  .sample::before {
+    content: "Aa";
+  }
+
   .role {
     display: inline-flex;
     align-items: center;

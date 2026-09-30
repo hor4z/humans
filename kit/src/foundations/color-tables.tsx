@@ -47,7 +47,7 @@ export function ContrastTable({ label, rows }: { label: string; rows: readonly C
                 <code className={cls.pair}>{r.fg} sobre {r.bg}</code>
               </Table.Cell>
               <Table.Cell>
-                <span className={cls.sample} style={{ color: `var(${r.fg})`, background: `var(${r.bg})` }}>Aa</span>
+                <span aria-hidden className={cls.sample} style={{ color: `var(${r.fg})`, background: `var(${r.bg})` }} />
               </Table.Cell>
               <Table.Cell>
                 <span className="tabular">{value === undefined ? '-' : `${fmt(value)}:1`}</span>{' '}
