@@ -3,7 +3,7 @@ import { clock, day, dayAndTime, duration, timeAgo, zoneLabel } from '@milo/ui/l
 import { bytes, count, counted, decimals, delta, plural, share, span, withUnit } from '@milo/ui/lib/number'
 import { colorForName } from '@milo/ui/lib/colors'
 import { Table } from '@milo/ui/table'
-import { A11y, Example, Mono, Page, Practices, Section } from '../kit'
+import { A11y, Example, Mono, Page, Practices, Rich, Section } from '../kit'
 
 const RIGHT_NOW = new Date('2026-03-09T18:20:00-03:00')
 const A_WHILE_AGO = new Date('2026-03-09T18:00:00-03:00')
@@ -14,7 +14,7 @@ function RowFixture({ call, out }: { call: string; out: string }) {
   return (
     <Table.Row>
       <Table.Cell><Mono>{call}</Mono></Table.Cell>
-      <Table.Cell>{out}</Table.Cell>
+      <Table.Cell><Rich text={out} /></Table.Cell>
     </Table.Row>
   )
 }
@@ -89,14 +89,14 @@ export function UtilidadesStory() {
         note="Los siete que el paquete trae. Cada uno entra por su propio archivo, así que tocar uno no invalida a los demás."
       >
         <TableFixture label="Los hooks">
-          <RowFixture call="useDisclosure()" out="{ open, onOpen, onClose, onToggle }" />
-          <RowFixture call="useAnnounce()" out="announce(texto, 'polite' | 'assertive')" />
-          <RowFixture call="useTheme()" out="{ theme, resolved, setTheme, toggle }" />
-          <RowFixture call="useMediaQuery(query)" out="true o false, y se entera al cambiar" />
-          <RowFixture call="useReducedMotion()" out="quién pidió menos movimiento" />
-          <RowFixture call="useClipboard()" out="{ copied, copy }" />
+          <RowFixture call="useDisclosure()" out="`{ open, onOpen, onClose, onToggle }`" />
+          <RowFixture call="useAnnounce()" out="`announce(texto, 'polite' | 'assertive')`" />
+          <RowFixture call="useTheme()" out="`{ theme, resolved, setTheme, toggle }`" />
+          <RowFixture call="useMediaQuery(query)" out="`true` o `false`, y se entera al cambiar" />
+          <RowFixture call="useReducedMotion()" out="`true` si alguien pidió menos movimiento" />
+          <RowFixture call="useClipboard()" out="`{ copied, copy }`" />
           <RowFixture call="useDebounce(valor, ms)" out="el valor, cuando dejó de cambiar" />
-          <RowFixture call="useLocalStorage(clave, inicial)" out="[valor, setValor], y sincroniza entre pestañas" />
+          <RowFixture call="useLocalStorage(clave, inicial)" out="`[valor, setValor]`, y sincroniza entre pestañas" />
         </TableFixture>
       </Section>
 

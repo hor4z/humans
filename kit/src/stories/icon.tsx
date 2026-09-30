@@ -178,6 +178,7 @@ export function IconStory() {
       <Section title="Cómo se agrega uno">
         <Demo
           label="Un comando, no un path"
+          lang="sh"
           code={`npm run icons -- search notification
 npm run icons -- add rocket_launch
 npm run icons -- check`}
