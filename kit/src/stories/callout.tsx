@@ -1,14 +1,19 @@
 import s from './callout.module.css'
-import { Callout } from '@milo/ui/blocks/editor/callout'
-import { A11y, Anatomy, Demo, Hero, Page, Panel, Practices, Props, Section, Stack } from '../kit'
+import { useState } from 'react'
+import { Button } from '@milo/ui/button'
+import { Callout } from '@milo/ui/callout'
+import { Icon } from '@milo/ui/icon'
+import { A11y, Anatomy, Demo, Frame, Hero, Page, Practices, Props, Section, Stack } from '../kit'
 
 export function CalloutStory() {
+  const [dismissed, setDismissed] = useState(false)
+
   return (
     <Page
       title="Callout"
-      kind="Editor"
-      imports="import { Callout } from '@milo/ui/blocks/editor/callout'"
-      lead="Un bloque de contenido que pide detenerse: una aclaración, una pista, algo para recordar. Lo escribe quien arma el material, no el sistema."
+      kind="Avisos"
+      imports="import { Callout } from '@milo/ui/callout'"
+      lead="El bloque que pide detenerse. Sin tono es contenido: una aclaración, una pista, algo para recordar, que escribe quien arma el material. Con tono es un aviso fijo del sistema: algo está roto, algo falta, algo está por vencer."
     >
       <Hero>
         <Stack width="xl">
@@ -16,22 +21,25 @@ export function CalloutStory() {
             <Callout.Title>Para acordarse</Callout.Title>
             La velocidad límite no depende de la masa: depende de la forma y del aire.
           </Callout>
-          <Callout icon="science" color="green">
-            <Callout.Title>Probalo</Callout.Title>
-            Soltá una hoja abierta y la misma hoja hecha un bollo. Cronometrá las dos.
+          <Callout tone="warn">
+            <Callout.Title>Tres entregas vencen mañana</Callout.Title>
+            <Callout.Actions>
+              <Button size="sm" variant="muted">Ver las entregas</Button>
+            </Callout.Actions>
           </Callout>
         </Stack>
       </Hero>
 
       <Anatomy>
-        <Anatomy.Part name="Superficie" required>El papel teñido con el color de la familia de categorías, sin borde.</Anatomy.Part>
-        <Anatomy.Part name="Glifo">`icon`: decorativo, en la tinta del color.</Anatomy.Part>
-        <Anatomy.Part name="Título">`Callout.Title`: lo que el bloque es, en una palabra o dos.</Anatomy.Part>
-        <Anatomy.Part name="Contenido" required>El texto, en tamaño de lectura. Puede entrar solo en una línea, sin título ni glifo.</Anatomy.Part>
+        <Anatomy.Part name="Superficie" required>{'Gris sin nada; `color` la tiñe con la familia de categorías y `tone` con el de estado. Sin borde.'}</Anatomy.Part>
+        <Anatomy.Part name="Glifo">{'`icon`. Con `tone` viene solo, uno por tono; `icon={null}` lo saca.'}</Anatomy.Part>
+        <Anatomy.Part name="Título">`Callout.Title`: lo que se entiende de un vistazo.</Anatomy.Part>
+        <Anatomy.Part name="Texto" required>Lo que va suelto adentro. Puede entrar solo en una línea, sin título ni glifo.</Anatomy.Part>
+        <Anatomy.Part name="Acciones">`Callout.Actions`: lo que se puede hacer al respecto.</Anatomy.Part>
+        <Anatomy.Part name="Cerrar">Con `onDismiss`, una X para sacarlo.</Anatomy.Part>
       </Anatomy>
 
-      <Section title="Ejemplos">
-        <Panel>
+      <Section title="Contenido" note="Sin `tone`: parte de lo que se lee, y sigue ahí aunque nadie haga nada.">
         <Demo label="Con título y glifo, y sin ninguno" code={`<Callout icon="lightbulb" color="blue">
   <Callout.Title>Para acordarse</Callout.Title>
   La velocidad límite no depende de la masa: depende de la forma y del aire.
@@ -39,10 +47,6 @@ export function CalloutStory() {
 <Callout icon="science" color="green">
   <Callout.Title>Probalo</Callout.Title>
   Soltá una hoja abierta y la misma hoja hecha un bollo. Cronometrá las dos.
-</Callout>
-<Callout icon="visibility" color="orange">
-  <Callout.Title>Ojo con esto</Callout.Title>
-  Dos figuras con el mismo perímetro pueden tener áreas muy distintas.
 </Callout>
 <Callout>Todo lo que sigue supone que el rozamiento es despreciable.</Callout>`}>
           <Stack width="xl">
@@ -53,10 +57,6 @@ export function CalloutStory() {
             <Callout icon="science" color="green">
               <Callout.Title>Probalo</Callout.Title>
               Soltá una hoja abierta y la misma hoja hecha un bollo. Cronometrá las dos.
-            </Callout>
-            <Callout icon="visibility" color="orange">
-              <Callout.Title>Ojo con esto</Callout.Title>
-              Dos figuras con el mismo perímetro pueden tener áreas muy distintas.
             </Callout>
             <Callout>Todo lo que sigue supone que el rozamiento es despreciable.</Callout>
           </Stack>
@@ -75,7 +75,76 @@ export function CalloutStory() {
             ))}
           </div>
         </Demo>
-        </Panel>
+      </Section>
+
+      <Section title="Avisos" note="Con `tone`: algo que pasó. Cada tono trae su glifo, porque un color de estado sin forma ni texto no dice nada a quien no distingue colores.">
+        <Demo fill label="Los cuatro tonos" code={`<Callout tone="info">
+  <Callout.Title>La corrección automática está en prueba</Callout.Title>
+  Podés desactivarla desde Ajustes mientras la probamos.
+</Callout>
+<Callout tone="ok">
+  <Callout.Title>Se publicó en los siete espacios</Callout.Title>
+</Callout>
+<Callout tone="warn">
+  <Callout.Title>Tres entregas vencen mañana</Callout.Title>
+  Después de esa fecha los estudiantes ya no pueden subir nada.
+  <Callout.Actions>
+    <Button size="sm" variant="muted">Ver las entregas</Button>
+  </Callout.Actions>
+</Callout>
+<Callout tone="bad" onDismiss={dismiss}>
+  <Callout.Title>No se pudieron traer las entregas</Callout.Title>
+  Puede ser la conexión. Lo que ya estaba corregido sigue estando.
+  <Callout.Actions>
+    <Button size="sm" variant="muted" iconStart={<Icon name="refresh" />}>Reintentar</Button>
+  </Callout.Actions>
+</Callout>`}>
+          <Stack>
+            <Callout tone="info">
+              <Callout.Title>La corrección automática está en prueba</Callout.Title>
+              Podés desactivarla desde Ajustes mientras la probamos.
+            </Callout>
+            <Callout tone="ok">
+              <Callout.Title>Se publicó en los siete espacios</Callout.Title>
+            </Callout>
+            <Callout tone="warn">
+              <Callout.Title>Tres entregas vencen mañana</Callout.Title>
+              Después de esa fecha los estudiantes ya no pueden subir nada.
+              <Callout.Actions>
+                <Button size="sm" variant="muted">Ver las entregas</Button>
+              </Callout.Actions>
+            </Callout>
+            {dismissed
+              ? <Button size="sm" variant="muted" iconStart={<Icon name="undo" />} onClick={() => setDismissed(false)}>Mostrarlo de nuevo</Button>
+              : (
+                <Callout tone="bad" onDismiss={() => setDismissed(true)}>
+                  <Callout.Title>No se pudieron traer las entregas</Callout.Title>
+                  Puede ser la conexión. Lo que ya estaba corregido sigue estando.
+                  <Callout.Actions>
+                    <Button size="sm" variant="muted" iconStart={<Icon name="refresh" />}>Reintentar</Button>
+                  </Callout.Actions>
+                </Callout>
+              )}
+          </Stack>
+        </Demo>
+
+        <Demo fill label="El glifo de un aviso" code={`<Callout tone="info" icon="schedule">
+  <Callout.Title>Cierra el viernes a las 23:59</Callout.Title>
+</Callout>
+<Callout tone="info" icon={null}>
+  <Callout.Title>Cuatro entregas nuevas desde ayer</Callout.Title>
+</Callout>`}>
+          <Frame width="lg">
+            <Stack>
+              <Callout tone="info" icon="schedule">
+                <Callout.Title>Cierra el viernes a las 23:59</Callout.Title>
+              </Callout>
+              <Callout tone="info" icon={null}>
+                <Callout.Title>Cuatro entregas nuevas desde ayer</Callout.Title>
+              </Callout>
+            </Stack>
+          </Frame>
+        </Demo>
       </Section>
 
       <Section title="Props">
@@ -84,17 +153,20 @@ export function CalloutStory() {
 
       <Section title="Cómo se usa bien">
         <Practices>
-          <Practices.Do>El color sale de la familia de categorías, no de los tonos de estado: un bloque de contenido no avisa de nada.</Practices.Do>
-          <Practices.Do>Los colores distinguen un bloque de otro cuando hay varios en una página, no dicen si algo está bien o mal.</Practices.Do>
-          <Practices.Dont>No lo uses para un error ni para algo que pasa: eso es un [Alert](#alert). El `Callout` es parte de lo que se lee y sigue ahí aunque nadie haga nada; por eso no usa los tonos de estado, un bloque en rojo diría "error" sin que haya ninguno.</Practices.Dont>
+          <Practices.Do>Un bloque de contenido va con `color`, de la familia de categorías: distingue un bloque de otro cuando hay varios en una página.</Practices.Do>
+          <Practices.Dont>No le pongas `tone` a un bloque de contenido: uno en rojo diría "error" sin que haya ninguno.</Practices.Dont>
+          <Practices.Do>Un aviso va fijo en la pantalla, donde pasó la cosa, y con una salida en `Callout.Actions`: sin nada para tocar deja al lector solo con el problema.</Practices.Do>
+          <Practices.Dont>No lo uses para acusar recibo de lo que la persona acaba de hacer: eso es un [Toast](#toast), que se va solo. Un error importante que desaparece solo es un error que nadie leyó.</Practices.Dont>
+          <Practices.Do>Adentro de un panel denso va en `size="sm"`.</Practices.Do>
         </Practices>
       </Section>
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>Lleva `role="note"`: se anuncia como una nota al margen sin sumar una región. Con once bloques en una página, once regiones dejarían la lista de saltos inservible.</A11y.Item>
-          <A11y.Item>El glifo es decorativo. Lo que el bloque dice está en su texto, así que sacarlo no pierde nada.</A11y.Item>
-          <A11y.Item>El color nunca es la única diferencia: el título y el glifo dicen de qué se trata.</A11y.Item>
+          <A11y.Item>Sin tono lleva `role="note"`: se anuncia como una nota al margen sin sumar una región. Con once bloques en una página, once regiones dejarían la lista de saltos inservible.</A11y.Item>
+          <A11y.Item>Con tono, el error va como `role="alert"` y el resto como `role="status"`: solo lo urgente interrumpe lo que se está leyendo, y algo fijo no interrumpe cada vez que se monta.</A11y.Item>
+          <A11y.Item>El estado y el tema están en el texto y en el glifo, no solo en el color. El glifo es decorativo.</A11y.Item>
+          <A11y.Item>La X se nombra sola y no es la única salida: el aviso se puede leer entero sin tocarla.</A11y.Item>
         </A11y>
       </Section>
     </Page>

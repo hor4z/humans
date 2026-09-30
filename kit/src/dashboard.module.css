@@ -151,6 +151,7 @@
   }
 
   .sideColumn {
+    position: relative;
     min-width: 0;
   }
 
@@ -221,6 +222,17 @@
     color: var(--text-muted);
   }
 
+  .mascotPeek {
+    pointer-events: none;
+    position: absolute;
+    left: 100%;
+    top: 3rem;
+    z-index: 20;
+    display: none;
+    height: 8rem;
+    width: auto;
+  }
+
   .statCard {
     display: flex;
     flex-direction: column;
@@ -249,10 +261,10 @@
   }
 
   .statValue {
-    font-size: var(--type-heading);
-    line-height: var(--type-heading-lh);
-    letter-spacing: var(--type-heading-ls);
-    font-weight: var(--font-weight-semibold);
+    font-size: var(--type-display);
+    line-height: var(--type-display-lh);
+    letter-spacing: var(--type-display-ls);
+    font-weight: var(--font-weight-bold);
     color: var(--text);
   }
 
@@ -293,6 +305,12 @@
   @media (min-width:40rem) {
     .folderGrid {
         grid-template-columns: repeat(4,minmax(0,1fr));
+    }
+  }
+
+  @media (min-width:80rem) {
+    .mascotPeek {
+        display: block;
     }
   }
 }

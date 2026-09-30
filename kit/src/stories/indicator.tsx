@@ -35,7 +35,7 @@ export function IndicatorStory() {
         <Panel>
           <Variant
             name="tonos"
-            note="El acento es el default y dice 'mirá esto'. Los otros cuatro significan lo mismo que en un `Alert` o en un `Chip`."
+            note="El acento es el default y dice 'mirá esto'. Los otros cuatro significan lo mismo que en un `Callout` o en un `Chip`."
             code={`{(['accent', 'ok', 'warn', 'bad', 'neutral'] as const).map(t => (
   <Indicator key={t} dot tone={t} label={t}>
     <IconButton icon="notifications" label={\`Avisos \${t}\`} size="lg" />

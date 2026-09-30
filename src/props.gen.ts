@@ -65,59 +65,6 @@ export const propsByComponent: Record<string, ComponentDoc> = {
     "html": "div",
     "doc": "Lo que aparece al abrir."
   },
-  "Alert": {
-    "props": [
-      {
-        "name": "tone",
-        "type": "Tone",
-        "required": false,
-        "def": "'info'",
-        "doc": "De acá salen el glifo, el color y la urgencia con que se anuncia."
-      },
-      {
-        "name": "color",
-        "type": "LabelColor | 'neutral'",
-        "required": false,
-        "doc": "El papel de la familia de categorías, para un bloque de contenido que no avisa de nada: reemplaza al tono y trae el glifo solo si se lo pasan."
-      },
-      {
-        "name": "icon",
-        "type": "IconName | null",
-        "required": false,
-        "doc": "Sin esto lo pone el tono; `null` lo saca."
-      },
-      {
-        "name": "onDismiss",
-        "type": "() => void",
-        "required": false,
-        "doc": "Agrega la X para cerrarlo; sin esto no se cierra."
-      },
-      {
-        "name": "size",
-        "type": "'sm' | 'md'",
-        "required": false,
-        "def": "'md'",
-        "doc": "`sm` para adentro de un panel denso, donde el de siempre se lee más grande que las filas de al lado."
-      }
-    ],
-    "html": "div",
-    "doc": "Un aviso fijo en la página: algo pasó o algo hay que saber antes de seguir."
-  },
-  "Alert.Title": {
-    "props": [],
-    "html": "p",
-    "doc": "El renglón que nombra el aviso."
-  },
-  "Alert.Body": {
-    "props": [],
-    "html": "p",
-    "doc": "Qué pasó y qué se puede hacer."
-  },
-  "Alert.Actions": {
-    "props": [],
-    "html": "div",
-    "doc": "La fila de botones del aviso."
-  },
   "AudioPlayer": {
     "props": [
       {
@@ -325,30 +272,49 @@ export const propsByComponent: Record<string, ComponentDoc> = {
   "Callout": {
     "props": [
       {
-        "name": "icon",
-        "type": "IconName",
+        "name": "tone",
+        "type": "Tone",
         "required": false,
-        "doc": "El glifo de la izquierda. Elegilo por lo que dice el bloque, no por el color."
+        "doc": "Para cuando avisa de algo que pasó: de acá salen el glifo, el papel y la urgencia con que se anuncia. Sin esto es un bloque de contenido."
       },
       {
         "name": "color",
         "type": "LabelColor | 'neutral'",
         "required": false,
-        "def": "'neutral'",
-        "doc": "El color del papel. Sale de la familia de categorías y no de los tonos de estado: un bloque de contenido no está avisando de nada."
+        "doc": "El papel de la familia de categorías, para un bloque que no avisa de nada. Pisa al tono. Sin tono ni color va gris."
       },
       {
-        "name": "children",
-        "type": "ReactNode",
-        "required": true
+        "name": "icon",
+        "type": "IconName | null",
+        "required": false,
+        "doc": "Sin esto lo pone el tono, y un bloque de color va sin glifo; `null` lo saca siempre."
       },
       {
-        "name": "className",
-        "type": "string",
-        "required": false
+        "name": "onDismiss",
+        "type": "() => void",
+        "required": false,
+        "doc": "Agrega la X para cerrarlo; sin esto no se cierra."
+      },
+      {
+        "name": "size",
+        "type": "'sm' | 'md'",
+        "required": false,
+        "def": "'md'",
+        "doc": "`sm` para adentro de un panel denso, donde el de siempre se lee más grande que las filas de al lado."
       }
     ],
-    "doc": "Un bloque de contenido que pide detenerse: una aclaración, una pista, algo para recordar."
+    "html": "div",
+    "doc": "Un bloque que pide detenerse: una aclaración o una pista de quien escribe el material, o un aviso fijo del sistema cuando lleva `tone`."
+  },
+  "Callout.Title": {
+    "props": [],
+    "html": "p",
+    "doc": "El renglón que nombra el bloque."
+  },
+  "Callout.Actions": {
+    "props": [],
+    "html": "div",
+    "doc": "La fila de botones: lo que se puede hacer al respecto."
   },
   "Card": {
     "props": [
@@ -3721,7 +3687,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "name": "tone",
         "type": "Tone",
         "required": false,
-        "doc": "El mismo juego de tonos que `Alert` y `Chip`."
+        "doc": "El mismo juego de tonos que `Callout` y `Chip`."
       },
       {
         "name": "action",

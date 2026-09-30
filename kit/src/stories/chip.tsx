@@ -53,7 +53,7 @@ export function ChipStory() {
           </Variant>
           <Variant
             name="estado y categoría"
-            note="Los cuatro de estado significan lo mismo que en `Alert` y en `Toast`. Los seis de categoría van en su **par suave**, porque un chip nunca viene solo."
+            note="Los cuatro de estado significan lo mismo que en `Callout` y en `Toast`. Los seis de categoría van en su **par suave**, porque un chip nunca viene solo."
             code={`<Chip color="info">En prueba</Chip>
 <Chip color="ok">Corregida</Chip>
 <Chip color="warn">Vence mañana</Chip>
