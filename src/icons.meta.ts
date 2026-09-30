@@ -96,6 +96,7 @@ export const iconTags: Record<IconName, string> = {
   keyboard_arrow_down: "access arrows bottom caret chevron collapse control direction",
   keyboard_arrow_up: "accordion angle arrows ascend caret chevron collapse control",
   label: "angled shape badge bookmark category classification corner designation detail",
+  landscape: "chart contour data diagram elevation environment geography graphic",
   language: "announcement bubble caption chat communicate communication dialogue discussion",
   layers: "arrange composition content depth disabled display document enabled",
   light_mode: "adjustment appearance application bright brightness celestial body circle clear",

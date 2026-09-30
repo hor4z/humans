@@ -95,6 +95,7 @@ export const codepoints = {
   keyboard_arrow_down: 0xe313,
   keyboard_arrow_up: 0xe316,
   label: 0xe892,
+  landscape: 0xe3f7,
   language: 0xe894,
   layers: 0xe53b,
   light_mode: 0xe518,

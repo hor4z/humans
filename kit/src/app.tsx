@@ -16,6 +16,7 @@ import { ToastProvider } from '@milo/ui/toast'
 import { Intro } from './intro'
 import { Dashboard } from './dashboard'
 import { DocumentStory } from './document'
+import { Mountain } from './mountain'
 import { AccessibilitySection } from './foundations/accessibility'
 import { TypographySection } from './foundations/typography'
 import { ColorSection } from './foundations/color'
@@ -425,6 +426,7 @@ export function App() {
             <div className={cls.compactGroup}>
               <CompactLink label="Dashboard" icon="dashboard" active={current === 'dashboard'} onClick={() => go('dashboard')} />
               <CompactLink label="Documento" icon="description" active={current === 'documento'} onClick={() => go('documento')} />
+              <CompactLink label="Montaña" icon="landscape" active={current === 'montana'} onClick={() => go('montana')} />
             </div>
           </div> : <div className={cls.railScroll}>
             <SideLink active={current === INTRO} onClick={() => go(INTRO)} icon="deployed_code">Introducción</SideLink>
@@ -486,6 +488,7 @@ export function App() {
                       <div className={cls.navGroupItems}>
                         <SideLink active={current === 'dashboard'} onClick={() => go('dashboard')} icon="dashboard">Dashboard</SideLink>
                         <SideLink active={current === 'documento'} onClick={() => go('documento')} icon="description">Documento</SideLink>
+                        <SideLink active={current === 'montana'} onClick={() => go('montana')} icon="landscape">Montaña</SideLink>
                       </div>
                     </div>
                   )}
@@ -530,8 +533,9 @@ export function App() {
             {current === INTRO && <Intro go={go} />}
             {current === 'dashboard' && <Dashboard />}
             {current === 'documento' && <DocumentStory />}
+            {current === 'montana' && <Mountain />}
             {story?.render()}
-            {!story && current !== INTRO && current !== 'dashboard' && current !== 'documento' && (
+            {!story && current !== INTRO && current !== 'dashboard' && current !== 'documento' && current !== 'montana' && (
               <>
               <h1 className="sr-only">Esa vista ya no está acá</h1>
               <EmptyState icon="search_off">
