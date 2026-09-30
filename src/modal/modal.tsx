@@ -1,10 +1,8 @@
 import s from './modal.module.css'
-import { createContext, useContext, useId, useRef, type ComponentPropsWithoutRef, type ReactNode } from 'react'
+import { createContext, useContext, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import { IconButton } from '../icon-button/icon-button'
-import { useEscape } from '../lib/esc'
-import { useFocusTrap, useScrollLock } from '../lib/overlay-hooks'
-import { Portal } from '../portal/portal'
 import { cx } from '../lib/cx'
+import { Dialog } from '../lib/dialog'
 
 type Ctx = { onClose: () => void; titleId: string }
 const ModalContext = createContext<Ctx | null>(null)
@@ -27,33 +25,23 @@ function Root({
   /** Solo si no hay `Title`: con título, el nombre sale de ahí. */
   label?: string
 }) {
-  const panel = useRef<HTMLDivElement>(null)
-  const titleId = useId()
   const onClose = () => onOpenChange(false)
-  useScrollLock(open)
-  useEscape(open, onClose)
-  useFocusTrap(open, panel)
-  if (!open) return null
   return (
-    <Portal>
-      <div className={s.viewport}>
-        <div className={`${s.veil} ui-fade`} onClick={onClose} />
-        <div
-          ref={panel}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby={titleId}
-          aria-label={label}
-          tabIndex={-1}
-          style={{ width: widths[size], maxWidth: '100%' }}
-          className={`${s.panel} ui-zoom bg-surface`}
-        >
-          <ModalContext.Provider value={{ onClose, titleId }}>
-            {children}
-          </ModalContext.Provider>
-        </div>
-      </div>
-    </Portal>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      label={label}
+      centered
+      blurred
+      panelClass={`${s.panel} ui-zoom bg-surface`}
+      panelStyle={{ width: widths[size], maxWidth: '100%' }}
+    >
+      {titleId => (
+        <ModalContext.Provider value={{ onClose, titleId }}>
+          {children}
+        </ModalContext.Provider>
+      )}
+    </Dialog>
   )
 }
 
