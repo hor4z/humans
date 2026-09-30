@@ -1,7 +1,7 @@
 import s from './self-assessment.module.css'
 import { useId, useState, type ReactNode } from 'react'
+import { Collapsible } from '../../../collapsible/collapsible'
 import { CriterionCard, namesFor, type Criterion } from '../criterion-card/criterion-card'
-import { Icon } from '../../../icon/icon'
 import { Progress } from '../../../progress/progress'
 import { cx } from '../../../lib/cx'
 import { counted } from '../../../lib/number'
@@ -57,11 +57,7 @@ function Root({ criteria, value, onValueChange, defaultOpen = true, children, cl
           onClick={panel.onToggle}
           className={s.trigger}
         >
-          <Icon
-            name="keyboard_arrow_down"
-            size={20}
-            className={cx(s.chevron, panel.open && s.chevronOpen, 'icon-muted')}
-          />
+          <Collapsible.Chevron open={panel.open} />
         </button>
         <p id={titleId} className={s.title}>{title}</p>
         <span className={`${s.count} tabular`}>
@@ -71,8 +67,7 @@ function Root({ criteria, value, onValueChange, defaultOpen = true, children, cl
 
       <Progress value={placed} max={criteria.length} label="Aspectos resueltos" className={s.progress} />
 
-      <div className={cx(s.body, panel.open && s.bodyOpen)}>
-        <div id={bodyId} inert={!panel.open} className={s.bodyInner}>
+      <Collapsible open={panel.open} id={bodyId}>
           <ul className={s.items}>
             {criteria.map(c => (
               <li key={c.id}>
@@ -88,8 +83,7 @@ function Root({ criteria, value, onValueChange, defaultOpen = true, children, cl
               </li>
             ))}
           </ul>
-        </div>
-      </div>
+      </Collapsible>
     </section>
   )
 }

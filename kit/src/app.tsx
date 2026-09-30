@@ -73,6 +73,7 @@ import { SheetStory } from './stories/sheet'
 import { LinkStory } from './stories/link'
 import { TabsStory } from './stories/tabs'
 import { AccordionStory } from './stories/accordion'
+import { CollapsibleStory } from './stories/collapsible'
 import { BreadcrumbStory } from './stories/breadcrumb'
 import { IndicatorStory } from './stories/indicator'
 import { SearchStory } from './stories/search'
@@ -177,6 +178,7 @@ const groups: Group[] = [
     section: 'system',
     stories: [
       { id: 'tabs', label: 'Solapas', alias: 'Tabs solapas pestañas paneles', render: () => <TabsStory /> },
+      { id: 'collapsible', label: 'Plegable', alias: 'Collapsible plegable colapsar expandir desplegar cuerpo', render: () => <CollapsibleStory /> },
       { id: 'accordion', label: 'Acordeón', alias: 'Accordion acordeón desplegable details preguntas frecuentes', render: () => <AccordionStory /> },
       { id: 'breadcrumb', label: 'Migas de pan', alias: 'Breadcrumb ruta migas volver jerarquía', render: () => <BreadcrumbStory /> },
       { id: 'reorder', label: 'Reordenar', alias: 'Reorder reordenar arrastrar soltar mover orden bloques manija drag', render: () => <ReorderStory /> },

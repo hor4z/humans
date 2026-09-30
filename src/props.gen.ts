@@ -782,6 +782,51 @@ export const propsByComponent: Record<string, ComponentDoc> = {
     ],
     "doc": "Una de las opciones que se ofrecen."
   },
+  "Collapsible": {
+    "props": [
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": true,
+        "doc": "Si se ve."
+      },
+      {
+        "name": "id",
+        "type": "string",
+        "required": false,
+        "doc": "El id que nombra el `aria-controls` del botón que lo abre."
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": true
+      }
+    ],
+    "doc": "Un cuerpo plegable con su flecha. El botón lo pone quien lo usa, porque cada uno lo dibuja distinto."
+  },
+  "Collapsible.Chevron": {
+    "props": [
+      {
+        "name": "open",
+        "type": "boolean",
+        "required": true,
+        "doc": "Si lo que abre está abierto."
+      },
+      {
+        "name": "size",
+        "type": "16 | 20 | 24",
+        "required": false,
+        "def": "20",
+        "doc": "16 · 20 · 24, como todo icono."
+      }
+    ],
+    "doc": "La flecha del botón que abre: hacia la derecha cerrado, hacia abajo abierto."
+  },
   "CommandMenu": {
     "props": [
       {

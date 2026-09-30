@@ -1,5 +1,6 @@
 import s from './checklist.module.css'
 import { Children, cloneElement, isValidElement, useId, useState, type ReactElement, type ReactNode } from 'react'
+import { Collapsible } from '../../../collapsible/collapsible'
 import { Icon } from '../../../icon/icon'
 import { Progress } from '../../../progress/progress'
 import { Spinner } from '../../../spinner/spinner'
@@ -129,11 +130,7 @@ function Root({ defaultOpen = false, size = 'md', value, onValueChange, children
           onClick={() => setOpen(v => !v)}
           className={s.trigger}
         >
-          <Icon
-            name="keyboard_arrow_down"
-            size={20}
-            className={cx(s.chevron, open && s.chevronOpen, 'icon-muted')}
-          />
+          <Collapsible.Chevron open={open} />
         </button>
         <p id={titleId} className={s.title}>{title}</p>
         <p className={`${s.count} tabular`}>

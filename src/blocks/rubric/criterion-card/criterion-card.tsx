@@ -1,5 +1,6 @@
 import s from './criterion-card.module.css'
 import { useId, type ReactNode } from 'react'
+import { Collapsible } from '../../../collapsible/collapsible'
 import { Card } from '../../../card/card'
 import { useRovingRadio } from '../../../lib/roving'
 import { Icon } from '../../../icon/icon'
@@ -83,11 +84,7 @@ export function CriterionCard({ criterion, total, open, onOpenChange, onRemove, 
           onClick={() => onOpenChange(!open)}
           className={s.trigger}
         >
-          <Icon
-            name="keyboard_arrow_down"
-            size={18}
-            className={cx(s.chevron, open && s.chevronOpen, 'icon-muted')}
-          />
+          <Collapsible.Chevron open={open} />
         </button>
         <span aria-hidden className={`${s.swatch} mark ${labelSoft[criterion.color]}`}>
           <Icon name="label" size={16} />
@@ -111,8 +108,7 @@ export function CriterionCard({ criterion, total, open, onOpenChange, onRemove, 
         )}
       </Card.Header>
 
-      <div className={cx(s.body, open && s.bodyOpen)}>
-        <div id={bodyId} inert={!open} className={s.bodyInner}>
+      <Collapsible open={open} id={bodyId}>
           <Card.Body className={s.levels}>
             {criterion.detail && <p className={s.hint}>{criterion.detail}</p>}
             <ul
@@ -169,8 +165,7 @@ export function CriterionCard({ criterion, total, open, onOpenChange, onRemove, 
             </ul>
             {children}
           </Card.Body>
-        </div>
-      </div>
+      </Collapsible>
     </Card>
   )
 }

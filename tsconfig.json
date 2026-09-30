@@ -45,6 +45,9 @@
       "@milo/ui/chip": [
         "./src/chip/chip.tsx"
       ],
+      "@milo/ui/collapsible": [
+        "./src/collapsible/collapsible.tsx"
+      ],
       "@milo/ui/confirm-dialog": [
         "./src/confirm-dialog/confirm-dialog.tsx"
       ],
