@@ -42,7 +42,7 @@ export function Dialog({ open, onClose, role = 'dialog', label, centered, blurre
   return (
     <Portal>
       <div className={cx(s.viewport, centered && s.centered)} data-closing={closing || undefined} aria-hidden={closing || undefined}>
-        <div ref={veil} className={cx(s.veil, blurred && s.blur, 'ui-fade')} onClick={onClose} />
+        <div ref={veil} className={cx(s.veil, blurred && s.blur)} onClick={onClose} />
         <div
           ref={panel}
           role={role}
@@ -51,7 +51,7 @@ export function Dialog({ open, onClose, role = 'dialog', label, centered, blurre
           aria-labelledby={label ? undefined : titleId}
           tabIndex={-1}
           style={panelStyle}
-          className={panelClass}
+          className={cx(s.panel, panelClass)}
         >
           {children(titleId)}
         </div>

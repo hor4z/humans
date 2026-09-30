@@ -33,7 +33,7 @@ function Root({
       label={label}
       centered
       blurred
-      panelClass={`${s.panel} ui-zoom bg-surface`}
+      panelClass={`${s.panel} bg-surface`}
       panelStyle={{ width: widths[size], maxWidth: '100%' }}
     >
       {titleId => (

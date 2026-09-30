@@ -5,6 +5,10 @@
     z-index: 40;
   }
 
+  .viewport[data-closing] {
+    pointer-events: none;
+  }
+
   .centered {
     display: flex;
     align-items: center;
@@ -16,11 +20,76 @@
     position: absolute;
     inset: 0;
     background-color: var(--scrim);
+    transition: opacity var(--duration-normal) var(--ease-out);
   }
 
   .blur {
     --milo-backdrop-blur: blur(3px);
     -webkit-backdrop-filter: var(--milo-backdrop-blur,) var(--milo-backdrop-brightness,) var(--milo-backdrop-contrast,) var(--milo-backdrop-grayscale,) var(--milo-backdrop-hue-rotate,) var(--milo-backdrop-invert,) var(--milo-backdrop-opacity,) var(--milo-backdrop-saturate,) var(--milo-backdrop-sepia,);
     backdrop-filter: var(--milo-backdrop-blur,) var(--milo-backdrop-brightness,) var(--milo-backdrop-contrast,) var(--milo-backdrop-grayscale,) var(--milo-backdrop-hue-rotate,) var(--milo-backdrop-invert,) var(--milo-backdrop-opacity,) var(--milo-backdrop-saturate,) var(--milo-backdrop-sepia,);
+  }
+
+  .panel {
+    transition: opacity var(--duration-normal) var(--ease-out), transform var(--duration-content) var(--ease-slide);
+  }
+
+  .viewport[data-closing] .veil {
+    opacity: 0;
+    transition: opacity var(--duration-normal) var(--ease-in);
+  }
+
+  .viewport[data-closing] .panel {
+    transition: opacity var(--duration-fast) var(--ease-in), transform var(--duration-normal) var(--ease-in);
+  }
+
+  .viewport[data-closing].centered .panel {
+    opacity: 0;
+  }
+
+  @starting-style {
+    .veil {
+      opacity: 0;
+    }
+
+    .centered .panel {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .viewport[data-closing] .panel {
+      transform: translateX(var(--slide-from, 100%));
+    }
+
+    .viewport[data-closing].centered .panel {
+      transform: scale(0.98);
+      transition: opacity var(--duration-fast) var(--ease-in), transform var(--duration-fast) var(--ease-in);
+    }
+
+    @starting-style {
+      .panel {
+        transform: translateX(var(--slide-from, 100%));
+      }
+
+      .centered .panel {
+        transform: translateY(8px) scale(0.96);
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .veil, .panel, .viewport[data-closing] .veil, .viewport[data-closing] .panel {
+      transition-duration: var(--duration-normal) !important;
+    }
+
+    .viewport[data-closing] .panel {
+      opacity: 0;
+    }
+
+    @starting-style {
+      .panel {
+        opacity: 0;
+      }
+    }
   }
 }
