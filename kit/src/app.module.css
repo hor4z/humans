@@ -38,7 +38,7 @@
   .railMotion {
     transition-property: transform,translate,scale,rotate,width;
     transition-duration: var(--duration-normal);
-    transition-timing-function: var(--ease-out);
+    transition-timing-function: var(--ease-slide);
   }
 
   .railOpen {
@@ -328,6 +328,7 @@
     .compactNav, .railScroll { animation: railIn var(--duration-normal) var(--ease-out); }
     .main.mainCompact { margin-left: 72px; }
     .railCompact .brandName { display: none; }
+    .railCompact .railHead, .railCompact .compactNav, .railCompact .railFoot { width: 72px; }
     .railCompact .railHead { align-items: center; padding-inline: var(--space-2); gap: var(--space-4); }
     .railCompact .brand { padding: 0; }
     .railCompact .railFoot { flex-direction: column; gap: var(--space-2); padding: var(--space-3) var(--space-2); }
@@ -364,7 +365,7 @@
         margin-left: 264px;
         transition-property: margin-left;
         transition-duration: var(--duration-content);
-        transition-timing-function: var(--ease-out);
+        transition-timing-function: var(--ease-slide);
         padding-inline: 2.5rem;
         padding-block: 2.5rem;
     }
