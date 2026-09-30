@@ -125,7 +125,7 @@ export function NavStory() {
       </Section>
 
       <Section title="Props">
-        <Props of={['Nav', 'Nav.Item', 'Nav.Body']} />
+        <Props of="Nav" />
       </Section>
 
       <Section title="Cómo se usa bien">

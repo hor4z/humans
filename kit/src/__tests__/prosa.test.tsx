@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import type { ComponentType } from 'react'
 import { ToastProvider } from '@milo/ui/toast'
 
@@ -21,8 +21,12 @@ describe('la prosa del sitio', () => {
   })
 
   for (const [name, View] of views) {
-    it(`${name} se dibuja y no deja marcas a la vista`, () => {
+    it(`${name} se dibuja sin avisos de React y no deja marcas a la vista`, () => {
+      const warned = vi.spyOn(console, 'error').mockImplementation(() => {})
       const { container } = render(<ToastProvider><View /></ToastProvider>)
+      const warnings = warned.mock.calls.map(c => String(c[0]).replace(/%s/g, String(c[1] ?? '')).slice(0, 120))
+      warned.mockRestore()
+      expect(warnings, 'React avisa de una prop que no existe o de una key repetida: en el navegador es un bug que nadie ve').toEqual([])
       const loose: string[] = []
       const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT)
       let n: Node | null
