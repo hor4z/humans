@@ -177,9 +177,6 @@
       "@milo/ui/blocks/editor/command-menu": [
         "./src/blocks/editor/command-menu/command-menu.tsx"
       ],
-      "@milo/ui/blocks/editor/figure": [
-        "./src/blocks/editor/figure/figure.tsx"
-      ],
       "@milo/ui/blocks/editor/mention": [
         "./src/blocks/editor/mention/mention.tsx"
       ],
@@ -210,17 +207,11 @@
       "@milo/ui/blocks/task/choice": [
         "./src/blocks/task/choice/choice.tsx"
       ],
-      "@milo/ui/blocks/task/compare-table": [
-        "./src/blocks/task/compare-table/compare-table.tsx"
-      ],
       "@milo/ui/blocks/task/number-answer": [
         "./src/blocks/task/number-answer/number-answer.tsx"
       ],
       "@milo/ui/blocks/task/open-question": [
         "./src/blocks/task/open-question/open-question.tsx"
-      ],
-      "@milo/ui/blocks/task/sum-table": [
-        "./src/blocks/task/sum-table/sum-table.tsx"
       ]
     }
   },

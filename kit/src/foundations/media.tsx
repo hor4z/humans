@@ -3,7 +3,7 @@ import { Table } from '@milo/ui/table'
 import { A11y, Page, Rich, Section } from '../kit'
 
 const media = [
-  ['Imagen', 'Figure', 'Lo que se entiende de un vistazo.', 'Texto alternativo y proporción reservada antes de cargar. Sin texto adentro.'],
+  ['Imagen', 'todavía no hay pieza', 'Lo que se entiende de un vistazo.', 'Texto alternativo y proporción reservada antes de cargar. Sin texto adentro.'],
   ['Audio', 'AudioPlayer', 'La voz de alguien: llega el tono, que un texto no lleva.', 'Su transcripción y la onda. No arranca solo.'],
   ['Video', 'todavía no hay pieza', 'Lo que pasa en el tiempo: un procedimiento, un experimento.', 'Subtítulos y controles desde el primer cuadro, en su proporción original.'],
   ['Animación', 'todavía no hay pieza', 'Un gesto corto que acompaña y no informa.', 'Con `prefers-reduced-motion` se reemplaza por la imagen quieta, no se atenúa.'],

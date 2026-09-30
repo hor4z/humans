@@ -54,7 +54,7 @@ const initialCriteria: Criterion[] = [
     weight: 3,
     color: 'purple',
     levels: [
-      'No investiga: el cuadro está vacío o inventado',
+      'No investiga: la respuesta está vacía o inventada',
       'Nombra competidores, sin datos de ninguno',
       'Compara dos competidores reales con datos de los dos',
       'Compara con datos y saca de ahí qué va a hacer distinto',
