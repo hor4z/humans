@@ -144,6 +144,7 @@
   .groupText { flex: 1; text-align: left; }
 
   .groupToggle {
+    position: relative;
     gap: var(--space-2);
     display: flex;
     width: 100%;
@@ -244,6 +245,7 @@
   }
 
   .navItem {
+    position: relative;
     display: flex;
     height: 2.25rem;
     width: 100%;
@@ -272,15 +274,27 @@
     rotate: 180deg;
   }
 
+  .navPiece {
+    padding-left: calc(var(--space-3) + 18px + var(--space-2));
+  }
+
   .navSubItem {
-    padding-left: var(--space-8);
+    padding-left: calc(var(--space-3) + 18px + var(--space-2) + var(--space-3));
   }
 
   .navItemActive {
-    background-color: var(--surface-muted);
-    box-shadow: inset 0 0 0 1px var(--border);
     font-weight: var(--font-weight-semibold);
-    color: var(--text);
+    color: var(--brand-ink);
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset-block: 0.5rem;
+      left: 0;
+      width: 2px;
+      border-radius: var(--radius-full);
+      background-color: var(--brand);
+    }
   }
 
 
