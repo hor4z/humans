@@ -938,11 +938,22 @@
     line-height: var(--type-body-lh);
     letter-spacing: var(--type-body-ls);
     font-weight: var(--font-weight-medium);
-    color: var(--text-muted);
+    color: var(--text);
   }
 
   .exampleCode {
     padding-block: 0.75rem;
+
+    & .codeBlock {
+      border-width: 0;
+      padding: 0;
+      background-color: transparent;
+    }
+
+    & .codeCopy {
+      top: -0.25rem;
+      right: 0;
+    }
   }
 
   .exampleCodeOnly {
