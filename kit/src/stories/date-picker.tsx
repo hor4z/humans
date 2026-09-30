@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { DatePicker } from '@milo/ui/date-picker'
 import { Field } from '@milo/ui/field'
-import { A11y, Canvas, Example, Note, Page, Practices, Props, Section, Stack } from '../kit'
+import { A11y, Demo, Note, Page, Practices, Props, Section, Stack } from '../kit'
 
 const today = () => {
   const d = new Date()
@@ -23,60 +23,68 @@ export function DatePickerStory() {
     >
       <Section
         title="En un campo"
-        note="Como cualquier otro control del sistema: el `Field` de alrededor le pone el nombre y la ayuda, y el campo se hunde o no según la superficie donde caiga."
+        note="El `Field` de alrededor le pone el nombre y la ayuda, como a cualquier otro control del sistema."
       >
-        <Canvas>
+        <Demo code={`<Field.Set>
+  <Field.Legend>Cuándo</Field.Legend>
+  <Field>
+    <Field.Label>Abre</Field.Label>
+    <Field.Hint>Desde cuándo se puede entregar</Field.Hint>
+    <DatePicker value={from} onValueChange={setFrom} />
+  </Field>
+  <Field>
+    <Field.Label>Vence</Field.Label>
+    <Field.Hint>Después de esta fecha no entra nada</Field.Hint>
+    <DatePicker value={due} onValueChange={setDue} min={from} placeholder="Sin fecha de cierre" />
+  </Field>
+</Field.Set>`}>
           <Stack gap="xl" width="md">
-            <Field.Set legend="Cuándo">
+            <Field.Set>
+              <Field.Legend>Cuándo</Field.Legend>
               <Field>
                 <Field.Label>Abre</Field.Label>
                 <Field.Hint>Desde cuándo se puede entregar</Field.Hint>
-                <DatePicker value={from} onChange={setFrom} />
+                <DatePicker value={from} onValueChange={setFrom} />
               </Field>
               <Field>
                 <Field.Label>Vence</Field.Label>
                 <Field.Hint>Después de esta fecha no entra nada</Field.Hint>
-                <DatePicker value={due} onChange={setDue} min={from} placeholder="Sin fecha de cierre" />
+                <DatePicker value={due} onValueChange={setDue} min={from} placeholder="Sin fecha de cierre" />
               </Field>
             </Field.Set>
           </Stack>
-        </Canvas>
+        </Demo>
       </Section>
 
       <Section
         title="Suelto"
         note="Sin `Field` alrededor hay que nombrarlo con `label`. El campo dice la fecha en palabras: 03/09/2026 quiere decir dos cosas distintas según de dónde sea quien lo lee."
       >
-        <Canvas>
-          <DatePicker value={loose} onChange={setLoose} label="Fecha del examen" width={260} />
-        </Canvas>
+        <Demo code={`<DatePicker value={loose} onValueChange={setLoose} label="Fecha del examen" width={260} />`}>
+          <DatePicker value={loose} onValueChange={setLoose} label="Fecha del examen" width={260} />
+        </Demo>
       </Section>
 
       <Section
         title="Acotado"
-        note="`min` y `max` apagan lo que queda afuera en vez de esconderlo: un día que desaparece deja a quien mira buscando dónde está, y uno apagado dice que existe y que no se puede."
+        note="`min` y `max` apagan lo que queda afuera en vez de esconderlo: un día apagado dice que existe y que no se puede elegir."
       >
-        <Canvas>
-          <DatePicker value={bounded} onChange={setBounded} min={today()} label="Nueva entrega" placeholder="No se puede antes de hoy" width={260} />
-        </Canvas>
+        <Demo code={`<DatePicker
+  value={bounded}
+  onValueChange={setBounded}
+  min={today()}
+  label="Nueva entrega"
+  placeholder="No se puede antes de hoy"
+  width={260}
+/>`}>
+          <DatePicker value={bounded} onValueChange={setBounded} min={today()} label="Nueva entrega" placeholder="No se puede antes de hoy" width={260} />
+        </Demo>
       </Section>
-
-      <Note icon="lightbulb" title="Por qué el valor es texto y no un `Date`">
-        `new Date('2026-03-09')` se interpreta en UTC, así que acá es el 8 a las 21. Una fecha de
-        vencimiento no tiene hora ni zona: es un día del calendario. El texto `AAAA-MM-DD` lo dice
-        tal cual, se ordena comparando cadenas y viaja a cualquier base sin traducción.
-      </Note>
 
       <Note title="La semana empieza el lunes">
-        Y no sale de la configuración del navegador: una grilla que a veces arranca el domingo y a
-        veces el lunes se lee mal justo cuando hay que contar días. Si hace falta soportar las dos,
-        es una prop y no una pieza nueva.
+        Y no sale de la configuración del navegador: una grilla que a veces arranca el domingo se lee
+        mal justo cuando hay que contar días.
       </Note>
-
-      <Section title="Cómo se escribe">
-        <Example code={`const [fecha, setFecha] = useState('')
-<DatePicker value={fecha} onChange={setFecha} min={hoy} label="Cierra el" />`} />
-      </Section>
 
       <Section title="Props">
         <Props of="DatePicker" />

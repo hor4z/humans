@@ -9,7 +9,7 @@ describe('Textarea', () => {
   it('crece con el contenido y vuelve al borrar', async () => {
     const Wrap = () => {
       const [v, setV] = useState('')
-      return <Textarea value={v} onChange={e => setV(e.target.value)} rows={2} maxRows={6} />
+      return <Textarea value={v} onValueChange={setV} rows={2} maxRows={6} />
     }
     render(<Wrap />)
     const ta = screen.getByRole('textbox') as HTMLTextAreaElement
@@ -79,12 +79,12 @@ describe('Textarea', () => {
   })
 
   it('el placeholder no cambia el tamaño de la caja: una pista es una pista', () => {
-    const corto = render(<Textarea rows={1} value="" onChange={() => {}} placeholder="Ok" />)
-    const alto = corto.container.querySelector('textarea')!.style.height
-    corto.unmount()
-    const largo = render(
+    const short = render(<Textarea rows={1} value="" onChange={() => {}} placeholder="Ok" />)
+    const height = short.container.querySelector('textarea')!.style.height
+    short.unmount()
+    const long = render(
       <Textarea rows={1} value="" onChange={() => {}} placeholder={'Una pista larguísima que en una celda angosta se va a partir en tres renglones distintos'} />,
     )
-    expect(largo.container.querySelector('textarea')!.style.height).toBe(alto)
+    expect(long.container.querySelector('textarea')!.style.height).toBe(height)
   })
 })

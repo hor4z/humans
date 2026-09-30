@@ -92,9 +92,6 @@ export function ReliefSection() {
         </div>
       </Section>
 
-      <Note icon="visibility_off" title="Tres tokens sin consumidor">
-        `--relief-solid`, `--relief-brand` y `--relief-brand-pressed` no los usa ninguna pieza: son de cuando los botones tenían volumen. Están a la vista para que nadie los agarre creyendo que son la receta de algo.
-      </Note>
 
       <Note title="Un campo no lleva relieve">
         El relieve dice "esto sobresale" o "esto se aprieta", y un campo no es ninguna de las dos: es un

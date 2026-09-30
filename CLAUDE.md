@@ -1,1005 +1,307 @@
 # milo · design system
 
-El sistema de interfaz de milo: la identidad en tokens, las piezas que la usan, y el sitio
-donde se ve todo funcionando. No es una lámina de estilos: cada pieza de acá es el componente
-real, con su teclado, sus estados y sus tests.
+La identidad de milo en tokens, las piezas que la usan y el sitio donde se ve todo funcionando.
+Cada pieza es el componente real, con su teclado, sus estados y sus tests. **El repo es del design
+system y de nada más**: el producto se arma aparte, consumiendo el paquete.
 
-**El repo es del design system y de nada más.** El UI kit (las 67 piezas) es una parte; las
-otras son los tokens y lo que el sitio documenta alrededor. Acá adentro no vive producto: el
-prototipo de la app que hubo hasta ahora se borró, y cuando haga falta uno de nuevo se arma
-aparte.
-
-Lo que se decide acá se porta a `~/melu/packages/ui`, que es el paquete que hoy consume el
-producto. **Ese es otro repo y todavía se llama `melu`**, en el disco y en GitHub; este pasó a
-llamarse `milo` (`hor4z/milo`) y el día que se renombre el otro, estas dos líneas y la del
-final son lo único que hay que tocar.
+Lo que se decide acá se porta a `~/melu/packages/ui`, que es otro repo y todavía se llama `melu`.
+Este es `milo` (`hor4z/milo`). Lo que falta está en `ROADMAP.md`.
 
 ```sh
 npm install
-npm run dev        # el sitio · http://localhost:5190
-npm run typecheck  # el paquete y el sitio de una
-npm test           # 845 tests con vitest y testing-library
-npm run build      # compila el paquete a dist/ (js, css y tipos)
-npm run props      # regenera la tabla de props desde los tipos
-npm run paths      # regenera el paths de tsconfig.json, una entrada por pieza
-npm test:changed   # solo lo que toca el cambio; los guardianes van aparte
+npm run dev           # el sitio en http://localhost:5190, con la caché de vite limpia
+npm run typecheck     # el paquete y el sitio
+npm test              # vitest y testing-library
+npm run test:changed  # solo lo que toca el cambio
+npm run test:guards   # solo los guardianes que leen el repo entero
+npm run build         # el paquete a dist/: js, css y tipos
+npm run kit           # el sitio a kit/dist
+npm run props         # la tabla de props, desde los tipos
+npm run paths         # el paths de tsconfig.json y el exports de cada familia de bloques
+npm run icons -- …    # search · add · check · refresh (ver Iconos)
+npm run mascotas      # los archivos de una mascota (hay una skill para eso)
 ```
 
-**El repo es un solo paquete y se llama `@milo/ui`.** Fue un monorepo de tres workspaces
-(`packages/tokens`, `packages/ui`, `apps/kit`) y dejó de serlo: hay un `package.json` en la raíz
-y nada más. Lo que se consume vive en `src/`, la herramienta en `scripts/` y el sitio en `kit/`,
-que es una carpeta con su propio `vite.config.ts` y no un paquete.
+Ningún número de este archivo cuenta piezas, tests ni iconos: se desactualizan. Los cuenta el
+comando.
 
-**Ni raya larga ni comillas angulares, en ningún lado.** Ni en el código, ni en la interfaz, ni
-en un commit, ni en la descripción de un PR, ni en una respuesta. Nadie las tiene a mano en un
-teclado, así que no aparecen en lo que escribe una persona: cuando aparecen, quien lee siente que
-el texto lo escribió una máquina y deja de creerle. En su lugar van los dos puntos, la coma, el
-paréntesis y las comillas dobles, que dicen lo mismo. Hay un test que lee el repo entero y falla
-si vuelve una.
+## Cómo se escribe
 
-**El código va en inglés y los comentarios en castellano.** Todo lo que es código (variables,
-parámetros, tipos, funciones, props) se escribe en inglés; lo que se lee (los comentarios, los
-textos de la interfaz, los nombres de los tests, el contenido de ejemplo) va en castellano. Esa
-es la línea, y no hay una tercera categoría.
+- **Ni raya larga ni comillas angulares, en ningún lado**: código, interfaz, commits, PRs y
+  respuestas. Delatan un texto escrito por una máquina. Van los dos puntos, la coma, el paréntesis
+  y las comillas dobles. Hay un test.
+- **El código va en inglés y lo que se lee en castellano.** Identificadores, tipos, props y clases
+  en inglés; comentarios, textos de la interfaz, nombres de los tests y contenido de ejemplo en
+  castellano. No hay una tercera categoría.
+- **El código no lleva comentarios.** Solo el docblock `/** */` de una línea por export y por prop,
+  que es lo que lee `npm run props` y lo que muestra el editor. El porqué de una decisión va acá o
+  en la nota de su vista del kit. Hay un test.
 
-**El código no lleva comentarios.** Lo único que queda es el docblock `/** */` de una línea por
-export y por prop, que no es prosa: lo lee `npm run props` para armar la tabla de cada vista, y lo
-muestra el editor al autocompletar. Todo lo demás se sacó: eran mil quinientas líneas de
-explicación adentro de los archivos, una tercera copia de lo que ya dicen este archivo y el kit, y
-la que se despegaba primero porque nada la verifica. El porqué de cada decisión vive en dos
-lugares que sí se leen: acá y las notas de cada vista del kit.
+## Las dos capas
 
-## De dónde salió
+- **La base** (`src/<pieza>`) es lo primitivo: botones, campos, overlays, avisos, superficies,
+  tabla, gráfico. Se importa `@milo/ui/button`.
+- **Los bloques** (`src/blocks/<familia>/<pieza>`) son lo complementario: piezas armadas con la
+  base que ponen al sistema en su uso real. Las familias son `editor`, `task` (la consigna),
+  `rubric` y `media`. Se importa `@milo/ui/blocks/editor/callout`.
+- **La base nunca importa un bloque, y un bloque no escribe en `:root`.** Sus custom properties
+  (`--band`, `--icon-size`) son locales a su clase. Si la base necesita algo de un bloque, eso no era
+  un bloque; si a un bloque le falta un rol, el rol es de la base. Hay dos tests.
+- **Dónde va una pieza nueva**: a la base si su forma se repite en cualquier producto; a un bloque
+  si lo que la define es el contexto que resuelve.
+- Lo que es del sitio y no del sistema (`settings-modal`, `prefs`, `folder`) vive en
+  `kit/src/demo/`, con su test, y no sale en el paquete.
 
-Arrancó como "clonar https://ui8-brainwave-2.vercel.app" y derivó en calibrar el sistema de
-milo contra esa referencia. **Brainwave 2 es un template comercial de UI8 y no está
-licenciado acá.** Lo que hay en este repo es código, iconos y contenido propios; de la
-referencia se tomaron medidas y recetas de sombra, que es lo que hace cualquier diseñador con
-una referencia enfrente.
-
-Ese límite importa para el futuro: **no seguir igualando pantalla por pantalla hasta que no
-quede diferencia.** El conjunto completo ya armado es el producto que UI8 vende. Si hace falta
-ese estilo tal cual, el camino es comprar la licencia (unos cientos de dólares, viene con el
-código fuente). Si no, las pantallas que falten se resuelven con criterio propio.
+`scripts/pieces.mjs` es la única lista de piezas: la leen el build, `paths`, `props` y los
+guardianes. Una pieza nueva es una carpeta nueva y nada más.
 
 ## Arquitectura
 
-El stack es React 19 + Vite y **nada más**: el sistema no usa ninguna librería de estilo. El
-estilo es CSS nativo, en módulos, contra tokens que también son CSS nativo.
+React 19 y Vite, y **ninguna librería de estilo**: CSS nativo en módulos, contra tokens que también
+son CSS nativo.
 
 ```
-src/styles/tokens/primitives.css   valores crudos: la rampa, el canto, los tintes, el azul
-src/styles/tokens/semantic.css     los roles: --surface, --border, --text, --relief-*, --switch-*
-src/styles/tokens/scales.css       radios, medidas del shell, tipografía, pesos, movimiento
-src/styles/reset.css               lo que un navegador trae y no queremos
-src/styles/base.css                lo que el sistema define para todos: .mark, .raised, .tabular
-src/theme.css                      el orden de las capas y los tres imports de arriba
-src/<pieza>/<pieza>.module.css     el estilo de esa pieza y de ninguna otra
+src/styles/tokens/primitives.css   los valores crudos: la rampa, los tintes, el azul
+src/styles/tokens/semantic.css     los roles: --surface, --border, --text, --relief-*
+src/styles/tokens/scales.css       radios, medidas, tipografía, pesos, movimiento
+src/styles/reset.css · base.css    lo que el navegador trae de más, y las clases globales
+src/theme.css                      el orden de las capas y los imports de arriba
+<pieza>/<pieza>.module.css         el estilo de esa pieza y de ninguna otra
 ```
 
-Los componentes se estilan **solo** contra roles: ninguno sabe que existe `--shade-03`, sabe
-que hay un `--surface-muted`. Un hex escrito a mano en un componente es un bug.
+- **Una app sí puede usar Tailwind**, armando su `@theme` encima de los tokens. Acá adentro, no:
+  un estilo se escribe una vez, en el módulo de su pieza.
+- **El orden de las capas se declara en `theme.css` y antes que nada**, porque una capa vale por
+  dónde se la declara. Por eso `app.css` va en la primera línea de `main.tsx`: las dos veces que
+  esto mordió fue el reset ganándole a todo.
+- **Una clase global de `base.css` va sin capa, así que le gana a cualquier módulo.** Cuando las
+  dos tienen que convivir, la receta se compone en `base.css`, no se pelea desde el módulo.
+- **`touch-target`** agranda el blanco de toque a 44 con un `::after`, solo con `pointer: coarse` y
+  sin mover la caja. Va solo en un botón: en un campo se quedaría con el tap que iba al `input`,
+  así que los campos suben la caja de verdad. La pone la pieza, que sabe de qué tamaño es.
+- **`.group` y `.peer` no dibujan nada**: existen para que un módulo cuelgue de ellas con
+  `:global(.group)` y estile a un hijo según el estado del padre.
 
-**Una app sí puede usar Tailwind, y para eso están los tokens.** El sistema exporta valores en
-CSS puro; quien quiera utilidades las arma encima con un `@theme` propio. Lo que no vuelve es
-tener las dos cosas: acá adentro un estilo se escribe una vez, en el módulo de su pieza.
+## Reglas al escribir código
 
-**El orden de las capas se declara en `theme.css` y antes que nada.** Una capa vale por dónde se
-la declara, no por dónde se usa, y lo que está en una capa siempre pierde contra lo que no está
-en ninguna. Las dos veces que esto mordió fueron la misma: el reset ganándole a todo porque su
-capa se registró tarde. De ahí que `app.css` se importe en la **primera** línea de `main.tsx`.
-
-El corolario que cuesta ver: una clase global de `base.css` va sin capa, así que le gana a
-cualquier módulo. Cuando las dos tienen que convivir (el anillo de un avatar sobre el relieve de
-`.mark`) la receta se compone en `base.css`, no se pelea desde el módulo.
-
-`touch-target` es la otra clase que no dibuja nada: con `pointer: coarse` le agranda a un botón el
-blanco de toque hasta 44×44 con un `::after`, sin mover la caja. Así la densidad de escritorio queda
-intacta y el dedo igual lo encuentra. La pone la pieza, no el call site, porque es la pieza la que
-sabe de qué tamaño es.
-
-**Va solo donde toda la superficie es un mismo objetivo**, o sea en un botón. En un campo no: el
-`::after` se pinta sobre el contenido, así que se quedaría con el tap que iba al `input` y el cursor
-no caería donde tocaste. Los campos llegan a 44 subiendo la caja de verdad, que en algo ancho no
-cuesta nada.
-
-`.group` y `.peer` son las dos únicas clases que no dibujan nada: existen para que un módulo
-pueda colgar de ellas con `:global(.group)` y estilar a un hijo según el estado del padre, que es
-lo único que un módulo no puede expresar solo.
-
-## El sistema: dónde está escrito cada porqué
-
-**El porqué de una decisión de diseño vive en el kit, no acá.** Cada vista de Fundamentos se
-renderiza, muestra la pieza real y tiene tests que la sostienen; este archivo no puede hacer
-ninguna de las tres cosas. Durante un tiempo lo explicó todo dos veces y las dos versiones
-divergieron (llegó a decir que el buscador usaba `--field-bg` mientras los tokens decían otra
-cosa), así que ahora dirige en vez de explicar.
-
-| si vas a tocar | leé | y los valores están en |
-|---|---|---|
-| la escala de texto, los pesos, el interlineado | **Fundamentos › Tipografía** | `tokens/scales.css` |
-| la rampa, el azul primario, las superficies | **Fundamentos › Color** | `tokens/primitives.css` · `semantic.css` |
-| el espaciado y los radios | **Fundamentos › Medidas y radios** | `tokens/scales.css` |
-| los cortes, el mueble y el ancho de lectura | **Fundamentos › Layout** | `tokens/scales.css` |
-| las sombras y el volumen | **Fundamentos › Relieve** | `tokens/semantic.css` |
-| hover, foco, vacío, cargando, error | **Fundamentos › Estados** | - |
-| contraste, teclado, lectores | **Fundamentos › Accesibilidad** | `__tests__/contraste.test.ts` |
-| el set y cómo crece | **Fundamentos › Iconos** | `scripts/icons.mjs` |
-| cuándo pasa algo, en qué zona | **Fundamentos › Fecha y hora** | `lib/time.ts` |
-| cómo se escribe un número | **Fundamentos › Números y valores** | `lib/number.ts` |
-| imagen, audio, video y animación, y cómo suenan | **Fundamentos › Medios** | `figure/` · `audio-player/` |
-| el texto de la interfaz | **Fundamentos › Cómo se escribe** | - |
-
-Se abre con `npm run dev` y está en `kit/src/foundations/`. Si una decisión no está en
-ninguna de esas vistas, es que todavía no se tomó.
-
-**El grupo Editor** son las piezas del editor de texto enriquecido: la barra de formato, la lista
-de comandos que abre la barra, el bloque destacado, la imagen con pie y la cita. `document.tsx` las
-arma en una consigna de verdad, que es al editor lo que el dashboard es a la app: la prueba de que
-juntas funcionan. Se documentan igual que las demás y la diferencia es de quién las usa: ahí el
-contenido lo escribe una persona, no el sistema, y eso cambia las reglas: un `Callout` no usa los
-tonos de estado porque no está avisando de nada.
-
-La fórmula y el bloque de código estuvieron y se sacaron: son las dos piezas del editor que traen
-un lenguaje propio (MathML una, la gramática de cada lenguaje la otra) y eso es un trabajo aparte
-del sistema. Cuando vuelvan, vuelven con esa decisión tomada.
-
-## Las reglas al escribir código
-
-Estas sí van acá: no se ven en una pantalla, así que el kit no puede mostrarlas.
-
-- **Los componentes se estilan solo contra roles.** Ninguno sabe que existe `--shade-03`; sabe que
-  hay un `--surface-muted`. Un hex escrito a mano en un componente es un bug, y hay un test.
-- **No hay barril: cada pieza entra por su propio subpath.** `@milo/ui/button`,
-  `@milo/ui/modal`, `@milo/ui/lib/use-debounce`. `src/index.ts` existió y se borró: importaba las
-  62 piezas, así que cualquier test que entrara por `@milo/ui` quedaba atado a las 62 en el grafo
-  de módulos y `vitest --changed` corría siempre la suite entera. Un export que no se alcanza desde
-  `pieza/pieza.tsx`, `lib/x.ts` o un subpath nombrado a mano hace fallar un test.
-- **Todo archivo y toda carpeta va en kebab, sin una sola mayúscula**, que es lo que hace
-  predecible el subpath: `icon-button/icon-button.tsx` se importa de `@milo/ui/icon-button`. Hay un
+- **Solo contra roles.** Una pieza no sabe que existe `--shade-03`, sabe que hay un
+  `--surface-muted`. Un hex o un escalón de la rampa en una pieza es un bug. Hay un test.
+- **Sin barril.** Cada pieza entra por su subpath. `src/index.ts` existió, ataba cada test a todas
+  las piezas y hacía que `vitest --changed` corriera siempre la suite entera.
+- **Todo en kebab**, archivo y carpeta, porque el nombre del archivo es el del subpath. Hay un test.
+- **Una carpeta por pieza, con su test al lado, y una pieza no vive adentro de otra.** Una carpeta
+  con nombre de caso de uso es un cajón: `filter/` llegó a esconder un buscador que terminó
+  dibujado a mano en tres lugares.
+- **Las partes cuelgan de la raíz**: `Modal.Header`, `Nav.Item`. Se declaran con nombre corto y
+  local y se arma el namespace ahí (`Object.assign(Root, { Header })`): `ModalHeader` no existe en
+  ningún lado.
+- **El contenido va como hijo, nunca en una prop**: `<Progress.Label>` y no `label="…"`. Siguen
+  siendo prop lo que no se ve (un `aria-label`, un `src`, un `value`), lo que la pieza necesita
+  como string y los datos que vienen en array (`Task`, `DropdownItem`).
+- **El handler se llama por lo que controla**: `value` y `onValueChange(value)`, `checked` y
+  `onCheckedChange`, `pressed` y `onPressedChange`, `open` y `onOpenChange`. `onChange` queda para
+  el evento nativo. Una pieza con un valor compuesto devuelve el valor entero, no la celda. Hay un
   test.
-- **Una carpeta por pieza, con su test al lado.** Agregar una pieza es agregar una carpeta, no
-  editar cuatro archivos. Dos tests lo sostienen: cada carpeta tiene el componente que le da
-  nombre, y cada componente tiene su test.
-- **Una pieza suelta no vive adentro de la carpeta de otra.** `filter/` llegó a tener seis exports
-  y dos eran controles sueltos (el buscador y el selector de columnas): como no tenían vista
-  propia, nadie los encontraba y el buscador terminó dibujado a mano en tres lugares con tres
-  alturas distintas. Una carpeta con el nombre de un caso de uso es un cajón.
-- **El gris de un icono no es una prop, es la clase `icon-muted`.** El gris se hereda de un
-  ancestro (un `IconButton` apagado, un item de nav inactivo) y el call site no tiene cómo saberlo.
-  Corolario que cuesta ver: **`Icon` no escribe `--icon-wght` salvo que le pasen `weight`**, porque
-  un estilo inline le gana a una clase y con un default escrito siempre, `icon-muted` no podría
-  subir el peso.
-- **Lo que se compone se expone en partes, y las partes cuelgan de la raíz.** `Alert.Title`,
-  `Card.Header`, `Tabs.Panel`. La pieza declara sus partes con nombre corto y **local** y arma el
-  namespace ahí mismo (`export const Modal = Object.assign(Root, { Header, Title, … })`), así que
-  `ModalHeader` no existe en ningún lado: ni adentro de la pieza ni en la puerta. El consumidor
-  importa una palabra por familia.
-- **El contenido va como hijo, nunca adentro de una prop.** `<Accordion.Summary>` y no
-  `summary="…"`; `<Field.Label>` y no `label="…"`. Lo que sí sigue siendo prop es lo que no se ve
-  (un `aria-label`, un `src`, un `value`), lo que la pieza necesita como string y no como nodo (el
-  `title` del `AudioPlayer` alimenta el `MediaMetadata` del sistema operativo) y los tipos de datos
-  que se pasan como array (`Task`, `Step`, `DropdownItem`). Cuando una pieza dibuja una parte en
-  otro lugar del marco, los hijos se separan con `lib/parts`.
-- **Un campo no sabe dónde cae.** La superficie que lo contiene escribe `--field-bg`, así que un
-  `TextField` adentro de un `Card` adentro de un `Modal` se ve bien sin que nadie se lo diga. El
-  `Spinner` con `on="control"` hace lo mismo con `--spinner-bg`: el hueco entre el arco y la pista
-  se pinta del color del relleno, y ese color lo escribe la pieza que lo contiene.
+- **Los tamaños son `sm · md · lg`**, las alturas 36 · 40 · 44 y los iconos 16 · 20 · 24. Una pieza
+  puede tener menos escalones, no otros nombres; lo que no es un tamaño es una variante
+  (`compact`).
+- **El gris de un icono es la clase `icon-muted`, y no se alterna entre estados**: también sube el
+  peso de la fuente, y el glifo se mueve adentro de su caja. Si el color cambia con el estado, el
+  peso va fijo (`weight={400}`) y el color sale del módulo. Por eso `Icon` no escribe
+  `--icon-wght` salvo que le pasen `weight`.
+- **Un campo no sabe dónde cae.** La superficie que lo contiene escribe `--field-bg`, y el
+  `Spinner` con `on="control"` hace lo mismo con `--spinner-bg`.
 
 ## Cómo se llama una clase
 
-Un nombre de clase es la única parte del CSS que explica **por qué** existe una regla. La conversión
-de Tailwind la dejó vacía (1450 de 1630 se llamaban `div2`, `span7`, `box4`) y volver a llenarla pidió
-escribir esto antes de tocar nada. Tres guardianes lo sostienen.
+Inglés y camelCase, sin número al final. Kebab es de las globales (`icon-muted`, `field-focus`), así
+que mirando una clase se sabe de dónde sale; y kebab en un módulo apaga a los guardianes, que leen
+`[A-Za-z]\w*`. Una clase de módulo no pisa el nombre de una global. Hay tests para las tres cosas.
 
-**La forma.** Inglés y camelCase, sin número al final. Kebab está reservado: las clases globales de
-`base.css` y `theme.css` son kebab (`icon-muted`, `field-focus`, `raised-brand`, `switch-track-on`) y
-las de módulo camelCase, así que mirando una clase se sabe de dónde sale. Kebab adentro de un módulo
-además **apaga a los guardianes en silencio**: no matchea el `[A-Za-z][\w]*` con el que leen los
-módulos, obliga a `s['card-header']` en TS y eso lo daría por muerto. Hay un test.
+El nombre sale, en este orden:
 
-**De dónde sale el nombre**, en este orden:
+1. **de la parte que la pieza expone**: `Card.Header` es `header`;
+2. **de lo que contiene, en plural**, y la unidad en singular: `items` e `item`;
+3. **de la condición bajo la cual se aplica**, nunca de la prop de la que salió. La del `TaskList`
+   se llamaba `readOnly` y se aplicaba cuando **no** era de solo lectura.
 
-1. **Si es una parte que la pieza ya expone, se llama como la parte.** `Card.Header` es `header`,
-   `Alert.Title` es `title`, `Tabs.Panel` es `panel`.
-2. **Si es un contenedor, se llama por lo que contiene, en plural**, y la unidad adentro es el
-   singular: `items` e `item`, `actions`, `options`, `swatches` y `swatch`.
-3. **Si es un estado o una variante, se llama por la condición bajo la cual se aplica**, nunca por la
-   prop de la que salió. Esto no es gusto: había cinco que engañaban al que las leía y dos estaban
-   dadas vuelta. La del libro que es un link se llamaba `href`; la del `TaskList` se llamaba
-   `readOnly` y se aplica cuando **no** es de solo lectura; la del `DatePicker` se llamaba `value` y
-   se aplica cuando **no** hay valor.
+Si dos reglas dan ganas de numerarlas, lo que las separa es el nombre: `trackRest` y `trackActive`.
 
-Si dos reglas se parecen tanto que dan ganas de numerarlas, lo que las separa es el nombre:
-`trackRest` y `trackActive`, no `track` y `track2`.
-
-**El léxico**, una palabra por papel y la misma en las 67 piezas:
-
-| | |
+| papel | palabras |
 |---|---|
-| partes de una pieza | `root` `header` `body` `footer` `title` `hint` `actions` `icon` `trailing` `count` `separator` `swatch` |
+| partes | `root` `header` `body` `footer` `title` `hint` `actions` `icon` `trailing` `count` `separator` `swatch` |
 | listas | `items` `item` `groupLabel` |
 | overlays | `viewport` `veil` `panel` `trigger` `arrow` |
-| barras de medida | `track` `fill` `thumb` `tick` |
+| barras | `track` `fill` `thumb` `tick` |
 | campos | `control` `input` `suffix` `chevron` |
-| estado y variante | `selected` `active` `current` `disabled` `editable` `interactive` `dragging` `loading` `empty` `placeholder` `danger` `open` `horizontal` `vertical` `compact` `muted` `bordered` |
-| las vistas de Fundamentos | `specimenGrid` `specimen` `specimenLabel` `specimenBody` `tokenName` `monoValue` `comparison` `comparisonBad` `comparisonGood` `verdictIcon` `roleBadge` |
+| estado | `selected` `active` `current` `disabled` `editable` `interactive` `dragging` `loading` `empty` `placeholder` `danger` `open` `horizontal` `vertical` `compact` `muted` `bordered` |
 
-`selected`, `active` y `current` son tres cosas distintas y conviven en la misma pieza: `selected` es
-el valor elegido, `active` es dónde está el cursor del teclado, `current` es dónde estás parado en una
-secuencia. En `Select`, en el `DatePicker` y en el `CommandMenu` hacen falta las tres.
+**`selected`, `active` y `current` son tres cosas**: el valor elegido, dónde está el cursor del
+teclado y dónde estás parado en una secuencia. Cada una tiene su complemento: **`idle`** es lo que
+no tiene el cursor, **`plain`** lo que no recibió tratamiento de elección ni de tono, y un
+interruptor va con **`on`/`off`**.
 
-Y cada una tiene su complemento, que son tres y no uno: **`idle`** es lo que no tiene el cursor
-encima (`active ? active : idle`), **`plain`** es lo que no recibió ningún tratamiento de tono ni de
-elección (`danger ? danger : plain`, `selected ? selected : plain`), y un interruptor va con el par
-**`on`/`off`**, que no es ninguna de las dos. Elegir mal el complemento no rompe nada y por eso se
-escapa: el `Tree` que hubo tenía `idle` contra `selected`, que se lee como si el árbol tuviera cursor.
+El vocabulario de la API no se unificó (hay seis palabras para el texto de apoyo), así que las
+clases eligieron una y la usan en todas: en `Alert` la clase se llama `text` aunque la parte sea
+`Alert.Body`.
 
-**Una clase no pisa el nombre de una global.** `group`, `peer`, `mark`, `field`, `tabular`, `raised`,
-`zebra`, `pressed` y las cincuenta y pico que declaran `base.css` y `theme.css` quedan prohibidas
-como nombre de módulo, y hay un test.
+## Overlays
 
-**Dónde el léxico no coincide con la API, y por qué.** El vocabulario público se contradice consigo
-mismo: `Body` es el cuerpo en `Card` y en `Sheet` pero la línea de apoyo en
-`Alert`, que en `Card` se llama `Hint`; `Footer` son tres cosas; hay seis palabras para el texto de
-apoyo (`hint`, `meta`, `caption`, `subtitle`, `body`, `detail`), cinco para lo elegido y cinco para el
-adorno de la izquierda. Las clases eligieron una y la usan en todas las piezas. **La API se tocó una vez**, al pasar todo a
-namespaces: era el momento, porque el paquete todavía no tiene un consumidor de verdad. Lo que no se
-unificó es el vocabulario, así que en `Alert` la clase del texto de apoyo se llama `text` aunque la
-parte se llame `Alert.Body`.
+Viven en `portal/`, `popover/`, `tooltip/`, `dropdown/`, `modal/`, `sheet/` y `confirm-dialog/`, con
+`lib/overlay-hooks`, `lib/esc` y `lib/dismiss` para lo compartido.
+
+- **El `Portal` crea su host durante el render**, no en un effect: si no, el primer render devuelve
+  `null` y quien mide o enfoca el contenido no lo encuentra.
+- **El foco se pone y se verifica** durante dos frames, porque el nodo puede desprenderse y volver a
+  colgarse entre el effect y el frame siguiente.
+- **Se enfoca el contenedor del diálogo, no su primer control**, con `preventScroll`: enfocar el
+  primero abría el panel corrido. `[data-autofocus]` para el que sí quiere un campo.
+- **`Escape` usa una pila global** y cierra el de arriba.
+- **El bloqueo de scroll compensa la scrollbar** y cuenta los overlays anidados.
+- **Todo lo que se mide contra un disparador y se dibuja en un portal se cierra solo** al scrollear
+  la página, con `useDismiss`. El `scroll` en captura se filtra por origen (si no, scrollear la
+  lista del propio panel lo cierra) y el filtro pregunta si el target es un `Node` antes de usar
+  `contains`. Un `resize` cierra siempre. Hay un test.
+- **Se cierra con `pointerdown` y no con `click`**, o el gesto que abre otro panel cierra y reabre.
+- **Al cerrar, el foco vuelve al disparador solo si estaba adentro del panel.**
+- **El `Select` es un botón con listbox propio**: la lista de un `<select>` nativo la dibuja el
+  sistema operativo, y en Linux aparece un control de GTK. El costo es el teclado a mano.
+
+## Dónde está escrito cada porqué
+
+El porqué de una decisión de diseño vive en el kit, que la muestra funcionando y tiene tests que la
+sostienen. Si una decisión no está en ninguna vista, todavía no se tomó.
+
+| si vas a tocar | leé | los valores |
+|---|---|---|
+| la escala de texto y los pesos | Fundamentos › Tipografía | `scales.css` |
+| la rampa, el azul, las superficies | Fundamentos › Color | `primitives.css` · `semantic.css` |
+| el espaciado y los radios | Fundamentos › Medidas y radios | `scales.css` |
+| los cortes y el ancho de lectura | Fundamentos › Layout | `scales.css` |
+| las sombras | Fundamentos › Relieve | `semantic.css` |
+| hover, foco, vacío, cargando, error | Fundamentos › Estados | |
+| contraste, teclado, lectores, táctil | Fundamentos › Accesibilidad | `__tests__/contraste.test.ts` |
+| el set de iconos | Fundamentos › Iconos | `scripts/icons.mjs` |
+| fechas, números, medios, texto | Fecha y hora · Números · Medios · Cómo se escribe | `lib/time` · `lib/number` |
+
+Una vista de Fundamentos existe si hay un token, una pieza o un test que la sostenga; si no, es
+prosa, y la prosa se despega en silencio.
+
+**Cada vista de pieza sigue la misma plantilla**: la portada con su `import`, las demos, Props,
+"Cómo se usa bien" y Accesibilidad, en ese orden. **Cada `Demo` y cada `Variant` lleva el código que
+la dibuja**, debajo: es lo que permite revisar la API mirando, y si la pieza se ve bien pero su
+código no, la pieza está mal. Cada hecho se dice en un solo lugar: la API en el docblock, la
+decisión en "Cómo se usa bien", el comportamiento en Accesibilidad. Una `note` de sección dice qué
+hacer en dos líneas. Hay tests para la plantilla.
+
+La referencia externa son las Human Interface Guidelines de Apple, salvo lo que es de una app nativa.
+Brainwave 2 (UI8) fue la referencia de arranque y **no está licenciado acá**: se tomaron medidas y
+recetas de sombra, no pantallas. No seguir igualándolo: el conjunto armado es lo que UI8 vende.
 
 ## Patrones que el sistema da por decididos
 
-Salieron de armar pantallas de verdad con estas piezas, y valen para cualquiera que las use.
+- **La acción que manda es `brand`, y hay una por pantalla.** `solid` es el mismo rol en tinta para
+  donde el azul no se puede usar: va uno o el otro.
+- **Lo que se deshace no va en rojo.** `bad` es para lo que no tiene vuelta: "Cerrar sesión" no.
+- **Una superficie es 16** (`--radius-xl`): tarjeta, fila, panel flotante, modal, diálogo.
+- **Un radio se elige contra el alto de la pieza, no contra su tipo.** Sobre un item de 40, 16 se
+  lee como pastilla: va `lg`, que es el radio del panel menos su relleno.
+- **Un item elegido se marca con una barra de 2px a la izquierda**, sin fondo ni borde, en el `Nav`
+  y en el riel de Ajustes.
+- **Las tarjetas no se mueven en hover** ni tienen acciones que aparecen al pasar el mouse.
+- **El movimiento dice de dónde vino algo y adónde se fue.** `--duration-fast` (120) acompaña al
+  dedo, `--duration-normal` (190) es lo que aparece o se va, `--duration-content` (280) es contenido
+  que se abre. `--ease-out` entra, `--ease-in` sale, y salir es más corto. El anillo de foco y el
+  esqueleto no se mueven. Con `prefers-reduced-motion` lo que informa por moverse se queda con
+  otra salida: el spinner gira lento, no quieto.
+- **Ajustes en un modal, no en una página**: al cerrar seguís donde estabas. Un panel que pide
+  leerse entero lleva velo (`Popover` con `veil`), sin blur.
+- **Una zona de riesgo es un `Alert tone="bad"`** con `role="group"`: la receta visual se reusa, la
+  urgencia de `role="alert"` no.
+- **Una confirmación no lleva X**, y con `tone="bad"` el foco arranca en cancelar.
+- **Un diálogo se arma con sus partes y el cuerpo es lo que scrollea.** El nombre sale del título
+  que se ve.
 
-- **Ajustes en un modal, no en una página.** Rail de 180 que no scrollea + panel que sí. Al
-  cerrar no hay navegación: seguís donde estabas, con el scroll donde lo dejaste. Por eso el
-  fondo se atenúa en vez de lavarse, 14% en claro, 55% en oscuro, que sobre fondo oscuro es lo que se necesita para que el velo exista. El `SettingsModal` del paquete es eso.
-- **Panel anclado con velo** (`Popover` con `veil`). Una lista que pide leerse entera necesita
-  que el resto se apague; un menú de cuatro items, no. El velo va sin blur: el fondo se sigue
-  reconociendo.
-- **Un solo `Segmented`** para el filtro de texto y para el conmutador de grilla/lista. Dos
-  implementaciones del mismo control se separan sola una de la otra con cada cambio.
-- **Las tarjetas no se mueven en hover** y no tienen acciones flotando encima: una grilla que
-  salta hace temblar la vista, y un botón que aparece al pasar el mouse no se descubre sin mouse
-  y tapa justo lo que estabas mirando.
-- **El movimiento dice de dónde vino algo y adónde se fue; cuando no dice eso, no va.** Son cinco
-  tokens en `scales.css` y esto es lo que significa cada uno, que es lo único que no se lee en el
-  valor: `--duration-fast` (120ms) es lo que acompaña al dedo, un hover o un check, y tiene que
-  sentirse instantáneo; `--duration-normal` (190) es lo que aparece o se va, un panel o un modal,
-  donde el ojo necesita ver de dónde vino; `--duration-content` (280) no es interfaz, es una
-  carpeta que se abre o un libro que gira, que muestran qué es la cosa y por eso piden más tiempo.
-  Por debajo de 100ms el ojo solo registra el salto, por encima de 250 la interfaz se hace esperar.
-  Y `--ease-out` es todo lo que entra, `--ease-in` todo lo que sale: salir es más corto que entrar,
-  porque abrir se mira y cerrar estorba.
-- **Lo que no se mueve, que es la lista que nadie reclama y la que más molesta cuando aparece**: las
-  tarjetas en hover (arriba), las acciones que se revelan al pasar, el contenido al cargar (el
-  esqueleto ocupa el lugar exacto de lo que viene, así que cuando llega no se mueve nada) y el
-  anillo de foco, que aparece sin transición porque un aviso que tarda 190ms llega tarde.
-- **Apagar el movimiento no es congelarlo.** Con `prefers-reduced-motion` las animaciones se van y
-  las transiciones bajan a 1ms, pero lo que informa por moverse necesita otra salida: el spinner
-  gira lento en vez de quedarse quieto, porque quieto se lee como colgado; las hojas de una carpeta
-  quedan afuera sin abanicar, que es donde estaba la información; y el libro no rota, porque ahí la
-  rotación era gusto. Está escrito en **Fundamentos › Accesibilidad**.
-- **Lo que se mueve porque sí es contenido, no interfaz.** Una mascota que saluda o una celebración
-  cuando algo salió bien no tiene que explicar nada: puede dar gusto, y es la parte que le habla a
-  alguien de doce años. Tres cosas no cambian: nunca al lado de una tarea, nunca como única forma de
-  entender algo, y siempre se reemplaza por la versión quieta para quien pidió menos movimiento.
+## Iconos
 
-- **Un radio se elige contra el alto de la pieza, no contra su tipo.** `radius-xl` es correcto en una
-  tarjeta y demasiado en una barra: sobre un `Toolbar` de 44 o un item de `Menu` de 40, 16px es más
-  de un tercio del alto y la pieza se lee como una pastilla. Los tres bajaron a `lg`. Es la misma
-  cuenta que bajó el modal de 24 a 16.
-- **Un item elegido se marca con la barra, en el riel de Ajustes y en el `Nav`.** El `Nav` también
-  apilaba fondo suave, anillo y una caja blanca con su propio canto alrededor del icono. Ahora es la
-  misma barra de 2px que el riel de Ajustes, y el `NavItemBody` pierde `active` y `chip`, que solo
-  existían para esa caja.
-- **Una casilla y un radio apagados son una caja vacía con su línea, no un campo hundido.** Llevaban
-  `inset-relief` y un relleno gris: la sombra ensuciaba una pieza de 18px y el gris la hacía leerse
-  como deshabilitada. Ahora van en `--field-bg` con una línea interior, que es lo que hace que se
-  vean sobre cualquier superficie. Al sacarlas, `--relief-inset` pasó de seis consumidores a cuatro.
-- **La escala de radios gana un escalón abajo, `--radius-xs` de 4px**, porque sobre un cuadrado de 18
-  el `sm` de 6 deja la casilla casi redonda y una casilla redonda se lee como un radio.
-- **La escalera de iconos de un control va 16 · 20 · 24**, uno por cada alto: 36, 40 y 44. Estaba en
-  16 · 18 · 24 después de subir el `lg`, y ese salto de 6 después de uno de 2 no era una escalera.
-  Cada par es el que usa cualquier sistema (Material va 20 sobre 40 y 24 sobre 48), y es lo que hace
-  que un icono solo se lea como una pieza y no como un detalle.
-- **El `Indicator` marca un icono, no cualquier cosa.** La marca se apoya en el hombro del glifo y no
-  en la esquina del botón, que es más grande: el `inset` viene en 9, que es lo que ese par pide, y va
-  en 0 sobre un glifo suelto. Se probó envolviendo un avatar y una carpeta y no vale la pena: cada
-  una necesitaba su propio número y su propio anillo.
-- **El anillo de una marca es del color de lo que tiene atrás, y eso lo sabe el call site.** Estaba
-  clavado en `--surface`, o sea blanco, así que sobre un botón gris se veía un halo que no
-  correspondía. Va por prop, transparente por default, y lo escribe quien la usa: sobre una foto, el
-  papel de la tarjeta; sobre un control, nada. Es la misma forma que ya tenía `AvatarGroup`.
-- **El verde de estado no aguanta tinta blanca, así que hay un relleno aparte: `--ok-fill`.** `--ok`
-  da 3,78 contra el blanco, por eso `--on-ok` llegó a ser casi negro: un tilde negro sobre un círculo
-  verde, que se lee como un error de imprenta. La salida ya estaba inventada en el sistema
-  (`--accent-fill` es exactamente eso).
-- **Y ese relleno dejó de ser la excepción del sistema.** En claro fue `#20ad54`, que da 2,93 con
-  blanco: no llegaba al 4,5 del sistema ni al 3:1 que WCAG pide para un gráfico, se eligió a ojo y
-  quedó anotado con su propio piso en `contraste.test.ts` para que al menos no empeorara. Ahora es
-  `#198842`, el más claro de ese mismo tono que llega a 4,5, que era el valor que esa nota dejaba
-  preparado. El piso anotado se fue con él y el par se verifica con la regla, como los demás. En
-  oscuro nunca hizo falta: sigue en 5,45.
-- **Una marca de `Indicator` se ancla a la caja de lo que marca, y esa caja casi nunca es lo que se
-  ve.** Un `IconButton` de 40 lleva un glifo de 18 centrado, así que la esquina de la caja queda a
-  11px de la esquina del glifo, y el punto se lee suelto aunque las cajas estén pegadas. La pieza no
-  puede saber el relleno de lo que envuelve, así que lo dice el call site con `inset`: 6 para un
-  `IconButton` md. Medir caja contra caja no sirve acá, porque la tinta de un glifo es más chica que
-  su caja: hay que mirarlo.
-- **Una acción que se deshace no va en rojo.** `bad` y `danger` son para lo que no tiene vuelta, no
-  para lo que asusta: "Cerrar sesión" estaba en rojo en el menú del dashboard y se vuelve a entrar.
-- **El spinner de un botón tiene dos números y los dos son del sistema.** Aparece recién a los 120ms
-  (`--duration-fast`), porque una respuesta más rápida que una transición no alcanza a leerse; y una
-  vez que apareció se queda 280 (`--duration-content`), para que no se vaya antes de que el ojo lo
-  registre.
-- **El ancho de un modal sale de tres y no de un número suelto**: `sm` 420 para una pregunta o un
-  campo, `md` 620 para el de siempre, `lg` 820 para lo que necesita dos columnas. Antes era
-  `width={number}` y no tenía tope: medido, con `width={2000}` en una pantalla ancha el panel salía
-  de 2000, y lo único que lo frenaba era el viewport. Un diálogo más ancho que 820 deja de ser un
-  diálogo y es una pantalla. El alto sí tenía tope desde siempre, `100vh - 2rem`, y de ahí scrollea
-  el cuerpo.
-- **Un aviso adentro de un panel denso va en `size="sm"`.** El `Alert` en su tamaño normal escribe en
-  `--type-reading`, que es lo correcto en una página; adentro del `SettingsModal`, cuyas filas están
-  en `--type-body`, el aviso se leía **más grande que los títulos de su propia sección**. `sm` lo
-  baja a body, achica el padding a 12 y el glifo a 16.
-- **El `Alert` se ve como el `Callout`: papel teñido, sin borde, y el texto en tamaño de lectura.**
-  Llevaba un borde del tono y el cuerpo en `--type-body` gris, así que el mismo contenido se leía
-  más chico y más apagado adentro de un aviso que adentro de un bloque de contenido. Lo único que
-  el `Alert` mantiene y el `Callout` no es el glifo en la tinta del tono, que es lo que hace que el
-  estado no dependa del color. Al sacar el borde, `--ok-border` y `--warn-border` quedaron sin un
-  solo consumidor, y está dicho en **Color**.
-- **Una zona de riesgo es un `Alert tone="bad"`, no una caja a mano.** El `SettingsModal` tenía
-  cinco clases propias (`dangerBox`, `dangerTitle`, `dangerText`, `dangerButton`) que reescribían la
-  receta del `Alert`: mismo `--bad-subtle`, mismo radio, mismo padding, y le faltaban el borde y el
-  glifo. Sin el glifo el rojo es la única señal, que es justo lo que **Accesibilidad** prohíbe.
-- **Un aviso que no acaba de pasar no lleva `role="alert"`.** `Alert` lo pone solo con `tone="bad"`,
-  y para algo que está fijo en la pantalla eso hace que el lector lo anuncie con urgencia cada vez
-  que se monta la sección. La pieza deja pasar el `role` (el spread de props va último), así que una
-  zona de riesgo va con `role="group"` y su `aria-label`. La receta visual se reusa; la urgencia no.
-- **Un item elegido se marca con una barra de 2px a la izquierda, sin fondo y sin borde.** El riel
-  de Ajustes llegó a apilar tres tratamientos en el item activo: pastilla con `--brand-soft`, borde
-  `--brand-border`, y adentro una caja blanca con su propio anillo alrededor del icono. Tres capas
-  para decir una cosa. La barra la dibuja un `::before` absoluto, así que no empuja nada.
-- **Un icono no cambia de peso entre estados**, y esto no se ve leyendo el CSS: `icon-muted` no es
-  solo un gris, también escribe `--icon-wght: 400`. Alternarlo con otra clase al elegir un item
-  cambia el peso de una fuente variable, el glifo cambia de ancho y **se mueve adentro de su caja**.
-  El `Nav` no lo hace: usa la misma clase siempre y el color lo hereda del item. El riel de Ajustes
-  sí lo hacía, y por eso los iconos saltaban al cambiar de sección.
-- **Una superficie es 16, sin excepciones.** Tarjeta, fila, panel flotante, modal y diálogo, todo
-  `--radius-xl`. `--radius-2xl` era del modal y del `ConfirmDialog`, y a 24 sobre un panel de 168 de
-  alto la esquina se come casi un tercio del borde: el diálogo se lee como una pastilla y no como
-  una superficie. Al sacarlo quedó sin un solo consumidor, y eso está dicho en **Medidas y radios**
-  en vez de escondido: un escalón de escala que no usa nadie es una invitación a usarlo mal.
-- **La acción que manda es siempre el azul de marca.** `brand` y no `solid`, en cualquier pantalla:
-  un modal, un panel, un vacío, una confirmación que no es destructiva. `solid` es el mismo rol en
-  tinta y existe para una pantalla donde el azul no se pueda usar, así que hoy no lo usa ningún call
-  site salvo la galería que lo muestra. Va uno o el otro, nunca los dos. Esto ya estaba escrito en
-  el docblock de `lib/control.ts` y el código hacía lo contrario: `solid` en 18 lugares contra
-  `brand` en 2.
-- **Un diálogo se arma con sus partes, y la del medio es la que scrollea.** `Modal` es
-  `Modal.Header` + `Modal.Body` + `Modal.Footer`, y `ConfirmDialog` es lo mismo con sus propias
-  partes. El panel es una columna: header y footer no se mueven y el cuerpo scrollea cuando no
-  entra, así que en un modal largo las acciones siguen a la vista. Antes el interior se construía a
-  mano en cada call site y la X flotaba afuera del panel, anclada con dos `!important`.
-- **El nombre del diálogo sale del título que se ve.** `Modal.Title` se ata solo con
-  `aria-labelledby`, y `label` queda para el caso sin título a la vista, como fallback. Teniendo las
-  dos, la prop y el título decían cosas distintas y el lector anunciaba la prop, que es la que nadie
-  revisa.
-- **Una confirmación no lleva X.** La salida segura ya está a la vista y es el botón de cancelar;
-  dos formas de salir compiten, y la X no dice qué pasa con lo que estabas por hacer. Por eso
-  `ConfirmDialog.Header` no la pone y `Modal.Header` sí.
-- **Los dos botones de una confirmación son partes y no props**, porque la regla de foco es de la
-  pieza y no del call site: con `tone="bad"` el foco arranca en cancelar, porque con el foco puesto
-  en "Borrar" un Enter de más borra. `ConfirmDialog.Cancel` y `ConfirmDialog.Confirm` lo resuelven
-  solos, así que no hay forma de escribir la confirmación destructiva con el foco en el lugar
-  peligroso.
-
-## Overlays: lo que costó y conviene no volver a pelear
-
-Repartido entre `portal/`, `popover/`, `tooltip/`, `dropdown/`, `modal/`, `sheet/` y
-`confirm-dialog/`, con `lib/overlay-hooks.ts` y `lib/esc.ts` para lo que comparten.
-
-- **El `Portal` crea su host durante el render**, no en un effect. La versión obvia (crearlo en el
-  effect y guardarlo en estado) hace que el primer render devuelva `null`, y eso rompe a
-  cualquiera que mida o enfoque el contenido: en el commit en el que el overlay "ya abrió", sus
-  nodos todavía no existen.
-- **El foco se pone y después se verifica.** Enfocar una vez y confiar no alcanza: entre el effect
-  y el frame siguiente el nodo puede desprenderse y volver a colgarse (React reejecuta los
-  effects en desarrollo) y el foco se cae al `<body>` sin avisar. Se reintenta en dos frames
-  mientras el foco no esté adentro.
-- **Se enfoca el contenedor del diálogo, no su primer control.** El navegador scrollea para traer
-  a la vista lo que enfoca, así que enfocar "el primero enfocable" abría el panel corrido 39px con
-  la primera fila tapada. `preventScroll` de cinturón, y `[data-autofocus]` para el caso que sí
-  quiere un campo (la paleta).
-- **`Escape` usa una pila global**: cierra el overlay de arriba y no todos.
-- **El bloqueo de scroll compensa el ancho de la scrollbar.** Sin eso la página salta a la derecha
-  justo al abrir el modal. El contador es para overlays anidados.
-- **`scroll` en captura hay que filtrarlo por origen.** La captura es la única forma de enterarse
-  del scroll de la página, pero atrapa el de cualquier hijo: sin filtrar, scrollear la lista del
-  propio panel lo cerraba. Un `resize` sí cierra siempre.
-- **Todo lo que se mide contra un disparador y se dibuja en un portal tiene que cerrarse solo.**
-  La posición se calcula una vez, al abrir, contra el rectángulo del disparador; si después la
-  página scrollea, el panel se queda donde estaba y se le despega. El `Select` lo tuvo así desde
-  siempre y el `Tooltip` llevaba su propia copia a medias de la receta. Hay un test que busca los
-  dos rasgos juntos, medir el disparador y montar un `Portal`, y exige `useDismiss`.
-- **Cerrar con `pointerdown` y no con `click`**: con click, el mismo gesto que abre otro panel lo
-  cierra y lo reabre, y parpadea.
-- Esas dos y la de afuera viven juntas en `lib/dismiss`, porque las comparten el `Popover` y el
-  `DatePicker`. Ahí adentro el filtro pregunta si el target es un `Node` antes de tocarlo: el
-  `scroll` de `window` no lo es, y `contains` revienta.
-- **Al cerrar, el foco vuelve al disparador solo si estaba adentro del panel.** Se pregunta antes de
-  cerrar, que es cuando el panel todavía existe; si alguien tocó en otro lado, no se le mueve nada.
-- **El `Select` es un botón con listbox propio, no un `<select>` nativo.** `appearance: none` te
-  saca la flecha, pero la lista desplegada la sigue dibujando el sistema operativo, así que en
-  Linux aparece un control de GTK en medio de la interfaz: se ve "sin estilo" por más que la caja
-  esté bien. El costo es traer el teclado a mano: flechas, Enter, Escape, Home/End.
-
-## La conversión de Tailwind dejó 59 declaraciones que el navegador tiraba
-
-Es la trampa que este archivo ya nombra en la lista de tests y que igual mordió: **un `var()` que
-nombra una custom property que nadie declara no falla, no avisa, y invalida la declaración entera.**
-No es que tome un valor raro: la propiedad queda como si no estuviera escrita.
-
-Tailwind emite sus utilidades de sombra y de transform como una composición de variables, y la
-conversión se trajo el uso sin traerse las definiciones, que vivían en su preflight:
-
-- `--milo-inset-shadow`, `--milo-inset-ring-shadow` y `--milo-ring-offset-shadow` se usaban **47
-  veces y se declaraban cero**. Las 45 reglas que las nombraban computaban `box-shadow: none`: el
-  anillo del `Indicator`, la sombra del `Modal`, la del `Tooltip`, la del `Sheet`, la del panel del
-  `ConfirmDialog` y así.
-- `--milo-translate-x` y `--milo-translate-y`: cada regla declaraba solo el eje que le importaba y
-  dejaba el otro sin declarar, así que las 14 computaban `translate: none`. **El pulgar del `Switch`
-  nunca se movió**, el del `Slider` nunca se centró, el tooltip del gráfico nunca se alineó y el
-  riel en móvil nunca se escondía.
-
-Todo eso se reemplazó por el valor literal, que es lo que la composición iba a dar. Y hay un
-guardián que lee todo el CSS del repo, junta lo declarado (incluido lo que una pieza pasa por
-`style` inline, como `--overlap` o `--folder-w`) y falla si un `var()` sin fallback nombra algo que
-no está.
-
-**Lo que hace que esto sea peligroso y no molesto**: la suite estaba entera en verde mientras pasaba,
-porque `vitest` corre con `css: false` y jsdom no calcula estilo. Un bug de CSS que rompe una pieza
-a la vista no lo agarra ningún test de comportamiento: hay que leer el CSS, que es lo que hace el
-guardián nuevo, o medirlo en un navegador.
-
-## El dev server se despega del disco, y ya mordió cuatro veces
-
-Es la misma causa con dos caras, y las dos terminan en algo que se lee como "el sitio está roto"
-cuando el repo está perfecto. `npm run typecheck`, `npm test` y `vite build` pasan mientras el
-navegador muestra otra cosa: **lo que se ve en localhost no es prueba de nada si el servidor
-lleva rato corriendo.**
-
-**Cara 1, el CSS que se quedó viejo.** El servidor puede seguir sirviendo la hoja anterior, así
-que un token recién tocado no llega y el elemento se dibuja con el valor de antes, en silencio.
-Antes de dar por bueno un valor nuevo, medirlo en el navegador y no leerlo en el archivo:
-
-```sh
-# en la consola del sitio
-getComputedStyle(document.documentElement).getPropertyValue('--chart-warn')
-```
-
-**Cara 2, el módulo que quedó viejo.** El servidor se guarda cada archivo ya transformado, y esa
-copia no se invalida cuando el archivo se borra ni cuando git reescribe medio repo de golpe, que
-es lo que pasa al cambiar de rama. El síntoma es **pantalla en blanco**, y la causa está siempre
-en la pestaña de red, no en la consola: un 404 sobre un módulo que ya no existe, o un módulo
-servido con contenido viejo. Los dos casos medidos:
-
-- después de sacar el `Badge`, el servidor seguía sirviendo un `index.ts` que importaba
-  `./badge/badge`: 404, y la aplicación entera sin dibujar;
-- servía un `icons.gen.ts` de 159 glifos contra los 172 del disco, así que `format_bold` no
-  resolvía a ningún codepoint y el `Icon` tiraba.
-
-La regla, entonces: **después de borrar un archivo o de cambiar de rama, se reinicia el
-servidor.** No alcanza con recargar el navegador, porque lo viejo está del lado del servidor.
-
-**Y ahora `npm run dev` sí borra la caché al arrancar, que hasta acá era mentira.** Este archivo lo
-afirmaba y el script era `vite` pelado, sin `--force` y sin `cacheDir` en el config: o sea que la
-receta escrita para el bug no arreglaba el bug. Volvió a morder con un servidor que quedó dos horas
-arriba mientras abajo se cambiaba de rama dos veces y se borraban cuatro archivos. El script lleva
-`--force`, así que reiniciar es todo lo que hay que hacer y de paso cierra la cara 1.
-
-**La otra mitad es del lado del navegador, y esta no la arregla reiniciar.** Una pestaña que estaba
-abierta cuando se borró el archivo ya recibió por HMR la actualización de un módulo que dejó de
-existir, y se queda así aunque el servidor vuelva limpio. Ahí va recarga dura (Ctrl+Shift+R), que es
-lo único que tira el módulo viejo que quedó del lado del cliente.
-
-Y cuando la pantalla aparece en blanco, el primer lugar donde mirar es la red y no la consola: un
-módulo que no carga no siempre deja un error escrito.
-
-## Agregar un icono
-
-El set son 172 de los más de 3900 de Material Symbols. Agregar uno **no es dibujar un path**, es
-un comando, y el que lo corre no tiene que acordarse de nada:
-
-```sh
-npm run icons -- search notification   # busca en el catálogo, offline
-npm run icons -- add rocket_launch     # agrega y regenera todo
-npm run icons -- check                 # usados que faltan, y al revés
-npm run icons -- refresh               # rebaja el catálogo desde Google
-```
-
-`add` hace tres preguntas antes de bajar nada, y las hace el script y no el prompt:
-
-1. **¿el nombre existe?** Si no, sugiere los cinco más parecidos por distancia de edición.
-2. **¿ya lo tenemos?** Si sí, no baja nada y lo dice.
-3. **¿hay uno mejor?** Compara los tags del candidato contra todo el set y muestra los que
-   comparten dos o más: *"ya tenés `tune`, ¿seguro que querés `settings_input_component`?"*.
-   Para saltearlo hay que escribir `--yes`. Esto es lo que evita llegar a doscientos iconos con
-   seis variantes de engranaje.
-
-La regla: **el set crece solo por `icons add`.** `icons check` corre al lado de `typecheck` y
-falla cuando alguien usa un glifo que no está en el manifiesto: esa mitad sí está cerrada.
-
-La otra mitad no: hoy hay **68 de 172 que no usa ningún call site**, y el chequeo los lista sin
-fallar. Medido con `pyftsubset`, sacarlos llevaría la fuente de 64 KB a 27 KB. No se sacaron
-porque la decisión es de quien arma el producto y no de un script: el editor y los gráficos van a
-consumir varios de esos, y volver a traer uno es `icons add`, que tarda lo mismo que leer esta
-línea. Lo que sí importa es que el número esté a la vista.
-
-El catálogo podado (3912 iconos con codepoint, popularidad y tags) está versionado en
-`scripts/catalog.json` para que buscar funcione sin internet: el mismo argumento por
-el que las caras de los avatares están commiteadas. Nunca llega al browser: al bundle solo van los
-codepoints, y los tags viajan por el subpath `@milo/ui/icons.meta`, que importa únicamente la
-galería del kit.
-
-Los tags son los de Google y están en inglés: "calendar" encuentra `calendar_month`, "calendario"
-no encuentra nada.
+Salen de Material Symbols, y **el set crece solo por `icons add`**, que antes de bajar nada
+pregunta si el nombre existe, si ya lo tenemos y si hay uno parecido en el set (así no se llega a
+seis engranajes). `icons check` corre al lado de `typecheck`: falla con un glifo usado que no está,
+y lista los que están sin uso. El catálogo está versionado en `scripts/catalog.json` para buscar sin
+internet, y sus tags están en inglés.
 
 ## Cómo lo consume otro proyecto
 
-**No está en npm y no va a estar: el repo es privado y se instala desde GitHub, clavado a un
-tag.**
+No está en npm: se instala desde GitHub, clavado a un tag.
 
 ```sh
 npm install "@milo/ui@git+ssh://git@github.com/hor4z/milo.git#v0.1.0"
 ```
 
-El consumidor necesita acceso de lectura al repo: una clave SSH en la máquina, o un token en CI
-puesto por variable de entorno. **Un token nunca se escribe adentro de un repo ni de un
-`package.json`.**
+- El consumidor necesita acceso de lectura: una clave SSH, o un token por variable de entorno en
+  CI. **Un token nunca se escribe en un repo ni en un `package.json`.**
+- **El consumidor compila el paquete**: `npm install` corre `prepare`, que es `npm run build`. Si el
+  build falla acá, falla su instalación.
+- `.npmignore` existe para que npm no lea `.gitignore`, que ignora `dist/`. Lo que entra lo decide
+  `files`: `dist/` y `src/` sin tests.
+- **Una rama no es un contrato, un tag sí**: `npm version <patch|minor|major>` y
+  `git push --follow-tags`.
+- El `exports` resuelve `./lib/*`, `./*` y una entrada por familia de bloques, que escribe
+  `npm run paths` porque un patrón con estrella no puede repetir la familia en la ruta.
+- El CSS va antes que cualquier estilo de la app y en este orden: `@milo/ui/theme.css` (las capas,
+  los tokens y las globales, servido sin compilar) y `@milo/ui/style.css` (las piezas, del build).
+  Van juntos o no va ninguno.
+- React 19 y `react-dom` 19 son peer dependencies.
 
-Lo que hace `npm install` con una dependencia de git: clona, instala también las
-devDependencies, corre el script `prepare` y empaqueta lo que diga `files`. Por eso `prepare`
-es `npm run build`, y por eso `dist/` no está commiteado: se arma en la instalación. Las tres
-consecuencias que conviene tener presentes:
+## El sitio
 
-- **El consumidor compila el paquete, así que el build tiene que pasar en su máquina.** Si
-  `npm run build` falla acá, falla su `npm install`, y el error que ve es el de tsc.
-- **`.npmignore` existe solo para que npm no lea `.gitignore` al empaquetar**, porque `dist/`
-  está ignorado en git y es justo lo que el paquete tiene que llevar. Lo que entra lo decide
-  `files`, y son dos cosas: `dist/` (el js, el css y los tipos) y `src/` sin sus tests, que va
-  porque el CSS plano se sirve tal cual desde ahí.
-- **Una rama no es un contrato, un tag sí.** Para sacar versión: `npm version <patch|minor|major>`
-  y `git push --follow-tags`.
-
-Y cada pieza se importa por su carpeta, que es lo que hace que cambiar una no arrastre a las
-demás:
-
-```ts
-import { Button } from '@milo/ui/button'
-import { Modal } from '@milo/ui/modal'
-import { timeAgo } from '@milo/ui/lib/time'
-```
-
-Eso lo resuelven dos patrones del `exports` (`./lib/*` y `./*`) contra una entrada por carpeta en el
-build, nombrada `button/button` para que el `.js` caiga al lado del `.d.ts`. **TypeScript admite una
-sola estrella por sustitución**, así que el `paths` de `tsconfig.json` no puede resolver a una
-carpeta y su archivo: lo escribe `scripts/paths.mjs` y un test lo corre con `--check`, igual que
-`props` y que `icons`.
-
-Del lado del consumidor, el CSS va primero y en este orden:
-
-```ts
-import '@milo/ui/theme.css'   // las capas, los tokens, el reset y las globales
-import '@milo/ui/style.css'   // el CSS de las piezas
-```
-
-`theme.css` **antes que cualquier otro estilo de la app**, por lo mismo de siempre: una capa
-vale por dónde se la declara. Y son dos archivos y no uno porque son dos cosas distintas:
-`theme.css` es CSS plano que se sirve sin compilar desde `src/` (con el `@font-face` y el woff2
-al lado), mientras que `style.css` sale del build y sus nombres de clase están hasheados contra
-el mismo `dist/index.js`. Van juntos o no va ninguno.
-
-React 19 y `react-dom` 19 son peer dependencies: el consumidor los pone, y el build los deja
-externos junto con `react/jsx-runtime`.
-
-## Estructura
-
-Un paquete, `@milo/ui`, y adentro el sitio que lo documenta:
-
-```
-src/                    theme.css (las capas) · styles/ (reset, base y tokens/) ·
-                        una carpeta por pieza: button/button.tsx + button/button.test.tsx,
-                        y así las 67 (select, modal, toast, chart, table…)
-                        lib/ lo compartido que no es un componente, un archivo por cosa:
-                        cx · colors · control · tone · time · number · parts ·
-                        esc · overlay-hooks · roving · side-scroll · dismiss ·
-                        use-disclosure · use-announce · use-media-query · use-clipboard ·
-                        use-theme · use-local-storage · use-debounce
-                        __tests__/ los cinco que leen el paquete entero:
-                        coherencia · contraste · tipografía · utilidades · props
-                        icons.gen.ts e icons.meta.ts los genera scripts/icons.mjs
-src/styles/tokens/      la identidad, en CSS puro. Sin librerías y sin JS.
-scripts/                icons.mjs (search · add · sync · check) + catalog.json,
-                        y props.mjs
-kit/src/                el sitio: app.tsx (shell y riel) · kit.tsx (Page, Section, Canvas,
-                        Cluster, Frame, Footnote, Grid, Props, A11y, Note) · intro.tsx (la portada) ·
-                        dashboard.tsx · document.tsx · stories/ (una por pieza) ·
-                        mascots/ ·
-                        foundations/ (accessibility · typography · color · measure · layout ·
-                        relief · states · time · media · numbers · writing)
-```
-
-**El corte entre el paquete y el sitio es por dependencia, no por gusto.** `src/` no sabe que
-el sitio existe: exporta piezas y nada más. El sitio las consume como lo haría cualquier app de
-afuera, que es lo que lo vuelve una prueba de verdad y no una demo. Cuando dejó de ser un
-monorepo, lo que sostenía ese corte pasó de ser un workspace a ser un alias: `kit/vite.config.ts`
-y `vitest.config.ts` resuelven `@milo/ui/<pieza>` a `src/<pieza>/<pieza>`, y el sitio nunca escribe
-una ruta relativa hacia adentro del paquete. Un import con `../../src` en `kit/` rompe el corte y hay que
-tratarlo como un bug.
-
-Un export se alcanza desde `pieza/pieza.tsx`, desde `lib/x.ts` o desde un subpath nombrado a mano en
-el `exports`, y no hay una cuarta forma. Un test lo verifica: un segundo componente adentro de la
-carpeta de otra pieza no lo alcanza nadie, y eso falla.
-
-**Una carpeta por pieza, con su test adentro.** El archivo largo con doce componentes
-(`primitives.tsx` tenía 922 líneas) obliga a leer todo para tocar uno, y su test hermano en
-`__tests__/` obliga a buscar en otro lado qué es lo que ya está probado. Con la carpeta, lo
-que hay que mirar para cambiar el `Select` son dos archivos que están uno al lado del otro, y
-agregar una pieza es agregar una carpeta y no editar cuatro archivos. Dos tests de coherencia
-lo sostienen: cada carpeta tiene el componente que le da nombre, y cada componente tiene su
-test al lado.
-
-Lo que no es un componente vive en `lib/`, **un archivo por cosa**: `cx` y `fold`, las familias de
-color, la escalera de alturas de control, los pares de tono de aviso, la pila de Escape, los hooks de
-overlay y los siete hooks sueltos. El corte es el mismo de siempre: si dos piezas lo comparten, no es
-de ninguna de las dos, y por eso `FieldCtx` se mudó acá el día que `Row` empezó a usarlo.
-
-**Los siete hooks no salieron de un catálogo**: cada uno tiene lugares contados donde entra.
-`useAnnounce` es el que más faltaba, porque cuatro piezas armaban su propia región viva a mano y dos
-regiones compitiendo se pisan; ahora hay una sola para todo el documento. `useDisclosure` tiene trece
-call sites. `useTheme` estrena el valor `system` de verdad, con listener de `matchMedia` y sync entre
-pestañas, que es lo que `usePrefs` no hacía. Y `plural` salió de adentro de las props de
-`Pagination`, que era el único lugar del sistema que hacía bien el plural en castellano.
-
-**El kit va con una historia por pieza, y una sola pieza por historia.** Las vistas que juntaban
-dos o tres ("Alert y Toast", "Chip y Progress", "Card y Row") hacían a escala chica lo mismo que
-las seis pantallas temáticas del principio: quien busca `Skeleton` en el riel no lo ve, porque la
-vista se llama por otra pieza. Donde la comparación importa, queda escrita en las dos vistas y
-cada una linkea a la otra: solapas o acordeón, alert o toast, sheet o modal, link o button.
-
-Las piezas se agrupan por el trabajo que hacen
-(Fundamentos, Mascotas, Editor, Acciones, Formularios, Navegación, Datos, Avisos, Superficies) y
-no por su tipo técnico. **Fundamentos va primero** y es la capa de la que sale todo lo demás:
-Accesibilidad · Tipografía · Color · Medidas y radios · Layout · Relieve · Estados · Iconos ·
-Fecha y hora · Medios · Números y valores · Cómo se escribe. El orden adentro no
-es alfabético: **Accesibilidad** va primera porque es la que hay que leer antes de tocar nada, y
-después van las capas en el orden en que se construye una pantalla.
-
-Se llevó puestos a "Guía" y a "Tokens", que eran dos grupos separados por si el contenido era una
-regla o un valor: una distinción que le importa a quien los escribió y a nadie más: el que busca
-"contraste" no sabe en cuál de los dos caería. Cada vista abre con una portada: el nombre, una línea de qué es y cuándo se usa, la
-categoría y el `import` para copiar; y cierra con lo que la pieza resuelve en accesibilidad.
-Dos tests verifican que ninguna vista se quede sin portada ni sin import.
-
-El riel tiene buscador con atajo `/` y no tiene logo: el nombre va en texto. **Los nombres van en
-castellano** ("Botón de icono", no `IconButton`) y el alias de búsqueda se queda con el nombre
-técnico, así que buscar `IconButton` lo sigue encontrando. **Y tiene tres niveles**: la familia de
-botones cuelga de Botón, con la sangría que ya definía `navSubItemClass`.
-
-**La familia de botones son cinco piezas.** `Button` e `IconButton` ya estaban; entraron
-`ButtonGroup` (pegados, con el canto solo en los extremos), `SplitButton` (la acción que se hace
-siempre a la vista y el resto en un menú), `ToggleButton` y `CopyButton`. `ToggleButton` no es nuevo:
-existía adentro de `Toolbar` y solo aceptaba un glifo, que es el caso del cajón de `filter/` otra
-vez; ahora `ToolbarButton` se apoya en él. **`ToggleButtonGroup` no entra y no es un olvido**:
-`Segmented` ya es eso para selección única y trae el roving del teclado; para selección múltiple
-alcanza un `ButtonGroup` con `ToggleButton` adentro.
-
-**Cada vista de pieza cierra diciendo cómo se usa bien**, en dos mitades: lo que conviene y lo que
-no, con el porqué. Sin el porqué es una orden y no una guía. Ahí adentro va también lo que un agente
-necesita para no equivocarse con la pieza, que es el mismo contenido dicho igual, así que no se
-escribe dos veces. Un guardián falla si una vista de pieza no lo tiene.
-
-## La documentación de las props
-
-**La tabla de props de cada vista sale del código y no de una lista escrita al lado.** Antes
-cada vista del kit llevaba su tabla a mano (el tipo, el default y la descripción copiados del
-componente) y eso se despega solo: el `Dropdown` declaraba tres props de su `items` cuando la
-pieza acepta siete.
-
-Ahora la descripción vive en el docblock de la prop, al lado de su tipo:
-
-```tsx
-export function Select({ value, onChange, options, width }: {
-  value: string
-  /** Sin esto toma el ancho del contenido. */
-  width?: number
-}) {
-```
-
-`npm run props` lee el AST de cada pieza y escribe `src/props.gen.ts` con el
-nombre, el tipo, si es obligatoria, su default, su descripción y de qué etiqueta nativa hereda
-la pieza. La vista pide `<Props of="Select" />` y nada más. Un test corre el script con
-`--check` y falla si el archivo quedó viejo, igual que `icons check`.
-
-Lo mismo vale para los tipos que una pieza recibe como argumento (`ToastOptions`,
-`DropdownItem`, `BarDatum`): son API pública y se documentan igual.
+`kit/` es una carpeta con su propio `vite.config.ts`, no un paquete. **Consume las piezas como
+cualquier app de afuera**: los alias resuelven `@milo/ui/<pieza>` a `src/`, y una ruta relativa
+hacia `src/` desde `kit/` es un bug. El riel se parte en Sistema y Bloques, con el dashboard y el
+documento al final como la prueba de que las piezas juntas funcionan. Los nombres del riel van en
+castellano y el nombre técnico queda como sinónimo de búsqueda.
 
 ## Los tests
 
-`npm test` corre vitest con jsdom y testing-library. 845 tests, y lo que prueban es el
-comportamiento (teclado, nombres accesibles, estados) y no el markup, que cambia con cada
-ajuste de estilo. El test de cada pieza vive en su carpeta, al lado del componente.
+Prueban comportamiento (teclado, nombres accesibles, estados) y no markup. El de cada pieza vive en
+su carpeta. Los guardianes en `src/__tests__` y `kit/src/__tests__` leen el repo entero y fallan si:
 
-Veinte de ellos leen el paquete entero y fallan si alguien:
+- una pieza escribe un color a mano, o un `var()` nombra algo que nadie declara: eso no falla en el
+  navegador, invalida la declaración entera en silencio;
+- un radio sale de la escala, un tamaño de letra va sin su interlineado y su tracking, o el peso de
+  portada aparece fuera del tamaño portada;
+- una duración o una curva no sale de un token;
+- queda una clase de módulo sin usar, o `s.algo` nombra una que el módulo no declara;
+- una clase no dice por qué existe: kebab, un número al final, la etiqueta sola;
+- un export no se alcanza por su subpath, un archivo lleva mayúscula, o `paths` o `props.gen` quedaron
+  viejos;
+- la base importa un bloque, o un bloque declara tokens;
+- un handler no se llama por lo que controla;
+- el código lleva un comentario, o aparece una raya larga o una comilla angular;
+- un `<button>` no tiene `type`, o un panel anclado no usa `useDismiss`;
+- una vista se sale de la plantilla, una demo no lleva su código, o un control de una demo no
+  responde;
+- algo no pasa el contraste, en los dos temas.
 
-- escribe un color a mano en un componente, o nombra en un `var()` un token que no existe: eso no
-  falla, resuelve a vacío y el elemento se queda sin color, sin error y sin que nadie se entere,
-- se sale de la escala de radios o de tamaños de texto,
-- **escribe un tamaño de letra sin su interlineado y su tracking**, que es el bug que los roles
-  vinieron a matar: escritos por separado se despegan, y ya se despegaron una vez,
-- **nombra un rol, una duración o una curva que el sistema no declara**,
-- **se sale de la grilla de espaciado**,
-- **usa un tamaño de icono que no está en la escala**: el tamaño se pasa como número, así que
-  ningún linter lo mira,
-- **usa el peso de la portada fuera del tamaño display**, que se lee como negrita y aplasta los
-  otros dos escalones de énfasis,
-- deja un `<button>` sin `type`, que adentro de un `form` lo manda,
-- deja una clase de un módulo sin usar: CSS muerto no rompe nada y por eso se queda,
-- **escribe `s.loQueSea` para una clase que el módulo no declara**, que es la mitad que faltaba de
-  la anterior y la que el renombre necesitaba: ver abajo por qué no la puede dar el que dibuja,
-- **le pone a una clase un nombre que no dice por qué existe la regla**: la etiqueta sola, un
-  número al final, kebab, o uno de la lista corta de vacíos,
-- exporta algo que no se alcanza por ningún subpath,
-- **escribe un archivo o una carpeta con una mayúscula**, que rompe el subpath sin avisar,
-- **deja el `paths` de `tsconfig.json` viejo**, que hace que un import nuevo no resuelva,
-- **pide en una vista una pieza que no existe en `props.gen`**: eso dibuja una tabla vacía, y una
-  tabla vacía no se distingue de una pieza sin props,
-- **deja una vista de pieza sin el bloque de cómo se usa bien**,
-- deja una carpeta sin el componente que le da nombre, o un componente sin su test al lado.
+Y hay tests que **dibujan** todas las vistas y el sitio entero: una vista que tira al dibujarse, un
+`**` que quedó a la vista, una clase literal que no resuelve a nada, un botón de la portada que
+manda a una vista que no existe.
 
-Y hay uno que no se puede escribir leyendo archivos: **dibuja las setenta vistas y falla
-si a algún elemento le quedó una clase literal que no resuelve a nada** (un resto de Tailwind, un
-string suelto). Una clase que no existe no falla, no avisa y deja la pieza sin estilo, y leer las
-fuentes no alcanza porque una clase puede llegar por una prop o por una constante.
+**Lo que ninguno ve**: `vitest` corre con `css: false`, así que los CSS Modules son un stub y
+`s.loQueSea` nunca es `undefined`. Un bug de CSS que rompe una pieza a la vista no lo agarra ningún
+test de comportamiento: lo agarra un guardián que lee el CSS, o se mide en un navegador. Para
+asertar sobre estilo, `__tests__/estilo.ts` resuelve la clase contra el módulo del que salió.
 
-**Ojo con lo que ese test no puede ver, que se creyó durante un tiempo que sí.** En los tests los
-CSS Modules son un stub: `vitest.config.ts` tiene `css: false`, así que `s.loQueSea` devuelve
-siempre `_loQueSea_hash` y **nunca** es `undefined`. Una referencia a una clase de módulo que no
-existe pasa el filtro y la suite queda en verde. Por eso esa mitad la cubre un guardián estático,
-el que resuelve el alias de cada import y exige que toda referencia apunte a una clase declarada.
-La palanca para verlo en vivo, si alguna vez hace falta, es correr esa suite con
-`css: { include: [/\.module\.css$/] }`.
+**JSX se come el espacio**: un texto que toca un elemento inline a través de un salto de línea se
+pega (`el\n<code>Alert</code>` se dibuja "elAlert"). En el corte va `{' '}`. Hay un test.
 
-**El test de una pieza aserta sobre lo que la clase declara, no sobre su nombre.** Con módulos el
-nombre que llega al DOM está hasheado, así que asertar sobre él es ilegible. `__tests__/estilo.ts`
-resuelve el nombre picado contra el módulo del que salió. Lo hacía buscando el nombre en **todos**
-los módulos del paquete y concatenando los cuerpos, que funcionaba mientras los nombres eran
-únicos por accidente: con un léxico compartido `input` existe en el `Textarea` y en el `Slider`, y la
-aserción del textarea empezó a leer el `flex` del otro.
+## El dev server se despega del disco
 
-Catorce más leen los tokens de tipografía: que cada rol declare sus tres valores y que quien
-escriba un tamaño escriba los tres, que ninguno baje de 12px, que la curva de interlineado tenga su máximo en `reading`, que
-el tracking cruce el cero en la base. Del lado del kit hay diecinueve más: los guardianes de
-escala repetidos sobre `kit/` (que hasta ahora se escapaba), el peso de display fuera de su
-tamaño, las transiciones sin duración ni curva, un control de estado sin su manija, y que cada
-vista tenga portada, import y sinónimos para buscarla.
+Lo que se ve en localhost no prueba nada si el servidor lleva rato corriendo: sirve CSS viejo o
+módulos que ya no existen, y el síntoma es un valor que no llega o una pantalla en blanco.
 
-Y hay uno que **renderiza las setenta vistas**, una por test. Encuentra dos cosas que
-ninguna lectura encuentra: una vista que tira al dibujarse (eso antes se veía solo abriéndola) y
-un backtick o un `**` que quedó a la vista porque ese texto no pasó por `Rich`. Había diez.
-
-**Y uno que agarra un bug que no deja rastro en el código: JSX se come el espacio.** Cuando un
-texto toca un elemento inline a través de un salto de línea, el espacio de ese borde desaparece,
-así que `...a ojo: el\n<code>Alert</code>` se dibuja **"a ojo: elAlert"**. Leyendo el archivo se ve
-bien, y en pantalla está pegado. Había cuatro, en Layout (dos), en la historia del `Modal` y en la
-del `Slider`, y ninguna la vio nadie. En el corte va `{' '}`.
-
-**Y uno que existe porque el de la prosa y el de las clases literales agarran las vistas por el
-sufijo del export**, `Story` o `Section`, y lo que no termina así no lo dibuja nadie. `Principles` y `Writing`
-se llamaban distinto, así que dos vistas de Fundamentos nunca se dibujaron en un test y nadie se
-enteró: el número de vistas no se movía al sacarlas. Ahora falla si un archivo tiene un `<Page>` y
-ningún export que termine en `Story` o en `Section`.
-
-**Y cuatro dibujan el sitio entero**, que hasta ahora no lo hacía ninguno: `App`, la portada, el
-dashboard y el documento quedaban fuera del glob de `prosa`, que solo mira `stories/`,
-`foundations/` y `mascots/`. Uno abre las setenta entradas del riel más el dashboard y el
-documento, y falla si alguna cae en "Esa vista ya no está acá" o se dibuja sin un encabezado. Otro
-dibuja la portada. Otro verifica que ningún botón de la portada mande a una vista que ya no existe,
-que es justo lo que se rompió al sacar Principios. Y el cuarto compara los números que la portada
-anuncia contra la realidad.
-
-**Dos cosas del test de contraste que no se ven leyéndolo.** Cada archivo de tokens se corta por su
-propio bloque oscuro **antes** de juntarlos: concatenados primero, lo claro de los roles cae adentro
-de lo oscuro de las primitivas. Y lo que el bloque oscuro no redeclara se hereda de `:root`, igual
-que en el navegador: sin esa caída, un rol declarado una sola vez se lee como ausente en oscuro.
-
-Y cincuenta y nueve leen los tokens y calculan contraste: cada tono de estado contra su fondo, el
-gris del texto secundario contra las superficies sobre las que se escribe, el gris del texto
-sugerido contra los cuatro fondos de campo, la tinta de una etiqueta de color contra los seis
-rellenos de la familia viva, el glifo de una marca contra su propio pastel, y el relleno de un
-dato contra su pista: todo en los dos temas. Los tres últimos faltaban, y las tres reglas estaban
-escritas desde antes de que los valores las cumplieran. Si alguien cambia un tono y rompe un par,
-falla antes de llegar a una pantalla.
-
-## De dónde se toma lo que ya está resuelto afuera
-
-**La referencia son las Human Interface Guidelines de Apple**, y no por gusto: es lo más completo que
-hay escrito sobre interfaz, y en lo que a este sistema le faltaba (medios y modelos) es justamente lo
-que más detalle tiene. De ahí salen las cuatro formas escritas de un medio que suena, la proporción
-original de un video, el volumen que es del sistema operativo y no de la pieza, el tamaño y el aire
-de un objetivo táctil.
-
-Lo que **no** se toma: Apple escribe para apps nativas en sus plataformas, así que lo que dice sobre
-reproductores del sistema, Picture in Picture o la app de TV no aplica.
-
-Cuando la referencia corrige algo que este repo tenía escrito, se corrige y se deja dicho. Ya pasó
-una vez: el repo decía que Apple "pide 44×44" para el dedo, y Apple tiene dos números, 44 de default
-y 28 de mínimo, más una advertencia sobre el aire entre controles que acá no estaba.
-
-## Lo que se revisó contra una referencia, y qué se decidió
-
-Se recorrió entero el mapa de una guía de interfaz de referencia (dieciocho fundamentos,
-veinticinco patrones, cincuenta y seis componentes) no para copiarla sino para usarla de lista de
-control: qué problemas de interfaz existen, y cuáles de esos tenemos resueltos. Lo que entró, entró
-adaptado a este sistema y a un producto de aula; lo que no entró, no entró por una razón escrita.
-
-**Ya estaba resuelto** todo lo que tiene vista propia en Fundamentos, más los patrones de
-modalidad, feedback, cargando, ajustes, buscar, audio y gráficos.
-
-**No aplica** y no se va a hacer: iconos de aplicación, experiencias inmersivas, layout espacial,
-pantalla completa, arranque, multitarea, y los catorce componentes que son de un sistema operativo
-(widgets, complicaciones, barra de menú, dock). Esto corre en un navegador.
-
-**Salió en esta vuelta, y es la dirección**: Fundamentos pasó de veinte vistas a doce.
-
-Cinco eran doctrina escrita sin token ni pieza detrás, que es lo que las volvía imposibles de
-verificar y lo primero que se despega: **Quién está mirando** y **Inclusión** (que son de producto y
-no del sistema), **Cuando responde la IA** (para un producto que todavía no tiene IA), **Más de una
-forma** (que es pedagogía) y **Voz y sonido**, que se fundió adentro de **Medios** quedándose con lo
-que el sistema sí implementa (nada suena sin que alguien lo pida, el volumen es del sistema
-operativo, las cuatro formas escritas) y tirando lo que era una decisión de contenido (la voz
-rioplatense, las velocidades, la tabla por rol).
-
-La sexta, **Principios**, se fue por otro motivo: no decía nada propio. Sus seis decisiones están
-cada una en la vista que además las muestra funcionando (la rampa monocroma y el acento en Color,
-la escalera y el radio del hijo en Medidas, el teclado y el color que nunca dice algo solo en
-Accesibilidad), así que era un índice que se iba a despegar de lo que indexaba. La portada del
-sitio, que antes abría con "Ver los principios", ahora abre con Accesibilidad.
-
-La regla que queda: **una vista de Fundamentos existe si hay un token, una pieza o un test que la
-sostenga.** Si no, es prosa, y la prosa se despega en silencio. **Cómo se escribe** se quedó por
-eso: parecía voz de producto como Inclusión, pero una de sus nueve reglas la hace cumplir un
-guardián que lee el repo entero (el que busca la raya larga y las comillas angulares), así que
-está sostenida.
-
-**Entró la rúbrica entera, que son tres piezas y un momento cada una.** `Rubric` es el panel que
-acompaña a la consigna mientras se la escribe: una barra reparte el peso de cada aspecto (que es una
-cantidad, así que el largo dice algo) y el alta vive adentro del panel. `CriterionCard` es un aspecto
-plegado, así que una rúbrica de ocho mide lo mismo que una de dos. Y `RubricReview` es la corrección
-y la devolución en la misma pieza: con `onMet` y `onNote` se tilda renglón por renglón y se comenta;
-sin ellos es lo que abre quien entregó.
-
-**En la pantalla no se llaman criterios, se llaman aspectos.** "Criterio" es la palabra del que
-escribe rúbricas y no la del aula. El código se queda en inglés con `Criterion`, que es el término
-exacto: es la misma distancia que hay entre `TaskList` y "Lista de tareas".
-
-**La corrección no termina en un número**, y eso es una decisión y no un olvido: el resultado es la
-barra, donde cada tramo se llena con lo que se tildó. Un número convierte cuatro descripciones en una
-cifra que se lee sola. Lo que falta son los renglones sin tilde, que están a la vista.
-
-**La cruz es del que corrige y no llega a la devolución**: quien entregó ve el tilde verde en lo que
-cumplió y una raya amarilla en lo que falta, que es el tono de un consejo y no el de un error.
-
-**Un comentario lo escribe una persona o un agente, indistintamente**: mismo campo, mismos botones y
-mismo lugar, y lo único que cambia es la firma. El agente se anuncia como asistente en texto y no
-solo con un glifo. No se edita: se borra con el tacho y se escribe de nuevo.
-
-**Entró en una vuelta anterior**, porque el propósito del sistema lo pedía: `DatePicker` y `Reorder`, más el `Documento` que las prueba juntas. De arrastrar y soltar entró la mitad que importa: reordenar una lista, con el teclado como
-pieza y el arrastre como comodidad. Lo que sigue afuera es soltar algo **adentro** de otra cosa
-(un archivo en una carpeta) que es otro problema.
-
-**Queda afuera por ahora, y esta es la lista corta de lo que falta**, en orden de cuánto lo pide
-un aula:
-
-| | por qué todavía no |
-|---|---|
-| bloque de preguntas y respuestas | del editor: pares de pregunta y campo, escritos por quien arma la consigna. Hoy lo suple un `CompareTable` de una sola columna, que no es lo mismo: ver abajo |
-| bloque de tabla dinámica | del editor: que quien escribe arme las columnas y las filas que quiera, en vez de recibirlas por prop. `CompareTable` y `SumTable` tienen su forma fija y su cuenta; esto es la tabla vacía |
-| y las dos se deciden en la plataforma | las dos son del editor de producto, así que puede que no se escriban acá: ver la nota de abajo sobre lo que está de paso |
-| campo de fichas | asignar personas a una entrega. `Chip` ya dibuja la ficha; falta el campo que las arma |
-| menú contextual | el clic derecho sobre un bloque. `Menu` y `Popover` ya están: falta la posición y la tecla de menú |
-| imágenes, como fundamento | `Figure` resuelve la pieza; falta la doctrina de proporción, carga y texto alternativo en un solo lugar |
-| deshacer | hoy vive en el `Toast` con acción, que alcanza para una acción por vez y no para un editor |
-| imprimir | un docente imprime una consigna. No hay ni una hoja de estilos de impresión |
-| de derecha a izquierda | no hay plan de idiomas que lo pidan. Si aparece, lo que cambia es el layout y no las piezas |
-
-## Pendiente
-
-- **Una tabla de una sola columna de respuestas no es una tabla, y el editor necesita otras dos
-  piezas.** El bloque "Quién te compra" de la consigna son cuatro preguntas con un campo cada una, y
-  se dibuja con un `CompareTable` de una columna. Lo que eso trae, medido: la pieza es un `<table>`
-  con `table-layout: fixed` y la primera columna clavada en 26%, y la etiqueta de la fila es un
-  `Table.Title`, que lleva `nowrap` y `ellipsis` porque está hecho para el nombre de un dato. O sea
-  que una pregunta se corta: "¿Por qué a vos y no al que ya está?" pedía 265px en una columna que
-  daba 116, y para que entrara la tabla tendría que medir 1000. Se resolvió acortando el texto de
-  ejemplo, que tapa el síntoma. **Las dos piezas que faltan son del grupo Editor**: un bloque de
-  preguntas y respuestas libre, donde el par es una pregunta y su campo y no una fila con columnas; y
-  un bloque de tabla dinámica, donde quien escribe la consigna arma las columnas y las filas que
-  quiera, que es lo que hoy ninguna de las dos tablas permite porque las dos reciben su forma por
-  prop. Lo que **no** hay que hacer es adaptar `Table` ni `CompareTable`: `CompareTable` sirve para
-  el otro uso del mismo documento, el cuadro de tres columnas que se comparan de verdad, y `Table`
-  trunca a propósito. Ojo con la historia: `Table` se tocó por última vez en el PR #49 y los dos data
-  grids nacieron en el #50, así que se apoyaron en ella tal como estaba, truncado incluido.
-
-- **Y antes de escribir ninguna de las dos, hay que decidir si van acá.** Las piezas de consigna
-  están en el paquete para ver el sistema funcionando en algo de verdad, que es lo que un kit de
-  especímenes no prueba: varias son de producto y **se van a quitar cuando la plataforma que las usa
-  las implemente**. Eso vale para las dos que faltan más que para las que están, porque todavía no se
-  escribieron: lo que hay que preguntar primero es si el bloque de preguntas y el de tabla dinámica
-  son del sistema o del editor de la plataforma. Si son del editor, acá no se escriben, y lo que sí
-  queda es lo que usan por debajo (el campo, la tabla, el radio, el tilde). El corte a mirar en cada
-  una es el de siempre: una pieza es del sistema cuando la forma se repite en cualquier producto, y
-  es del producto cuando lo que la define es la consigna que resuelve.
-
-- **Los otros arrastres de la conversión mecánica**: 56 `transition-duration: 150ms` seguidas de la
-  `var(--duration-fast)` que sí vale, y la maquinaria de gradiente escrita a mano
-  (`--milo-gradient-from/via/to/stops`), casi toda adentro de un `transition-property` que no anima
-  nada. **La de sombra y la de translate ya no están, y no eran cosmética: estaban rotas.** Ver
-  abajo.
-- **Cuatro cosas del relieve no las usa nadie.** Medido al achicar la vista de Relieve:
-  `--relief-solid`, `--relief-brand` y `--relief-brand-pressed` no tienen un solo consumidor, y la
-  clase global `.pressed` de `base.css` tampoco (el `.pressed` de `Button` y de `IconButton` es una
-  clase de módulo, que es otra cosa). Son de cuando los botones tenían volumen. Sacarlos es una
-  decisión sobre la superficie del paquete, así que está escrito en la vista en vez de hecho a
-  escondidas. El que sí se usa y por una sola pieza es `--relief-raised`, en `Segmented`.
-- **El lienzo, antes que los manipulables y que el editor de nodos.** Los dos necesitan lo mismo y
-  no está decidido: pan, zoom, selección, y el teclado para todo eso. Si se arman por separado, cada
-  uno lo inventa y quedan dos sistemas. Es la misma forma que ya tuvo el arrastre, donde `Reorder`
-  entró con la regla de que el teclado es la pieza y el arrastre la comodidad.
-- **La gramática de un manipulable**, que es la parte de lo lúdico que sí es del sistema: cómo avisa
-  que se puede agarrar, qué devuelve cuando se lo mueve, qué pasa sin mouse, y sobre todo la línea
-  entre explorar y evaluar. Un manipulable donde equivocarse es parte de entender no puede usar el
-  rojo de error, y hoy esa contradicción no está escrita en ningún lado.
-- **El paquete no exporta nada que no se alcance por su subpath, y eso hay que probarlo desde
-  afuera.** Node resuelve los 69 subpaths contra el `exports` de verdad, que es lo mismo que hace
-  quien instala, pero nadie lo instaló todavía en un proyecto real.
-- **El helper `face()` está copiado en cinco historias** (avatar, mention, table, chart, folder), y
-  `p()` o `person()` en tres. Es contenido de ejemplo, así que va a un `fixtures.ts` compartido.
-- **Un `Stack` hermano de `Cluster`.** Hay 23 clases en 18 archivos que son la misma columna con
-  gap, pero los valores van de 0.125 a 1.5rem y no entran en una escala sin mover cosas de lugar.
-- **`Table` no tiene `align="right"` ni columna de acciones**, y la historia lo suple con CSS.
-- **La familia de controles ya llega a 44×44 en táctil; el resto de las piezas no.** Con
-  `pointer: coarse` los botones suben a `lg` y llevan `touch-target`, que agranda el blanco de toque
-  a 44 sin mover la caja; los campos suben la caja a 44 de verdad, porque ahí el tap tiene que llegar
-  al `input`. En escritorio no cambia un píxel. Lo tienen `Button`, `IconButton`, `ToolbarButton`,
-  `TextField`, `Textarea`, `Select` y `DatePicker`. **Lo que falta, medido**: `Checkbox` y `Radio` de 18, `Switch` de 22, el tachito de
-  `Chip` de 24 y el de `Search` de 24, el eslabón de `Breadcrumb` de 24, las opciones de
-  `Segmented` de 28 a 32, y las solapas de `Tabs` y los ítems de `Menu` de 36 a 40. Esas no son
-  una omisión: varias son compactas a propósito, así que subirlas es una decisión sobre cómo se
-  siente el sistema en un teléfono y no un arreglo. Está escrito en Fundamentos › Accesibilidad.
-- **Recuperar `ss04` y el cero barrado** pide auto-alojar Inter: 69 KB subseteada a latín, con la
-  receta de `pyftsubset` anotada. Se eligió el CDN; si algún día una red escolar filtra Google
-  Fonts, la decisión se da vuelta y el trabajo ya está pensado.
-- **El sitio entra en un solo bundle de 737 KB (230 gzip) y `vite build` avisa.** Son las 73
-  vistas importadas de una (70 entradas del riel, más la portada, el dashboard y el documento): nada está mal, está todo junto. La salida es `lazy` por historia con
-  un `Skeleton` de espera, y el costo es un parpadeo por navegación en una pantalla que hoy es
-  instantánea. No se hizo porque es una decisión sobre cómo se siente el sitio y no un bug.
-- **El paquete no tiene un consumidor de verdad todavía.** Se verificó instalándolo en un
-  proyecto de prueba desde el propio git, que es lo que prueba el `prepare` y el `files`, pero
-  nadie lo importó en producción. El primero que lo haga va a encontrar lo que falte.
-- Portar los tokens a `~/melu/packages/ui`, que es para lo que existe todo esto. Ojo con el
-  nombre: ese repo es otro y sigue llamándose `melu`.
-
-## Lo que no está
-
-No hay backend ni datos reales, y nada persiste salvo las preferencias del sitio. El contenido
-de las vistas es de ejemplo y está escrito a mano: nombres, entregas, espacios. Los medios de
-las tarjetas son geometría derivada del id, no imágenes: una grilla de fotos se ve linda y no
-dice nada del contenido.
-
-**Y no está el prototipo de la app.** Vivía en `apps/guide` y se borró a propósito: este repo
-es del design system. Cuando haga falta probar el sistema en pantallas de producto, eso se arma
-donde vive el producto, consumiendo el paquete como cualquier otro consumidor.
+- **Después de borrar un archivo o de cambiar de rama, se reinicia el servidor.** `npm run dev` ya
+  arranca con `--force`.
+- La pestaña que estaba abierta necesita recarga dura (Ctrl+Shift+R).
+- Con la pantalla en blanco se mira primero la red, no la consola: un 404 sobre un módulo viejo.
+- Un valor nuevo se mide en el navegador (`getComputedStyle`), no se lee en el archivo.

@@ -4,7 +4,8 @@ import { Progress } from './progress'
 
 describe('Progress', () => {
   it('expone valor y nombre', () => {
-    render(<Progress value={30} max={60} label="Corregidas" >
+    render(<Progress value={30} max={60}>
+  <Progress.Label>Corregidas</Progress.Label>
   <Progress.Hint>30/60</Progress.Hint>
 </Progress>)
     const bar = screen.getByRole('progressbar', { name: 'Corregidas' })
@@ -13,14 +14,20 @@ describe('Progress', () => {
   })
 
   it('el valor que se anuncia no se sale del rango', () => {
-    const { rerender } = render(<Progress value={999} max={10} label="Corregidas" />)
+    const { rerender } = render(<Progress value={999} max={10}>
+  <Progress.Label>Corregidas</Progress.Label>
+</Progress>)
     expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '10')
-    rerender(<Progress value={-4} max={10} label="Corregidas" />)
+    rerender(<Progress value={-4} max={10}>
+  <Progress.Label>Corregidas</Progress.Label>
+</Progress>)
     expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '0')
   })
 
   it('el nombre accesible es el rótulo que se ve', () => {
-    render(<Progress value={3} max={10} label="Corregidas" />)
+    render(<Progress value={3} max={10}>
+  <Progress.Label>Corregidas</Progress.Label>
+</Progress>)
     const bar = screen.getByRole('progressbar', { name: 'Corregidas' })
     expect(bar.getAttribute('aria-labelledby')).toBe(screen.getByText('Corregidas').id)
   })

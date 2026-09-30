@@ -1,11 +1,11 @@
-/** Escribe el `paths` de tsconfig.json con una entrada por pieza: TypeScript admite una sola estrella por sustitución, así que el patrón genérico no puede resolver a una carpeta y su archivo. Con `--check` falla si quedó viejo. */
-import { readFileSync, writeFileSync, readdirSync, statSync } from 'node:fs'
-import { join, dirname } from 'node:path'
+/** Escribe el `paths` de tsconfig.json con una entrada por pieza, y en el `exports` de package.json una por familia de bloques: TypeScript admite una sola estrella por sustitución, y un patrón con estrella no puede repetir la familia. Con `--check` falla si alguno quedó viejo. */
+import { readFileSync, writeFileSync } from 'node:fs'
+import { join, dirname, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { pieces, families } from './pieces.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const src = join(root, 'src')
-const file = join(root, 'tsconfig.json')
 
 const paths = {
   '@milo/ui/icons.meta': ['./src/icons.meta.ts'],
@@ -13,26 +13,35 @@ const paths = {
   '@milo/ui/props': ['./src/props.gen.ts'],
   '@milo/ui/lib/*': ['./src/lib/*'],
 }
+for (const p of pieces(src)) if (p.file) paths[`@milo/ui/${p.subpath}`] = [`./${relative(root, p.file)}`]
 
-for (const folder of readdirSync(src).sort()) {
-  const dir = join(src, folder)
-  if (!statSync(dir).isDirectory()) continue
-  if (['__tests__', 'lib', 'styles', 'assets'].includes(folder)) continue
-  const entry = readdirSync(dir).find(f => f === `${folder}.tsx` || f === `${folder}.ts`)
-  if (entry) paths[`@milo/ui/${folder}`] = [`./src/${folder}/${entry}`]
-}
+const tsconfigFile = join(root, 'tsconfig.json')
+const tsconfig = JSON.parse(readFileSync(tsconfigFile, 'utf8'))
+tsconfig.compilerOptions.paths = paths
 
-const config = JSON.parse(readFileSync(file, 'utf8'))
-config.compilerOptions.paths = paths
-const body = JSON.stringify(config, null, 2) + '\n'
+const pkgFile = join(root, 'package.json')
+const pkg = JSON.parse(readFileSync(pkgFile, 'utf8'))
+const { './*': rest, ...fixed } = pkg.exports
+const kept = Object.fromEntries(Object.entries(fixed).filter(([k]) => !k.startsWith('./blocks/')))
+const blocks = Object.fromEntries(families(src).map(f => [`./blocks/${f}/*`, {
+  types: `./dist/blocks/${f}/*/*.d.ts`,
+  import: `./dist/blocks/${f}/*/*.js`,
+}]))
+pkg.exports = { ...kept, ...blocks, './*': rest }
+
+const files = [
+  [tsconfigFile, JSON.stringify(tsconfig, null, 2) + '\n'],
+  [pkgFile, JSON.stringify(pkg, null, 2) + '\n'],
+]
 
 if (process.argv.includes('--check')) {
-  if (readFileSync(file, 'utf8') !== body) {
-    console.error('✗ el paths de tsconfig.json quedó viejo: corré `npm run paths`')
+  const stale = files.filter(([file, body]) => readFileSync(file, 'utf8') !== body).map(([file]) => relative(root, file))
+  if (stale.length) {
+    console.error(`✗ quedó viejo ${stale.join(' y ')}: corré \`npm run paths\``)
     process.exit(1)
   }
-  console.log(`✓ paths al día (${Object.keys(paths).length} entradas)`)
+  console.log(`✓ paths y exports al día (${Object.keys(paths).length} entradas)`)
 } else {
-  writeFileSync(file, body)
-  console.log(`✓ ${Object.keys(paths).length} entradas en paths`)
+  for (const [file, body] of files) writeFileSync(file, body)
+  console.log(`✓ ${Object.keys(paths).length} entradas en paths, ${Object.keys(blocks).length} familias en exports`)
 }

@@ -1,8 +1,8 @@
 import cls from './rubric.module.css'
 import { useState } from 'react'
-import { SelfAssessment } from '@milo/ui/self-assessment'
+import { SelfAssessment } from '@milo/ui/blocks/rubric/self-assessment'
 import { ConfirmDialog } from '@milo/ui/confirm-dialog'
-import { Rubric, type Criterion } from '@milo/ui/rubric'
+import { Rubric, type Criterion } from '@milo/ui/blocks/rubric/rubric'
 import { useToast } from '@milo/ui/toast'
 import { labelColors } from '@milo/ui/lib/colors'
 import { counted } from '@milo/ui/lib/number'
@@ -136,7 +136,7 @@ export function RubricRail({ mode }: { mode: RubricMode }) {
         <SelfAssessment
           criteria={criteria}
           value={reached}
-          onChange={(id, level) => setReached(r => ({ ...r, [id]: level }))}
+          onValueChange={setReached}
         >
           <SelfAssessment.Title>Dónde estás</SelfAssessment.Title>
         </SelfAssessment>
@@ -160,7 +160,7 @@ export function RubricRail({ mode }: { mode: RubricMode }) {
 
       <ConfirmDialog
         open={!!asking}
-        onCancel={() => setAsking(null)}
+        onOpenChange={() => setAsking(null)}
         onConfirm={() => {
           if (asking) remove(asking)
           setAsking(null)

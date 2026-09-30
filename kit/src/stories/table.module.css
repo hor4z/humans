@@ -18,49 +18,4 @@
   .fractionTotal {
     color: var(--text-muted);
   }
-
-  .twoRow {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    border-radius: var(--radius-xl);
-    padding: 1rem;
-    box-shadow: 0 0 0 1px var(--border);
-  }
-
-  .threeRow {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    border-radius: var(--radius-xl);
-    padding: 1rem;
-    box-shadow: 0 0 0 1px var(--border);
-  }
-
-  .fourRow {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    border-radius: var(--radius-xl);
-    padding: 1rem;
-    box-shadow: 0 0 0 1px var(--border);
-  }
-
-  .fiveRow {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    border-radius: var(--radius-xl);
-    padding: 1rem;
-    box-shadow: 0 0 0 1px var(--border);
-  }
-
-  .mutedRow {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    border-radius: var(--radius-xl);
-    background-color: var(--surface-muted);
-    padding: 1rem;
-  }
 }

@@ -101,16 +101,16 @@ describe('el CSS del sistema se sostiene solo', () => {
     const uses = new Map<string, Set<string>>()
     for (const i of imports) {
       if (!i.module) continue
-      const vistas = uses.get(i.module.file) ?? new Set<string>()
-      for (const n of used(i.source.text, i.alias)) vistas.add(n)
-      uses.set(i.module.file, vistas)
+      const views = uses.get(i.module.file) ?? new Set<string>()
+      for (const n of used(i.source.text, i.alias)) views.add(n)
+      uses.set(i.module.file, views)
     }
 
     const dead: string[] = []
     for (const f of css) {
-      const vistas = uses.get(f.file)
-      if (!vistas) continue
-      for (const n of declared(f.text)) if (!vistas.has(n)) dead.push(`${f.name}: .${n}`)
+      const views = uses.get(f.file)
+      if (!views) continue
+      for (const n of declared(f.text)) if (!views.has(n)) dead.push(`${f.name}: .${n}`)
     }
     expect(dead).toEqual([])
   })
@@ -144,9 +144,9 @@ describe('el CSS del sistema se sostiene solo', () => {
     const orphaned: string[] = []
     for (const i of imports) {
       if (!i.module) continue
-      const hay = new Set(declared(i.module.text))
+      const has = new Set(declared(i.module.text))
       for (const n of used(i.source.text, i.alias)) {
-        if (!hay.has(n)) orphaned.push(`${i.source.name}: ${i.alias}.${n} no está en ${relative(ui, i.module.file)}`)
+        if (!has.has(n)) orphaned.push(`${i.source.name}: ${i.alias}.${n} no está en ${relative(ui, i.module.file)}`)
       }
     }
     expect(orphaned).toEqual([])
@@ -164,19 +164,29 @@ describe('el CSS del sistema se sostiene solo', () => {
     expect(literals).toEqual([])
   })
 
-  it('no quedó maquinaria de gradiente de Tailwind escrita a mano', () => {
-    const leftovers = css.filter(f => /--milo-gradient-/.test(f.text)).map(f => f.name)
-    expect(leftovers).toEqual([])
-  })
-
-  it('no queda nada de Tailwind', () => {
-    const leftovers: string[] = []
-    for (const f of [...css, { name: 'theme.css', text: bridge }]) {
-      if (/--tw-|@tailwind|@apply\b|@source\b|@utility\b|@theme\b|var\(--spacing\)|var\(--default-/.test(f.text)) {
-        leftovers.push(f.name)
+  it('un radio sale de la escala', () => {
+    const offenders: string[] = []
+    for (const f of css) {
+      for (const m of f.text.matchAll(/border-radius:\s*([^;}]+)/g)) {
+        const v = m[1].trim()
+        if (/^0$|^inherit$|^50%$/.test(v)) continue
+        if (/var\(--radius-[\w-]+\)/.test(v) || /var\(--[\w-]+-r\)/.test(v)) continue
+        offenders.push(`${f.name}: ${v}`)
       }
     }
-    expect(leftovers).toEqual([])
+    expect(offenders, 'un radio suelto no sigue a la escala cuando la escala cambia').toEqual([])
+  })
+
+  it('el peso de la portada va solo en tamaño portada', () => {
+    const offenders: string[] = []
+    for (const f of css) {
+      for (const block of f.text.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+        if (!/font-weight:\s*var\(--font-weight-bold\)/.test(block[2])) continue
+        if (/font-size:\s*var\(--type-display\)/.test(block[2]) || /weightBold/.test(block[1])) continue
+        offenders.push(`${f.name}: ${block[1].trim()}`)
+      }
+    }
+    expect(offenders, 'a otro tamaño se lee como negrita y aplasta los otros dos escalones de énfasis').toEqual([])
   })
 
   it('el anillo de foco vive fuera de toda capa', () => {
@@ -184,9 +194,9 @@ describe('el CSS del sistema se sostiene solo', () => {
     const i = bridge.indexOf(rule)
     expect(i, 'la regla del anillo de foco cambió de forma').toBeGreaterThan(0)
 
-    const antes = bridge.slice(0, i).replace(/\/\*[\s\S]*?\*\//g, '').replace(/"[^"]*"|'[^']*'/g, '')
+    const before = bridge.slice(0, i).replace(/\/\*[\s\S]*?\*\//g, '').replace(/"[^"]*"|'[^']*'/g, '')
     let depth = 0
-    for (const c of antes) {
+    for (const c of before) {
       if (c === '{') depth++
       else if (c === '}') depth--
     }

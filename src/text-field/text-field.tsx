@@ -16,10 +16,12 @@ type TextFieldProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> & {
   ref?: Ref<HTMLDivElement>
   /** Va al `input` de adentro, para quien necesita enfocarlo desde afuera: un atajo de teclado. */
   inputRef?: Ref<HTMLInputElement>
+  /** Recibe el texto nuevo, no el evento. El `onChange` nativo sigue andando. */
+  onValueChange?: (v: string) => void
 }
 
 /** El campo de texto. */
-export function TextField({ icon, suffix, size = 'md', className, ref, inputRef, ...rest }: TextFieldProps) {
+export function TextField({ icon, suffix, size = 'md', className, ref, inputRef, onChange, onValueChange, ...rest }: TextFieldProps) {
   const iconSize = size === 'sm' ? 16 : size === 'md' ? 18 : 20
   const field = useField()
   return (
@@ -45,6 +47,7 @@ export function TextField({ icon, suffix, size = 'md', className, ref, inputRef,
         )}
         {...field}
         {...rest}
+        onChange={e => { onChange?.(e); onValueChange?.(e.target.value) }}
       />
       {suffix}
     </div>

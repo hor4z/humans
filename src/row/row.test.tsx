@@ -16,7 +16,7 @@ describe('Row', () => {
   it('su etiqueta nombra al control que lleva adentro', async () => {
     render(<Row>
   <Row.Label>Avisos por mail</Row.Label>
-  <Row.Hint>Cuando llega una entrega</Row.Hint><Switch checked onChange={() => {}} /></Row>)
+  <Row.Hint>Cuando llega una entrega</Row.Hint><Switch checked onCheckedChange={() => {}} /></Row>)
     const sw = screen.getByRole('switch', { name: 'Avisos por mail' })
     expect(sw).toHaveAccessibleDescription('Cuando llega una entrega')
     await userEvent.click(screen.getByText('Avisos por mail'))

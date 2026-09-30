@@ -85,4 +85,19 @@
     height: 0.75rem;
     width: 40%;
   }
+
+  .lines {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .lineBone {
+    height: 0.875rem;
+  }
+
+  .lastLineBone {
+    height: 0.875rem;
+    width: 60%;
+  }
 }

@@ -1,0 +1,100 @@
+import s from './toolbar.module.css'
+import { useLayoutEffect, useRef, type FocusEvent, type KeyboardEvent, type ReactNode } from 'react'
+import { Icon, type IconName } from '../../../icon/icon'
+import { control } from '../../../lib/control'
+import { cx } from '../../../lib/cx'
+import { ToggleButton } from '../../../toggle-button/toggle-button'
+
+function Root({ label, children, className }: {
+  /** Qué controla esta barra. Dos barras sin nombre en una pantalla se leen como una sola. */
+  label: string
+  children: ReactNode
+  className?: string
+}) {
+  const barRef = useRef<HTMLDivElement>(null)
+
+  const enabledButtons = () => [...(barRef.current?.querySelectorAll<HTMLButtonElement>('button:not(:disabled)') ?? [])]
+
+  const roveTo = (active?: HTMLButtonElement) => {
+    const enabled = enabledButtons()
+    if (!enabled.length) return
+    const target = active && enabled.includes(active) ? active : enabled[0]
+    for (const b of enabled) b.tabIndex = b === target ? 0 : -1
+  }
+
+  useLayoutEffect(() => { roveTo() })
+
+  const onKey = (e: KeyboardEvent<HTMLDivElement>) => {
+    const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0
+    const toEdge = e.key === 'Home' ? 0 : e.key === 'End' ? -1 : null
+    if (!step && toEdge === null) return
+    const buttons = enabledButtons()
+    if (!buttons.length) return
+    e.preventDefault()
+    const next = toEdge !== null
+      ? buttons.at(toEdge)!
+      : buttons[(buttons.indexOf(document.activeElement as HTMLButtonElement) + step + buttons.length) % buttons.length]
+    roveTo(next)
+    next.focus()
+  }
+
+  return (
+    <div
+      ref={barRef}
+      role="toolbar"
+      aria-label={label}
+      onKeyDown={onKey}
+      onFocus={(e: FocusEvent<HTMLDivElement>) => roveTo(e.target.closest('button') ?? undefined)}
+      className={cx(`${s.root} bg-popover`, className)}
+    >
+      {children}
+    </div>
+  )
+}
+
+/** El botón de la barra: siempre un glifo solo, y siempre `sm`. Con `pressed` es un interruptor y lo dice ("negrita, activado"); sin él, una acción que pasa y no queda. */
+function Button({ icon, label, pressed, onPressedChange, disabled, onClick }: {
+  icon: IconName
+  /** Sin esto el botón no dice nada: adentro solo hay un glifo. */
+  label: string
+  /** Presente lo vuelve un interruptor. Ausente es una acción que pasa y no queda. */
+  pressed?: boolean
+  /** Recibe el estado nuevo del interruptor. */
+  onPressedChange?: (pressed: boolean) => void
+  disabled?: boolean
+  /** La acción, cuando no es un interruptor. */
+  onClick?: () => void
+}) {
+  if (pressed === undefined) {
+    return (
+      <button
+        type="button"
+        aria-label={label}
+        disabled={disabled}
+        onClick={onClick}
+        className={cx(s.button, s.disabled, s.buttonPlain)}
+      >
+        <Icon name={icon} size={control.sm.icon} />
+      </button>
+    )
+  }
+  return (
+    <ToggleButton
+      size="sm"
+      icon={icon}
+      label={label}
+      pressed={pressed}
+      disabled={disabled}
+      onPressedChange={onPressedChange}
+      className={s.button}
+    />
+  )
+}
+
+/** El corte entre dos grupos de la barra. */
+function Separator() {
+  return <span aria-hidden className={s.separator} />
+}
+
+/** La barra de herramientas: una sola parada de tabulación y flechas adentro, como manda un `toolbar`. */
+export const Toolbar = Object.assign(Root, { Button, Separator })

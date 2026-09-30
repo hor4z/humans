@@ -5,12 +5,12 @@ import { cx } from '../lib/cx'
 
 /** Un valor en un rango. */
 export function Slider({
-  value, onChange, min = 0, max = 100, step = 1, disabled, label, id, className,
+  value, onValueChange, min = 0, max = 100, step = 1, disabled, label, id, className,
 }: {
   /** Es controlado. */
   value: number
   /** Recibe el número nuevo. */
-  onChange: (v: number) => void
+  onValueChange: (v: number) => void
   /** El extremo de la izquierda. */
   min?: number
   /** El extremo de la derecha. */
@@ -49,7 +49,7 @@ export function Slider({
         aria-label={field.id ? undefined : label}
         min={min} max={max} step={step} value={value}
         disabled={disabled}
-        onChange={e => onChange(Number(e.target.value))}
+        onChange={e => onValueChange(Number(e.target.value))}
         onPointerDown={() => setDragging(true)}
         onPointerUp={() => setDragging(false)}
         onPointerCancel={() => setDragging(false)}

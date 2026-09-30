@@ -5,19 +5,19 @@ import { DatePicker } from './date-picker'
 
 const open = async (props: Partial<Parameters<typeof DatePicker>[0]> = {}) => {
   const onChange = vi.fn()
-  render(<DatePicker value="2026-03-09" onChange={onChange} label="Vence" {...props} />)
+  render(<DatePicker value="2026-03-09" onValueChange={onChange} label="Vence" {...props} />)
   await userEvent.click(screen.getByRole('button', { name: /Vence|marzo|Elegir/ }))
   return { onChange }
 }
 
 describe('DatePicker', () => {
   it('el campo dice la fecha en palabras y no en números sueltos', () => {
-    render(<DatePicker value="2026-03-09" onChange={() => {}} label="Vence" />)
+    render(<DatePicker value="2026-03-09" onValueChange={() => {}} label="Vence" />)
     expect(screen.getByRole('button', { name: 'Vence' })).toHaveTextContent(/9 de marzo de 2026/)
   })
 
   it('sin fecha dice qué falta', () => {
-    render(<DatePicker value="" onChange={() => {}} label="Vence" placeholder="Elegir fecha" />)
+    render(<DatePicker value="" onValueChange={() => {}} label="Vence" placeholder="Elegir fecha" />)
     expect(screen.getByRole('button', { name: 'Vence' })).toHaveTextContent('Elegir fecha')
   })
 
@@ -108,7 +108,7 @@ describe('DatePicker', () => {
   })
 
   it('sin fecha, el campo dice qué falta', () => {
-    const { container } = render(<DatePicker value="" onChange={() => {}} label="Fecha" />)
+    const { container } = render(<DatePicker value="" onValueChange={() => {}} label="Fecha" />)
     expect(container.querySelector('button')?.textContent).toContain('Elegir fecha')
   })
 

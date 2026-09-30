@@ -1,4 +1,9 @@
 @layer milo.app {
+  .vertical {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .paragraphText {
     max-width: 60ch;
     font-size: var(--type-body);

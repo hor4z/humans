@@ -48,7 +48,8 @@ describe('Field', () => {
 describe('Field.Set', () => {
   it('agrupa campos bajo un nombre', () => {
     render(
-      <Field.Set legend="Quién puede ver">
+      <Field.Set>
+        <Field.Legend>Quién puede ver</Field.Legend>
         <Field><Field.Label>Espacio</Field.Label><TextField /></Field>
       </Field.Set>,
     )
@@ -65,7 +66,7 @@ describe('Field con cualquier control del sistema', () => {
   })
 
   it('nombra un Switch', async () => {
-    render(<Field><Field.Label>Avisos por mail</Field.Label><Switch checked onChange={() => {}} /></Field>)
+    render(<Field><Field.Label>Avisos por mail</Field.Label><Switch checked onCheckedChange={() => {}} /></Field>)
     expect(screen.getByRole('switch', { name: 'Avisos por mail' })).toBeInTheDocument()
   })
 
@@ -74,7 +75,7 @@ describe('Field con cualquier control del sistema', () => {
       <Field>
         <Field.Label>Acepto</Field.Label>
         <Field.Error>Hay que aceptar para seguir</Field.Error>
-        <Checkbox checked={false} onChange={() => {}} />
+        <Checkbox checked={false} onCheckedChange={() => {}} />
       </Field>,
     )
     const cb = screen.getByRole('checkbox', { name: 'Acepto' })
@@ -83,12 +84,12 @@ describe('Field con cualquier control del sistema', () => {
   })
 
   it('nombra un Slider', async () => {
-    render(<Field><Field.Label>Duración</Field.Label><Slider value={30} onChange={() => {}} /></Field>)
+    render(<Field><Field.Label>Duración</Field.Label><Slider value={30} onValueChange={() => {}} /></Field>)
     expect(screen.getByRole('slider', { name: 'Duración' })).toBeInTheDocument()
   })
 
   it('un control suelto conserva su propio label', async () => {
-    render(<Switch checked onChange={() => {}} label="Suelto" />)
+    render(<Switch checked onCheckedChange={() => {}} label="Suelto" />)
     expect(screen.getByRole('switch', { name: 'Suelto' })).toBeInTheDocument()
   })
 })

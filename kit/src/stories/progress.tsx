@@ -1,6 +1,5 @@
-import cls from './progress.module.css'
 import { Progress } from '@milo/ui/progress'
-import { A11y, Example, Note, Page, Practices, Props, Section } from '../kit'
+import { A11y, Demo, Note, Page, Practices, Props, Section, Stack } from '../kit'
 
 export function ProgressStory() {
   return (
@@ -12,33 +11,60 @@ export function ProgressStory() {
     >
       <Section
         title="La barra y su rótulo"
-        note="`label` no es decoración: es lo que un lector de pantalla anuncia con el número, y lo que hace que tres barras apiladas se distingan entre sí. El `hint` es el número a la vista: '18 de 24' dice más que '75%' cuando lo que falta se cuenta."
+        note="El `Progress.Hint` es el número a la vista: '18 de 24' dice más que '75%' cuando lo que falta se cuenta."
       >
-        <div className={`${cls.labelBox} bg-surface`}>
-          <Progress label="Corregidas" value={18} max={24} >
-            <Progress.Hint>18 de 24</Progress.Hint>
-          </Progress>
-          <Progress label="Subida del archivo" value={62} >
-            <Progress.Hint>62%</Progress.Hint>
-          </Progress>
-          <Progress label="Actividades publicadas" value={7} max={7} tone="ok" >
-            <Progress.Hint>listo</Progress.Hint>
-          </Progress>
-        </div>
+        <Demo fill code={`<Progress value={18} max={24}>
+  <Progress.Label>Corregidas</Progress.Label>
+  <Progress.Hint>18 de 24</Progress.Hint>
+</Progress>
+<Progress value={62}>
+  <Progress.Label>Subida del archivo</Progress.Label>
+  <Progress.Hint>62%</Progress.Hint>
+</Progress>
+<Progress value={7} max={7} tone="ok">
+  <Progress.Label>Actividades publicadas</Progress.Label>
+  <Progress.Hint>listo</Progress.Hint>
+</Progress>`}>
+          <Stack gap="xl">
+            <Progress value={18} max={24}>
+              <Progress.Label>Corregidas</Progress.Label>
+              <Progress.Hint>18 de 24</Progress.Hint>
+            </Progress>
+            <Progress value={62}>
+              <Progress.Label>Subida del archivo</Progress.Label>
+              <Progress.Hint>62%</Progress.Hint>
+            </Progress>
+            <Progress value={7} max={7} tone="ok">
+              <Progress.Label>Actividades publicadas</Progress.Label>
+              <Progress.Hint>listo</Progress.Hint>
+            </Progress>
+          </Stack>
+        </Demo>
       </Section>
 
       <Section
         title="El tono dice algo, no decora"
-        note="El default es el azul de dato (no el de marca, aunque en claro sean el mismo) y sirve para todo lo que avanza. `ok` es para lo que se completó, y `warn` y `bad` solo cuando llenar la barra es el problema (una cuota, un espacio que se acaba). Una lista de cuatro barras en cuatro colores distintos se lee como un semáforo y deja de leerse como progreso."
+        note="`warn` y `bad` van solo cuando llenar la barra es el problema: una cuota, un espacio que se acaba."
       >
-        <div className={`${cls.toneBox} bg-surface`}>
-          <Progress label="Espacio usado" value={92} max={100} tone="warn" >
-            <Progress.Hint>92%</Progress.Hint>
-          </Progress>
-          <Progress label="Cuota de la cuenta" value={100} max={100} tone="bad" >
-            <Progress.Hint>llena</Progress.Hint>
-          </Progress>
-        </div>
+        <Demo fill code={`<Progress value={92} max={100} tone="warn">
+  <Progress.Label>Espacio usado</Progress.Label>
+  <Progress.Hint>92%</Progress.Hint>
+</Progress>
+<Progress value={100} max={100} tone="bad">
+  <Progress.Label>Cuota de la cuenta</Progress.Label>
+  <Progress.Hint>llena</Progress.Hint>
+</Progress>`}>
+          <Stack gap="xl">
+            <Progress value={92} max={100} tone="warn">
+              <Progress.Label>Espacio usado</Progress.Label>
+              <Progress.Hint>92%</Progress.Hint>
+            </Progress>
+            <Progress value={100} max={100} tone="bad">
+              <Progress.Label>Cuota de la cuenta</Progress.Label>
+              <Progress.Hint>llena</Progress.Hint>
+            </Progress>
+          </Stack>
+        </Demo>
       </Section>
 
       <Note title="Progress o Spinner">
@@ -48,19 +74,15 @@ export function ProgressStory() {
         se queda en el 90% es la forma más cara de perder la confianza de quien mira.
       </Note>
 
-      <Section title="Cómo se escribe">
-        <Example code={`<Progress value={18} max={24} label="Corregidas">
-  <Progress.Hint>18 de 24</Progress.Hint>
-</Progress>`} />
-      </Section>
-
       <Section title="Props">
         <Props of="Progress" />
       </Section>
 
       <Section title="Cómo se usa bien">
         <Practices>
-          <Practices.Do>`label` dice qué mide, para quien no ve la barra.</Practices.Do>
+          <Practices.Do>`Progress.Label` dice qué mide: es lo que anuncia el lector con el número, y lo que distingue tres barras apiladas.</Practices.Do>
+          <Practices.Do>El default es para todo lo que avanza, y `ok` para lo que se completó.</Practices.Do>
+          <Practices.Dont>No pintes cada barra de una lista con un tono distinto: se lee como un semáforo y deja de leerse como progreso.</Practices.Dont>
           <Practices.Dont>La pista es el resto, no un segundo dato: no metas dos números en la misma barra.</Practices.Dont>
         </Practices>
       </Section>

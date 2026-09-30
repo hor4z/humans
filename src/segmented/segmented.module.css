@@ -4,7 +4,7 @@
     align-items: center;
   }
 
-  .railXs {
+  .railCompact {
     gap: 0.25rem;
   }
 
@@ -44,7 +44,7 @@
     }
   }
 
-  .optionXs {
+  .optionCompact {
     min-height: 1.75rem;
     border-radius: var(--radius-sm);
     font-size: var(--type-meta);
@@ -68,25 +68,25 @@
     letter-spacing: var(--type-body-ls);
   }
 
-  .idle {
+  .plain {
     color: var(--text-muted);
   }
 
-  .iconOnlyXs { width: 1.75rem; }
+  .iconOnlyCompact { width: 1.75rem; }
   .iconOnlySm { width: 2rem; }
   .iconOnlyMd { width: 2.25rem; }
 
-  .padXs { padding-inline: 0.5rem; }
+  .padCompact { padding-inline: 0.5rem; }
   .padSm { padding-inline: 0.75rem; }
   .padMd { padding-inline: 1rem; }
 
-  .activeXs {
+  .selectedCompact {
     background-color: var(--surface-muted);
     font-weight: var(--font-weight-semibold);
     color: var(--text);
   }
 
-  .active {
+  .selected {
     background-color: var(--surface);
     font-weight: var(--font-weight-semibold);
     color: var(--text);
@@ -102,7 +102,7 @@
   }
 
   @media (hover:hover) {
-    .idle:hover {
+    .plain:hover {
         color: var(--text);
     }
   }

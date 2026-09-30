@@ -7,14 +7,17 @@ import { Menu } from '../menu/menu'
 import { Popover } from '../popover/popover'
 import { cx } from '../lib/cx'
 import { takePart } from '../lib/parts'
+import { control } from '../lib/control'
 
-const ancho = { sm: s.sm, md: s.md, lg: s.lg }
+const chevronWidth = { sm: s.sm, md: s.md, lg: s.lg }
 
-type Ctx = { variant: Variante; size: Paso; disabled?: boolean; close: () => void }
+const panelWidth = 220
+
+type Ctx = { variant: Variant; size: Size; disabled?: boolean; close: () => void }
 const SplitContext = createContext<Ctx | null>(null)
 
-type Variante = 'brand' | 'solid' | 'muted' | 'ghost' | 'bad'
-type Paso = 'sm' | 'md' | 'lg'
+type Variant = 'brand' | 'solid' | 'muted' | 'ghost' | 'bad'
+type Size = 'sm' | 'md' | 'lg'
 
 /** La acción que se hace casi siempre: la mitad ancha, la que se toca directo. */
 function Action({ onClick, children }: {
@@ -50,33 +53,31 @@ function Item({ icon, danger, disabled, onSelect, children }: {
 }
 
 /** La acción que se hace casi siempre, y al lado las que casi nunca. Es lo que evita una fila de cinco botones donde cuatro no se tocan nunca. */
-function Root({ variant = 'brand', size = 'md', disabled, menuLabel, width = 220, children }: {
+function Root({ variant = 'brand', size = 'md', disabled, menuLabel, children }: {
   /** El mismo juego que `Button`, y vale para las dos mitades. */
-  variant?: Variante
+  variant?: Variant
   /** La escalera de siempre. */
-  size?: Paso
+  size?: Size
   disabled?: boolean
   /** Qué hay en el menú, para quien lo escucha. Sin esto, "Más opciones". */
   menuLabel?: string
-  /** El ancho del panel en px. */
-  width?: number
   /** El `SplitButton.Action` y los `SplitButton.Item` que van en el menú. */
   children: ReactNode
 }) {
-  const [accion, resto] = takePart(children, Action)
-  const [items] = takePart(resto, Item)
-  const nombre = typeof (accion[0] as { props?: { children?: unknown } })?.props?.children === 'string'
-    ? String((accion[0] as { props: { children: string } }).props.children)
+  const [action, rest] = takePart(children, Action)
+  const [items] = takePart(rest, Item)
+  const name = typeof (action[0] as { props?: { children?: unknown } })?.props?.children === 'string'
+    ? String((action[0] as { props: { children: string } }).props.children)
     : undefined
-  const otras = menuLabel ?? (nombre ? `Más opciones de ${nombre}` : 'Más opciones')
+  const moreLabel = menuLabel ?? (name ? `Más opciones de ${name}` : 'Más opciones')
 
   return (
-    <ButtonGroup label={nombre ?? otras}>
+    <ButtonGroup label={name ?? moreLabel}>
       <SplitContext.Provider value={{ variant, size, disabled, close: () => {} }}>
-        {accion}
+        {action}
       </SplitContext.Provider>
       <Popover
-        width={width}
+        width={panelWidth}
         align="end"
         trigger={({ onClick, ref, 'aria-expanded': expanded }) => (
           <Button
@@ -84,18 +85,18 @@ function Root({ variant = 'brand', size = 'md', disabled, menuLabel, width = 220
             variant={variant}
             size={size}
             disabled={disabled}
-            aria-label={otras}
+            aria-label={moreLabel}
             aria-expanded={expanded}
             aria-haspopup="menu"
             onClick={onClick}
-            className={cx(s.chevron, ancho[size])}
+            className={cx(s.chevron, chevronWidth[size])}
           >
-            <Icon name="keyboard_arrow_down" size={size === 'sm' ? 16 : 18} />
+            <Icon name="keyboard_arrow_down" size={control[size].icon} />
           </Button>
         )}
       >
         {close => (
-          <Menu label={otras}>
+          <Menu label={moreLabel}>
             <SplitContext.Provider value={{ variant, size, disabled, close }}>
               {items}
             </SplitContext.Provider>

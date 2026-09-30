@@ -2,26 +2,25 @@ import cls from './document.module.css'
 import { useEffect, useRef, useState } from 'react'
 import { Avatar } from '@milo/ui/avatar'
 import { Button } from '@milo/ui/button'
-import { Callout } from '@milo/ui/callout'
-import { CommandMenu, type CommandGroup } from '@milo/ui/command-menu'
+import { Callout } from '@milo/ui/blocks/editor/callout'
+import { CommandMenu, type CommandGroup } from '@milo/ui/blocks/editor/command-menu'
 import { Divider } from '@milo/ui/divider'
-import { Choice } from '@milo/ui/choice'
-import { NumberAnswer } from '@milo/ui/number-answer'
-import { OpenQuestion } from '@milo/ui/open-question'
-import { CompareTable } from '@milo/ui/compare-table'
-import { SumTable, type SumCell } from '@milo/ui/sum-table'
-import { Mention } from '@milo/ui/mention'
+import { Choice } from '@milo/ui/blocks/task/choice'
+import { NumberAnswer } from '@milo/ui/blocks/task/number-answer'
+import { OpenQuestion } from '@milo/ui/blocks/task/open-question'
+import { CompareTable } from '@milo/ui/blocks/task/compare-table'
+import { SumTable, type SumCell } from '@milo/ui/blocks/task/sum-table'
+import { Mention } from '@milo/ui/blocks/editor/mention'
 import { Chip } from '@milo/ui/chip'
 import { Icon } from '@milo/ui/icon'
 import { Popover } from '@milo/ui/popover'
 import { parseNumber } from '@milo/ui/lib/number'
-import { Quote } from '@milo/ui/quote'
+import { Quote } from '@milo/ui/blocks/editor/quote'
 import { labelSoft } from '@milo/ui/lib/colors'
 import { Segmented } from '@milo/ui/segmented'
-import { TaskList, type Task } from '@milo/ui/task-list'
+import { TaskList, type Task } from '@milo/ui/blocks/editor/task-list'
 import { RubricRail, type RubricMode } from './rubric'
-
-const face = (n: number) => `/avatars/${String(n).padStart(2, '0')}.webp`
+import { face } from './fixtures'
 
 const blocks: CommandGroup[] = [
   {
@@ -141,18 +140,6 @@ export function DocumentStory() {
   const precioNum = parseNumber(precio)
   const margenNum = parseNumber(margen)
 
-  const responderQuien = (fila: string, columna: string, texto: string) =>
-    setQuien(q => ({ ...q, [fila]: { ...q[fila], [columna]: texto } }))
-
-  const compararCon = (fila: string, columna: string, texto: string) =>
-    setCompetencia(c => ({ ...c, [fila]: { ...c[fila], [columna]: texto } }))
-
-  const cargarGasto = (id: string, celda: SumCell) =>
-    setPresupuesto(p => ({ ...p, [id]: celda }))
-
-  const toggleTask = (id: string, done: boolean) =>
-    setTasks(ts => ts.map(t => (t.id === id ? { ...t, done } : t)))
-
   return (
     <article className={cls.doc}>
       <div className={cls.docBar}>
@@ -188,7 +175,7 @@ export function DocumentStory() {
               size="md"
               label="Ver el documento como"
               value={mode}
-              onChange={setMode}
+              onValueChange={setMode}
               options={[{ value: 'teacher', label: 'Docente' }, { value: 'student', label: 'Estudiante' }]}
             />
             <Popover
@@ -236,12 +223,12 @@ export function DocumentStory() {
 
           <h2 className={cls.sourceHeading}>1. Qué vas a vender</h2>
 
-          <Choice options={rubros} value={rubro} onChange={setRubro}>
+          <Choice options={rubros} value={rubro} onValueChange={setRubro}>
             <Choice.Prompt>Elegí un producto o un servicio</Choice.Prompt>
             <Choice.Hint>Uno solo. Si no está en la lista, contalo en la respuesta de abajo.</Choice.Hint>
           </Choice>
 
-          <OpenQuestion value={porque} onChange={setPorque} rows={2} maxLength={240}
+          <OpenQuestion value={porque} onValueChange={setPorque} rows={2} maxLength={240}
             placeholder="Porque en el barrio no hay nadie que lo haga y en casa ya sabemos hacerlo">
             <OpenQuestion.Prompt>¿Por qué ese y no otro?</OpenQuestion.Prompt>
           </OpenQuestion>
@@ -250,7 +237,7 @@ export function DocumentStory() {
 
           <h2 className={cls.sourceHeading}>2. Quién te compra</h2>
 
-          <CompareTable rows={cliente} columns={[{ id: 'vos', label: 'Tu respuesta' }]} value={quien} onChange={responderQuien}>
+          <CompareTable rows={cliente} columns={[{ id: 'vos', label: 'Tu respuesta' }]} value={quien} onValueChange={setQuien}>
             <CompareTable.Prompt>Contestá las cuatro, en una línea cada una</CompareTable.Prompt>
             <CompareTable.Hint>La última es la más difícil y es la que importa: por qué a vos y no al que ya está.</CompareTable.Hint>
           </CompareTable>
@@ -259,7 +246,7 @@ export function DocumentStory() {
 
           <h2 className={cls.sourceHeading}>3. Tu presupuesto</h2>
 
-          <SumTable rows={gastos} value={presupuesto} onChange={cargarGasto} cap={100000}>
+          <SumTable rows={gastos} value={presupuesto} onValueChange={setPresupuesto} cap={100000}>
             <SumTable.Prompt>Repartí los $100.000</SumTable.Prompt>
             <SumTable.Hint>No hace falta gastarlos todos: lo que sobra es lo que te banca el primer mes flojo.</SumTable.Hint>
           </SumTable>
@@ -272,21 +259,21 @@ export function DocumentStory() {
             segundo número, que vuelve en el punto 5.
           </p>
 
-          <NumberAnswer value={precio} onChange={setPrecio} unit="$" placeholder="4000" revealed={corregido}>
+          <NumberAnswer value={precio} onValueChange={setPrecio} unit="$" placeholder="4000" revealed={corregido}>
             <NumberAnswer.Prompt>¿A cuánto la vendés?</NumberAnswer.Prompt>
             <NumberAnswer.Hint>No hay respuesta correcta acá: la que elijas manda en todas las cuentas que siguen.</NumberAnswer.Hint>
           </NumberAnswer>
 
-          <NumberAnswer value={margen} onChange={setMargen} unit="$" expected={precioNum === null ? undefined : precioNum - 2000} revealed={corregido}>
+          <NumberAnswer value={margen} onValueChange={setMargen} unit="$" expected={precioNum === null ? undefined : precioNum - 2000} revealed={corregido}>
             <NumberAnswer.Prompt>El margen por unidad</NumberAnswer.Prompt>
             <NumberAnswer.Hint>Precio de venta menos los $2.000 que cuesta producirla.</NumberAnswer.Hint>
           </NumberAnswer>
 
-          <NumberAnswer value={veinte} onChange={setVeinte} unit="$" expected={margenNum === null ? undefined : margenNum * 20} revealed={corregido}>
+          <NumberAnswer value={veinte} onValueChange={setVeinte} unit="$" expected={margenNum === null ? undefined : margenNum * 20} revealed={corregido}>
             <NumberAnswer.Prompt>Si vendés 20 unidades, ¿cuánto ganás?</NumberAnswer.Prompt>
           </NumberAnswer>
 
-          <NumberAnswer value={cincuenta} onChange={setCincuenta} unit="$" expected={margenNum === null ? undefined : margenNum * 50} revealed={corregido}>
+          <NumberAnswer value={cincuenta} onValueChange={setCincuenta} unit="$" expected={margenNum === null ? undefined : margenNum * 50} revealed={corregido}>
             <NumberAnswer.Prompt>¿Y con 50?</NumberAnswer.Prompt>
           </NumberAnswer>
 
@@ -300,12 +287,12 @@ export function DocumentStory() {
             $1.000 son $1.300, así que producir una unidad te sale $2.300.
           </Callout>
 
-          <Choice options={salidas} value={salida} onChange={setSalida}>
+          <Choice options={salidas} value={salida} onValueChange={setSalida}>
             <Choice.Prompt>¿Qué hacés?</Choice.Prompt>
             <Choice.Hint>Las tres se pueden defender. Lo que se evalúa es con qué la defendés.</Choice.Hint>
           </Choice>
 
-          <OpenQuestion value={defensa} onChange={setDefensa} rows={3} maxLength={400}
+          <OpenQuestion value={defensa} onValueChange={setDefensa} rows={3} maxLength={400}
             placeholder="Subir el precio me deja afuera de lo que cobra el de al lado, así que prefiero...">
             <OpenQuestion.Prompt>¿Por qué esa y no las otras dos?</OpenQuestion.Prompt>
             <OpenQuestion.Hint>Tiene que nombrar un número del punto 4.</OpenQuestion.Hint>
@@ -328,12 +315,12 @@ export function DocumentStory() {
 
           <h2 className={cls.sourceHeading}>6. Contra quién competís</h2>
 
-          <CompareTable rows={frentes} columns={competidores} value={competencia} onChange={compararCon}>
+          <CompareTable rows={frentes} columns={competidores} value={competencia} onValueChange={setCompetencia}>
             <CompareTable.Prompt>Buscá dos emprendimientos reales que vendan algo parecido</CompareTable.Prompt>
             <CompareTable.Hint>Reales: con nombre, y con el precio que cobran de verdad.</CompareTable.Hint>
           </CompareTable>
 
-          <OpenQuestion value={diferencia} onChange={setDiferencia} rows={2} maxLength={240}
+          <OpenQuestion value={diferencia} onValueChange={setDiferencia} rows={2} maxLength={240}
             placeholder="Ninguno de los dos entrega de noche, y ahí es cuando la gente lo quiere">
             <OpenQuestion.Prompt>¿Qué tendría el tuyo que no tienen esos dos?</OpenQuestion.Prompt>
           </OpenQuestion>
@@ -345,7 +332,7 @@ export function DocumentStory() {
             Armá una publicación para la red que quieras. No alcanza con poner "comprá mi producto":
             tenés que convencer a alguien de que lo necesita.
           </p>
-          <TaskList items={tasks} onToggle={toggleTask} label="Lo que la publicación tiene que tener" />
+          <TaskList value={tasks} onValueChange={setTasks} label="Lo que la publicación tiene que tener" />
 
           <Divider />
 
@@ -358,20 +345,20 @@ export function DocumentStory() {
             </span> Y gastaste $15.000 más en publicidad y transporte.
           </p>
 
-          <NumberAnswer value={ingresos} onChange={setIngresos} unit="$" expected={160000} revealed={corregido}>
+          <NumberAnswer value={ingresos} onValueChange={setIngresos} unit="$" expected={160000} revealed={corregido}>
             <NumberAnswer.Prompt>Ingresos</NumberAnswer.Prompt>
           </NumberAnswer>
 
-          <NumberAnswer value={costos} onChange={setCostos} unit="$" expected={92000} revealed={corregido}>
+          <NumberAnswer value={costos} onValueChange={setCostos} unit="$" expected={92000} revealed={corregido}>
             <NumberAnswer.Prompt>Costo de producción</NumberAnswer.Prompt>
           </NumberAnswer>
 
-          <NumberAnswer value={ganancia} onChange={setGanancia} unit="$" expected={53000} revealed={corregido}>
+          <NumberAnswer value={ganancia} onValueChange={setGanancia} unit="$" expected={53000} revealed={corregido}>
             <NumberAnswer.Prompt>Ganancia del mes</NumberAnswer.Prompt>
             <NumberAnswer.Hint>Ingresos menos costo de producción menos los $15.000 de gastos.</NumberAnswer.Hint>
           </NumberAnswer>
 
-          <NumberAnswer value={equilibrio} onChange={setEquilibrio} unit="unidades" expected={59} revealed={corregido}>
+          <NumberAnswer value={equilibrio} onValueChange={setEquilibrio} unit="unidades" expected={59} revealed={corregido}>
             <NumberAnswer.Prompt>¿Cuántas unidades tenés que vender para recuperar los $100.000?</NumberAnswer.Prompt>
             <NumberAnswer.Hint>Con el precio y el costo de arriba, cada unidad te deja $1.700. Y no se venden unidades a medias.</NumberAnswer.Hint>
           </NumberAnswer>

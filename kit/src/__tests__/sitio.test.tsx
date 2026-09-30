@@ -2,17 +2,17 @@ import { render, screen, act } from '@testing-library/react'
 import { beforeAll, describe, expect, it } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
-import { PrefsProvider } from '@milo/ui/prefs'
+import { PrefsProvider } from '../demo/prefs/prefs'
 import { App } from '../app'
 
 const app = readFileSync(join(import.meta.dirname, '../app.tsx'), 'utf8')
 const entries = [...app.matchAll(/id: '([\w-]+)',\s*label: '([^']*)'/g)].map(m => ({ id: m[1], label: m[2] }))
-const sueltas = [
+const loose = [
   { id: 'dashboard', label: 'Dashboard' },
   { id: 'documento', label: 'Documento' },
 ]
 
-const ir = (id: string) => act(() => {
+const goTo = (id: string) => act(() => {
   location.hash = id
   dispatchEvent(new HashChangeEvent('hashchange'))
 })
@@ -33,21 +33,21 @@ describe('el sitio entero', () => {
   })
 
   it('la portada no manda a ninguna vista que no exista', () => {
-    const ids = new Set([...entries.map(e => e.id), ...sueltas.map(s => s.id)])
+    const ids = new Set([...entries.map(e => e.id), ...loose.map(s => s.id)])
     const intro = readFileSync(join(import.meta.dirname, '../intro.tsx'), 'utf8')
-    const destinos = [
+    const targets = [
       ...[...intro.matchAll(/go\('([\w-]+)'\)/g)].map(m => m[1]),
       ...[...intro.matchAll(/\{ id: '([\w-]+)',/g)].map(m => m[1]),
     ].filter(d => d !== 'intro')
-    expect(destinos.length).toBeGreaterThan(3)
-    expect(destinos.filter(d => !ids.has(d))).toEqual([])
+    expect(targets.length).toBeGreaterThan(3)
+    expect(targets.filter(d => !ids.has(d))).toEqual([])
   })
 
-  for (const { id, label } of [...entries, ...sueltas]) {
+  for (const { id, label } of [...entries, ...loose]) {
     it(`#${id} abre ${label}`, () => {
       location.hash = ''
       render(<PrefsProvider><App /></PrefsProvider>)
-      ir(id)
+      goTo(id)
       expect(
         screen.queryByText('Esa vista ya no está acá'),
         `#${id} no resuelve a ninguna vista`,

@@ -45,7 +45,7 @@
 
   .trackEmpty {
     &:is(:where(:global(.group)):focus-visible *) {
-      background-color: #0000;
+      background-color: transparent;
       box-shadow: 0 0 0 1px currentcolor;
     }
   }
@@ -97,11 +97,11 @@
     transition-timing-function: var(--ease-out);
   }
 
-  .labelOn {
+  .labelActive {
     font-weight: var(--font-weight-semibold);
   }
 
-  .labelOff {
+  .labelIdle {
     font-weight: var(--font-weight-medium);
   }
 
@@ -174,7 +174,7 @@
 
   @media (hover:hover) {
     .trackMotion:is(:where(:global(.group)):hover *) {
-        background-color: #0000;
+        background-color: transparent;
     }
   }
 

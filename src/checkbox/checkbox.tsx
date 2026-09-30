@@ -5,12 +5,12 @@ import { cx } from '../lib/cx'
 
 /** La caja de 18, la misma medida del pulgar del switch, así una fila con los dos no tiene dos tamaños de "marca". */
 export function Checkbox({
-  checked, onChange, label, disabled, id, indeterminate,
+  checked, onCheckedChange, label, disabled, id, indeterminate,
 }: {
   /** Es controlado: el estado lo lleva quien lo usa. */
   checked: boolean
   /** Recibe el valor nuevo, no el evento. */
-  onChange: (v: boolean) => void
+  onCheckedChange: (v: boolean) => void
   /** Al aria-label; si va dentro de un <label>, se omite. */
   label?: string
   /** Apagado no se toca ni recibe el foco. */
@@ -31,7 +31,7 @@ export function Checkbox({
       aria-checked={indeterminate ? 'mixed' : checked}
       aria-label={field.id ? undefined : label}
       disabled={disabled}
-      onClick={() => onChange(!checked)}
+      onClick={() => onCheckedChange(!checked)}
       className={cx(
         s.root,
         s.motion,

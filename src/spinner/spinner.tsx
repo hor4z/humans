@@ -28,8 +28,8 @@ export function Spinner({ size = 20, label = 'Cargando', on = 'surface', classNa
       <svg width={size} height={size} viewBox="0 0 24 24" className="spin" aria-hidden="true">
         <defs>
           <linearGradient id={gid} x1="0.5" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor={on === 'control' ? 'currentColor' : 'var(--blue-400)'} />
-            <stop offset="100%" stopColor={on === 'control' ? 'currentColor' : 'var(--blue-600)'} />
+            <stop offset="0%" stopColor={on === 'control' ? 'currentColor' : 'var(--spinner-arc-start)'} />
+            <stop offset="100%" stopColor={on === 'control' ? 'currentColor' : 'var(--spinner-arc-end)'} />
           </linearGradient>
         </defs>
         <circle cx="12" cy="12" r={r} fill="none" stroke={track} strokeWidth={w} />

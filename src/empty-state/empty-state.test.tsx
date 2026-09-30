@@ -48,8 +48,8 @@ describe('EmptyState · cada parte cae en su lugar', () => {
         <EmptyState.Action><button type="button">Crear</button></EmptyState.Action>
       </EmptyState>,
     )
-    const boton = screen.getByRole('button', { name: 'Crear' })
-    expect(boton).not.toHaveTextContent('Nada acá')
-    expect(boton.contains(screen.getByText('Todavía no llegó nada.'))).toBe(false)
+    const button = screen.getByRole('button', { name: 'Crear' })
+    expect(button).not.toHaveTextContent('Nada acá')
+    expect(button.contains(screen.getByText('Todavía no llegó nada.'))).toBe(false)
   })
 })

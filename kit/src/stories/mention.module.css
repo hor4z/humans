@@ -1,13 +1,4 @@
 @layer milo.app {
-  .paragraphBox {
-    max-width: 640px;
-    border-radius: var(--radius-xl);
-    border-style: solid;
-    border-width: 1px;
-    border-color: var(--border);
-    padding: 1.5rem;
-  }
-
   .paragraphText {
     font-size: var(--type-reading);
     line-height: var(--type-reading-lh);
@@ -16,15 +7,7 @@
   }
 
   .looseStrip {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
     gap: 1rem;
-    border-radius: var(--radius-xl);
-    border-style: solid;
-    border-width: 1px;
-    border-color: var(--border);
-    padding: 1.5rem;
     font-size: var(--type-reading);
     line-height: var(--type-reading-lh);
     letter-spacing: var(--type-reading-ls);

@@ -25,10 +25,22 @@ export const propsByComponent: Record<string, ComponentDoc> = {
   "Accordion.Item": {
     "props": [
       {
+        "name": "open",
+        "type": "boolean",
+        "required": false,
+        "doc": "Controlada: la abre y la cierra quien la usa."
+      },
+      {
         "name": "defaultOpen",
         "type": "boolean",
         "required": false,
-        "doc": "Arranca abierta."
+        "doc": "Arranca abierta y después se maneja sola."
+      },
+      {
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
+        "required": false,
+        "doc": "Recibe si quedó abierta, cada vez que cambia."
       },
       {
         "name": "className",
@@ -386,7 +398,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Papel sobresale y tira sombra; muted es un hueco."
       }
     ],
-    "doc": "El contenedor de radio 16: lo que se apoya en la página. Lo que flota sobre un velo (un modal, un diálogo) va en 24."
+    "doc": "El contenedor de radio 16, que es el de toda superficie: lo que se apoya en la página."
   },
   "Card.Header": {
     "props": [],
@@ -428,10 +440,10 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "El índice de la barra de la que habla la pantalla: le pesa la etiqueta."
       },
       {
-        "name": "title",
+        "name": "label",
         "type": "string",
         "required": true,
-        "doc": "Para el lector de pantalla y la tabla de abajo."
+        "doc": "El nombre del gráfico: lo lee el lector de pantalla, y es el título de la tabla que lo acompaña."
       },
       {
         "name": "height",
@@ -491,7 +503,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Es controlado: el estado lo lleva quien lo usa."
       },
       {
-        "name": "onChange",
+        "name": "onCheckedChange",
         "type": "(v: boolean) => void",
         "required": true,
         "doc": "Recibe el valor nuevo, no el evento."
@@ -546,7 +558,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Cuántos pasos van hechos. Con esto la lista es una escalera: cada paso incluye a los de arriba, así que el estado de cada uno lo decide la pieza y no el call site."
       },
       {
-        "name": "onChange",
+        "name": "onValueChange",
         "type": "(value: number) => void",
         "required": false,
         "doc": "Recibe cuántos pasos quedan hechos al tocar uno. Tocar el que ya es el último desmarca de ahí para abajo."
@@ -693,7 +705,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Lo marcado, siempre como array: así el call site no cambia de forma al pasar de una a varias."
       },
       {
-        "name": "onChange",
+        "name": "onValueChange",
         "type": "(next: string[]) => void",
         "required": true,
         "doc": "Recibe lo marcado después del toque, no el id que se tocó. Eligiendo una sola, volver a tocar la elegida no la apaga: es lo mismo que hace `Radio`, y una opción única que se puede dejar en blanco se destilda sin querer."
@@ -951,10 +963,10 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Lo cargado, por renglón y después por columna."
       },
       {
-        "name": "onChange",
-        "type": "(rowId: string, columnId: string, next: string) => void",
+        "name": "onValueChange",
+        "type": "(next: Record<string, Record<string, string>>) => void",
         "required": false,
-        "doc": "Recibe el renglón, la columna y el texto nuevo."
+        "doc": "Recibe el cuadro entero con la celda nueva adentro."
       },
       {
         "name": "lines",
@@ -1052,10 +1064,10 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Cerrado no monta nada."
       },
       {
-        "name": "onCancel",
-        "type": "() => void",
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
         "required": true,
-        "doc": "Lo llaman el botón de cancelar, el velo y Escape."
+        "doc": "Recibe `false` desde el botón de cancelar, el velo y Escape."
       },
       {
         "name": "onConfirm",
@@ -1178,10 +1190,10 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Es controlada: la rúbrica decide cuál está abierta."
       },
       {
-        "name": "onToggle",
-        "type": "() => void",
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
         "required": true,
-        "doc": "Recibe el pedido de abrir o cerrar."
+        "doc": "Recibe si tiene que quedar abierta."
       },
       {
         "name": "onRemove",
@@ -1190,13 +1202,13 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Sin esto el aspecto no se puede sacar."
       },
       {
-        "name": "level",
+        "name": "value",
         "type": "number",
         "required": false,
         "doc": "En qué nivel quedó: el índice del renglón elegido. Los renglones son excluyentes, así que es uno y no una lista."
       },
       {
-        "name": "onLevel",
+        "name": "onValueChange",
         "type": "(level: number) => void",
         "required": false,
         "doc": "Sin esto los renglones se leen y no se eligen."
@@ -1277,7 +1289,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "La fecha elegida como `AAAA-MM-DD`, o vacío."
       },
       {
-        "name": "onChange",
+        "name": "onValueChange",
         "type": "(v: string) => void",
         "required": true,
         "doc": "Recibe la fecha nueva en el mismo formato."
@@ -1306,6 +1318,13 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "type": "string",
         "required": false,
         "doc": "De qué es la fecha. Sin esto lo pone el `Field` de alrededor."
+      },
+      {
+        "name": "size",
+        "type": "'sm' | 'md' | 'lg'",
+        "required": false,
+        "def": "'md'",
+        "doc": "36 · 40 · 44, las de los demás campos."
       },
       {
         "name": "width",
@@ -1527,16 +1546,19 @@ export const propsByComponent: Record<string, ComponentDoc> = {
     "doc": "Lo que está mal. Reemplaza al hint y marca el control."
   },
   "Field.Set": {
-    "props": [
-      {
-        "name": "legend",
-        "type": "string",
-        "required": false,
-        "doc": "Cómo se llama el grupo. Un lector lo anuncia al entrar."
-      }
-    ],
+    "props": [],
     "html": "fieldset",
     "doc": "Varios campos, uno debajo del otro, con el aire del sistema."
+  },
+  "Field.Legend": {
+    "props": [
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": true
+      }
+    ],
+    "doc": "Cómo se llama un `Field.Set`. Un lector lo anuncia al entrar."
   },
   "Figure": {
     "props": [
@@ -1590,11 +1612,6 @@ export const propsByComponent: Record<string, ComponentDoc> = {
     ],
     "doc": "Lo que se lee abajo, para todo el mundo. Agrega algo que la imagen no dice sola: de dónde salió, qué hay que mirar."
   },
-  "FilterBar": {
-    "props": [],
-    "html": "div",
-    "doc": "La barra de arriba de una tabla: el buscador y los filtros, en una línea."
-  },
   "Filter": {
     "props": [
       {
@@ -1622,86 +1639,17 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Recibe la lista nueva de valores elegidos."
       }
     ],
-    "doc": "Un filtro: un botón que dice qué filtra, y un panel para elegir."
+    "doc": "Los filtros de una tabla: la barra, cada filtro y el botón que los limpia."
   },
-  "FilterReset": {
+  "Filter.Bar": {
+    "props": [],
+    "html": "div",
+    "doc": "La barra de arriba de una tabla: el buscador y los filtros, en una línea."
+  },
+  "Filter.Reset": {
     "props": [],
     "html": "button",
     "doc": "El botón que devuelve la tabla a como estaba."
-  },
-  "Folder": {
-    "props": [
-      {
-        "name": "children",
-        "type": "ReactNode",
-        "required": false,
-        "doc": "El `Folder.Label` y, si va, el `Folder.Meta`."
-      },
-      {
-        "name": "sheets",
-        "type": "2 | 3",
-        "required": false,
-        "def": "3",
-        "doc": "Cuántas hojas se abanican."
-      },
-      {
-        "name": "size",
-        "type": "number",
-        "required": false,
-        "def": "128",
-        "doc": "El ancho de la carpeta en px."
-      },
-      {
-        "name": "color",
-        "type": "string",
-        "required": false,
-        "doc": "Un token, no un hex."
-      },
-      {
-        "name": "avatars",
-        "type": "readonly { name: string; src?: string }[]",
-        "required": false,
-        "doc": "Quiénes tienen acceso, abajo a la izquierda."
-      },
-      {
-        "name": "badges",
-        "type": "ReactNode",
-        "required": false,
-        "doc": "Lo mismo pero a mano, para lo que no es una persona: un logo, un icono."
-      },
-      {
-        "name": "onClick",
-        "type": "() => void",
-        "required": false,
-        "doc": "Sin esto es un <div> y no se puede tabular."
-      },
-      {
-        "name": "className",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "doc": "Una carpeta que se abre."
-  },
-  "Folder.Label": {
-    "props": [
-      {
-        "name": "children",
-        "type": "ReactNode",
-        "required": true
-      }
-    ],
-    "doc": "El nombre, debajo."
-  },
-  "Folder.Meta": {
-    "props": [
-      {
-        "name": "children",
-        "type": "ReactNode",
-        "required": true
-      }
-    ],
-    "doc": "La línea de apoyo: \"15 archivos\"."
   },
   "Icon": {
     "props": [
@@ -2104,10 +2052,10 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Cerrado no monta nada."
       },
       {
-        "name": "onClose",
-        "type": "() => void",
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
         "required": true,
-        "doc": "Lo llaman Escape, el velo y la X del header."
+        "doc": "Recibe `false` desde Escape, el velo y la X del header."
       },
       {
         "name": "children",
@@ -2155,7 +2103,47 @@ export const propsByComponent: Record<string, ComponentDoc> = {
     "html": "div",
     "doc": "La fila de acciones, contra el borde derecho."
   },
-  "NavItemBody": {
+  "Nav": {
+    "props": [
+      {
+        "name": "label",
+        "type": "string",
+        "required": true,
+        "doc": "Va al `aria-label`: con dos navegaciones en la página, es lo que las distingue."
+      }
+    ],
+    "html": "nav",
+    "doc": "La navegación de una app: el riel y sus items."
+  },
+  "Nav.Item": {
+    "props": [
+      {
+        "name": "current",
+        "type": "boolean",
+        "required": false,
+        "doc": "Dónde estás parado: la barra de la izquierda y el `aria-current`."
+      },
+      {
+        "name": "collapsed",
+        "type": "boolean",
+        "required": false,
+        "doc": "El riel de 72: queda el icono y nada más."
+      },
+      {
+        "name": "muted",
+        "type": "boolean",
+        "required": false,
+        "doc": "El caso aparte que sí se apaga, como un item que todavía no se puede abrir."
+      }
+    ],
+    "doc": "Un item del riel. Es un botón; para un link de router van `Nav.itemClass` y `Nav.Body`."
+  },
+  "Nav.SubItem": {
+    "props": [],
+    "html": "button",
+    "doc": "Un subitem, debajo de su padre."
+  },
+  "Nav.Body": {
     "props": [
       {
         "name": "icon",
@@ -2170,12 +2158,6 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Para cuando el glifo no sale del set: la carpeta de color de un espacio."
       },
       {
-        "name": "label",
-        "type": "string",
-        "required": true,
-        "doc": "El texto del item, que se esconde al contraerse."
-      },
-      {
         "name": "badge",
         "type": "string",
         "required": false,
@@ -2186,8 +2168,38 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "type": "boolean",
         "required": false,
         "doc": "El riel de 72: queda el icono y nada más."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": true,
+        "doc": "El texto del item, que se esconde al contraerse."
       }
-    ]
+    ],
+    "doc": "Lo de adentro del item: el glifo, el texto y el contador."
+  },
+  "Nav.itemClass": {
+    "props": [
+      {
+        "name": "current",
+        "type": "boolean",
+        "required": false,
+        "doc": "Dónde estás parado: la barra de la izquierda y el `aria-current`."
+      },
+      {
+        "name": "collapsed",
+        "type": "boolean",
+        "required": false,
+        "doc": "El riel de 72: queda el icono y nada más."
+      },
+      {
+        "name": "muted",
+        "type": "boolean",
+        "required": false,
+        "doc": "El caso aparte que sí se apaga, como un item que todavía no se puede abrir."
+      }
+    ],
+    "doc": "Las clases del item, para quien lo dibuja con su propio elemento: el `NavLink` de un router."
   },
   "NumberAnswer": {
     "props": [
@@ -2198,7 +2210,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Lo escrito, tal cual, para no pelearle al que está tipeando."
       },
       {
-        "name": "onChange",
+        "name": "onValueChange",
         "type": "(next: string) => void",
         "required": false,
         "doc": "Recibe el texto nuevo. Sin esto se lee y no se responde."
@@ -2283,7 +2295,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Lo escrito hasta ahora."
       },
       {
-        "name": "onChange",
+        "name": "onValueChange",
         "type": "(next: string) => void",
         "required": false,
         "doc": "Recibe el texto nuevo. Sin esto la pregunta se lee y no se responde."
@@ -2469,86 +2481,13 @@ export const propsByComponent: Record<string, ComponentDoc> = {
       }
     ]
   },
-  "PrefsProvider": {
-    "props": [
-      {
-        "name": "children",
-        "type": "ReactNode",
-        "required": true
-      }
-    ]
-  },
-  "Prefs": {
-    "props": [
-      {
-        "name": "theme",
-        "type": "'light' | 'dark'",
-        "required": true
-      },
-      {
-        "name": "suggest",
-        "type": "boolean",
-        "required": true
-      },
-      {
-        "name": "resume",
-        "type": "boolean",
-        "required": true
-      },
-      {
-        "name": "showLens",
-        "type": "boolean",
-        "required": true
-      },
-      {
-        "name": "shareRecipes",
-        "type": "boolean",
-        "required": true
-      },
-      {
-        "name": "directory",
-        "type": "boolean",
-        "required": true
-      },
-      {
-        "name": "confirmDelete",
-        "type": "boolean",
-        "required": true
-      },
-      {
-        "name": "notifySubmission",
-        "type": "boolean",
-        "required": true
-      },
-      {
-        "name": "notifyStuck",
-        "type": "boolean",
-        "required": true
-      },
-      {
-        "name": "notifyWeekly",
-        "type": "boolean",
-        "required": true
-      },
-      {
-        "name": "notifyProduct",
-        "type": "boolean",
-        "required": true
-      },
-      {
-        "name": "sidebarCollapsed",
-        "type": "boolean",
-        "required": true
-      }
-    ]
-  },
   "Progress": {
     "props": [
       {
         "name": "children",
         "type": "ReactNode",
         "required": false,
-        "doc": "El `Progress.Hint` con el número, si va."
+        "doc": "El `Progress.Label` con lo que mide y el `Progress.Hint` con el número."
       },
       {
         "name": "value",
@@ -2566,8 +2505,8 @@ export const propsByComponent: Record<string, ComponentDoc> = {
       {
         "name": "label",
         "type": "string",
-        "required": true,
-        "doc": "Qué mide, para quien no ve la barra."
+        "required": false,
+        "doc": "Solo si no hay `Progress.Label`: el nombre de la barra para quien no la ve."
       },
       {
         "name": "tone",
@@ -2579,6 +2518,16 @@ export const propsByComponent: Record<string, ComponentDoc> = {
     ],
     "html": "div",
     "doc": "Cuánto de algo va hecho. La pista es el resto, no un segundo dato."
+  },
+  "Progress.Label": {
+    "props": [
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": true
+      }
+    ],
+    "doc": "Qué mide, arriba a la izquierda. Es el nombre de la barra."
   },
   "Progress.Hint": {
     "props": [
@@ -2630,10 +2579,10 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Es controlado."
       },
       {
-        "name": "onChange",
-        "type": "() => void",
+        "name": "onCheckedChange",
+        "type": "(checked: boolean) => void",
         "required": true,
-        "doc": "Sin valor: el radio solo se prende."
+        "doc": "Un radio solo se prende, así que siempre recibe `true`."
       },
       {
         "name": "label",
@@ -2677,7 +2626,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "El valor elegido: es controlado."
       },
       {
-        "name": "onChange",
+        "name": "onValueChange",
         "type": "(v: T) => void",
         "required": true,
         "doc": "Recibe el valor nuevo."
@@ -2868,7 +2817,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Los aspectos de la rúbrica, en su orden."
       },
       {
-        "name": "marks",
+        "name": "value",
         "type": "Record<string, Mark>",
         "required": true,
         "doc": "Lo corregido hasta ahora, por id de aspecto."
@@ -2877,25 +2826,13 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "name": "by",
         "type": "Reviewer",
         "required": false,
-        "doc": "Quién está corrigiendo ahora: firma lo que escriba."
+        "doc": "Quién está corrigiendo ahora: firma lo que escriba. Sin esto se eligen niveles pero no se comenta."
       },
       {
-        "name": "onLevel",
-        "type": "(id: string, level: number) => void",
+        "name": "onValueChange",
+        "type": "(next: Record<string, Mark>) => void",
         "required": false,
-        "doc": "Sin esto los renglones se leen y no se eligen."
-      },
-      {
-        "name": "onNote",
-        "type": "(id: string, text: string) => void",
-        "required": false,
-        "doc": "Sin esto no se puede comentar."
-      },
-      {
-        "name": "onClearNote",
-        "type": "(id: string) => void",
-        "required": false,
-        "doc": "Sin esto un comentario no se puede borrar."
+        "doc": "Recibe todo lo corregido, con el nivel o el comentario nuevo adentro. Sin esto se lee y no se toca."
       },
       {
         "name": "children",
@@ -2909,7 +2846,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "required": false
       }
     ],
-    "doc": "Cómo le fue a un trabajo contra su rúbrica: qué cumplió de cada aspecto y qué le dijeron. Sin los callbacks es la devolución que lee quien entregó; con ellos, la pantalla donde se corrige."
+    "doc": "Cómo le fue a un trabajo contra su rúbrica: qué cumplió de cada aspecto y qué le dijeron. Sin `onValueChange` es la devolución que lee quien entregó; con él, la pantalla donde se corrige."
   },
   "RubricReview.Title": {
     "props": [
@@ -2993,8 +2930,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
       {
         "name": "placeholder",
         "type": "string",
-        "required": false,
-        "def": "'Buscar…'",
+        "required": true,
         "doc": "Qué se busca, no \"Buscar…\" a secas."
       },
       {
@@ -3038,7 +2974,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "La opción elegida: es controlado."
       },
       {
-        "name": "onChange",
+        "name": "onValueChange",
         "type": "(v: T) => void",
         "required": true,
         "doc": "Recibe el valor nuevo."
@@ -3051,10 +2987,16 @@ export const propsByComponent: Record<string, ComponentDoc> = {
       },
       {
         "name": "size",
-        "type": "'xs' | 'sm' | 'md'",
+        "type": "'sm' | 'md'",
         "required": false,
         "def": "'md'",
-        "doc": "Xs va con pista transparente: dentro del header de un panel, una pista gris sobre fondo gris agrega una caja que no hace falta."
+        "doc": "36 · 40, las de los controles."
+      },
+      {
+        "name": "compact",
+        "type": "boolean",
+        "required": false,
+        "doc": "De 28 y sin pista, para el header de un panel: una pista gris sobre fondo gris agrega una caja que no hace falta. Le gana a `size`."
       },
       {
         "name": "label",
@@ -3074,7 +3016,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "El valor elegido, que es lo que se ve en el botón."
       },
       {
-        "name": "onChange",
+        "name": "onValueChange",
         "type": "(v: string) => void",
         "required": false,
         "doc": "Recibe el valor nuevo; sin esto el control es de solo lectura."
@@ -3086,6 +3028,13 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "La lista, en el orden en que se muestra."
       },
       {
+        "name": "size",
+        "type": "'sm' | 'md' | 'lg'",
+        "required": false,
+        "def": "'md'",
+        "doc": "36 · 40 · 44, las de los demás campos."
+      },
+      {
         "name": "width",
         "type": "number",
         "required": false,
@@ -3095,7 +3044,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "name": "leading",
         "type": "ReactNode",
         "required": false,
-        "doc": "Adelante del valor: un `Icon`, un `FolderIcon`, un `Avatar`, un `Spinner`."
+        "doc": "Adelante del valor: un `Icon`, un `Icon.Folder`, un `Avatar`, un `Spinner`."
       },
       {
         "name": "loading",
@@ -3121,10 +3070,10 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "En qué nivel se ubicó cada aspecto, por id."
       },
       {
-        "name": "onChange",
-        "type": "(id: string, level: number) => void",
+        "name": "onValueChange",
+        "type": "(next: Record<string, number>) => void",
         "required": true,
-        "doc": "Recibe el aspecto y el nivel elegido."
+        "doc": "Recibe todos los niveles, con el que se acaba de elegir adentro."
       },
       {
         "name": "defaultOpen",
@@ -3157,55 +3106,6 @@ export const propsByComponent: Record<string, ComponentDoc> = {
     ],
     "doc": "Cómo se llama la autoevaluación, en la cabecera."
   },
-  "SettingsModal": {
-    "props": [
-      {
-        "name": "open",
-        "type": "boolean",
-        "required": true,
-        "doc": "Cerrado no monta nada."
-      },
-      {
-        "name": "onClose",
-        "type": "() => void",
-        "required": true,
-        "doc": "Al cerrar no hay navegación: seguís donde estabas."
-      },
-      {
-        "name": "user",
-        "type": "SettingsUser",
-        "required": true,
-        "doc": "Quién está mirando los ajustes."
-      }
-    ],
-    "doc": "Los ajustes en un modal y no en una página."
-  },
-  "SettingsUser": {
-    "props": [
-      {
-        "name": "name",
-        "type": "string",
-        "required": true
-      },
-      {
-        "name": "email",
-        "type": "string",
-        "required": true
-      },
-      {
-        "name": "alias",
-        "type": "string",
-        "required": true,
-        "doc": "Cómo lo ven los aprendices."
-      },
-      {
-        "name": "school",
-        "type": "string",
-        "required": true
-      }
-    ],
-    "doc": "Quién está mirando los ajustes."
-  },
   "Sheet": {
     "props": [
       {
@@ -3215,10 +3115,10 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Cerrado no monta nada."
       },
       {
-        "name": "onClose",
-        "type": "() => void",
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
         "required": true,
-        "doc": "Lo llaman la X, el velo y Escape."
+        "doc": "Recibe `false` desde Escape, el velo y la X del header."
       },
       {
         "name": "children",
@@ -3272,7 +3172,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Es controlado."
       },
       {
-        "name": "onChange",
+        "name": "onValueChange",
         "type": "(v: number) => void",
         "required": true,
         "doc": "Recibe el número nuevo."
@@ -3360,14 +3260,14 @@ export const propsByComponent: Record<string, ComponentDoc> = {
     "props": [
       {
         "name": "variant",
-        "type": "Variante",
+        "type": "Variant",
         "required": false,
         "def": "'brand'",
         "doc": "El mismo juego que `Button`, y vale para las dos mitades."
       },
       {
         "name": "size",
-        "type": "Paso",
+        "type": "Size",
         "required": false,
         "def": "'md'",
         "doc": "La escalera de siempre."
@@ -3382,13 +3282,6 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "type": "string",
         "required": false,
         "doc": "Qué hay en el menú, para quien lo escucha. Sin esto, \"Más opciones\"."
-      },
-      {
-        "name": "width",
-        "type": "number",
-        "required": false,
-        "def": "220",
-        "doc": "El ancho del panel en px."
       },
       {
         "name": "children",
@@ -3520,10 +3413,10 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Lo cargado hasta ahora, por id de renglón."
       },
       {
-        "name": "onChange",
-        "type": "(id: string, next: SumCell) => void",
+        "name": "onValueChange",
+        "type": "(next: Record<string, SumCell>) => void",
         "required": false,
-        "doc": "Recibe el renglón entero, no la celda suelta."
+        "doc": "Recibe la tabla entera con el renglón nuevo adentro."
       },
       {
         "name": "cap",
@@ -3633,7 +3526,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Es controlado: el estado lo lleva quien lo usa."
       },
       {
-        "name": "onChange",
+        "name": "onCheckedChange",
         "type": "(v: boolean) => void",
         "required": true,
         "doc": "Recibe el valor nuevo, no el evento."
@@ -3933,16 +3826,16 @@ export const propsByComponent: Record<string, ComponentDoc> = {
   "TaskList": {
     "props": [
       {
-        "name": "items",
+        "name": "value",
         "type": "Task[]",
         "required": true,
-        "doc": "En el orden en que van."
+        "doc": "Las tareas, en el orden en que van."
       },
       {
-        "name": "onToggle",
-        "type": "(id: string, done: boolean) => void",
-        "required": true,
-        "doc": "Recibe el id y si quedó hecha."
+        "name": "onValueChange",
+        "type": "(next: Task[]) => void",
+        "required": false,
+        "doc": "Recibe la lista entera, con la tarea recién marcada adentro. Sin esto se lee y no se toca."
       },
       {
         "name": "label",
@@ -4017,6 +3910,12 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "type": "Ref<HTMLInputElement>",
         "required": false,
         "doc": "Va al `input` de adentro, para quien necesita enfocarlo desde afuera: un atajo de teclado."
+      },
+      {
+        "name": "onValueChange",
+        "type": "(v: string) => void",
+        "required": false,
+        "doc": "Recibe el texto nuevo, no el evento. El `onChange` nativo sigue andando."
       }
     ],
     "doc": "El campo de texto."
@@ -4048,6 +3947,12 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "type": "boolean",
         "required": false,
         "doc": "Muestra la cuenta abajo a la derecha. Lee `maxLength` y `minLength`; sin ninguno de los dos cuenta y nada más."
+      },
+      {
+        "name": "onValueChange",
+        "type": "(v: string) => void",
+        "required": false,
+        "doc": "Recibe el texto nuevo, no el evento. El `onChange` nativo sigue andando."
       }
     ],
     "doc": "El campo de varias líneas: la misma caja que `TextField`, estirada."
@@ -4192,6 +4097,12 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Presente lo vuelve un interruptor. Ausente es una acción que pasa y no queda."
       },
       {
+        "name": "onPressedChange",
+        "type": "(pressed: boolean) => void",
+        "required": false,
+        "doc": "Recibe el estado nuevo del interruptor."
+      },
+      {
         "name": "disabled",
         "type": "boolean",
         "required": false
@@ -4199,10 +4110,11 @@ export const propsByComponent: Record<string, ComponentDoc> = {
       {
         "name": "onClick",
         "type": "() => void",
-        "required": false
+        "required": false,
+        "doc": "La acción, cuando no es un interruptor."
       }
     ],
-    "doc": "El botón de la barra: siempre un glifo solo, y siempre `sm`. Con `pressed` es un interruptor y sin él una acción que pasa y no queda."
+    "doc": "El botón de la barra: siempre un glifo solo, y siempre `sm`. Con `pressed` es un interruptor y lo dice (\"negrita, activado\"); sin él, una acción que pasa y no queda."
   },
   "Tooltip": {
     "props": [

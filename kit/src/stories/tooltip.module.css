@@ -4,12 +4,4 @@
     align-items: center;
     justify-content: space-between;
   }
-
-  .limitsText {
-    max-width: 70ch;
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    color: var(--text-muted);
-  }
 }

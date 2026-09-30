@@ -1,5 +1,5 @@
 import { Accordion } from '@milo/ui/accordion'
-import { A11y, Example, Note, Page, Practices, Props, Section } from '../kit'
+import { A11y, Demo, Page, Practices, Props, Section } from '../kit'
 
 export function AccordionStory() {
   return (
@@ -11,53 +11,64 @@ export function AccordionStory() {
     >
       <Section
         title="Cómo se arma"
-        note="Es un `<details>` nativo, así que abre sin JavaScript y el buscador del navegador (Ctrl+F) encuentra lo que hay adentro aunque esté cerrado. El chevron gira, que es lo único que hace falta para saber si una fila está abierta."
+        note="El chevron gira, que es lo único que hace falta para saber si una fila está abierta."
       >
-        <Accordion>
-          <Accordion.Item defaultOpen>
-            <Accordion.Summary>¿Qué pasa si publico sin fecha de cierre?</Accordion.Summary>
-            <Accordion.Body>La actividad queda abierta hasta que la cierres a mano. Los estudiantes pueden seguir entregando.</Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item>
-            <Accordion.Summary>¿Puedo corregir después de cerrar?</Accordion.Summary>
-            <Accordion.Body>Sí. Cerrar solo impide entregas nuevas.</Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item>
-            <Accordion.Summary>¿Se avisa a los estudiantes?</Accordion.Summary>
-            <Accordion.Body>Al publicar, sí. Al cerrar, no: la fecha ya estaba a la vista desde el principio.</Accordion.Body>
-          </Accordion.Item>
-        </Accordion>
+        <Demo fill code={`<Accordion>
+  <Accordion.Item defaultOpen>
+    <Accordion.Summary>¿Qué pasa si publico sin fecha de cierre?</Accordion.Summary>
+    <Accordion.Body>La actividad queda abierta hasta que la cierres a mano. Los estudiantes pueden seguir entregando.</Accordion.Body>
+  </Accordion.Item>
+  <Accordion.Item>
+    <Accordion.Summary>¿Puedo corregir después de cerrar?</Accordion.Summary>
+    <Accordion.Body>Sí. Cerrar solo impide entregas nuevas.</Accordion.Body>
+  </Accordion.Item>
+  <Accordion.Item>
+    <Accordion.Summary>¿Se avisa a los estudiantes?</Accordion.Summary>
+    <Accordion.Body>Al publicar, sí. Al cerrar, no: la fecha ya estaba a la vista desde el principio.</Accordion.Body>
+  </Accordion.Item>
+</Accordion>`}>
+          <Accordion>
+            <Accordion.Item defaultOpen>
+              <Accordion.Summary>¿Qué pasa si publico sin fecha de cierre?</Accordion.Summary>
+              <Accordion.Body>La actividad queda abierta hasta que la cierres a mano. Los estudiantes pueden seguir entregando.</Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item>
+              <Accordion.Summary>¿Puedo corregir después de cerrar?</Accordion.Summary>
+              <Accordion.Body>Sí. Cerrar solo impide entregas nuevas.</Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item>
+              <Accordion.Summary>¿Se avisa a los estudiantes?</Accordion.Summary>
+              <Accordion.Body>Al publicar, sí. Al cerrar, no: la fecha ya estaba a la vista desde el principio.</Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
+        </Demo>
       </Section>
 
       <Section
         title="Varias abiertas a la vez"
         note="Ninguna fila cierra a las otras: cada `<details>` es independiente."
       >
-        <Accordion>
-          <Accordion.Item defaultOpen>
-            <Accordion.Summary>Quién ve la actividad</Accordion.Summary>
-            <Accordion.Body>Los espacios en los que la publiques, y nadie más. Cambiarlo después no avisa de nuevo.</Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item defaultOpen>
-            <Accordion.Summary>Cómo se califica</Accordion.Summary>
-            <Accordion.Body>Con la rúbrica que elijas, o con una nota suelta si no elegís ninguna.</Accordion.Body>
-          </Accordion.Item>
-        </Accordion>
-      </Section>
-
-      <Note title="Acordeón o solapas">
-        Un acordeón con tres filas que siempre se abren las tres es una lista con pasos de más: eso
-        es texto, no un acordeón. Y si las filas se comparan entre sí, van en
-        [Tabs](#tabs).
-      </Note>
-
-      <Section title="Cómo se escribe">
-        <Example code={`<Accordion>
+        <Demo fill code={`<Accordion>
   <Accordion.Item defaultOpen>
-    <Accordion.Summary>¿Puedo corregir después de cerrar?</Accordion.Summary>
-    <Accordion.Body>Sí. Cerrar solo impide entregas nuevas.</Accordion.Body>
+    <Accordion.Summary>Quién ve la actividad</Accordion.Summary>
+    <Accordion.Body>Los espacios en los que la publiques, y nadie más. Cambiarlo después no avisa de nuevo.</Accordion.Body>
   </Accordion.Item>
-</Accordion>`} />
+  <Accordion.Item defaultOpen>
+    <Accordion.Summary>Cómo se califica</Accordion.Summary>
+    <Accordion.Body>Con la rúbrica que elijas, o con una nota suelta si no elegís ninguna.</Accordion.Body>
+  </Accordion.Item>
+</Accordion>`}>
+          <Accordion>
+            <Accordion.Item defaultOpen>
+              <Accordion.Summary>Quién ve la actividad</Accordion.Summary>
+              <Accordion.Body>Los espacios en los que la publiques, y nadie más. Cambiarlo después no avisa de nuevo.</Accordion.Body>
+            </Accordion.Item>
+            <Accordion.Item defaultOpen>
+              <Accordion.Summary>Cómo se califica</Accordion.Summary>
+              <Accordion.Body>Con la rúbrica que elijas, o con una nota suelta si no elegís ninguna.</Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
+        </Demo>
       </Section>
 
       <Section title="Props">
@@ -68,6 +79,7 @@ export function AccordionStory() {
         <Practices>
           <Practices.Do>El texto que se toca va en `Accordion.Summary` y lo que aparece en `Accordion.Body`.</Practices.Do>
           <Practices.Dont>No lo uses para esconder algo que hay que leer: lo cerrado no se lee.</Practices.Dont>
+          <Practices.Dont>Tres filas que siempre se abren las tres son texto, no un acordeón. Y si las filas se comparan entre sí, van en [Tabs](#tabs).</Practices.Dont>
         </Practices>
       </Section>
 

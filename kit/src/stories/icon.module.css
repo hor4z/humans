@@ -98,22 +98,6 @@
     color: var(--text-muted);
   }
 
-  .commandNote {
-    margin-top: 0.75rem;
-    max-width: 70ch;
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    color: var(--text-muted);
-  }
-
-  .commandName {
-    font-family: var(--font-mono);
-    font-size: var(--type-meta);
-    line-height: var(--type-meta-lh);
-    letter-spacing: var(--type-meta-ls);
-  }
-
   @media (hover:hover) {
     .iconTile:hover {
         background-color: var(--surface-muted);

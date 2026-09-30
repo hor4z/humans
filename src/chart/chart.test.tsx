@@ -11,18 +11,18 @@ describe('BarChart', () => {
   ]
 
   it('nombra cada barra con lo hecho y el total', () => {
-    render(<BarChart title="Semana" data={data} />)
+    render(<BarChart label="Semana" data={data} />)
     expect(screen.getByRole('button', { name: 'Lun: 3 de 6' })).toBeInTheDocument()
   })
 
   it('deja los valores en una tabla con encabezados', () => {
-    render(<BarChart title="Semana" data={data} />)
+    render(<BarChart label="Semana" data={data} />)
     expect(screen.getByRole('table')).toHaveTextContent('Hecho')
     expect(screen.getByRole('table')).toHaveTextContent('Total')
   })
 
   it('muestra el tooltip al enfocar y lo saca al salir', async () => {
-    render(<BarChart title="Semana" data={data} />)
+    render(<BarChart label="Semana" data={data} />)
     await userEvent.tab()
     await waitFor(() => expect(screen.getByRole('tooltip')).toHaveTextContent('3'))
   })
@@ -33,7 +33,7 @@ describe('BarChart', () => {
       return (
         <>
           <button onClick={() => setD([data[0]])}>achicar</button>
-          <BarChart title="Semana" data={d} />
+          <BarChart label="Semana" data={d} />
         </>
       )
     }

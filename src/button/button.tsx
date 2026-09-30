@@ -23,7 +23,6 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   ref?: Ref<HTMLButtonElement>
 }
 
-/** Una respuesta más rápida que una transición no alcanza a leerse, así que el spinner no aparece; y una vez que apareció se queda lo que dura un cambio de contenido, para que no se vaya antes de que el ojo lo registre. Los dos números son los del sistema: `--duration-fast` y `--duration-content`. */
 const SPINNER_DELAY = 120
 const SPINNER_MIN_VISIBLE = 280
 

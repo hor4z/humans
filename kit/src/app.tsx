@@ -5,7 +5,7 @@ import { EmptyState } from '@milo/ui/empty-state'
 import { Icon } from '@milo/ui/icon'
 import { IconButton } from '@milo/ui/icon-button'
 import { cx, fold } from '@milo/ui/lib/cx'
-import { usePrefs } from '@milo/ui/prefs'
+import { usePrefs } from './demo/prefs/prefs'
 import { Search } from '@milo/ui/search'
 import { ToastProvider } from '@milo/ui/toast'
 import { Intro } from './intro'
@@ -95,13 +95,20 @@ import { PopoverStory } from './stories/popover'
 import { TooltipStory } from './stories/tooltip'
 
 type Story = { id: string; label: string; render: () => ReactNode; alias?: string; children?: Story[] }
-type Group = { label: string; stories: Story[] }
+type Section = 'system' | 'blocks'
+type Group = { label: string; section: Section; stories: Story[] }
+
+const sections: { key: Section; label: string }[] = [
+  { key: 'system', label: 'Sistema' },
+  { key: 'blocks', label: 'Bloques' },
+]
 
 const INTRO = 'intro'
 
 const groups: Group[] = [
   {
     label: 'Fundamentos',
+    section: 'system',
     stories: [
       { id: 'accessibility', label: 'Accesibilidad', alias: 'accesibilidad a11y contraste teclado foco lector pantalla wcag', render: () => <AccessibilitySection /> },
       { id: 'typography', label: 'Tipografía', alias: 'tipografía fuente texto escala pesos interlineado tracking familia inter legibilidad', render: () => <TypographySection /> },
@@ -120,26 +127,15 @@ const groups: Group[] = [
   },
   {
     label: 'Mascotas',
+    section: 'system',
     stories: [
       { id: 'otto', label: 'Otto', alias: 'otto mascota personaje nutria hurón ilustración', render: () => <OttoStory /> },
       { id: 'amelia', label: 'Amelia', alias: 'amelia mascota personaje chica estudiante ilustración', render: () => <AmeliaStory /> },
     ],
   },
   {
-    label: 'Editor',
-    stories: [
-      { id: 'toolbar', label: 'Barra de formato', alias: 'Toolbar barra herramientas formato negrita cursiva editor texto enriquecido', render: () => <ToolbarStory /> },
-      { id: 'command-menu', label: 'Paleta de comandos', alias: 'CommandMenu comandos paleta barra slash menú buscar bloques editor notion', render: () => <CommandMenuStory /> },
-      { id: 'callout', label: 'Bloque destacado', alias: 'Callout bloque destacado aclaración pista recordar contenido editor', render: () => <CalloutStory /> },
-      { id: 'figure', label: 'Imagen con pie', alias: 'Figure imagen figura pie epígrafe foto alt caption editor', render: () => <FigureStory /> },
-      { id: 'quote', label: 'Cita', alias: 'cita blockquote fuente atribución textual editor', render: () => <QuoteStory /> },
-      { id: 'task-list', label: 'Lista de tareas', alias: 'TaskList tareas checklist pasos pendientes marcar hacer editor', render: () => <TaskListStory /> },
-      { id: 'checklist', label: 'Lista de pasos', alias: 'Checklist primeros pasos onboarding progreso acordeón plegable checklist', render: () => <ChecklistStory /> },
-      { id: 'mention', label: 'Mención', alias: 'Mention mención arroba persona espacio referencia enlace texto editor', render: () => <MentionStory /> },
-    ],
-  },
-  {
     label: 'Acciones',
+    section: 'system',
     stories: [
       {
         id: 'button',
@@ -160,6 +156,7 @@ const groups: Group[] = [
   },
   {
     label: 'Formularios',
+    section: 'system',
     stories: [
       { id: 'field', label: 'Campo', alias: 'formulario campo etiqueta ayuda error obligatorio fieldset', render: () => <FieldStory /> },
       { id: 'sheet', label: 'Panel lateral', alias: 'Sheet panel lateral drawer formulario largo costado', render: () => <SheetStory /> },
@@ -168,9 +165,6 @@ const groups: Group[] = [
       { id: 'textarea', label: 'Área de texto', alias: 'Textarea campo multilínea texto largo', render: () => <TextareaStory /> },
       { id: 'select', label: 'Selector', alias: 'Select combo desplegable elegir opción', render: () => <SelectStory /> },
       { id: 'date-picker', label: 'Selector de fecha', alias: 'DatePicker fecha calendario vencimiento día mes entrega cuándo almanaque', render: () => <DatePickerStory /> },
-      { id: 'choice', label: 'Pregunta con opciones', alias: 'Choice opciones multiple choice pregunta respuesta elegir correcta quiz', render: () => <ChoiceStory /> },
-      { id: 'open-question', label: 'Pregunta abierta', alias: 'OpenQuestion pregunta abierta respuesta escribir texto libre consigna', render: () => <OpenQuestionStory /> },
-      { id: 'number-answer', label: 'Respuesta numérica', alias: 'NumberAnswer número cálculo cuenta promedio métrica unidad tolerancia margen', render: () => <NumberAnswerStory /> },
       { id: 'checkbox', label: 'Casilla', alias: 'Checkbox casilla marcar tilde', render: () => <CheckboxStory /> },
       { id: 'radio', label: 'Opción única', alias: 'Radio opción única elegir', render: () => <RadioStory /> },
       { id: 'switch', label: 'Interruptor', alias: 'Switch toggle interruptor prender apagar', render: () => <SwitchStory /> },
@@ -180,6 +174,7 @@ const groups: Group[] = [
   },
   {
     label: 'Navegación',
+    section: 'system',
     stories: [
       { id: 'tabs', label: 'Solapas', alias: 'Tabs solapas pestañas paneles', render: () => <TabsStory /> },
       { id: 'accordion', label: 'Acordeón', alias: 'Accordion acordeón desplegable details preguntas frecuentes', render: () => <AccordionStory /> },
@@ -191,14 +186,73 @@ const groups: Group[] = [
   },
   {
     label: 'Datos',
+    section: 'system',
     stories: [
       { id: 'table', label: 'Tabla', alias: 'Table tabla grilla filas columnas datos', render: () => <TableStory /> },
       { id: 'list', label: 'Lista', alias: 'lista filas acciones', render: () => <ListStory /> },
       { id: 'bar-chart', label: 'Gráfico de barras', alias: 'BarChart gráfico barras chart datos progreso visualización ejes leyenda tabla', render: () => <ChartStory /> },
-      { id: 'sum-table', label: 'Tabla que se suma', alias: 'SumTable presupuesto suma total costeo materiales tope capital gasto', render: () => <SumTableStory /> },
-      { id: 'compare-table', label: 'Cuadro comparativo', alias: 'CompareTable comparar cuadro grilla competencia contrastar completar', render: () => <CompareTableStory /> },
       { id: 'column-picker', label: 'Selector de columnas', alias: 'ColumnPicker columnas tabla elegir mostrar ocultar', render: () => <ColumnPickerStory /> },
       { id: 'indicator', label: 'Indicador', alias: 'Indicator indicador badge marca punto contador aviso notificación campana', render: () => <IndicatorStory /> },
+      { id: 'progress', label: 'Barra de progreso', alias: 'Progress progreso barra porcentaje avance', render: () => <ProgressStory /> },
+      { id: 'skeleton', label: 'Esqueleto', alias: 'Skeleton esqueleto carga hueco placeholder', render: () => <SkeletonStory /> },
+      { id: 'avatar', label: 'Avatar', alias: 'Avatar foto persona iniciales grupo', render: () => <AvatarStory /> },
+      { id: 'chip', label: 'Ficha', alias: 'Chip etiqueta pill categoría badge marca estado tono', render: () => <ChipStory /> },
+    ],
+  },
+  {
+    label: 'Avisos',
+    section: 'system',
+    stories: [
+      { id: 'alert', label: 'Aviso', alias: 'alerta aviso error banner mensaje', render: () => <AlertStory /> },
+      { id: 'toast', label: 'Notificación', alias: 'toast notificación aviso pasajero deshacer', render: () => <ToastStory /> },
+      { id: 'empty-state', label: 'Vacío', alias: 'EmptyState vacío sin resultados nada', render: () => <EmptyStateStory /> },
+      { id: 'spinner', label: 'Girador', alias: 'Spinner cargando loading esperar', render: () => <SpinnerStory /> },
+      { id: 'tooltip', label: 'Etiqueta flotante', alias: 'Tooltip ayuda globo hover', render: () => <TooltipStory /> },
+    ],
+  },
+  {
+    label: 'Superficies',
+    section: 'system',
+    stories: [
+      { id: 'card', label: 'Tarjeta', alias: 'tarjeta card panel superficie grilla', render: () => <CardStory /> },
+      { id: 'row', label: 'Fila', alias: 'Row fila ajuste panel preferencia', render: () => <RowStory /> },
+      { id: 'modal', label: 'Modal', alias: 'Modal diálogo ventana emergente', render: () => <ModalStory /> },
+      { id: 'confirm', label: 'Confirmación', alias: 'ConfirmDialog confirmar borrar peligro pregunta', render: () => <ConfirmStory /> },
+      { id: 'popover', label: 'Panel anclado', alias: 'Popover panel anclado flotante', render: () => <PopoverStory /> },
+      { id: 'divider', label: 'Separador', alias: 'Divider separador línea corte', render: () => <DividerStory /> },
+      { id: 'link', label: 'Enlace', alias: 'Link enlace hipervínculo subrayado externo', render: () => <LinkStory /> },
+      { id: 'kbd', label: 'Tecla', alias: 'Kbd tecla atajo teclado', render: () => <KbdStory /> },
+    ],
+  },
+  {
+    label: 'Editor',
+    section: 'blocks',
+    stories: [
+      { id: 'toolbar', label: 'Barra de formato', alias: 'Toolbar barra herramientas formato negrita cursiva editor texto enriquecido', render: () => <ToolbarStory /> },
+      { id: 'command-menu', label: 'Paleta de comandos', alias: 'CommandMenu comandos paleta barra slash menú buscar bloques editor notion', render: () => <CommandMenuStory /> },
+      { id: 'callout', label: 'Bloque destacado', alias: 'Callout bloque destacado aclaración pista recordar contenido editor', render: () => <CalloutStory /> },
+      { id: 'figure', label: 'Imagen con pie', alias: 'Figure imagen figura pie epígrafe foto alt caption editor', render: () => <FigureStory /> },
+      { id: 'quote', label: 'Cita', alias: 'cita blockquote fuente atribución textual editor', render: () => <QuoteStory /> },
+      { id: 'task-list', label: 'Lista de tareas', alias: 'TaskList tareas checklist pasos pendientes marcar hacer editor', render: () => <TaskListStory /> },
+      { id: 'checklist', label: 'Lista de pasos', alias: 'Checklist primeros pasos onboarding progreso acordeón plegable checklist', render: () => <ChecklistStory /> },
+      { id: 'mention', label: 'Mención', alias: 'Mention mención arroba persona espacio referencia enlace texto editor', render: () => <MentionStory /> },
+    ],
+  },
+  {
+    label: 'Consigna',
+    section: 'blocks',
+    stories: [
+      { id: 'choice', label: 'Pregunta con opciones', alias: 'Choice opciones multiple choice pregunta respuesta elegir correcta quiz', render: () => <ChoiceStory /> },
+      { id: 'open-question', label: 'Pregunta abierta', alias: 'OpenQuestion pregunta abierta respuesta escribir texto libre consigna', render: () => <OpenQuestionStory /> },
+      { id: 'number-answer', label: 'Respuesta numérica', alias: 'NumberAnswer número cálculo cuenta promedio métrica unidad tolerancia margen', render: () => <NumberAnswerStory /> },
+      { id: 'compare-table', label: 'Cuadro comparativo', alias: 'CompareTable comparar cuadro grilla competencia contrastar completar', render: () => <CompareTableStory /> },
+      { id: 'sum-table', label: 'Tabla que se suma', alias: 'SumTable presupuesto suma total costeo materiales tope capital gasto', render: () => <SumTableStory /> },
+    ],
+  },
+  {
+    label: 'Rúbrica',
+    section: 'blocks',
+    stories: [
       {
         id: 'rubric',
         label: 'Rúbrica',
@@ -210,34 +264,19 @@ const groups: Group[] = [
           { id: 'criterion-card', label: 'Tarjeta de aspecto', alias: 'CriterionCard aspecto aspecto tarjeta plegable niveles descriptores rúbrica', render: () => <CriterionCardStory /> },
         ],
       },
-      { id: 'progress', label: 'Barra de progreso', alias: 'Progress progreso barra porcentaje avance', render: () => <ProgressStory /> },
+    ],
+  },
+  {
+    label: 'Medios',
+    section: 'blocks',
+    stories: [
       { id: 'audio-player', label: 'Reproductor de audio', alias: 'AudioPlayer audio reproductor sonido onda waveform grabación consigna mp3', render: () => <AudioPlayerStory /> },
-      { id: 'skeleton', label: 'Esqueleto', alias: 'Skeleton esqueleto carga hueco placeholder', render: () => <SkeletonStory /> },
-      { id: 'avatar', label: 'Avatar', alias: 'Avatar foto persona iniciales grupo', render: () => <AvatarStory /> },
-      { id: 'chip', label: 'Ficha', alias: 'Chip etiqueta pill categoría badge marca estado tono', render: () => <ChipStory /> },
     ],
   },
   {
-    label: 'Avisos',
+    label: 'Del sitio',
+    section: 'blocks',
     stories: [
-      { id: 'alert', label: 'Aviso', alias: 'alerta aviso error banner mensaje', render: () => <AlertStory /> },
-      { id: 'toast', label: 'Notificación', alias: 'toast notificación aviso pasajero deshacer', render: () => <ToastStory /> },
-      { id: 'empty-state', label: 'Vacío', alias: 'EmptyState vacío sin resultados nada', render: () => <EmptyStateStory /> },
-      { id: 'spinner', label: 'Girador', alias: 'Spinner cargando loading esperar', render: () => <SpinnerStory /> },
-      { id: 'tooltip', label: 'Etiqueta flotante', alias: 'Tooltip ayuda globo hover', render: () => <TooltipStory /> },
-    ],
-  },
-  {
-    label: 'Superficies',
-    stories: [
-      { id: 'card', label: 'Tarjeta', alias: 'tarjeta card panel superficie grilla', render: () => <CardStory /> },
-      { id: 'row', label: 'Fila', alias: 'Row fila ajuste panel preferencia', render: () => <RowStory /> },
-      { id: 'modal', label: 'Modal', alias: 'Modal diálogo ventana emergente', render: () => <ModalStory /> },
-      { id: 'confirm', label: 'Confirmación', alias: 'ConfirmDialog confirmar borrar peligro pregunta', render: () => <ConfirmStory /> },
-      { id: 'popover', label: 'Panel anclado', alias: 'Popover panel anclado flotante', render: () => <PopoverStory /> },
-      { id: 'divider', label: 'Separador', alias: 'Divider separador línea corte', render: () => <DividerStory /> },
-      { id: 'link', label: 'Enlace', alias: 'Link enlace hipervínculo subrayado externo', render: () => <LinkStory /> },
-      { id: 'kbd', label: 'Tecla', alias: 'Kbd tecla atajo teclado', render: () => <KbdStory /> },
       { id: 'folder', label: 'Carpeta', alias: 'Folder carpeta espacio color', render: () => <FolderStory /> },
     ],
   },
@@ -360,43 +399,58 @@ export function App() {
 
           <div className={cls.railScroll}>
             <SideLink active={current === INTRO} onClick={() => go(INTRO)} icon="deployed_code">Introducción</SideLink>
-            <SideLink active={current === 'dashboard'} onClick={() => go('dashboard')} icon="dashboard">Dashboard</SideLink>
-            <SideLink active={current === 'documento'} onClick={() => go('documento')} icon="description">Documento</SideLink>
-
-            {filtered.map(g => (
-              <div key={g.label} className={cls.navGroup}>
-                <div className={cls.navGroupLabel}>
-                  {g.label}
+            {sections.map(section => {
+              const shown = filtered.some(g => g.section === section.key)
+              if (!shown) return null
+              return (
+                <div key={section.key} className={cls.railSection}>
+                  <div className={cls.railSectionLabel}>{section.label}</div>
+                  {filtered.filter(g => g.section === section.key).map(g => (
+                    <div key={g.label} className={cls.navGroup}>
+                      <div className={cls.navGroupLabel}>
+                        {g.label}
+                      </div>
+                      <div className={cls.navGroupItems}>
+                        {g.stories.map(s => {
+                          const desplegado = abiertos.includes(s.id)
+                            || Boolean(s.children?.some(c => c.id === current))
+                            || Boolean(query && s.children?.length)
+                          return (
+                            <Fragment key={s.id}>
+                              <SideLink
+                                active={current === s.id}
+                                expanded={s.children?.length ? desplegado : undefined}
+                                onClick={() => {
+                                  if (s.children?.length) {
+                                    setAbiertos(a => a.includes(s.id) ? a.filter(x => x !== s.id) : [...a, s.id])
+                                  }
+                                  go(s.id)
+                                }}
+                                piece
+                              >
+                                {s.label}
+                              </SideLink>
+                              {desplegado && s.children?.map(c => (
+                                <SideLink key={c.id} active={current === c.id} onClick={() => go(c.id)} piece sub>{c.label}</SideLink>
+                              ))}
+                            </Fragment>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  ))}
+                  {section.key === 'blocks' && !query && (
+                    <div className={cls.navGroup}>
+                      <div className={cls.navGroupLabel}>En uso</div>
+                      <div className={cls.navGroupItems}>
+                        <SideLink active={current === 'dashboard'} onClick={() => go('dashboard')} icon="dashboard">Dashboard</SideLink>
+                        <SideLink active={current === 'documento'} onClick={() => go('documento')} icon="description">Documento</SideLink>
+                      </div>
+                    </div>
+                  )}
                 </div>
-                <div className={cls.navGroupItems}>
-                  {g.stories.map(s => {
-                    const desplegado = abiertos.includes(s.id)
-                      || Boolean(s.children?.some(c => c.id === current))
-                      || Boolean(query && s.children?.length)
-                    return (
-                      <Fragment key={s.id}>
-                        <SideLink
-                          active={current === s.id}
-                          expanded={s.children?.length ? desplegado : undefined}
-                          onClick={() => {
-                            if (s.children?.length) {
-                              setAbiertos(a => a.includes(s.id) ? a.filter(x => x !== s.id) : [...a, s.id])
-                            }
-                            go(s.id)
-                          }}
-                          piece
-                        >
-                          {s.label}
-                        </SideLink>
-                        {desplegado && s.children?.map(c => (
-                          <SideLink key={c.id} active={current === c.id} onClick={() => go(c.id)} piece sub>{c.label}</SideLink>
-                        ))}
-                      </Fragment>
-                    )
-                  })}
-                </div>
-              </div>
-            ))}
+              )
+            })}
 
             {filtered.length === 0 && (
               <p className={cls.railEmpty}>Nada con "{query}".</p>
@@ -484,7 +538,7 @@ function SideLink({ active, onClick, icon, piece, sub, expanded, children }: {
         active ? cls.navItemActive : cls.navItemIdle,
       )}
     >
-      {icon && <Icon name={icon} size={16} className={active ? undefined : 'icon-muted'} />}
+      {icon && <Icon name={icon} size={16} weight={400} className={cls.navIcon} />}
       <span className={cls.navItemLabel}>{children}</span>
       {expanded !== undefined && (
         <Icon

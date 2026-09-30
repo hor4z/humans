@@ -15,12 +15,12 @@ const widths = { sm: 420, md: 620, lg: 820 } as const
 export type ModalSize = keyof typeof widths
 
 function Root({
-  open, onClose, children, size = 'md', label,
+  open, onOpenChange, children, size = 'md', label,
 }: {
   /** Cerrado no monta nada. */
   open: boolean
-  /** Lo llaman Escape, el velo y la X del header. */
-  onClose: () => void
+  /** Recibe `false` desde Escape, el velo y la X del header. */
+  onOpenChange: (open: boolean) => void
   children: ReactNode
   /** `sm` una pregunta o un campo, `md` el de siempre, `lg` lo que necesita dos columnas. */
   size?: ModalSize
@@ -29,6 +29,7 @@ function Root({
 }) {
   const panel = useRef<HTMLDivElement>(null)
   const titleId = useId()
+  const onClose = () => onOpenChange(false)
   useScrollLock(open)
   useEscape(open, onClose)
   useFocusTrap(open, panel)

@@ -1,6 +1,6 @@
 import { CopyButton } from '@milo/ui/copy-button'
 import { TextField } from '@milo/ui/text-field'
-import { A11y, Example, Page, Panel, Practices, Props, Section, Variant } from '../kit'
+import { A11y, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function CopyButtonStory() {
   return (
@@ -16,12 +16,19 @@ import { TextField } from '@milo/ui/text-field'"
         note="Va pegado a lo que copia. Si el navegador no deja copiar, el botón no dice que copió."
       >
         <Panel>
-          <Variant name="sm · md · lg" note="`sm` adentro de un campo o de una fila, `md` suelto.">
+          <Variant name="sm · md · lg" note="`sm` adentro de un campo o de una fila, `md` suelto." code={`<CopyButton size="sm" value="npm install @milo/ui" />
+<CopyButton value="npm install @milo/ui" />
+<CopyButton size="lg" value="npm install @milo/ui" />`}>
             <CopyButton size="sm" value="npm install @milo/ui" />
             <CopyButton value="npm install @milo/ui" />
             <CopyButton size="lg" value="npm install @milo/ui" />
           </Variant>
-          <Variant name="adentro del campo" note="El caso más común: un enlace para compartir, que se lee y se copia sin seleccionarlo a mano.">
+          <Variant name="adentro del campo" note="El caso más común: un enlace para compartir, que se lee y se copia sin seleccionarlo a mano." code={`<TextField
+  readOnly
+  value="https://milo.escuela/act/fracciones-equivalentes"
+  aria-label="Enlace para compartir"
+  suffix={<CopyButton size="sm" value="https://milo.escuela/act/fracciones-equivalentes" label="Copiar el enlace" />}
+/>`}>
             <TextField
               readOnly
               value="https://milo.escuela/act/fracciones-equivalentes"
@@ -30,10 +37,6 @@ import { TextField } from '@milo/ui/text-field'"
             />
           </Variant>
         </Panel>
-      </Section>
-
-      <Section title="Cómo se escribe">
-        <Example code={`<CopyButton value="npm install @milo/ui" label="Copiar el comando" />`} />
       </Section>
 
       <Section title="Props">

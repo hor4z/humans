@@ -36,20 +36,4 @@
     max-width: 42rem;
     padding: 1.5rem;
   }
-
-  .tooltipText {
-    max-width: 70ch;
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    color: var(--text-muted);
-  }
-
-  .limitsText {
-    max-width: 70ch;
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    color: var(--text-muted);
-  }
 }

@@ -1,27 +1,39 @@
 import { useState } from 'react'
-import { OpenQuestion } from '@milo/ui/open-question'
-import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
+import { OpenQuestion } from '@milo/ui/blocks/task/open-question'
+import { A11y, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 export function OpenQuestionStory() {
-  const [texto, setTexto] = useState('')
+  const [text, setText] = useState('')
 
   return (
     <Page
       title="OpenQuestion"
-      kind="Formularios"
-      imports="import { OpenQuestion } from '@milo/ui/open-question'"
+      kind="Consigna"
+      imports="import { OpenQuestion } from '@milo/ui/blocks/task/open-question'"
       lead="Una pregunta que se responde escribiendo. No la corrige nadie solo: lo que se escribe acá lo lee una persona, y por eso la pieza no tiene noción de respuesta correcta."
     >
       <Section
         title="Respondiendo"
-        note="El enunciado va como hijo porque lo escribe una persona; lo que se escribe abajo es dato y va por `value`. El tope no frena la tecla en silencio: el campo avisa recién cuando quedan pocos caracteres."
+        note="El tope no frena la tecla en silencio: el campo avisa recién cuando quedan pocos caracteres."
       >
         <Panel>
-          <Variant name="en blanco" note="El `placeholder` es una pista de por dónde empezar, nunca la respuesta.">
+          <Variant
+            name="en blanco"
+            code={`<OpenQuestion
+  value={text}
+  onValueChange={setText}
+  rows={3}
+  maxLength={240}
+  placeholder="Porque ahí se junta todo el curso y además está el eco del techo"
+>
+  <OpenQuestion.Prompt>¿Por qué ese y no otro?</OpenQuestion.Prompt>
+  <OpenQuestion.Hint>Dos renglones alcanzan.</OpenQuestion.Hint>
+</OpenQuestion>`}
+          >
             <Stack width="sm">
               <OpenQuestion
-                value={texto}
-                onChange={setTexto}
+                value={text}
+                onValueChange={setText}
                 rows={3}
                 maxLength={240}
                 placeholder="Porque ahí se junta todo el curso y además está el eco del techo"
@@ -31,14 +43,26 @@ export function OpenQuestionStory() {
               </OpenQuestion>
             </Stack>
           </Variant>
-          <Variant name="ya entregada" note="Sin `onChange` la pregunta se lee y no se escribe, así que una consigna cerrada no necesita pasar `readOnly` además.">
+          <Variant
+            name="ya entregada"
+            note="Sin `onValueChange` se lee y no se escribe."
+            code={`<OpenQuestion value="Porque el buffet junta a los dos turnos al mismo tiempo y el techo es de chapa.">
+  <OpenQuestion.Prompt>¿Por qué ese y no otro?</OpenQuestion.Prompt>
+</OpenQuestion>`}
+          >
             <Stack width="sm">
               <OpenQuestion value="Porque el buffet junta a los dos turnos al mismo tiempo y el techo es de chapa.">
                 <OpenQuestion.Prompt>¿Por qué ese y no otro?</OpenQuestion.Prompt>
               </OpenQuestion>
             </Stack>
           </Variant>
-          <Variant name="sin responder" note="Una caja en blanco no se distingue de un campo que nadie tocó, así que lo dice con todas las letras.">
+          <Variant
+            name="sin responder"
+            note="Una caja en blanco no se distingue de un campo que nadie tocó, así que lo dice con todas las letras."
+            code={`<OpenQuestion value="">
+  <OpenQuestion.Prompt>¿Por qué ese y no otro?</OpenQuestion.Prompt>
+</OpenQuestion>`}
+          >
             <Stack width="sm">
               <OpenQuestion value="">
                 <OpenQuestion.Prompt>¿Por qué ese y no otro?</OpenQuestion.Prompt>
@@ -51,13 +75,6 @@ export function OpenQuestionStory() {
           lo que se está evaluando es si adivinaste las palabras: para lo que se corrige solo está
           `Choice`, y para lo que mira una persona está la rúbrica.
         </Note>
-      </Section>
-
-      <Section title="Cómo se escribe">
-        <Example code={`<OpenQuestion value={texto} onChange={setTexto} rows={3} maxLength={240}>
-  <OpenQuestion.Prompt>¿Por qué ese y no otro?</OpenQuestion.Prompt>
-  <OpenQuestion.Hint>Dos renglones alcanzan.</OpenQuestion.Hint>
-</OpenQuestion>`} />
       </Section>
 
       <Section title="Props">

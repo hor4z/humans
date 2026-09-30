@@ -1,7 +1,7 @@
 import cls from './time.module.css'
 import { Table } from '@milo/ui/table'
 import { clock, day, dayAndTime, duration, machineTime, timeAgo, zoneLabel } from '@milo/ui/lib/time'
-import { A11y, Note, Page, Panel, Rich, Section, Variant } from '../kit'
+import { A11y, Note, Page, Panel, Rich, Section, Specimen } from '../kit'
 
 const AR = 'America/Argentina/Buenos_Aires'
 const now = new Date('2026-03-09T15:00:00-03:00')
@@ -53,7 +53,7 @@ export function TimeSection() {
         note="Todo esto sale de las mismas funciones, con el ahora fijo en el 9 de marzo de 2026 a las 15:00 para que la vista no cambie sola."
       >
         <Panel>
-          <Variant name="cuánto hace">
+          <Specimen name="cuánto hace">
             <Sample>{timeAgo(ago(20_000), { now: now })}</Sample>
             <Sample>{timeAgo(ago(60_000), { now: now })}</Sample>
             <Sample>{timeAgo(ago(20 * 60_000), { now: now })}</Sample>
@@ -61,18 +61,18 @@ export function TimeSection() {
             <Sample>{timeAgo(ago(24 * 3_600_000), { now: now })}</Sample>
             <Sample>{timeAgo(ago(3 * 24 * 3_600_000), { now: now })}</Sample>
             <Sample>{timeAgo(ago(23 * 24 * 3_600_000), { now: now, zone: AR })}</Sample>
-          </Variant>
-          <Variant name="fecha y reloj">
+          </Specimen>
+          <Specimen name="fecha y reloj">
             <Sample>{clock('2026-03-09T23:59:00-03:00', { zone: AR })}</Sample>
             <Sample>{day('2026-03-09T12:00:00-03:00', { zone: AR })}</Sample>
             <Sample>{dayAndTime('2026-03-09T23:59:00-03:00', { zone: AR })}</Sample>
             <Sample>{day('2026-03-09T12:00:00-03:00', { zone: AR, full: true })}</Sample>
-          </Variant>
-          <Variant name="duración">
+          </Specimen>
+          <Specimen name="duración">
             <Sample>{duration(7)}</Sample>
             <Sample>{duration(90)}</Sample>
             <Sample>{duration(3661)}</Sample>
-          </Variant>
+          </Specimen>
         </Panel>
       </Section>
 

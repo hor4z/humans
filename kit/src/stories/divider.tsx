@@ -3,7 +3,7 @@ import { Avatar } from '@milo/ui/avatar'
 import { Divider } from '@milo/ui/divider'
 import { Icon } from '@milo/ui/icon'
 import { Kbd } from '@milo/ui/kbd'
-import { A11y, Example, Footnote, Frame, Page, Panel, Practices, Props, Section, Variant } from '../kit'
+import { A11y, Footnote, Frame, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function DividerStory() {
   return (
@@ -13,19 +13,22 @@ export function DividerStory() {
       imports="import { Divider } from '@milo/ui/divider'"
       lead="Un píxel de `--border`, y nada más. Existe como pieza porque la línea estaba escrita a mano en varios lugares y no todas con el mismo gris: cuál es la línea del sistema es una decisión, y una decisión escrita seis veces se desincroniza a la quinta."
     >
-      <Section
-        title="Las dos orientaciones"
-        note="El vertical lleva `self-stretch` adentro: sin eso, en una fila con `items-center` mide cero y no se ve. Es el caso que rompe siempre, así que lo resuelve la pieza y no el call site."
-      >
+      <Section title="Las dos orientaciones">
         <Panel>
-          <Variant name="horizontal">
+          <Variant name="horizontal" code={`<div>Doce actividades en siete espacios</div>
+<Divider />
+<div>Cuatro esperan que alguien las mire</div>`}>
             <Frame width="md">
               <div className={cls.aboveText}>Doce actividades en siete espacios</div>
               <Divider />
               <div className={cls.belowText}>Cuatro esperan que alguien las mire</div>
             </Frame>
           </Variant>
-          <Variant name="vertical">
+          <Variant name="vertical" code={`<span>Matemática</span>
+<Divider orientation="vertical" />
+<span>4.º A</span>
+<Divider orientation="vertical" />
+<span>18 entregas</span>`}>
             <div className={cls.inlineStrip}>
               <span className={cls.inlineSubject}>Matemática</span>
               <Divider orientation="vertical" />
@@ -39,10 +42,15 @@ export function DividerStory() {
 
       <Section
         title="Entre piezas"
-        note="Separar dos cosas que son del mismo tipo. Cuando lo que hay abajo es de otro tipo, el cambio de fondo dice más que una línea: el hueco apagado de un panel, la cabecera de una tabla."
+        note="Entre dos cosas del mismo tipo. Cuando lo de abajo es de otro tipo, el cambio de fondo dice más que una línea."
       >
         <Panel>
-          <Variant name="una barra">
+          <Variant name="una barra" code={`<Icon name="search" size={18} className="icon-muted" />
+<span>Buscar</span>
+<Divider orientation="vertical" className={s.beforeShortcut} />
+<Kbd>⌘K</Kbd>
+<Divider orientation="vertical" className={s.afterShortcut} />
+<Avatar name="Horacio Rivero" size={24} />`}>
             <div className={`${cls.fakeToolbar} bg-surface`}>
               <Icon name="search" size={18} className="icon-muted" />
               <span className={cls.toolbarLabel}>Buscar</span>
@@ -59,12 +67,6 @@ export function DividerStory() {
           el Divider lleva <code className={cls.attributeName}>data-divider</code>, que es de lo único que
           se agarra el padre para hacerla.
         </Footnote>
-      </Section>
-
-      <Section title="Cómo se escribe">
-        <Example code={`<Divider />
-
-<Divider orientation="vertical" />`} />
       </Section>
 
       <Section title="Props">

@@ -1,9 +1,7 @@
 import cls from './avatar.module.css'
 import { Avatar } from '@milo/ui/avatar'
-import { A11y, Demo, Example, Page, Practices, Props, Section } from '../kit'
-
-const face = (n: number) => `/avatars/${String(n).padStart(2, '0')}.webp`
-const person = (name: string, photo?: number) => ({ name, src: photo ? face(photo) : undefined })
+import { A11y, Demo, Grid, Page, Practices, Props, Section } from '../kit'
+import { face, person } from '../fixtures'
 
 export function AvatarStory() {
   return (
@@ -15,9 +13,13 @@ export function AvatarStory() {
     >
       <Section
         title="Sin foto"
-        note="Círculo pastel con la inicial en el mismo tono, que es la familia de las marcas de fila. El color sale del nombre, así que la misma persona tiene siempre el mismo."
+        note="Círculo pastel con la inicial en el mismo tono, que es la familia de las marcas de fila."
       >
-        <Demo>
+        <Demo code={`<Avatar name="Horacio Rivero" size={24} />
+<Avatar name="Horacio Rivero" size={34} />
+<Avatar name="Horacio Rivero" size={44} />
+<Avatar name="Melina Duarte" size={44} />
+<Avatar name="Equipo Timonel" size={44} />`}>
           <Avatar name="Horacio Rivero" size={24} />
           <Avatar name="Horacio Rivero" size={34} />
           <Avatar name="Horacio Rivero" size={44} />
@@ -28,9 +30,14 @@ export function AvatarStory() {
 
       <Section
         title="Con foto"
-        note="Con `src`, la etiqueta de color no se reemplaza: se queda de fondo. Es lo que se ve mientras la imagen carga y lo que queda si no carga nunca: un hueco gris en una fila de cinco se lee como una persona sin nombre, y una inicial sobre su color no."
+        note="Con `src`, la etiqueta de color se queda de fondo: es lo que se ve mientras la imagen carga y lo que queda si no carga nunca."
       >
-        <Demo>
+        <Demo code={`<Avatar name="Ana Pérez" src="/avatars/01.webp" size={24} />
+<Avatar name="Ana Pérez" src="/avatars/01.webp" size={34} />
+<Avatar name="Ana Pérez" src="/avatars/01.webp" size={44} />
+<Avatar name="Bruno Díaz" src="/avatars/02.webp" size={44} />
+<Avatar name="Carla Sosa" src="/avatars/03.webp" size={44} />
+<Avatar name="Damián Ruiz" src="/avatars/04.webp" size={44} />`}>
           <Avatar name="Ana Pérez" src={face(1)} size={24} />
           <Avatar name="Ana Pérez" src={face(1)} size={34} />
           <Avatar name="Ana Pérez" src={face(1)} size={44} />
@@ -42,27 +49,67 @@ export function AvatarStory() {
 
       <Section
         title="El grupo"
-        note="Se montan un tercio y cada uno lleva un anillo del color del fondo de atrás: sin él, dos vecinos de tonos parecidos se leen como una mancha sola y no como dos personas. Tres caras y el resto en un círculo neutro: un '+4' no identifica a nadie."
+        note="Se montan un tercio y cada uno lleva un anillo del color del fondo de atrás. Tres caras y el resto en un círculo neutro."
       >
-        <Demo label="todos con foto">
-          <Avatar.Group people={[person('Ana Pérez', 1), person('Bruno Díaz', 2), person('Carla Sosa', 3), person('Damián Ruiz', 4), person('Elena Vega', 5)]} />
-        </Demo>
-        <Demo label="ninguno con foto">
-          <Avatar.Group people={[person('Irene Lopez'), person('Julián Cruz'), person('Karen Ortiz'), person('Leo Nuñez')]} />
-        </Demo>
-        <Demo label="mezclados · el caso que importa mirar">
-          <Avatar.Group people={[person('Mora Tello', 6), person('Nico Arce'), person('Olivia Rey', 7)]} />
-        </Demo>
-        <Demo label="con un solo sobrante va la cuarta cara, no un '+1'">
-          <Avatar.Group people={[person('Ana Pérez', 1), person('Bruno Díaz', 2), person('Carla Sosa', 3), person('Damián Ruiz', 4)]} />
-        </Demo>
+        <Grid min={320}>
+          <Demo label="todos con foto" code={`<Avatar.Group
+  people={[
+    { name: 'Ana Pérez', src: '/avatars/01.webp' },
+    { name: 'Bruno Díaz', src: '/avatars/02.webp' },
+    { name: 'Carla Sosa', src: '/avatars/03.webp' },
+    { name: 'Damián Ruiz', src: '/avatars/04.webp' },
+    { name: 'Elena Vega', src: '/avatars/05.webp' },
+  ]}
+/>`}>
+            <Avatar.Group people={[person('Ana Pérez', 1), person('Bruno Díaz', 2), person('Carla Sosa', 3), person('Damián Ruiz', 4), person('Elena Vega', 5)]} />
+          </Demo>
+          <Demo label="ninguno con foto" code={`<Avatar.Group
+  people={[
+    { name: 'Irene Lopez' },
+    { name: 'Julián Cruz' },
+    { name: 'Karen Ortiz' },
+    { name: 'Leo Nuñez' },
+  ]}
+/>`}>
+            <Avatar.Group people={[person('Irene Lopez'), person('Julián Cruz'), person('Karen Ortiz'), person('Leo Nuñez')]} />
+          </Demo>
+          <Demo label="mezclados · el caso que importa mirar" code={`<Avatar.Group
+  people={[
+    { name: 'Mora Tello', src: '/avatars/06.webp' },
+    { name: 'Nico Arce' },
+    { name: 'Olivia Rey', src: '/avatars/07.webp' },
+  ]}
+/>`}>
+            <Avatar.Group people={[person('Mora Tello', 6), person('Nico Arce'), person('Olivia Rey', 7)]} />
+          </Demo>
+          <Demo label="con un solo sobrante va la cuarta cara, no un '+1'" code={`<Avatar.Group
+  people={[
+    { name: 'Ana Pérez', src: '/avatars/01.webp' },
+    { name: 'Bruno Díaz', src: '/avatars/02.webp' },
+    { name: 'Carla Sosa', src: '/avatars/03.webp' },
+    { name: 'Damián Ruiz', src: '/avatars/04.webp' },
+  ]}
+/>`}>
+            <Avatar.Group people={[person('Ana Pérez', 1), person('Bruno Díaz', 2), person('Carla Sosa', 3), person('Damián Ruiz', 4)]} />
+          </Demo>
+        </Grid>
       </Section>
 
       <Section
         title="Sobre otro fondo"
-        note="El anillo es del color de lo que hay atrás y no blanco fijo, así que fuera del papel hay que pasarle `ring`. Es la única forma: un avatar no puede saber sobre qué lo pusieron."
+        note="Fuera del papel hay que pasarle `ring`: un avatar no puede saber sobre qué lo pusieron."
       >
-        <Demo label='ring="var(--surface-muted)" sobre una superficie apagada'>
+        <Demo label='ring="var(--surface-muted)" sobre una superficie apagada' code={`<Avatar.Group
+  people={[
+    { name: 'Ana Pérez', src: '/avatars/01.webp' },
+    { name: 'Bruno Díaz', src: '/avatars/02.webp' },
+    { name: 'Carla Sosa', src: '/avatars/03.webp' },
+    { name: 'Damián Ruiz', src: '/avatars/04.webp' },
+    { name: 'Elena Vega', src: '/avatars/05.webp' },
+  ]}
+  size={40}
+  ring="var(--surface-muted)"
+/>`}>
           <span className={cls.ringedPlate}>
             <Avatar.Group
               people={[person('Ana Pérez', 1), person('Bruno Díaz', 2), person('Carla Sosa', 3), person('Damián Ruiz', 4), person('Elena Vega', 5)]}
@@ -71,7 +118,16 @@ export function AvatarStory() {
             />
           </span>
         </Demo>
-        <Demo label="el mismo grupo con el anillo por default: se corta contra el fondo">
+        <Demo label="el mismo grupo con el anillo por default: se corta contra el fondo" code={`<Avatar.Group
+  people={[
+    { name: 'Ana Pérez', src: '/avatars/01.webp' },
+    { name: 'Bruno Díaz', src: '/avatars/02.webp' },
+    { name: 'Carla Sosa', src: '/avatars/03.webp' },
+    { name: 'Damián Ruiz', src: '/avatars/04.webp' },
+    { name: 'Elena Vega', src: '/avatars/05.webp' },
+  ]}
+  size={40}
+/>`}>
           <span className={cls.defaultRingPlate}>
             <Avatar.Group
               people={[person('Ana Pérez', 1), person('Bruno Díaz', 2), person('Carla Sosa', 3), person('Damián Ruiz', 4), person('Elena Vega', 5)]}
@@ -81,20 +137,15 @@ export function AvatarStory() {
         </Demo>
       </Section>
 
-      <Section title="Cómo se escribe">
-        <Example code={`<Avatar name="Ana Pérez" src="/avatars/01.webp" />
-
-<Avatar.Group people={equipo} size={24} ring="var(--surface)" />`} />
-      </Section>
-
       <Section title="Props">
         <Props of="Avatar" />
       </Section>
 
       <Section title="Cómo se usa bien">
         <Practices>
-          <Practices.Do>El color sale del nombre con `colorForName`, así que la misma persona tiene siempre el mismo tinte.</Practices.Do>
-          <Practices.Dont>En un grupo, tres caras y un "+N": más de tres no se reconocen, se cuentan.</Practices.Dont>
+          <Practices.Do>Pasale siempre el nombre completo, aunque haya foto: de ahí salen la inicial, el tinte y lo que se anuncia.</Practices.Do>
+          <Practices.Do>Sobre un fondo que no es el papel, `ring` va del color de ese fondo: sin anillo, dos vecinos de tonos parecidos se leen como una mancha sola.</Practices.Do>
+          <Practices.Dont>En un grupo no subas `max` más allá de tres caras: más no se reconocen, se cuentan.</Practices.Dont>
         </Practices>
       </Section>
 

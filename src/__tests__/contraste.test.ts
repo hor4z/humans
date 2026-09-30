@@ -136,8 +136,8 @@ describe('el texto sugerido de un campo se lee', () => {
   it('es más claro que el gris del texto: si no, no se distingue de lo escrito', () => {
     for (const theme of ['light', 'dark'] as const) {
       const ph = ratio(value('--shade-placeholder', theme)!, value('--shade-01', theme)!)
-      const gris = ratio(value('--shade-06', theme)!, value('--shade-01', theme)!)
-      expect(ph, theme).toBeLessThan(gris)
+      const gray = ratio(value('--shade-06', theme)!, value('--shade-01', theme)!)
+      expect(ph, theme).toBeLessThan(gray)
     }
   })
 
@@ -231,7 +231,7 @@ describe('el relleno de un dato se despega de su pista', () => {
     throw new Error(`no encuentro ${token} en ${theme}`)
   }
 
-  const canal = (hex: string) => {
+  const channel = (hex: string) => {
     const h = hex.replace('#', '')
     const n = h.length === 3 ? h.split('').map(c => c + c).join('') : h
     return [0, 2, 4].map(i => parseInt(n.slice(i, i + 2), 16))
@@ -240,7 +240,7 @@ describe('el relleno de un dato se despega de su pista', () => {
   /** La pista es tinta en alpha: se compone sobre el papel antes de medir. */
   function track(theme: 'light' | 'dark') {
     const [r, g, b, a] = literal('--track', theme).match(/[\d.]+/g)!.map(Number)
-    const background = canal(literal('--shade-01', theme))
+    const background = channel(literal('--shade-01', theme))
     const mixed = [r, g, b].map((c, i) => Math.round(c * a + background[i] * (1 - a)))
     return '#' + mixed.map(c => c.toString(16).padStart(2, '0')).join('')
   }

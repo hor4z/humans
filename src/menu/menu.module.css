@@ -1,6 +1,6 @@
 @layer milo.components {
   .root {
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-xl);
     border-style: solid;
     border-width: 1px;
     border-color: var(--border);
@@ -21,7 +21,7 @@
     width: 100%;
     align-items: center;
     gap: 1rem;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-lg);
     padding-inline: 0.5rem;
     text-align: left;
     font-size: var(--type-body);
@@ -40,6 +40,14 @@
       pointer-events: none;
       opacity: .45;
     }
+  }
+
+  .icon {
+    color: var(--icon-muted);
+  }
+
+  .danger .icon {
+    color: inherit;
   }
 
   .danger {

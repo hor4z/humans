@@ -2,6 +2,7 @@ import cls from './date-picker.module.css'
 import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useField } from '../lib/field-ctx'
 import { Icon } from '../icon/icon'
+import { fieldSizes } from '../lib/control'
 import { cx } from '../lib/cx'
 import { useEscape } from '../lib/esc'
 import { useDismiss } from '../lib/dismiss'
@@ -32,11 +33,11 @@ const inWords = (iso: string) => {
 }
 
 /** Elegir una fecha: un campo que abre un mes. */
-export function DatePicker({ value, onChange, min, max, placeholder = 'Elegir fecha', label, width }: {
+export function DatePicker({ value, onValueChange, min, max, placeholder = 'Elegir fecha', label, size = 'md', width }: {
   /** La fecha elegida como `AAAA-MM-DD`, o vacío. */
   value: string
   /** Recibe la fecha nueva en el mismo formato. */
-  onChange: (v: string) => void
+  onValueChange: (v: string) => void
   /** Nada antes de este día. Para un vencimiento, el de hoy. */
   min?: string
   /** Nada después de este día. */
@@ -45,6 +46,8 @@ export function DatePicker({ value, onChange, min, max, placeholder = 'Elegir fe
   placeholder?: string
   /** De qué es la fecha. Sin esto lo pone el `Field` de alrededor. */
   label?: string
+  /** 36 · 40 · 44, las de los demás campos. */
+  size?: 'sm' | 'md' | 'lg'
   /** Sin esto toma el ancho del contenido. */
   width?: number
 }) {
@@ -121,7 +124,7 @@ export function DatePicker({ value, onChange, min, max, placeholder = 'Elegir fe
     if (jump) { e.preventDefault(); jump(); return }
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault()
-      if (!isOutOfRange(cursor)) { onChange(cursor); close() }
+      if (!isOutOfRange(cursor)) { onValueChange(cursor); close() }
     }
   }
 
@@ -141,7 +144,7 @@ export function DatePicker({ value, onChange, min, max, placeholder = 'Elegir fe
         {...field}
         onClick={() => setOpen(o => !o)}
         style={{ width }}
-        className={`${cls.root} field-focus`}
+        className={cx(cls.root, fieldSizes[size], 'field-focus')}
       >
         <span className={cx(cls.value, !value && cls.placeholder)}>
           {value ? inWords(value) : placeholder}
@@ -208,7 +211,7 @@ export function DatePicker({ value, onChange, min, max, placeholder = 'Elegir fe
                         aria-disabled={isBlocked || undefined}
                         aria-label={`${inWords(iso)}${isToday ? ', hoy' : ''}`}
                         onKeyDown={onKey}
-                        onClick={() => { if (!isBlocked) { onChange(iso); close() } }}
+                        onClick={() => { if (!isBlocked) { onValueChange(iso); close() } }}
                         className={cx(
                           cls.day,
                           isSelected ? cls.selected

@@ -8,7 +8,7 @@ import { cx } from '../lib/cx'
 import { Popover } from '../popover/popover'
 
 /** La barra de arriba de una tabla: el buscador y los filtros, en una línea. */
-export function FilterBar({ className, ...props }: ComponentPropsWithoutRef<'div'>) {
+function Bar({ className, ...props }: ComponentPropsWithoutRef<'div'>) {
   return <div className={cx(s.bar, className)} {...props} />
 }
 
@@ -32,7 +32,7 @@ type FilterProps = {
 }
 
 /** Un filtro: un botón que dice qué filtra, y un panel para elegir. */
-export function Filter({ label, options, value, onValueChange }: FilterProps) {
+function Root({ label, options, value, onValueChange }: FilterProps) {
   const toggle = (v: string) =>
     onValueChange(value.includes(v) ? value.filter(x => x !== v) : [...value, v])
 
@@ -69,7 +69,7 @@ export function Filter({ label, options, value, onValueChange }: FilterProps) {
               <Checkbox
                 label={o.count === undefined ? o.value : `${o.value}, ${o.count}`}
                 checked={value.includes(o.value)}
-                onChange={() => toggle(o.value)}
+                onCheckedChange={() => toggle(o.value)}
               />
               {o.person && <Avatar name={o.person.name} src={o.person.src} size={22} className={s.avatar} />}
               <span aria-hidden="true" className={s.optionLabel}>{o.value}</span>
@@ -94,7 +94,7 @@ export function Filter({ label, options, value, onValueChange }: FilterProps) {
 }
 
 /** El botón que devuelve la tabla a como estaba. */
-export function FilterReset({ className, children = 'Limpiar', ...props }: ComponentPropsWithoutRef<'button'>) {
+function Reset({ className, children = 'Limpiar', ...props }: ComponentPropsWithoutRef<'button'>) {
   return (
     <Button type="button" variant="ghost" size="sm" className={className} {...props}>
       {children}
@@ -102,12 +102,5 @@ export function FilterReset({ className, children = 'Limpiar', ...props }: Compo
   )
 }
 
-export function facets<T>(rows: T[], of: (row: T) => string | undefined | null): Record<string, number> {
-  const tally: Record<string, number> = {}
-  for (const row of rows) {
-    const k = of(row)
-    if (k == null) continue
-    tally[k] = (tally[k] ?? 0) + 1
-  }
-  return tally
-}
+/** Los filtros de una tabla: la barra, cada filtro y el botón que los limpia. */
+export const Filter = Object.assign(Root, { Bar, Reset })

@@ -7,7 +7,7 @@ import { Switch } from './switch'
 describe('Switch', () => {
   it('alterna y expone su estado', async () => {
     const onChange = vi.fn()
-    render(<Switch checked={false} onChange={onChange} label="Oscuro" />)
+    render(<Switch checked={false} onCheckedChange={onChange} label="Oscuro" />)
     const sw = screen.getByRole('switch', { name: 'Oscuro' })
     expect(sw).toHaveAttribute('aria-checked', 'false')
     await userEvent.click(sw)
@@ -16,7 +16,7 @@ describe('Switch', () => {
 
   it('la barra de espacio lo prende, que es lo que hace un botón', async () => {
     const onChange = vi.fn()
-    render(<Switch checked={false} onChange={onChange} label="Oscuro" />)
+    render(<Switch checked={false} onCheckedChange={onChange} label="Oscuro" />)
     screen.getByRole('switch').focus()
     await userEvent.keyboard(' ')
     expect(onChange).toHaveBeenCalledWith(true)
@@ -24,7 +24,7 @@ describe('Switch', () => {
 
   it('apagado no se toca', async () => {
     const onChange = vi.fn()
-    render(<Switch checked onChange={onChange} label="Oscuro" disabled />)
+    render(<Switch checked onCheckedChange={onChange} label="Oscuro" disabled />)
     await userEvent.click(screen.getByRole('switch'))
     expect(onChange).not.toHaveBeenCalled()
   })
@@ -34,7 +34,7 @@ describe('Switch', () => {
       <Field>
         <Field.Label>Entregas fuera de fecha</Field.Label>
         <Field.Hint>Después del cierre</Field.Hint>
-        <Switch checked onChange={() => {}} />
+        <Switch checked onCheckedChange={() => {}} />
       </Field>,
     )
     const sw = screen.getByRole('switch', { name: 'Entregas fuera de fecha' })
@@ -45,7 +45,7 @@ describe('Switch', () => {
     const onSubmit = vi.fn(e => e.preventDefault())
     render(
       <form onSubmit={onSubmit}>
-        <Switch checked={false} onChange={() => {}} label="Oscuro" />
+        <Switch checked={false} onCheckedChange={() => {}} label="Oscuro" />
       </form>,
     )
     await userEvent.click(screen.getByRole('switch'))

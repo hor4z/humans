@@ -13,9 +13,9 @@ export function decimals(value: number, digits = 1) {
 
 /** Lo escrito, como número. Acepta la coma y el punto, porque acá se escribe "7,5" y el teclado del celular manda un punto. Lo que no es un número no es cero: es nada. */
 export function parseNumber(raw: string): number | null {
-  const limpio = raw.replace(/\s/g, '').replace(',', '.')
-  if (limpio === '' || !/^-?\d*\.?\d*$/.test(limpio)) return null
-  const n = Number(limpio)
+  const clean = raw.replace(/\s/g, '').replace(',', '.')
+  if (clean === '' || !/^-?\d*\.?\d*$/.test(clean)) return null
+  const n = Number(clean)
   return Number.isFinite(n) ? n : null
 }
 

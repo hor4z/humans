@@ -11,14 +11,13 @@ import { Progress } from '@milo/ui/progress'
 import { Switch } from '@milo/ui/switch'
 import { TextField } from '@milo/ui/text-field'
 import { useState } from 'react'
-
-const face = (n: number) => `/avatars/${String(n).padStart(2, '0')}.webp`
+import { face } from './fixtures'
 
 const shortcuts: { id: string; icon: IconName; title: string; body: string }[] = [
   { id: 'accessibility', icon: 'accessibility', title: 'Accesibilidad', body: 'Contraste, teclado y lectores, que es lo que hay que leer antes de tocar nada.' },
   { id: 'color', icon: 'palette', title: 'Color', body: 'Una rampa casi neutra y cuatro familias acotadas.' },
   { id: 'dashboard', icon: 'dashboard', title: 'Dashboard', body: 'Las piezas de la app, juntas en una pantalla real.' },
-  { id: 'documento', icon: 'description', title: 'Documento', body: 'Las del editor, juntas en una consigna de verdad.' },
+  { id: 'documento', icon: 'description', title: 'Documento', body: 'Los bloques, juntos en una consigna de verdad.' },
 ]
 
 export function Intro({ go }: { go: (id: string) => void }) {
@@ -40,8 +39,9 @@ export function Intro({ go }: { go: (id: string) => void }) {
               El sistema de milo, funcionando
             </h1>
             <p className={cls.heroLead}>
-              Cada pieza de acá es el componente real, con su teclado, sus estados y sus tests. Se
-              importa una por una: <code className={cls.inlineCode}>@milo/ui/button</code>.
+              Cada pieza de acá es el componente real, con su teclado, sus estados y sus tests. La base
+              son las piezas elementales, <code className={cls.inlineCode}>@milo/ui/button</code>; los
+              bloques las ponen en contexto, <code className={cls.inlineCode}>@milo/ui/blocks/editor/callout</code>.
             </p>
           </Stack>
 
@@ -88,7 +88,7 @@ export function Intro({ go }: { go: (id: string) => void }) {
         <div className={cls.showcaseGrid}>
           <Card className={cls.chartCard}>
             <BarChart
-              title="Corregidas esta semana"
+              label="Corregidas esta semana"
               height={150}
               highlight={2}
               data={[
@@ -109,7 +109,8 @@ export function Intro({ go }: { go: (id: string) => void }) {
                 <Chip color="blue">Corregida</Chip>
                 <Chip size="sm" color="warn" icon="schedule">Vence mañana</Chip>
               </div>
-              <Progress label="Corregidas" value={18} max={24} >
+              <Progress value={18} max={24}>
+                <Progress.Label>Corregidas</Progress.Label>
                 <Progress.Hint>18 de 24</Progress.Hint>
               </Progress>
             </Card>
@@ -123,7 +124,7 @@ export function Intro({ go }: { go: (id: string) => void }) {
                 ]} />
                 <span className={cls.peopleNote}>tres entregaron</span>
               </div>
-              <Switch checked={demo} onChange={setDemo} label="Avisos" />
+              <Switch checked={demo} onCheckedChange={setDemo} label="Avisos" />
             </Card>
           </Stack>
         </div>

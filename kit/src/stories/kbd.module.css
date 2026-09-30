@@ -1,17 +1,4 @@
 @layer milo.app {
-  .usageStrip {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1rem;
-    border-radius: var(--radius-xl);
-    border-style: solid;
-    border-width: 1px;
-    border-color: var(--border);
-    padding-inline: 1.25rem;
-    padding-block: 1rem;
-  }
-
   .searchHint {
     display: flex;
     align-items: center;

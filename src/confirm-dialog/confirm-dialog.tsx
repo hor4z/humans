@@ -15,12 +15,12 @@ type Ctx = {
 const ConfirmContext = createContext<Ctx | null>(null)
 
 function Root({
-  open, onCancel, onConfirm, children, tone = 'neutral',
+  open, onOpenChange, onConfirm, children, tone = 'neutral',
 }: {
   /** Cerrado no monta nada. */
   open: boolean
-  /** Lo llaman el botón de cancelar, el velo y Escape. */
-  onCancel: () => void
+  /** Recibe `false` desde el botón de cancelar, el velo y Escape. */
+  onOpenChange: (open: boolean) => void
   /** Lo que pasa si dice que sí. */
   onConfirm: () => void
   children: ReactNode
@@ -29,6 +29,7 @@ function Root({
 }) {
   const panel = useRef<HTMLDivElement>(null)
   const titleId = useId()
+  const onCancel = () => onOpenChange(false)
   useScrollLock(open)
   useEscape(open, onCancel)
   useFocusTrap(open, panel)

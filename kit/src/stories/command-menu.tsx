@@ -1,10 +1,10 @@
 import cls from './command-menu.module.css'
 import { useState } from 'react'
 import { Button } from '@milo/ui/button'
-import { CommandMenu, type CommandGroup, type CommandItem } from '@milo/ui/command-menu'
+import { CommandMenu, type CommandGroup, type CommandItem } from '@milo/ui/blocks/editor/command-menu'
 import { Kbd } from '@milo/ui/kbd'
 import { Popover } from '@milo/ui/popover'
-import { A11y, Cluster, Example, Frame, Note, Page, Practices, Props, Section, Stack } from '../kit'
+import { A11y, Cluster, Demo, Frame, Note, Page, Practices, Props, Section, Stack } from '../kit'
 
 const blocks: CommandGroup[] = [
   {
@@ -46,66 +46,87 @@ export function CommandMenuStory() {
     <Page
       title="CommandMenu"
       kind="Editor"
-      imports="import { CommandMenu } from '@milo/ui/command-menu'"
+      imports="import { CommandMenu } from '@milo/ui/blocks/editor/command-menu'"
       lead="La lista de comandos: se escribe, se filtra y se elige con las flechas. Es el menú que abre la barra en un editor, y la paleta de atajos de una app."
     >
       <Section
         title="La pieza"
         note="Probá las flechas, Home y End, y escribí 'foto' para ver que Imagen aparece sin que la palabra esté en su nombre."
       >
-        <Stack align="start">
-          <Frame width="md">
-            <CommandMenu groups={blocks} onSelect={setPicked} />
-          </Frame>
-          <p className={cls.pickedNote}>
-            {picked ? <>Elegiste <strong className={cls.emphasis}>{picked.label}</strong>.</> : 'Elegí uno para ver qué devuelve.'}
-          </p>
-        </Stack>
+        <Demo code={`const [picked, setPicked] = useState<CommandItem | null>(null)
+
+<CommandMenu groups={blocks} onSelect={setPicked} />`}>
+          <Stack align="start">
+            <Frame width="md">
+              <CommandMenu groups={blocks} onSelect={setPicked} />
+            </Frame>
+            <p className={cls.pickedNote}>
+              {picked ? <>Elegiste <strong className={cls.emphasis}>{picked.label}</strong>.</> : 'Elegí uno para ver qué devuelve.'}
+            </p>
+          </Stack>
+        </Demo>
       </Section>
 
       <Section
         title="Sin buscador"
         note="Para cuando lo que se escribe ya está afuera: en un editor, el texto va detrás de la barra y el menú solo filtra."
       >
-        <Cluster gap="xl" align="start">
-          <div className={`${cls.queryStrip} bg-surface`}>
-            <span className={cls.queryLead}>Escribí</span>
-            <Kbd>/</Kbd>
-            <span className={cls.queryTail}>y después</span>
-            <span className={cls.queryText}>lis</span>
-          </div>
-          <Frame width="md">
-            <CommandMenu groups={blocks} onSelect={setPicked} search={false} query="lis" />
-          </Frame>
-        </Cluster>
+        <Demo code={`<CommandMenu groups={blocks} onSelect={setPicked} search={false} query="lis" />`}>
+          <Cluster gap="xl" align="start">
+            <div className={`${cls.queryStrip} bg-surface`}>
+              <span className={cls.queryLead}>Escribí</span>
+              <Kbd>/</Kbd>
+              <span className={cls.queryTail}>y después</span>
+              <span className={cls.queryText}>lis</span>
+            </div>
+            <Frame width="md">
+              <CommandMenu groups={blocks} onSelect={setPicked} search={false} query="lis" />
+            </Frame>
+          </Cluster>
+        </Demo>
       </Section>
 
       <Section
         title="Anclado a su disparador"
-        note="Es lo que hace la barra en un editor: el menú cuelga de donde se escribió el '/'. La pieza no se posiciona sola: de eso se encarga el `Popover`, que es el que ya sabe encajar un panel contra un borde."
+        note="Es lo que hace la barra en un editor: el menú cuelga de donde se escribió el '/', y lo ancla un `Popover`."
       >
-        <Cluster gap="lg" align="center">
-          <Popover
-            align="start"
-            width={380}
-            trigger={p => <Button {...p} variant="muted">Insertar un bloque</Button>}
-          >
-            {close => (
-              <CommandMenu
-                autoFocus
-                groups={blocks}
-                maxHeight={280}
-                onSelect={item => { setPicked(item); close() }}
-              />
-            )}
-          </Popover>
-          <span className={cls.anchoredNote}>Abrí, escribí, movete con las flechas y elegí con Enter.</span>
-        </Cluster>
+        <Demo code={`<Popover
+  align="start"
+  width={380}
+  trigger={props => <Button {...props} variant="muted">Insertar un bloque</Button>}
+>
+  {close => (
+    <CommandMenu
+      autoFocus
+      groups={blocks}
+      maxHeight={280}
+      onSelect={item => { setPicked(item); close() }}
+    />
+  )}
+</Popover>`}>
+          <Cluster gap="lg" align="center">
+            <Popover
+              align="start"
+              width={380}
+              trigger={props => <Button {...props} variant="muted">Insertar un bloque</Button>}
+            >
+              {close => (
+                <CommandMenu
+                  autoFocus
+                  groups={blocks}
+                  maxHeight={280}
+                  onSelect={item => { setPicked(item); close() }}
+                />
+              )}
+            </Popover>
+            <span className={cls.anchoredNote}>Abrí, escribí, movete con las flechas y elegí con Enter.</span>
+          </Cluster>
+        </Demo>
       </Section>
 
       <Note icon="lightbulb" title="Qué de esta lista ya existe">
         Los bloques que llevan una pieza propia son `Título`, `Cita`, `Bloque destacado`, `Lista de
-        tareas`, `Imagen`, `Tabla`, `Gráfico` y `Fórmula`. `Lista`, `Lista numerada` y `Separador`
+        tareas`, `Imagen`, `Tabla` y `Gráfico`. `Lista`, `Lista numerada` y `Separador`
         no la necesitan: son HTML con los estilos del sistema.
       </Note>
 
@@ -115,29 +136,24 @@ export function CommandMenuStory() {
         paleta de atajos de la app, sin cambiarle una línea.
       </Note>
 
-      <Section title="Cómo se escribe">
-        <Example code={`const [abierto, setAbierto] = useState(false)
-
-<CommandMenu
-  open={abierto}
-  onClose={() => setAbierto(false)}
-  groups={grupos}
-  onSelect={id => insertar(id)}
-/>`} />
+      <Section title="Props">
+        <Props of={['CommandMenu', 'CommandGroup', 'CommandItem']} />
       </Section>
 
-      <Props of={['CommandMenu', 'CommandGroup', 'CommandItem']} />
+      <Section title="Cómo se usa bien">
+        <Practices>
+          <Practices.Do>El `id` de cada item es lo que se anuncia y lo que vuelve al elegir: tiene que ser único en toda la lista.</Practices.Do>
+        </Practices>
+      </Section>
 
-      <Practices>
-        <Practices.Do>El `id` de cada item es lo que se anuncia y lo que vuelve al elegir: tiene que ser único en toda la lista.</Practices.Do>
-      </Practices>
-
-      <A11y>
-        <A11y.Item>El buscador es un `combobox` y la lista un `listbox`. Lo marcado viaja por `aria-activedescendant`, así que el foco no se mueve y lo que se escribe sigue llegando al campo.</A11y.Item>
-        <A11y.Item>Flechas para moverse, Home y End para los extremos, Enter para elegir. Lo apagado se saltea.</A11y.Item>
-        <A11y.Item>Al cambiar lo buscado, la marca vuelve al primero: dejarla donde estaba marca algo que ya no se está mirando.</A11y.Item>
-        <A11y.Item>Un grupo que se queda sin resultados no deja su encabezado solo, y cuando no queda nada se dice con palabras.</A11y.Item>
-      </A11y>
+      <Section title="Accesibilidad">
+        <A11y>
+          <A11y.Item>El buscador es un `combobox` y la lista un `listbox`. Lo marcado viaja por `aria-activedescendant`, así que el foco no se mueve y lo que se escribe sigue llegando al campo.</A11y.Item>
+          <A11y.Item>Flechas para moverse, Home y End para los extremos, Enter para elegir. Lo apagado se saltea.</A11y.Item>
+          <A11y.Item>Al cambiar lo buscado, la marca vuelve al primero: dejarla donde estaba marca algo que ya no se está mirando.</A11y.Item>
+          <A11y.Item>Un grupo que se queda sin resultados no deja su encabezado solo, y cuando no queda nada se dice con palabras.</A11y.Item>
+        </A11y>
+      </Section>
     </Page>
   )
 }

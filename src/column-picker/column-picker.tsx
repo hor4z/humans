@@ -52,7 +52,7 @@ export function ColumnPicker({ columns, value, onValueChange, label = 'Columnas'
               <Checkbox
                 label={c.label}
                 checked={c.locked || value.includes(c.id)}
-                onChange={() => !c.locked && toggle(c.id)}
+                onCheckedChange={() => !c.locked && toggle(c.id)}
                 disabled={c.locked}
               />
               <span aria-hidden="true" className={s.optionLabel}>{c.label}</span>

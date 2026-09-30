@@ -5,8 +5,8 @@ const ID = 'milo-live'
 /** La región viva, una sola para todo el documento: dos regiones compitiendo se pisan. */
 function region(): HTMLElement | null {
   if (typeof document === 'undefined') return null
-  const ya = document.getElementById(ID)
-  if (ya) return ya
+  const existing = document.getElementById(ID)
+  if (existing) return existing
   const el = document.createElement('div')
   el.id = ID
   el.className = 'sr-only'

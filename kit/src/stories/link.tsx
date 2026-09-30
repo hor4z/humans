@@ -1,6 +1,6 @@
 import cls from './link.module.css'
 import { Link } from '@milo/ui/link'
-import { A11y, Canvas, Example, Note, Page, Practices, Props, Section } from '../kit'
+import { A11y, Demo, Note, Page, Practices, Props, Section } from '../kit'
 
 export function LinkStory() {
   return (
@@ -12,27 +12,34 @@ export function LinkStory() {
     >
       <Section
         title="Adentro de un párrafo"
-        note="Es el caso para el que existe la pieza: un enlace suelto en medio de una frase. Fuera de un párrafo (una fila de una lista, una acción de una barra) lo que corresponde es un `Button` con variante `ghost`, que tiene el alto y el blanco de click de un control."
+        note="Es el caso para el que existe la pieza. Fuera de un párrafo (una fila, una barra) va un `Button` con `variant=&quot;ghost&quot;`, que tiene el alto de un control."
       >
-        <Canvas stack>
+        <Demo code={`<p>
+  Las entregas se cierran en la fecha que elijas. Podés cambiarla desde{' '}
+  <Link href="#link">los ajustes de la actividad</Link> mientras siga abierta.
+</p>`}>
           <p className={cls.paragraphText}>
             Las entregas se cierran en la fecha que elijas. Podés cambiarla desde{' '}
             <Link href="#link">los ajustes de la actividad</Link> mientras siga abierta.
           </p>
-        </Canvas>
+        </Demo>
       </Section>
 
       <Section
         title="El de afuera avisa"
-        note="`external` agrega el glifo, el `target` y el `rel`, y (lo que no se ve) el texto 'se abre en otra pestaña' para el lector de pantalla. Abrir una pestaña sin avisar rompe el botón de volver, que es el control que más se usa de todo el navegador."
+        note="Abrir una pestaña sin avisar rompe el botón de volver, que es el control que más se usa del navegador."
       >
-        <Canvas stack>
+        <Demo code={`<Link href="https://m3.material.io/styles/icons" external>Material Symbols</Link>
+<p>
+  El set sale de <Link href="https://fonts.google.com/icons" external>Google Fonts</Link>, subseteado
+  a los 160 que usamos.
+</p>`} className={cls.vertical}>
           <Link href="https://m3.material.io/styles/icons" external>Material Symbols</Link>
           <p className={cls.externalText}>
             El set sale de <Link href="https://fonts.google.com/icons" external>Google Fonts</Link>, subseteado
             a los 160 que usamos.
           </p>
-        </Canvas>
+        </Demo>
       </Section>
 
       <Note title="Link o Button">
@@ -40,12 +47,6 @@ export function LinkStory() {
         otra pestaña sin borrar, y un botón que navega no se puede copiar ni guardar. Cuando hay una
         URL de verdad, va link.
       </Note>
-
-      <Section title="Cómo se escribe">
-        <Example code={`Mirá <Link href="/rubricas">cómo se arma una rúbrica</Link> antes de publicar.
-
-<Link href="https://example.edu" external>El sitio de la escuela</Link>`} />
-      </Section>
 
       <Section title="Props">
         <Props of="Link" />

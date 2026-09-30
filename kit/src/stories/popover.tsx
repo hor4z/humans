@@ -1,7 +1,7 @@
 import cls from './popover.module.css'
 import { Button } from '@milo/ui/button'
 import { Popover } from '@milo/ui/popover'
-import { A11y, Cluster, Demo, Example, Page, Practices, Props, Section } from '../kit'
+import { A11y, Demo, Grid, Page, Practices, Props, Section } from '../kit'
 
 export function PopoverStory() {
   return (
@@ -11,14 +11,23 @@ export function PopoverStory() {
       kind="Superficies"
       imports="import { Popover } from '@milo/ui/popover'"
     >
-      <Section title="Vivo" note="Con `veil`, el resto de la pantalla se apaga. El velo va sin blur: el fondo se sigue reconociendo, que es lo que te dice de dónde salió el panel.">
-        <Cluster align="start">
-          <Demo label="sin velo">
+      <Section title="Vivo" note="El panel lo dibujás vos: `Popover` pone la posición, el cierre y el velo, no el aspecto.">
+        <Grid min={300}>
+          <Demo label="sin velo" code={`<Popover
+  width={320}
+  trigger={props => <Button {...props} variant="muted">Panel anclado</Button>}
+>
+  {close => (
+    <div className={s.panel}>
+      <div>Un panel de 320</div>
+      <p>Cierra con Escape, con un click afuera, o al scrollear la página, pero no al scrollear su propio contenido. Un resize sí lo cierra siempre.</p>
+      <Button size="sm" variant="muted" onClick={close}>Cerrar</Button>
+    </div>
+  )}
+</Popover>`}>
             <Popover
               width={320}
-              trigger={({ onClick, ref, ...rest }) => (
-                <Button ref={ref} onClick={onClick} {...rest} variant="muted">Panel anclado</Button>
-              )}
+              trigger={props => <Button {...props} variant="muted">Panel anclado</Button>}
             >
               {close => (
                 <div className={`${cls.plainPanel} ui-pop bg-popover`}>
@@ -33,13 +42,23 @@ export function PopoverStory() {
             </Popover>
           </Demo>
 
-          <Demo label="veil">
+          <Demo label="veil" code={`<Popover
+  width={340}
+  veil
+  trigger={props => <Button {...props} variant="muted">Con velo</Button>}
+>
+  {close => (
+    <div className={s.panel}>
+      <div>Una lista que pide leerse entera</div>
+      <p>El resto de la pantalla se atenúa para ganar la mirada. Un menú de cuatro items no necesita esto.</p>
+      <Button size="sm" variant="muted" onClick={close}>Cerrar</Button>
+    </div>
+  )}
+</Popover>`}>
             <Popover
               width={340}
               veil
-              trigger={({ onClick, ref, ...rest }) => (
-                <Button ref={ref} onClick={onClick} {...rest} variant="muted">Con velo</Button>
-              )}
+              trigger={props => <Button {...props} variant="muted">Con velo</Button>}
             >
               {close => (
                 <div className={`${cls.veiledPanel} ui-pop bg-popover`}>
@@ -53,16 +72,7 @@ export function PopoverStory() {
               )}
             </Popover>
           </Demo>
-        </Cluster>
-      </Section>
-
-      <Section title="Cómo se escribe">
-        <Example code={`<Popover
-  width={280}
-  trigger={props => <Button {...props}>Filtros</Button>}
->
-  {close => <FiltroPanel onDone={close} />}
-</Popover>`} />
+        </Grid>
       </Section>
 
       <Section title="Props">

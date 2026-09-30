@@ -9,7 +9,7 @@ import { Segmented } from '@milo/ui/segmented'
 import { Slider } from '@milo/ui/slider'
 import { TextField } from '@milo/ui/text-field'
 import { iconTags } from '@milo/ui/icons.meta'
-import { A11y, Cluster, Example, Footnote, Mono, Note, Page, Panel, Practices, Props, Section, Variant } from '../kit'
+import { A11y, Cluster, Demo, Footnote, Mono, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 const sizes = [
   { px: 12, role: 'un badge, la cruz de un chip' },
@@ -18,6 +18,7 @@ const sizes = [
   { px: 18, role: 'adentro de un botón mediano' },
   { px: 20, role: 'el default: la interfaz' },
   { px: 22, role: 'el glifo de una marca de lista' },
+  { px: 24, role: 'adentro de un control de 44' },
 ] as const
 
 const weights = [
@@ -52,10 +53,12 @@ export function IconStory() {
     >
       <Section
         title="El eje"
-        note="El peso va de 100 a 700 y es continuo porque es una fuente variable: con SVG haría falta un archivo por escalón, y por eso el set es una fuente. El otro eje, FILL, está clavado en 0: todos de contorno, con una sola excepción escrita a mano."
+        note="El peso va de 100 a 700 y es continuo, porque el set es una fuente variable. El relleno está clavado en 0: todos de contorno."
       >
         <Panel>
-          <Variant name="wght 100…700">
+          <Variant name="wght 100…700" code={`{[100, 200, 300, 400, 500, 600, 700].map(weight => (
+  <Icon key={weight} name="notifications" size={28} weight={weight} />
+))}`}>
             {([100, 200, 300, 400, 500, 600, 700] as IconWeight[]).map(w => (
               <span key={w} className={cls.weightSample}>
                 <Icon name="notifications" size={28} weight={w} />
@@ -70,56 +73,62 @@ export function IconStory() {
         title={`El set · ${iconNames.length} iconos`}
         note="Buscá por nombre o por lo que el icono es. Los tags son los de Google y están en inglés: 'calendar' encuentra `calendar_month`, 'calendario' no encuentra nada."
       >
-        <Cluster gap="lg" align="center">
-          <span className={cls.searchSlot}>
-            <TextField icon="search" value={q} onChange={e => setQ(e.target.value)} placeholder="buscar por nombre o por tag…" />
-          </span>
-          <Segmented
-            label="Peso del glifo"
-            value={weight}
-            onChange={setWeight}
-            options={weights.map(p => ({ value: p.value, label: p.label }))}
-            size="sm"
-          />
-          <span className={cls.sizeSlot}>
-            <Slider value={size} onChange={setSize} min={12} max={40} label="Tamaño" />
-            <Mono>{size}</Mono>
-          </span>
-        </Cluster>
+        <Demo fill code={`<div style={{ '--icon-wght': weight }}>
+  {visible.map(name => <Icon key={name} name={name} size={size} />)}
+</div>`}>
+          <div>
+          <Cluster gap="lg" align="center">
+            <span className={cls.searchSlot}>
+              <TextField icon="search" value={q} onValueChange={setQ} placeholder="buscar por nombre o por tag…" />
+            </span>
+            <Segmented
+              label="Peso del glifo"
+              value={weight}
+              onValueChange={setWeight}
+              options={weights.map(p => ({ value: p.value, label: p.label }))}
+              size="sm"
+            />
+            <span className={cls.sizeSlot}>
+              <Slider value={size} onValueChange={setSize} min={12} max={40} label="Tamaño" />
+              <Mono>{size}</Mono>
+            </span>
+          </Cluster>
 
-        {visible.length === 0 ? (
-          <div className={cls.emptySlot}>
-            <EmptyState size="sm" icon="search_off">
-              <EmptyState.Title>Ningún icono con eso</EmptyState.Title>
-              <EmptyState.Body>{`Los tags son los de Google y están en inglés. Si no está en el set, buscalo en el catálogo completo: npm run icons -w @milo/ui -- search ${q.trim() || '…'}`}</EmptyState.Body>
-            </EmptyState>
+          {visible.length === 0 ? (
+            <div className={cls.emptySlot}>
+              <EmptyState size="sm" icon="search_off">
+                <EmptyState.Title>Ningún icono con eso</EmptyState.Title>
+                <EmptyState.Body>{`Los tags son los de Google y están en inglés. Si no está en el set, buscalo en el catálogo completo: npm run icons -- search ${q.trim() || '…'}`}</EmptyState.Body>
+              </EmptyState>
+            </div>
+          ) : (
+            <div
+              className={cls.iconGrid}
+              style={{
+                gridTemplateColumns: 'repeat(auto-fill, minmax(104px, 1fr))',
+                '--icon-wght': weight,
+              } as CSSProperties}
+            >
+              {visible.map(name => (
+                <button
+                  key={name}
+                  type="button"
+                  onClick={() => copy(name)}
+                  title={iconTags[name] || name}
+                  className={`${cls.iconTile} bg-surface`}
+                >
+                  <span className={cls.glyphSlot} style={{ height: 40 }}>
+                    <Icon name={name} size={size} />
+                  </span>
+                  <span className={cls.glyphName}>
+                    {copied === name ? 'copiado' : name}
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
           </div>
-        ) : (
-          <div
-            className={cls.iconGrid}
-            style={{
-              gridTemplateColumns: 'repeat(auto-fill, minmax(104px, 1fr))',
-              '--icon-wght': weight,
-            } as CSSProperties}
-          >
-            {visible.map(name => (
-              <button
-                key={name}
-                type="button"
-                onClick={() => copy(name)}
-                title={iconTags[name] || name}
-                className={`${cls.iconTile} bg-surface`}
-              >
-                <span className={cls.glyphSlot} style={{ height: 40 }}>
-                  <Icon name={name} size={size} />
-                </span>
-                <span className={cls.glyphName}>
-                  {copied === name ? 'copiado' : name}
-                </span>
-              </button>
-            ))}
-          </div>
-        )}
+        </Demo>
         <Footnote>
           Click en un icono copia <Mono>{'<Icon name="…" />'}</Mono>. El title trae los tags con los
           que se puede buscar.
@@ -128,11 +137,11 @@ export function IconStory() {
 
       <Section
         title="Los tamaños"
-        note="Seis pasos, todos pares: con una fuente, un tamaño impar cae en media grilla de píxeles y el glifo se ve borroso."
+        note="Siete pasos, todos pares: con una fuente, un tamaño impar cae en media grilla de píxeles y el glifo se ve borroso."
       >
         <Panel>
           {sizes.map(e => (
-            <Variant key={e.px} name={`${e.px}`}>
+            <Variant key={e.px} name={`${e.px}`} code={`<Icon name="calendar_month" size={${e.px}} />`}>
               <Icon name="calendar_month" size={e.px} />
               <span className={cls.sizeRole}>{e.role}</span>
             </Variant>
@@ -142,18 +151,18 @@ export function IconStory() {
 
       <Section
         title="El gris no es una prop"
-        note="La regla vieja decía 'icono en gris ⇒ weight 1.5' y era imposible de cumplir: el gris se hereda de un ancestro y el call site no tiene cómo saberlo. Ahora es la utilidad `icon-muted`, que pone el color y sube el peso juntos. Se cumple sola."
+        note="El gris se hereda de un ancestro y el call site no tiene cómo saberlo: por eso es la utilidad `icon-muted`, que pone el color y sube el peso juntos."
       >
         <Panel>
-          <Variant name="en tinta">
+          <Variant name="en tinta" code={`<Icon name="search" size={20} />`}>
             <Icon name="search" size={20} />
             <span className={cls.defaultNote}>peso 300</span>
           </Variant>
-          <Variant name="icon-muted">
+          <Variant name="icon-muted" code={`<Icon name="search" size={20} className="icon-muted" />`}>
             <Icon name="search" size={20} className="icon-muted" />
             <span className={cls.mutedNote}>el peso sube a 400 solo, sin prop</span>
           </Variant>
-          <Variant name="el error">
+          <Variant name="el error" code={`<Icon name="search" size={20} className={styles.gray} />`}>
             <Icon name="search" size={20} className={cls.plainGrayIcon} />
             <span className={cls.plainGrayNote}>gris sin la utilidad: queda en 300 y se apaga</span>
           </Variant>
@@ -162,77 +171,40 @@ export function IconStory() {
 
       <Section
         title="Cómo se agrega uno"
-        note="Hay más de tres mil novecientos en el catálogo y el set trae los que usamos. Agregar uno es un comando, no dibujar un path."
+        note="Hay más de tres mil novecientos en el catálogo y el set trae los que usamos. Agregar uno es un comando, no dibujar un path. El catálogo está versionado, así que buscar funciona sin internet."
       >
         <Panel>
-          <Variant name="buscar">
-            <Mono>npm run icons -w @milo/ui -- search notification</Mono>
+          <Variant name="buscar" code={`npm run icons -- search notification`}>
+            <span className={cls.sizeRole}>en el catálogo entero, por nombre o por tag</span>
           </Variant>
-          <Variant name="agregar">
-            <Mono>npm run icons -w @milo/ui -- add rocket_launch</Mono>
+          <Variant name="agregar" code={`npm run icons -- add rocket_launch`}>
+            <span className={cls.sizeRole}>antes de bajar nada pregunta si el nombre existe, si ya lo tenemos y si hay uno en el set con los mismos tags; <Mono>--yes</Mono> saltea la tercera</span>
           </Variant>
-          <Variant name="auditar">
-            <Mono>npm run icons -w @milo/ui -- check</Mono>
+          <Variant name="auditar" code={`npm run icons -- check`}>
+            <span className={cls.sizeRole}>los usados que faltan, y los que están y no usa nadie</span>
           </Variant>
         </Panel>
-        <p className={cls.commandNote}>
-          <code className={cls.commandName}>add</code> hace tres preguntas antes de bajar nada:
-          si el nombre existe (y si no, sugiere los cinco más parecidos), si ya lo tenemos, y si hay
-          uno en el set que comparta tags y probablemente sirva igual. La tercera es la que evita
-          llegar a doscientos iconos con seis variantes de engranaje, y para saltearla hay que
-          escribir <Mono>--yes</Mono>. El catálogo está versionado, así que buscar funciona sin
-          internet.
-        </p>
-      </Section>
-
-      <Section title="Cómo se escribe">
-        <Example code={`<Icon name="calendar_month" size={20} />
-
-<Icon name="tune" size={18} className="icon-muted" />`} />
       </Section>
 
       <Section title="Props">
         <Props of="Icon" />
       </Section>
 
-      <Section
-        title="El costo, que conviene saber"
-        note="Firefox deja desactivar 'permitir que las páginas elijan sus propias fuentes', y hay gente que lo usa por dislexia o baja visión. Con esa opción todos los iconos quedan en cuadraditos. Un SVG era inmune: es el precio de que el peso sea un eje de verdad, y está escrito y no escondido."
-      >
-        <div />
-      </Section>
-
       <Section title="Cómo se usa bien">
         <Practices>
           <Practices.Do>El gris se hereda del ancestro con `icon-muted`, no se pasa por prop.</Practices.Do>
-          <Practices.Do>El tamaño sale de la escala: 14, 16, 18, 20, 22 o 24.</Practices.Do>
+          <Practices.Do>El tamaño sale de la escala: 12, 14, 16, 18, 20, 22 o 24.</Practices.Do>
           <Practices.Dont>El set crece solo por `npm run icons -- add`: no dibujes un path a mano.</Practices.Dont>
         </Practices>
       </Section>
 
       <Section title="Accesibilidad">
-        <Note tone="warn" title="Buena parte del set no la usa nadie">
-        `npm run icons -- check` los lista, y el número conviene mirarlo cada tanto: doscientos
-        iconos con seis variantes de engranaje es lo que `icons add` existe para evitar. No se sacan
-        porque el editor y los gráficos van a consumir varios, y traer uno de vuelta es un comando.
-      </Note>
-
-      <Note title="Un glifo que falta deja el hueco, no la pantalla en blanco">
-        Un nombre que el manifiesto no tiene no resuelve a ningún codepoint, y
-        `String.fromCodePoint` de eso lanza. Adentro de un render no deja un icono roto:
-        deja la aplicación entera sin dibujar, que es lo que alguien lee como "el sitio está
-        caído". Desde el código no puede pasar (el tipo es la unión del manifiesto y `icons check`
-        corre al lado de `typecheck`): pasa cuando el módulo que el navegador tiene y el del disco
-        se separan, que es la trampa conocida del dev server. Así que el glifo se saltea y el resto
-        de la pantalla sigue en pie.
-      </Note>
-
-      <A11y>
-        <A11y.Item>Los glifos van aria-hidden: un icono es una imagen del texto que tiene al lado, no una segunda lectura.</A11y.Item>
-        <A11y.Item>Un icono sin texto vive dentro de un IconButton, que exige su label.</A11y.Item>
-        <A11y.Item>El glifo lleva translate="no": es texto, y un traductor automático puede reescribirlo.</A11y.Item>
-        <A11y.Item>Si alguien desactiva las fuentes de la página, los iconos desaparecen. Es el precio de que el peso sea un eje real y está dicho, no escondido.</A11y.Item>
-      </A11y>
+        <A11y>
+          <A11y.Item>Los glifos van aria-hidden: un icono es una imagen del texto que tiene al lado, no una segunda lectura.</A11y.Item>
+          <A11y.Item>Un icono sin texto vive dentro de un IconButton, que exige su label.</A11y.Item>
+          <A11y.Item>El glifo lleva translate="no": es texto, y un traductor automático puede reescribirlo.</A11y.Item>
+          <A11y.Item>Si alguien desactiva las fuentes de la página (Firefox lo permite, y hay quien lo usa por dislexia o baja visión), los iconos quedan en cuadraditos. Es el precio de que el peso sea un eje real y está dicho, no escondido.</A11y.Item>
+        </A11y>
       </Section>
     </Page>
   )

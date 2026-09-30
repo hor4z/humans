@@ -1,7 +1,7 @@
 import { Button } from '@milo/ui/button'
 import { Icon } from '@milo/ui/icon'
 import { useEffect, useRef, useState } from 'react'
-import { A11y, Demo, Example, Grid, Page, Panel, Practices, Props, Section, Variant } from '../kit'
+import { A11y, Demo, Grid, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 /** Dos respuestas de verdad, una más rápida que la espera y otra más lenta, para ver que la corta no dibuja nada y la larga no se corta. */
 function TryLoading() {
@@ -15,12 +15,16 @@ function TryLoading() {
   }
   return (
     <Grid>
-      <Demo label="Tocá: esta responde enseguida">
+      <Demo label="Tocá: esta responde enseguida" code={`<Button variant="brand" iconStart={<Icon name="save" />} loading={saving} onClick={save}>
+  Guardar
+</Button>`}>
         <Button variant="brand" iconStart={<Icon name="save" />} loading={running === 'short'} onClick={() => run('short', 80)}>
           Guardar
         </Button>
       </Demo>
-      <Demo label="Tocá: esta tarda">
+      <Demo label="Tocá: esta tarda" code={`<Button variant="brand" iconStart={<Icon name="save" />} loading={saving} onClick={save}>
+  Guardar
+</Button>`}>
         <Button variant="brand" iconStart={<Icon name="save" />} loading={running === 'long'} onClick={() => run('long', 900)}>
           Guardar
         </Button>
@@ -45,30 +49,35 @@ export function ButtonStory() {
           <Variant
             name="brand"
             note="**La acción que manda**, y hay una sola por pantalla."
+            code={`<Button variant="brand">Crear actividad</Button>`}
           >
             <Button variant="brand">Crear actividad</Button>
           </Variant>
           <Variant
             name="solid"
             note="**La misma acción que manda, en tinta**, para una pantalla donde el azul no se puede usar. Va este o `brand`, nunca los dos, o la mirada no sabe cuál es."
+            code={`<Button variant="solid">Crear actividad</Button>`}
           >
             <Button variant="solid">Crear actividad</Button>
           </Variant>
           <Variant
             name="muted"
             note="**Lo secundario**: la acción que acompaña a la que manda. Relleno claro y tinta, sin color, así que no compite."
+            code={`<Button variant="muted">Crear actividad</Button>`}
           >
             <Button variant="muted">Crear actividad</Button>
           </Variant>
           <Variant
             name="ghost"
             note="**Lo terciario**: la que está ahí por si acaso. No dibuja caja hasta que le pasás el mouse."
+            code={`<Button variant="ghost">Crear actividad</Button>`}
           >
             <Button variant="ghost">Crear actividad</Button>
           </Variant>
           <Variant
             name="bad"
             note="**Lo que no se puede deshacer.** No es un aviso de que algo salió mal: es la acción que borra, y por eso lleva el rojo la acción y no el mensaje."
+            code={`<Button variant="bad">Eliminar</Button>`}
           >
             <Button variant="bad">Eliminar</Button>
           </Variant>
@@ -80,15 +89,18 @@ export function ButtonStory() {
         note="Una fila densa, un panel, la acción principal. El `lg` cae en 44, que es el objetivo táctil, así que la que manda ya llega con el dedo."
       >
         <Panel>
-          <Variant name="sm · 36">
+          <Variant name="sm · 36" code={`<Button size="sm" variant="brand">Guardar</Button>
+<Button size="sm" variant="muted">Guardar</Button>`}>
             <Button size="sm" variant="brand">Guardar</Button>
             <Button size="sm" variant="muted">Guardar</Button>
           </Variant>
-          <Variant name="md · 40">
+          <Variant name="md · 40" code={`<Button size="md" variant="brand">Guardar</Button>
+<Button size="md" variant="muted">Guardar</Button>`}>
             <Button size="md" variant="brand">Guardar</Button>
             <Button size="md" variant="muted">Guardar</Button>
           </Variant>
-          <Variant name="lg · 44">
+          <Variant name="lg · 44" code={`<Button size="lg" variant="brand">Guardar</Button>
+<Button size="lg" variant="muted">Guardar</Button>`}>
             <Button size="lg" variant="brand">Guardar</Button>
             <Button size="lg" variant="muted">Guardar</Button>
           </Variant>
@@ -97,16 +109,16 @@ export function ButtonStory() {
 
       <Section title="Con icono, ancho completo y deshabilitado">
         <Grid>
-          <Demo label="Con un icono al comienzo">
+          <Demo label="Con un icono al comienzo" code={`<Button variant="muted" iconStart={<Icon name="folder" />}>Nuevo espacio</Button>`}>
             <Button variant="muted" iconStart={<Icon name="folder" />}>Nuevo espacio</Button>
           </Demo>
-          <Demo label="Con un icono al final">
+          <Demo label="Con un icono al final" code={`<Button variant="muted" iconEnd={<Icon name="chevron_right" />}>Siguiente</Button>`}>
             <Button variant="muted" iconEnd={<Icon name="chevron_right" />}>Siguiente</Button>
           </Demo>
-          <Demo label="Deshabilitado">
+          <Demo label="Deshabilitado" code={`<Button variant="brand" disabled>Guardar</Button>`}>
             <Button variant="brand" disabled>Guardar</Button>
           </Demo>
-          <Demo label="Ocupando el ancho">
+          <Demo label="Ocupando el ancho" code={`<Button variant="brand" block>Entrar</Button>`}>
             <Button variant="brand" block>Entrar</Button>
           </Demo>
         </Grid>
@@ -114,21 +126,24 @@ export function ButtonStory() {
 
       <Section
         title="Cargando"
-        note="Para una acción que tarda. El botón avisa que está trabajando y no se deja tocar de nuevo hasta que termina."
+        note="El spinner aparece recién a los 120ms (`--duration-fast`), porque una respuesta más rápida no alcanza a leerse, y una vez que apareció se queda 280 (`--duration-content`). Mientras carga, el botón no se deja tocar de nuevo."
       >
         <Panel>
-          <Variant name="brand"><Button variant="brand" loading>Guardar</Button></Variant>
-          <Variant name="solid"><Button variant="solid" loading>Guardar</Button></Variant>
-          <Variant name="muted"><Button variant="muted" loading>Guardar</Button></Variant>
-          <Variant name="ghost"><Button variant="ghost" loading>Guardar</Button></Variant>
-          <Variant name="bad"><Button variant="bad" loading>Eliminar</Button></Variant>
+          <Variant name="brand" code={`<Button variant="brand" loading>Guardar</Button>`}><Button variant="brand" loading>Guardar</Button></Variant>
+          <Variant name="solid" code={`<Button variant="solid" loading>Guardar</Button>`}><Button variant="solid" loading>Guardar</Button></Variant>
+          <Variant name="muted" code={`<Button variant="muted" loading>Guardar</Button>`}><Button variant="muted" loading>Guardar</Button></Variant>
+          <Variant name="ghost" code={`<Button variant="ghost" loading>Guardar</Button>`}><Button variant="ghost" loading>Guardar</Button></Variant>
+          <Variant name="bad" code={`<Button variant="bad" loading>Eliminar</Button>`}><Button variant="bad" loading>Eliminar</Button></Variant>
         </Panel>
         <Grid min={340}>
-          <Demo label="Antes y mientras carga">
+          <Demo label="Antes y mientras carga" code={`<Button variant="brand" iconStart={<Icon name="folder" />}>Nuevo espacio</Button>
+<Button variant="brand" iconStart={<Icon name="folder" />} loading>Nuevo espacio</Button>`}>
             <Button variant="brand" iconStart={<Icon name="folder" />}>Nuevo espacio</Button>
             <Button variant="brand" iconStart={<Icon name="folder" />} loading>Nuevo espacio</Button>
           </Demo>
-          <Demo label="Los tres tamaños">
+          <Demo label="Los tres tamaños" code={`<Button size="sm" variant="brand" loading>Guardar</Button>
+<Button size="md" variant="brand" loading>Guardar</Button>
+<Button size="lg" variant="brand" loading>Guardar</Button>`}>
             <Button size="sm" variant="brand" loading>Guardar</Button>
             <Button size="md" variant="brand" loading>Guardar</Button>
             <Button size="lg" variant="brand" loading>Guardar</Button>
@@ -137,21 +152,6 @@ export function ButtonStory() {
         <TryLoading />
       </Section>
 
-      <Section title="Cómo se escribe">
-        <Example code={`
-<Button variant="brand" onClick={crear}>
-  Crear actividad
-</Button>
-
-<Button variant="muted" iconStart={<Icon name="folder" />} size="sm">
-  Nuevo espacio
-</Button>
-
-<Button variant="brand" loading={guardando} onClick={guardar}>
-  Guardar
-</Button>
-`} />
-      </Section>
 
       <Section title="Props">
         <Props of="Button" />

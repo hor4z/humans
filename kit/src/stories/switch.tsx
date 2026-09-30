@@ -2,7 +2,7 @@ import cls from './switch.module.css'
 import { useState } from 'react'
 import { Row } from '@milo/ui/row'
 import { Switch } from '@milo/ui/switch'
-import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Variant } from '../kit'
+import { A11y, Demo, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function SwitchStory() {
   const [on, setOn] = useState(true)
@@ -20,11 +20,12 @@ export function SwitchStory() {
         note="Se lee como una llave de luz y no como una casilla: va para lo que se aplica al momento, sin un botón de guardar que lo confirme."
       >
         <Panel>
-          <Variant name="on"><Switch checked={on} onChange={setOn} label="Sugerencias" /></Variant>
-          <Variant name="off"><Switch checked={off} onChange={setOff} label="Directorio" /></Variant>
-          <Variant name="disabled">
-            <Switch checked onChange={() => {}} disabled label="Fijo" />
-            <Switch checked={false} onChange={() => {}} disabled label="Fijo" />
+          <Variant name="on" code={`<Switch checked={on} onCheckedChange={setOn} label="Sugerencias" />`}><Switch checked={on} onCheckedChange={setOn} label="Sugerencias" /></Variant>
+          <Variant name="off" code={`<Switch checked={off} onCheckedChange={setOff} label="Directorio" />`}><Switch checked={off} onCheckedChange={setOff} label="Directorio" /></Variant>
+          <Variant name="disabled" code={`<Switch checked onCheckedChange={toggle} disabled label="Fijo" />
+<Switch checked={false} onCheckedChange={toggle} disabled label="Fijo" />`}>
+            <Switch checked onCheckedChange={() => {}} disabled label="Fijo" />
+            <Switch checked={false} onCheckedChange={() => {}} disabled label="Fijo" />
           </Variant>
         </Panel>
       </Section>
@@ -33,29 +34,29 @@ export function SwitchStory() {
         title="Con su etiqueta al lado"
         note="Un switch suelto no dice qué prende. En un panel va dentro de una `Row`, que pone la etiqueta a la izquierda y el control contra el borde derecho; en un formulario va dentro de un `Field`."
       >
-        <div className={`${cls.rowBox} bg-surface`}>
-          <Row>
-            <Row.Label>Avisos por mail</Row.Label>
-            <Row.Hint>Cuando llega una entrega nueva</Row.Hint>
-            <Switch checked={on} onChange={setOn} label="Avisos por mail" />
-          </Row>
-          <Row>
-            <Row.Label>Entregas fuera de fecha</Row.Label>
-            <Row.Hint>Después del cierre</Row.Hint>
-            <Switch checked={off} onChange={setOff} label="Entregas fuera de fecha" />
-          </Row>
-        </div>
-      </Section>
-
-      <Note title="Switch o Checkbox">
-        El switch aplica en el momento: lo prendés y ya está. La casilla es parte de un formulario que
-        se confirma después, con un botón. Si hay un "Guardar" abajo, va casilla; si el cambio pasa
-        solo, va switch.
-      </Note>
-
-      <Section title="Cómo se escribe">
-        <Example code={`const [activo, setActivo] = useState(true)
-<Switch checked={activo} onChange={setActivo} label="Permitir entregas tarde" />`} />
+        <Demo fill code={`<Row>
+  <Row.Label>Avisos por mail</Row.Label>
+  <Row.Hint>Cuando llega una entrega nueva</Row.Hint>
+  <Switch checked={on} onCheckedChange={setOn} label="Avisos por mail" />
+</Row>
+<Row>
+  <Row.Label>Entregas fuera de fecha</Row.Label>
+  <Row.Hint>Después del cierre</Row.Hint>
+  <Switch checked={off} onCheckedChange={setOff} label="Entregas fuera de fecha" />
+</Row>`}>
+          <div className={`${cls.rowBox} bg-surface`}>
+            <Row>
+              <Row.Label>Avisos por mail</Row.Label>
+              <Row.Hint>Cuando llega una entrega nueva</Row.Hint>
+              <Switch checked={on} onCheckedChange={setOn} label="Avisos por mail" />
+            </Row>
+            <Row>
+              <Row.Label>Entregas fuera de fecha</Row.Label>
+              <Row.Hint>Después del cierre</Row.Hint>
+              <Switch checked={off} onCheckedChange={setOff} label="Entregas fuera de fecha" />
+            </Row>
+          </div>
+        </Demo>
       </Section>
 
       <Section title="Props">

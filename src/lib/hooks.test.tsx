@@ -22,9 +22,9 @@ describe('useDisclosure', () => {
 
   it('las acciones no cambian de identidad entre renders', () => {
     const { result, rerender } = renderHook(() => useDisclosure())
-    const antes = result.current.onOpen
+    const before = result.current.onOpen
     rerender()
-    expect(result.current.onOpen).toBe(antes)
+    expect(result.current.onOpen).toBe(before)
   })
 })
 
@@ -84,17 +84,17 @@ describe('useClipboard', () => {
 
 describe('useAnnounce', () => {
   it('escribe en una sola región viva, compartida', async () => {
-    function Dos() {
-      const uno = useAnnounce()
-      const dos = useAnnounce()
+    function TwoFixture() {
+      const one = useAnnounce()
+      const two = useAnnounce()
       return (
         <>
-          <button type="button" onClick={() => uno('primero')}>uno</button>
-          <button type="button" onClick={() => dos('segundo', 'assertive')}>dos</button>
+          <button type="button" onClick={() => one('primero')}>uno</button>
+          <button type="button" onClick={() => two('segundo', 'assertive')}>dos</button>
         </>
       )
     }
-    render(<Dos />)
+    render(<TwoFixture />)
     await userEvent.click(screen.getByRole('button', { name: 'uno' }))
     await waitFor(() => expect(document.getElementById('milo-live')!.textContent).toBe('primero'))
     await userEvent.click(screen.getByRole('button', { name: 'dos' }))
@@ -130,7 +130,7 @@ describe('colorForName', () => {
   })
 
   it('mira el orden de las letras, que es lo que sumar los códigos no hacía', () => {
-    const pares = [['Ana Ruiz', 'Ruiz Ana'], ['Juan Pérez', 'Pérez Juan'], ['Mora Tello', 'Tello Mora']] as const
-    expect(pares.some(([a, b]) => colorForName(a) !== colorForName(b))).toBe(true)
+    const pairs = [['Ana Ruiz', 'Ruiz Ana'], ['Juan Pérez', 'Pérez Juan'], ['Mora Tello', 'Tello Mora']] as const
+    expect(pairs.some(([a, b]) => colorForName(a) !== colorForName(b))).toBe(true)
   })
 })

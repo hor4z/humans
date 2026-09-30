@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Avatar } from '@milo/ui/avatar'
 import { Icon } from '@milo/ui/icon'
 import { Select } from '@milo/ui/select'
-import { A11y, Cluster, Demo, Example, Page, Practices, Props, Section } from '../kit'
+import { A11y, Cluster, Demo, Page, Practices, Props, Section } from '../kit'
 
 export function SelectStory() {
   const [level, setLevel] = useState('6.º grado')
@@ -27,19 +27,24 @@ export function SelectStory() {
     >
       <Section
         title="Variantes"
-        note="El costo de no usar el nativo es traer el teclado a mano, que es lo que el nativo regalaba: flechas para moverse, Enter para elegir, Escape para salir, Home y End a los extremos, y teclear para saltar a la opción que empieza así. Probalo con el teclado: abrí el de al lado y escribí 'ci'."
+        note="Probalo con el teclado: abrí el de las materias y escribí 'ci'."
       >
         <Cluster align="start">
-          <Demo label="width 160">
-            <Select value={level} onChange={setLevel} width={160} options={['4.º grado', '5.º grado', '6.º grado', '7.º grado']} />
+          <Demo label="width 160" code={`<Select value={level} onValueChange={setLevel} width={160} options={['4.º grado', '5.º grado', '6.º grado', '7.º grado']} />`}>
+            <Select value={level} onValueChange={setLevel} width={160} options={['4.º grado', '5.º grado', '6.º grado', '7.º grado']} />
           </Demo>
-          <Demo label="al ancho del contenido">
-            <Select value={subject} onChange={setSubject} options={['Matemática', 'Lengua', 'Ciencias', 'Geografía', 'Convivencia']} />
+          <Demo label="al ancho del contenido" code={`<Select value={subject} onValueChange={setSubject} options={['Matemática', 'Lengua', 'Ciencias', 'Geografía', 'Convivencia']} />`}>
+            <Select value={subject} onValueChange={setSubject} options={['Matemática', 'Lengua', 'Ciencias', 'Geografía', 'Convivencia']} />
           </Demo>
-          <Demo width="sm" label="valor largo · se trunca">
+          <Demo width="sm" label="valor largo · se trunca" code={`<Select
+  value={long}
+  onValueChange={setLong}
+  width={280}
+  options={['Solo yo', 'Todo el equipo', 'Cualquiera con el link puede ver y comentar']}
+/>`}>
             <Select
               value={long}
-              onChange={setLong}
+              onValueChange={setLong}
               width={280}
               options={['Solo yo', 'Todo el equipo', 'Cualquiera con el link puede ver y comentar']}
             />
@@ -49,31 +54,49 @@ export function SelectStory() {
 
       <Section
         title="Adelante del valor"
-        note="`leading` es un nodo y no un `IconName`, al revés que el `icon` del TextField: ahí el icono es siempre un glifo del set, acá lo que va adelante del valor es de quien lo usa, el glifo de la categoría, la carpeta de color de un espacio, el avatar de una persona."
+        note="`leading` es un nodo y no un `IconName`, al revés que el `icon` del TextField: lo que va adelante del valor es de quien lo usa."
       >
         <Cluster align="start">
-          <Demo label="un glifo">
+          <Demo label="un glifo" code={`<Select
+  value={withIcon}
+  onValueChange={setWithIcon}
+  width={180}
+  leading={<Icon name="calculate" size={16} />}
+  options={['Matemática', 'Lengua', 'Ciencias']}
+/>`}>
             <Select
               value={withIcon}
-              onChange={setWithIcon}
+              onValueChange={setWithIcon}
               width={180}
               leading={<Icon name="calculate" size={16} />}
               options={['Matemática', 'Lengua', 'Ciencias']}
             />
           </Demo>
-          <Demo label="una carpeta de color">
+          <Demo label="una carpeta de color" code={`<Select
+  value={space}
+  onValueChange={setSpace}
+  width={200}
+  leading={<Icon.Folder color="blue" size={16} />}
+  options={['Matemática · 4.º A', 'Lengua · 6.º', 'Ciencias · 5.º B']}
+/>`}>
             <Select
               value={space}
-              onChange={setSpace}
+              onValueChange={setSpace}
               width={200}
               leading={<Icon.Folder color="blue" size={16} />}
               options={['Matemática · 4.º A', 'Lengua · 6.º', 'Ciencias · 5.º B']}
             />
           </Demo>
-          <Demo label="un avatar">
+          <Demo label="un avatar" code={`<Select
+  value={teacher}
+  onValueChange={setTeacher}
+  width={190}
+  leading={<Avatar name="Melina Rivero" size={20} />}
+  options={['Melina Rivero', 'Juan Pérez', 'Ana Gómez']}
+/>`}>
             <Select
               value={teacher}
-              onChange={setTeacher}
+              onValueChange={setTeacher}
               width={190}
               leading={<Avatar name="Melina Rivero" size={20} />}
               options={['Melina Rivero', 'Juan Pérez', 'Ana Gómez']}
@@ -84,13 +107,19 @@ export function SelectStory() {
 
       <Section
         title="Mientras los datos no están"
-        note="`loading` no es lo mismo que pasar un spinner por `leading`. Un spinner suelto se dibuja y nada más: el control sigue abriendo, y lo que abre es una lista vieja que se puede elegir. Con `loading` el select no abre, avisa `aria-busy` y cierra el panel. Lo que no hace es enterarse solo: no recibe promesas."
+        note="Va `loading` y no un spinner por `leading`: con el spinner suelto el control sigue abriendo una lista vieja. No recibe promesas: el estado lo pasa quien carga."
       >
         <Cluster align="start">
-          <Demo label="loading · el spinner es el default">
+          <Demo label="loading · el spinner es el default" code={`<Select value="Cargando espacios…" width={200} loading options={[]} />`}>
             <Select value="Cargando espacios…" width={200} loading options={[]} />
           </Demo>
-          <Demo label="loading con leading propio">
+          <Demo label="loading con leading propio" code={`<Select
+  value="Matemática"
+  width={180}
+  loading
+  leading={<Icon name="calculate" size={16} className="icon-muted" />}
+  options={['Matemática', 'Lengua']}
+/>`}>
             <Select
               value="Matemática"
               width={180}
@@ -99,21 +128,22 @@ export function SelectStory() {
               options={['Matemática', 'Lengua']}
             />
           </Demo>
-          <Demo label="en vivo · alterna cada 2s">
+          <Demo label="en vivo · alterna cada 2s" code={`<Select
+  value={loading ? 'Buscando espacios…' : space}
+  onValueChange={setSpace}
+  width={200}
+  loading={loading}
+  options={['Matemática · 4.º A', 'Lengua · 6.º', 'Ciencias · 5.º B']}
+/>`}>
             <Select
               value={loading ? 'Buscando espacios…' : space}
-              onChange={setSpace}
+              onValueChange={setSpace}
               width={200}
               loading={loading}
               options={['Matemática · 4.º A', 'Lengua · 6.º', 'Ciencias · 5.º B']}
             />
           </Demo>
         </Cluster>
-      </Section>
-
-      <Section title="Cómo se escribe">
-        <Example code={`const [espacio, setEspacio] = useState('Matemática')
-<Select value={espacio} onChange={setEspacio} options={espacios} width={180} />`} />
       </Section>
 
       <Section title="Props">

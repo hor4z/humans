@@ -7,7 +7,10 @@ import type { LabelColor } from '@milo/ui/lib/colors'
 import { toneIcon, toneInk, toneSurface, type Tone } from '@milo/ui/lib/tone'
 import { Icon, type IconName } from '@milo/ui/icon'
 import { cx } from '@milo/ui/lib/cx'
-import { propsByComponent } from '@milo/ui/props'
+import { propsByComponent as packageProps } from '@milo/ui/props'
+import { sitePropsByComponent } from './demo/props.gen'
+
+const propsByComponent = { ...packageProps, ...sitePropsByComponent }
 
 export function useTokens(names: readonly string[]) {
   const [vals, setVals] = useState<Record<string, string>>({})
@@ -79,6 +82,10 @@ const kindColor: Record<string, LabelColor> = {
   Datos: 'blue',
   Avisos: 'pink',
   Superficies: 'purple',
+  Consigna: 'green',
+  'Rúbrica': 'orange',
+  Medios: 'pink',
+  'Del sitio': 'teal',
 }
 
 /** La cabecera de una pieza y el cuerpo de su página. */
@@ -159,10 +166,10 @@ const highlight: Record<string, string> = {
   comment: s.codeComment,
 }
 
-/** Cómo se escribe la pieza. Va al lado de la tabla de props: una dice qué acepta, el otro cómo se usa. */
-export function Example({ code }: { code: string }) {
+/** El código que arma lo que se ve. Lo dibujan `Demo` y `Variant` debajo de su pieza: si la pieza se ve bien y su código no, la API está mal. */
+export function Example({ code, className }: { code: string; className?: string }) {
   return (
-    <div className={`${s.codeBlock} group`}>
+    <div className={cx(s.codeBlock, 'group', className)}>
       <pre className={s.codePre}>
         <code>
           {code.trim().split('\n').map((line, i) => (
@@ -275,9 +282,11 @@ export function Footnote({ children }: { children: ReactNode }) {
   )
 }
 
-/** Un ejemplo con su etiqueta abajo. */
-export function Demo({ label, width, fill, children, className }: {
+/** Un ejemplo: la pieza en su lienzo, la etiqueta y el código que la arma. */
+export function Demo({ label, code, width, fill, children, className }: {
   label?: string
+  /** El código que dibuja lo de adentro, con los mismos props y el mismo contenido. */
+  code: string
   /** Le pone tope de ancho a la caja, de la misma escala que `Frame`. */
   width?: keyof typeof frameWidths
   /** La pieza de adentro ocupa el ancho del lienzo, para un campo que si no se mide por su contenido. */
@@ -289,6 +298,7 @@ export function Demo({ label, width, fill, children, className }: {
     <div className={cx(s.demo, width && s.frame, width && frameWidths[width])}>
       <Canvas className={cx(s.demoCanvas, fill && s.demoFill, className)}>{children}</Canvas>
       {label && <div className={s.demoCaption}><Rich text={label} /></div>}
+      <Example code={code} />
     </div>
   )
 }
@@ -311,10 +321,29 @@ export function Grid({ children, min = 220, cols }: {
   )
 }
 
-/** Una fila de variantes con su nombre al costado. */
-export function Variant({ name, note, children }: {
+/** Una fila de variantes con su nombre al costado y su código abajo. */
+export function Variant({ name, note, code, children }: {
   name: string
+  /** El código que dibuja la fila, con los mismos props y el mismo contenido. */
+  code: string
   /** Qué significa esta variante, al lado de la pieza. Sin esto la fila solo muestra cómo se ve, no cuándo va. */
+  note?: string
+  children: ReactNode
+}) {
+  return (
+    <div className={s.variant}>
+      <code className={s.variantName}>{name}</code>
+      <div className={s.variantItems}>{children}</div>
+      {note && <p className={s.variantNote}><Rich text={note} /></p>}
+      <Example code={code} className={s.variantCode} />
+    </div>
+  )
+}
+
+/** Una fila de Fundamentos: como `Variant`, pero sin código, porque lo que muestra es una regla y no una pieza. */
+export function Specimen({ name, note, children }: {
+  name: string
+  /** Qué dice esta fila, al lado. */
   note?: string
   children: ReactNode
 }) {
