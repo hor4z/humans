@@ -71,7 +71,7 @@
 
   --relief-raised: 0 0 0 1px var(--border), 0 2px 4px -2px rgb(35 34 32 / 0.12);
   --relief-inset: inset 0 0 0 1px var(--border-strong), inset 0 1px 2px rgb(35 34 32 / 0.04);
-  --relief-card: 0 2px 6px -3px rgb(35 34 32 / 0.08);
+  --relief-card: 0 1px 2px 0 rgb(35 34 32 / 0.04), 0 8px 20px -6px rgb(35 34 32 / 0.08);
   --relief-toolbar: 0 2px 6px -2px rgb(35 34 32 / 0.08), 0 8px 20px -12px rgb(35 34 32 / 0.12);
   --relief-popover: 0 4px 12px -4px rgb(35 34 32 / 0.10), 0 20px 48px -16px rgb(35 34 32 / 0.16);
 
@@ -157,7 +157,7 @@
   --folder-top: oklch(0.70 0.098 89.6);
   --relief-raised: 0 0 0 1px var(--border), 0 2px 4px rgb(0 0 0 / 0.2);
   --relief-inset: inset 0 0 0 1px var(--border-strong);
-  --relief-card: 0 2px 6px -3px rgb(0 0 0 / 0.25);
+  --relief-card: 0 1px 2px 0 rgb(0 0 0 / 0.3), 0 8px 20px -6px rgb(0 0 0 / 0.4);
   --relief-toolbar: 0 4px 16px -6px rgb(0 0 0 / 0.35);
   --relief-popover: 0 8px 20px -6px rgb(0 0 0 / 0.3), 0 24px 48px -16px rgb(0 0 0 / 0.45);
 }

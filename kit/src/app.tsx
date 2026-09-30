@@ -278,16 +278,6 @@ const groupIcons: Record<string, IconName> = {
   Consigna: 'menu_book', Rúbrica: 'checklist', Medios: 'volume_up', 'Del sitio': 'folder',
 }
 
-const destinationIcons: Record<string, IconName> = {
-  accessibility: 'accessibility', typography: 'format_bold', color: 'palette', measure: 'square_foot',
-  layout: 'grid_view', icon: 'star_shine', time: 'schedule', writing: 'edit',
-  button: 'touch_app', menu: 'menu', dropdown: 'keyboard_arrow_down', field: 'tune',
-  search: 'search', 'date-picker': 'calendar_month', checkbox: 'checklist',
-  tabs: 'tab', accordion: 'view_list', breadcrumb: 'chevron_right', table: 'table_rows',
-  list: 'view_list', avatar: 'person', chart: 'bar_chart', progress: 'bar_chart',
-  toast: 'notifications', modal: 'open_in_new', link: 'link', divider: 'horizontal_rule',
-}
-
 export function App() {
   const [current, setCurrent] = useState(() => location.hash.slice(1) || INTRO)
   const [query, setQuery] = useState('')
@@ -395,7 +385,7 @@ export function App() {
               <span className={cls.brandMark}><Icon name="deployed_code" size={20} /></span>
               <span className={cls.brandName}>milo</span>
             </button>
-            {desktop && !compact && <IconButton icon={compact ? 'chevron_right' : 'chevron_left'} label={compact ? 'Expandir panel lateral' : 'Plegar panel lateral'} size="sm" aria-expanded={!compact} onClick={() => setCollapsed(v => !v)} />}
+            {desktop && <IconButton icon={compact ? 'chevron_right' : 'chevron_left'} label={compact ? 'Expandir panel lateral' : 'Plegar panel lateral'} size="sm" aria-expanded={!compact} onClick={() => setCollapsed(v => !v)} className={cls.railToggle} />}
             {!desktop && <IconButton icon="close" label="Cerrar el índice" size="sm" onClick={() => setRailOpen(false)} />}
             </div>
 
@@ -469,7 +459,6 @@ export function App() {
                           return (
                             <Fragment key={s.id}>
                               <SideLink
-                                icon={destinationIcons[s.id] ?? groupIcons[g.label] ?? 'deployed_code'}
                                 active={current === s.id}
                                 expanded={s.children?.length ? desplegado : undefined}
                                 onClick={() => {
@@ -483,7 +472,7 @@ export function App() {
                                 {s.label}
                               </SideLink>
                               {desplegado && s.children?.map(c => (
-                                <SideLink icon={destinationIcons[c.id] ?? 'deployed_code'} key={c.id} active={current === c.id} onClick={() => go(c.id)} piece sub>{c.label}</SideLink>
+                                <SideLink key={c.id} active={current === c.id} onClick={() => go(c.id)} piece sub>{c.label}</SideLink>
                               ))}
                             </Fragment>
                           )
@@ -510,7 +499,6 @@ export function App() {
           </div>}
 
           <div className={cls.railFoot}>
-            {compact && <IconButton icon="chevron_right" label="Expandir panel lateral" size="sm" onClick={() => setCollapsed(false)} />}
             <span className={cls.railCount}>
               {everything.length} vistas
             </span>
@@ -589,6 +577,7 @@ function SideLink({ active, onClick, icon, piece, sub, expanded, children }: {
       aria-expanded={expanded}
       className={cx(
         cls.navItem,
+        piece && cls.navPiece,
         sub && cls.navSubItem,
         active ? cls.navItemActive : cls.navItemIdle,
       )}
