@@ -45,10 +45,10 @@
   }
 
   .pageTitle {
-    font-size: var(--type-display);
-    line-height: var(--type-display-lh);
-    letter-spacing: var(--type-display-ls);
-    font-weight: var(--font-weight-bold);
+    font-size: var(--type-heading);
+    line-height: var(--type-heading-lh);
+    letter-spacing: var(--type-heading-ls);
+    font-weight: var(--font-weight-semibold);
     color: var(--text);
   }
 
@@ -261,10 +261,10 @@
   }
 
   .statValue {
-    font-size: var(--type-display);
-    line-height: var(--type-display-lh);
-    letter-spacing: var(--type-display-ls);
-    font-weight: var(--font-weight-bold);
+    font-size: var(--type-heading);
+    line-height: var(--type-heading-lh);
+    letter-spacing: var(--type-heading-ls);
+    font-weight: var(--font-weight-semibold);
     color: var(--text);
   }
 

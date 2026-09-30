@@ -14,9 +14,9 @@ const roles = [
 ] as const
 
 const weights = [
-  ['--font-weight-medium', '380', 'La interfaz.'],
-  ['--font-weight-semibold', '430', 'Lo elegido y los títulos. Lo lleva el elegido, no la lista. Es 430 y no 500 porque el 500 ya se lee como negrita.'],
-  ['--font-weight-bold', '560', 'Solo portada.'],
+  ['--font-weight-medium', '400', 'La interfaz.'],
+  ['--font-weight-semibold', '500', 'Lo elegido y los títulos. Lo lleva el elegido, no la lista. Con 400 de base, 500 alcanza para la jerarquía sin verse como negrita.'],
+  ['--font-weight-bold', '600', 'Solo portada.'],
 ] as const
 
 const rules = [
