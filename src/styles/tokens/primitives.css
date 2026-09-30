@@ -1,26 +1,26 @@
 :root {
-  --shade-01: #f0f1f3;
-  --shade-02: #e5e8ed;
-  --shade-03: #dce1e8;
-  --shade-04: #ccd3de;
-  --shade-05: #aab2bf;
-  --shade-06: #465365;
-  --shade-07: #354153;
-  --shade-08: #243044;
-  --shade-09: #182235;
-  --shade-placeholder: #565e6b;
+  --shade-01: #ffffff;
+  --shade-02: #fbfaf6;
+  --shade-03: #f1f0ec;
+  --shade-04: #d4d2ce;
+  --shade-05: #b2b1ad;
+  --shade-06: #535250;
+  --shade-07: #41403e;
+  --shade-08: #30302d;
+  --shade-09: #232220;
+  --shade-placeholder: #5e5d5b;
 
-  --shade-09-a04: rgb(17 24 39 / 0.04);
-  --shade-09-a06: rgb(17 24 39 / 0.06);
-  --shade-09-a08: rgb(17 24 39 / 0.08);
-  --shade-09-a11: rgb(17 24 39 / 0.11);
-  --shade-09-a28: rgb(17 24 39 / 0.28);
-  --shade-09-a35: rgb(17 24 39 / 0.35);
+  --shade-09-a04: rgb(35 34 32 / 0.04);
+  --shade-09-a06: rgb(35 34 32 / 0.06);
+  --shade-09-a08: rgb(35 34 32 / 0.08);
+  --shade-09-a11: rgb(35 34 32 / 0.11);
+  --shade-09-a28: rgb(35 34 32 / 0.28);
+  --shade-09-a35: rgb(35 34 32 / 0.35);
 
-  --light-a33: rgb(249 250 251 / 0.33);
-  --light-a27: rgb(249 250 251 / 0.27);
-  --edge: #aab1bc;
-  --icon-muted: #354153;
+  --light-a33: rgb(251 250 246 / 0.33);
+  --light-a27: rgb(251 250 246 / 0.27);
+  --edge: #b1b0ac;
+  --icon-muted: #41403e;
 
   --blue-050: #d5e4f7;
   --blue-100: #dae9ff;
