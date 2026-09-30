@@ -240,7 +240,11 @@ export function Code({ children }: { children: string }) {
       onClick={() => copy(children)}
       className={`${s.importBlock} group`}
     >
-      <code className={s.importCode}>{paintLine(children)}</code>
+      <code className={s.importCode}>
+        {highlight(children.trim()).map((line, i) => (
+          <span key={i} className={s.importLine}><Painted tokens={line} /></span>
+        ))}
+      </code>
       <Icon
         name={copied ? 'check' : 'content_copy'}
         size={14}

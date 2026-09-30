@@ -1,8 +1,16 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-import { A11y, Note } from '../kit'
+import { A11y, Code, Note } from '../kit'
 
 describe('las piezas del propio kit', () => {
+  it('la pastilla del import deja cada import en su renglón', () => {
+    render(<Code>{"import { List } from '@milo/ui/list'\nimport { useState } from 'react'"}</Code>)
+    const code = screen.getByRole('button').querySelector('code')!
+    expect(code.children).toHaveLength(2)
+    expect(code.children[0]).toHaveTextContent("import { List } from '@milo/ui/list'")
+    expect(code.children[1]).toHaveTextContent("import { useState } from 'react'")
+  })
+
   it('una nota interpreta los backticks igual que el resto del sitio', () => {
     const { container } = render(<Note title="Algo">El tipo va en `lib/side-scroll.ts` y listo.</Note>)
     expect(container.querySelector('code')?.textContent).toBe('lib/side-scroll.ts')
