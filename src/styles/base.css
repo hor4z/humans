@@ -7,7 +7,7 @@ body {
   color: var(--text);
   font-family: var(--font-sans);
   font-size: var(--type-body);
-  font-weight: 400;
+  font-weight: var(--font-weight-medium);
   line-height: var(--type-body-lh);
   letter-spacing: var(--type-body-ls);
 

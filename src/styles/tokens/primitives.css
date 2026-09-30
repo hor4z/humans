@@ -4,23 +4,23 @@
   --shade-03: #e9eaec;
   --shade-04: #dee0e2;
   --shade-05: #cfd1d4;
-  --shade-06: #616264;  
-  --shade-07: #48494a;
-  --shade-08: #363738;
-  --shade-09: #2b2b2d;  
-  --shade-placeholder: #68696b;
+  --shade-06: #5e6269;  
+  --shade-07: #454950;
+  --shade-08: #33373d;
+  --shade-09: #282c31;  
+  --shade-placeholder: #656970;
 
-  --shade-09-a04: rgb(43 43 45 / 0.04);
-  --shade-09-a06: rgb(43 43 45 / 0.06);
-  --shade-09-a08: rgb(43 43 45 / 0.08);
-  --shade-09-a11: rgb(43 43 45 / 0.11);
-  --shade-09-a28: rgb(43 43 45 / 0.28);
-  --shade-09-a35: rgb(43 43 45 / 0.35);
+  --shade-09-a04: rgb(40 44 49 / 0.04);
+  --shade-09-a06: rgb(40 44 49 / 0.06);
+  --shade-09-a08: rgb(40 44 49 / 0.08);
+  --shade-09-a11: rgb(40 44 49 / 0.11);
+  --shade-09-a28: rgb(40 44 49 / 0.28);
+  --shade-09-a35: rgb(40 44 49 / 0.35);
 
   --light-a33: rgb(255 255 255 / 0.33);
   --light-a27: rgb(255 255 255 / 0.27);
   --edge: #c5c7ca;
-  --icon-muted: #48494a;
+  --icon-muted: #454950;
 
   --blue-050: #e7f7ff;
   --blue-100: #cdecff;
@@ -92,23 +92,23 @@
   --shade-03: #27292b;
   --shade-04: #343538;
   --shade-05: #46484b;
-  --shade-06: #9d9fa0;
-  --shade-07: #c3c4c5;
-  --shade-08: #dfe0e1;
-  --shade-09: #f3f3f4;
-  --shade-placeholder: #8e9091;
+  --shade-06: #9a9fa6;
+  --shade-07: #bfc4cc;
+  --shade-08: #dbe0e8;
+  --shade-09: #eef4fc;
+  --shade-placeholder: #8b9097;
 
-  --shade-09-a04: rgb(243 243 244 / 0.05);
-  --shade-09-a06: rgb(243 243 244 / 0.08);
-  --shade-09-a08: rgb(243 243 244 / 0.10);
-  --shade-09-a11: rgb(243 243 244 / 0.14);
-  --shade-09-a28: rgb(243 243 244 / 0.30);
+  --shade-09-a04: rgb(238 244 252 / 0.05);
+  --shade-09-a06: rgb(238 244 252 / 0.08);
+  --shade-09-a08: rgb(238 244 252 / 0.10);
+  --shade-09-a11: rgb(238 244 252 / 0.14);
+  --shade-09-a28: rgb(238 244 252 / 0.30);
   --shade-09-a35: rgb(0 0 0 / 0.6);
 
   --light-a33: rgb(255 255 255 / 0.07);
   --light-a27: rgb(255 255 255 / 0.05);
   --edge: #4f5052;
-  --icon-muted: #c3c4c5;
+  --icon-muted: #bfc4cc;
 
   --blue-050: #062148;
   --blue-100: #022d66;
