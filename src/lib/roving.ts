@@ -32,3 +32,24 @@ export function useRovingRadio<T extends string>(
       v === value || (!live.some(l => l.value === value) && v === live[0]?.value) ? 0 : -1,
   }
 }
+
+/** Las flechas de una fila o columna de controles que ya existen en el DOM: se mueven entre los que casan con `selector`, dan la vuelta en los bordes, y Home y End van a las puntas. */
+export function useRovingFocus<T extends HTMLElement>(selector: string, axis: 'horizontal' | 'vertical') {
+  const ref = useRef<T>(null)
+  const [next, prev] = axis === 'horizontal' ? ['ArrowRight', 'ArrowLeft'] : ['ArrowDown', 'ArrowUp']
+  return {
+    ref,
+    onKeyDown(e: { key: string; preventDefault: () => void }) {
+      const step = e.key === next ? 1 : e.key === prev ? -1 : 0
+      const edge = e.key === 'Home' ? 0 : e.key === 'End' ? -1 : null
+      if (!step && edge === null) return
+      const items = [...(ref.current?.querySelectorAll<HTMLElement>(selector) ?? [])]
+      if (!items.length) return
+      const at = items.indexOf(document.activeElement as HTMLElement)
+      if (edge === null && at < 0) return
+      e.preventDefault()
+      const target = edge !== null ? items.at(edge) : items[(at + step + items.length) % items.length]
+      target?.focus()
+    },
+  }
+}
