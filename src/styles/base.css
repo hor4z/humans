@@ -267,7 +267,7 @@ tr[tabindex]:focus-visible {
 .ui-fade { animation: ui-fade-in var(--duration-normal) var(--ease-out) }
 .ui-zoom { animation: ui-zoom-in var(--duration-normal) var(--ease-out) }
 .ui-rise { animation: ui-rise var(--duration-content) var(--ease-out) both }
-.ui-slide { animation: ui-slide-in var(--duration-content) var(--ease-out) }
+.ui-slide { animation: ui-slide-in var(--duration-content) var(--ease-slide) }
 
 [data-closing] { pointer-events: none }
 [data-closing] .ui-fade { animation: ui-fade-out var(--duration-normal) var(--ease-in) forwards }

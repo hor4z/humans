@@ -27,7 +27,7 @@ export function Dialog({ open, onClose, role = 'dialog', label, centered, blurre
   const [mounted, setMounted] = useState(open)
   if (open && !mounted) setMounted(true)
   const closing = mounted && !open
-  useScrollLock(open)
+  useScrollLock(mounted)
   useEscape(open, onClose)
   useFocusTrap(open, panel)
   useEffect(() => {
