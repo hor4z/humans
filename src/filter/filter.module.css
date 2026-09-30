@@ -22,6 +22,26 @@
     box-shadow: var(--relief-popover);
   }
 
+  .iconTrigger {
+    margin-left: auto;
+  }
+
+  .panelLabel {
+    padding-inline: 0.5rem;
+    padding-top: 0.25rem;
+    padding-bottom: 0.5rem;
+    font-size: var(--type-label);
+    line-height: var(--type-label-lh);
+    letter-spacing: var(--type-label-ls);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text);
+  }
+
+  .locked {
+    cursor: default;
+    opacity: .45;
+  }
+
   .option {
     display: flex;
     cursor: pointer;

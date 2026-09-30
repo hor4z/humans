@@ -82,7 +82,7 @@ import { SelfAssessmentStory } from './stories/self-assessment'
 import { SumTableStory } from './stories/sum-table'
 import { NumberAnswerStory } from './stories/number-answer'
 import { OpenQuestionStory } from './stories/open-question'
-import { ColumnPickerStory } from './stories/column-picker'
+import { FilterStory } from './stories/filter'
 import { ProgressStory } from './stories/progress'
 import { CriterionCardStory } from './stories/criterion-card'
 import { RubricReviewStory } from './stories/rubric-review'
@@ -191,7 +191,7 @@ const groups: Group[] = [
       { id: 'table', label: 'Tabla', alias: 'Table tabla grilla filas columnas datos', render: () => <TableStory /> },
       { id: 'list', label: 'Lista', alias: 'lista filas acciones', render: () => <ListStory /> },
       { id: 'bar-chart', label: 'Gráfico de barras', alias: 'BarChart gráfico barras chart datos progreso visualización ejes leyenda tabla', render: () => <ChartStory /> },
-      { id: 'column-picker', label: 'Selector de columnas', alias: 'ColumnPicker columnas tabla elegir mostrar ocultar', render: () => <ColumnPickerStory /> },
+      { id: 'filter', label: 'Filtro', alias: 'Filter filtro columnas tabla elegir mostrar ocultar', render: () => <FilterStory /> },
       { id: 'indicator', label: 'Indicador', alias: 'Indicator indicador badge marca punto contador aviso notificación campana', render: () => <IndicatorStory /> },
       { id: 'progress', label: 'Barra de progreso', alias: 'Progress progreso barra porcentaje avance', render: () => <ProgressStory /> },
       { id: 'skeleton', label: 'Esqueleto', alias: 'Skeleton esqueleto carga hueco placeholder', render: () => <SkeletonStory /> },

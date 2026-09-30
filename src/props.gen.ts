@@ -75,6 +75,12 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "De acá salen el glifo, el color y la urgencia con que se anuncia."
       },
       {
+        "name": "color",
+        "type": "LabelColor | 'neutral'",
+        "required": false,
+        "doc": "El papel de la familia de categorías, para un bloque de contenido que no avisa de nada: reemplaza al tono y trae el glifo solo si se lo pasan."
+      },
+      {
         "name": "icon",
         "type": "IconName | null",
         "required": false,
@@ -361,15 +367,6 @@ export const propsByComponent: Record<string, ComponentDoc> = {
       }
     ],
     "doc": "Un bloque de contenido que pide detenerse: una aclaración, una pista, algo para recordar."
-  },
-  "Callout.Title": {
-    "props": [
-      {
-        "name": "children",
-        "type": "ReactNode",
-        "required": true
-      }
-    ]
   },
   "Card": {
     "props": [
@@ -784,41 +781,6 @@ export const propsByComponent: Record<string, ComponentDoc> = {
       }
     ],
     "doc": "Una de las opciones que se ofrecen."
-  },
-  "ColumnPicker": {
-    "props": [
-      {
-        "name": "columns",
-        "type": "{ id: string; label: string; locked?: boolean }[]",
-        "required": true,
-        "doc": "Todas las columnas que la tabla puede mostrar, en el orden en que van."
-      },
-      {
-        "name": "value",
-        "type": "string[]",
-        "required": true,
-        "doc": "Los ids de las que están a la vista."
-      },
-      {
-        "name": "onValueChange",
-        "type": "(v: string[]) => void",
-        "required": true,
-        "doc": "Recibe los ids de las columnas que quedan a la vista."
-      },
-      {
-        "name": "label",
-        "type": "string",
-        "required": false,
-        "def": "'Columnas'",
-        "doc": "Nombra el botón y encabeza el panel."
-      },
-      {
-        "name": "className",
-        "type": "string",
-        "required": false
-      }
-    ],
-    "doc": "Elegir qué columnas se ven."
   },
   "CommandMenu": {
     "props": [
@@ -1637,6 +1599,17 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "type": "(v: string[]) => void",
         "required": true,
         "doc": "Recibe la lista nueva de valores elegidos."
+      },
+      {
+        "name": "icon",
+        "type": "IconName",
+        "required": false,
+        "doc": "Con un glifo el disparador es un botón de solo icono, con el rótulo como nombre y como encabezado del panel: para elegir qué se ve y no qué se filtra."
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false
       }
     ],
     "doc": "Los filtros de una tabla: la barra, cada filtro y el botón que los limpia."

@@ -45,9 +45,6 @@
       "@milo/ui/chip": [
         "./src/chip/chip.tsx"
       ],
-      "@milo/ui/column-picker": [
-        "./src/column-picker/column-picker.tsx"
-      ],
       "@milo/ui/confirm-dialog": [
         "./src/confirm-dialog/confirm-dialog.tsx"
       ],

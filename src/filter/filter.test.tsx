@@ -36,4 +36,24 @@ describe('Filter', () => {
     expect(screen.queryAllByText('Abierta')).toHaveLength(1)
     expect(screen.getByText('Abierta')).toHaveAttribute('aria-hidden', 'true')
   })
+
+  it('con icon elige columnas y no deja apagar la bloqueada', async () => {
+    const Demo = () => {
+      const [v, setV] = useState(['a', 'b'])
+      return (
+        <Filter
+          icon="view_column"
+          label="Columnas"
+          value={v}
+          onValueChange={setV}
+          options={[{ value: 'a', label: 'Actividad', locked: true }, { value: 'b', label: 'Estado' }]}
+        />
+      )
+    }
+    render(<Demo />)
+    await userEvent.click(screen.getByRole('button', { name: 'Columnas' }))
+    expect(screen.getByRole('checkbox', { name: /Actividad/ })).toBeDisabled()
+    await userEvent.click(screen.getByRole('checkbox', { name: /Estado/ }))
+    expect(screen.getByRole('checkbox', { name: /Estado/ })).toHaveAttribute('aria-checked', 'false')
+  })
 })

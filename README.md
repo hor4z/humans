@@ -111,7 +111,7 @@ Acciones: `Button` · `IconButton` · `Menu` · `Dropdown`
 Formularios: `Field` · `Sheet` · `Search` · `TextField` · `Textarea` · `Select` · `DatePicker` ·
 `Checkbox` · `Radio` · `Switch` · `Slider` · `Stepper` · `Segmented`
 Navegación: `Tabs` · `Accordion` · `Breadcrumb` · `Tree` · `Reorder` · `Steps` · `NavItem`
-Datos: `Table` · `List` · `BarChart` · `ColumnPicker` · `Indicator` · `Chip` · `Progress` ·
+Datos: `Table` · `List` · `BarChart` · `Indicator` · `Chip` · `Progress` ·
 `AudioPlayer` · `Skeleton` · `Avatar`
 Avisos: `Alert` · `Toast` · `EmptyState` · `Spinner` · `Tooltip`
 Superficies: `Card` · `Row` · `Modal` · `ConfirmDialog` · `Popover` · `Divider` · `Link` ·
