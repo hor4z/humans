@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { act, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import { Button } from '../button/button'
@@ -28,5 +28,18 @@ describe('Sheet', () => {
   it('cerrado no monta nada', async () => {
     render(<Sheet open={false} onOpenChange={() => {}}><p>hola</p></Sheet>)
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+  it('al cerrar, sale con su animación y recién después se desmonta', async () => {
+    let finish = () => {}
+    const finished = new Promise<void>(r => { finish = r })
+    Object.defineProperty(HTMLElement.prototype, 'getAnimations', { configurable: true, value: () => [{ finished }] })
+    const view = (open: boolean) => <Sheet open={open} onOpenChange={() => {}} label="Filtros"><p>hola</p></Sheet>
+    const { rerender } = render(view(true))
+    rerender(view(false))
+    expect(screen.getByText('hola').closest('[data-closing]')).toHaveAttribute('aria-hidden', 'true')
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+    await act(async () => { finish(); await finished })
+    expect(screen.queryByText('hola')).not.toBeInTheDocument()
+    delete (HTMLElement.prototype as { getAnimations?: unknown }).getAnimations
   })
 })

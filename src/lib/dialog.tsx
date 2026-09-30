@@ -1,5 +1,5 @@
 import s from './dialog.module.css'
-import { useId, useRef, type CSSProperties, type ReactNode } from 'react'
+import { useEffect, useId, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { Portal } from '../portal/portal'
 import { cx } from './cx'
 import { useEscape } from './esc'
@@ -22,15 +22,27 @@ export function Dialog({ open, onClose, role = 'dialog', label, centered, blurre
   children: (titleId: string) => ReactNode
 }) {
   const panel = useRef<HTMLDivElement>(null)
+  const veil = useRef<HTMLDivElement>(null)
   const titleId = useId()
+  const [mounted, setMounted] = useState(open)
+  if (open && !mounted) setMounted(true)
+  const closing = mounted && !open
   useScrollLock(open)
   useEscape(open, onClose)
   useFocusTrap(open, panel)
-  if (!open) return null
+  useEffect(() => {
+    if (!closing) return
+    const running = [veil.current, panel.current].flatMap(el => el?.getAnimations?.() ?? [])
+    if (!running.length) { setMounted(false); return }
+    let live = true
+    Promise.all(running.map(a => a.finished)).then(() => live && setMounted(false), () => {})
+    return () => { live = false }
+  }, [closing])
+  if (!mounted) return null
   return (
     <Portal>
-      <div className={cx(s.viewport, centered && s.centered)}>
-        <div className={cx(s.veil, blurred && s.blur, 'ui-fade')} onClick={onClose} />
+      <div className={cx(s.viewport, centered && s.centered)} data-closing={closing || undefined} aria-hidden={closing || undefined}>
+        <div ref={veil} className={cx(s.veil, blurred && s.blur, 'ui-fade')} onClick={onClose} />
         <div
           ref={panel}
           role={role}

@@ -29,7 +29,7 @@ function Root({
       onClose={onClose}
       label={label}
       panelClass={cx(`${s.panel} ui-slide bg-surface`, side === 'right' ? s.right : s.left)}
-      panelStyle={{ width, maxWidth: '100%', ['--slide-from' as string]: side === 'right' ? '12px' : '-12px' }}
+      panelStyle={{ width, maxWidth: '100%', ['--slide-from' as string]: side === 'right' ? '100%' : '-100%' }}
     >
       {titleId => (
         <SheetContext.Provider value={{ onClose, titleId }}>
