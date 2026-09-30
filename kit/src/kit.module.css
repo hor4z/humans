@@ -91,6 +91,12 @@
     color: var(--text);
   }
 
+  .importLine {
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
   .importCopyIcon {
     flex-shrink: 0;
     transition-property: color,background-color,border-color,outline-color,text-decoration-color,fill,stroke;
