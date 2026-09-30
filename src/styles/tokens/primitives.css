@@ -1,26 +1,26 @@
 :root {
   --shade-01: #ffffff;  
-  --shade-02: #ecf3fc;  
-  --shade-03: #e3ebf6;
-  --shade-04: #d8e1ed;
+  --shade-02: #eef3f7;  
+  --shade-03: #e5ebf2;
+  --shade-04: #d9e1ea;
   --shade-05: #c8d2df;
-  --shade-06: #5e6269;  
-  --shade-07: #454950;
-  --shade-08: #33373d;
-  --shade-09: #282c31;  
-  --shade-placeholder: #656970;
+  --shade-06: #546378;  
+  --shade-07: #3c4a5e;
+  --shade-08: #2b374b;
+  --shade-09: #212c3e;  
+  --shade-placeholder: #5b6a80;
 
-  --shade-09-a04: rgb(40 44 49 / 0.04);
-  --shade-09-a06: rgb(40 44 49 / 0.06);
-  --shade-09-a08: rgb(40 44 49 / 0.08);
-  --shade-09-a11: rgb(40 44 49 / 0.11);
-  --shade-09-a28: rgb(40 44 49 / 0.28);
-  --shade-09-a35: rgb(40 44 49 / 0.35);
+  --shade-09-a04: rgb(33 44 62 / 0.04);
+  --shade-09-a06: rgb(33 44 62 / 0.06);
+  --shade-09-a08: rgb(33 44 62 / 0.08);
+  --shade-09-a11: rgb(33 44 62 / 0.11);
+  --shade-09-a28: rgb(33 44 62 / 0.28);
+  --shade-09-a35: rgb(33 44 62 / 0.35);
 
   --light-a33: rgb(255 255 255 / 0.33);
   --light-a27: rgb(255 255 255 / 0.27);
-  --edge: #bec8d5;
-  --icon-muted: #454950;
+  --edge: #bdc8d7;
+  --icon-muted: #3c4a5e;
 
   --blue-050: #e7f7ff;
   --blue-100: #cdecff;
@@ -87,28 +87,28 @@
 }
 
 [data-theme="dark"] {
-  --shade-01: #1a1e25;  
-  --shade-02: #111419;  
-  --shade-03: #242931;
-  --shade-04: #2f353e;
-  --shade-05: #414853;
-  --shade-06: #9a9fa6;
-  --shade-07: #bfc4cc;
-  --shade-08: #dbe0e8;
-  --shade-09: #eef4fc;
-  --shade-placeholder: #8b9097;
+  --shade-01: #1d1e20;  
+  --shade-02: #131415;  
+  --shade-03: #27292b;
+  --shade-04: #343538;
+  --shade-05: #46484b;
+  --shade-06: #9d9fa0;
+  --shade-07: #c3c4c5;
+  --shade-08: #dfe0e1;
+  --shade-09: #f3f3f4;
+  --shade-placeholder: #8e9091;
 
-  --shade-09-a04: rgb(238 244 252 / 0.05);
-  --shade-09-a06: rgb(238 244 252 / 0.08);
-  --shade-09-a08: rgb(238 244 252 / 0.10);
-  --shade-09-a11: rgb(238 244 252 / 0.14);
-  --shade-09-a28: rgb(238 244 252 / 0.30);
+  --shade-09-a04: rgb(243 243 244 / 0.05);
+  --shade-09-a06: rgb(243 243 244 / 0.08);
+  --shade-09-a08: rgb(243 243 244 / 0.10);
+  --shade-09-a11: rgb(243 243 244 / 0.14);
+  --shade-09-a28: rgb(243 243 244 / 0.30);
   --shade-09-a35: rgb(0 0 0 / 0.6);
 
   --light-a33: rgb(255 255 255 / 0.07);
   --light-a27: rgb(255 255 255 / 0.05);
-  --edge: #49505b;
-  --icon-muted: #bfc4cc;
+  --edge: #4f5052;
+  --icon-muted: #c3c4c5;
 
   --blue-050: #062148;
   --blue-100: #022d66;
