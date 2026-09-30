@@ -129,7 +129,7 @@ export function ToastStory() {
         <Practices>
           <Practices.Do>Es para lo que pasó y no necesita respuesta: aparece, se lee y se va.</Practices.Do>
           <Practices.Do>Lo que se puede revertir va con `action` de deshacer y no con una confirmación antes: preguntar cuesta un click siempre, deshacer solo cuando alguien se equivocó.</Practices.Do>
-          <Practices.Dont>Si la persona tiene que seguir viendo el aviso cuando vuelva dentro de un minuto, no es un toast: es un [Alert](#alert), que se queda en la página.</Practices.Dont>
+          <Practices.Dont>Si la persona tiene que seguir viendo el aviso cuando vuelva dentro de un minuto, no es un toast: es un [Callout](#callout) con `tone`, que se queda en la página.</Practices.Dont>
           <Practices.Dont>Con `duration: 0` poné una salida: sin X y sin acción, no hay forma de cerrarlo.</Practices.Dont>
         </Practices>
       </Section>

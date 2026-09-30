@@ -539,6 +539,23 @@
     color: var(--text-muted);
   }
 
+  .practices {
+    display: flex;
+    max-width: 70ch;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-left: 1.25rem;
+    list-style-type: disc;
+    font-size: var(--type-body);
+    line-height: var(--type-body-lh);
+    letter-spacing: var(--type-body-ls);
+    color: var(--text-muted);
+  }
+
+  .practice::marker {
+    color: var(--text-placeholder);
+  }
+
   .a11yList {
     display: flex;
     flex-direction: column;
@@ -867,10 +884,11 @@
   }
 
   .guideHeadName {
-    width: 9rem;
+    width: 1%;
   }
 
   .guideName {
+    white-space: nowrap;
     font-weight: var(--font-weight-medium);
     color: var(--text);
   }
@@ -907,6 +925,7 @@
   }
 
   .exampleTabs {
+    gap: 0;
     overflow: hidden;
     border-radius: var(--radius-lg);
     background-color: var(--surface-muted);
@@ -920,11 +939,22 @@
     line-height: var(--type-body-lh);
     letter-spacing: var(--type-body-ls);
     font-weight: var(--font-weight-medium);
-    color: var(--text-muted);
+    color: var(--text);
   }
 
   .exampleCode {
     padding-block: 0.75rem;
+
+    & .codeBlock {
+      border-width: 0;
+      padding: 0;
+      background-color: transparent;
+    }
+
+    & .codeCopy {
+      top: -0.25rem;
+      right: 0;
+    }
   }
 
   .exampleCodeOnly {

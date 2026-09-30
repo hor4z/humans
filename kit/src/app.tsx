@@ -62,7 +62,6 @@ import { TableStory } from './stories/table'
 import { CardStory } from './stories/card'
 import { RowStory } from './stories/row'
 import { NavStory } from './stories/nav'
-import { AlertStory } from './stories/alert'
 import { ToastStory } from './stories/toast'
 import { FieldStory } from './stories/field'
 import { SheetStory } from './stories/sheet'
@@ -190,7 +189,7 @@ const groups: Group[] = [
     label: 'Avisos',
     section: 'system',
     stories: [
-      { id: 'alert', label: 'Aviso', alias: 'alerta aviso error banner mensaje', render: () => <AlertStory /> },
+      { id: 'callout', label: 'Bloque destacado', alias: 'Callout Alert aviso alerta error banner mensaje bloque destacado aclaración pista recordar nota', render: () => <CalloutStory /> },
       { id: 'toast', label: 'Notificación', alias: 'toast notificación aviso pasajero deshacer', render: () => <ToastStory /> },
       { id: 'empty-state', label: 'Vacío', alias: 'EmptyState vacío sin resultados nada', render: () => <EmptyStateStory /> },
       { id: 'spinner', label: 'Girador', alias: 'Spinner cargando loading esperar', render: () => <SpinnerStory /> },
@@ -217,7 +216,6 @@ const groups: Group[] = [
     stories: [
       { id: 'toolbar', label: 'Barra de formato', alias: 'Toolbar barra herramientas formato negrita cursiva editor texto enriquecido', render: () => <ToolbarStory /> },
       { id: 'command-menu', label: 'Paleta de comandos', alias: 'CommandMenu comandos paleta barra slash menú buscar bloques editor notion', render: () => <CommandMenuStory /> },
-      { id: 'callout', label: 'Bloque destacado', alias: 'Callout bloque destacado aclaración pista recordar contenido editor', render: () => <CalloutStory /> },
       { id: 'quote', label: 'Cita', alias: 'cita blockquote fuente atribución textual editor', render: () => <QuoteStory /> },
       { id: 'task-list', label: 'Lista de tareas', alias: 'TaskList tareas checklist pasos pendientes marcar hacer editor', render: () => <TaskListStory /> },
       { id: 'checklist', label: 'Lista de pasos', alias: 'Checklist primeros pasos onboarding progreso acordeón plegable checklist', render: () => <ChecklistStory /> },

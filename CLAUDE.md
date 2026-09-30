@@ -42,7 +42,7 @@ comando.
   tabla, gráfico. Se importa `@milo/ui/button`.
 - **Los bloques** (`src/blocks/<familia>/<pieza>`) son lo complementario: piezas armadas con la
   base que ponen al sistema en su uso real. Las familias son `editor`, `task` (la consigna),
-  `rubric` y `media`. Se importa `@milo/ui/blocks/editor/callout`.
+  `rubric` y `media`. Se importa `@milo/ui/blocks/editor/quote`.
 - **La base nunca importa un bloque, y un bloque no escribe en `:root`.** Sus custom properties
   (`--band`, `--icon-size`) son locales a su clase. Si la base necesita algo de un bloque, eso no era
   un bloque; si a un bloque le falta un rol, el rol es de la base. Hay dos tests.
@@ -141,8 +141,8 @@ no tiene el cursor, **`plain`** lo que no recibió tratamiento de elección ni d
 interruptor va con **`on`/`off`**.
 
 El vocabulario de la API no se unificó (hay seis palabras para el texto de apoyo), así que las
-clases eligieron una y la usan en todas: en `Alert` la clase se llama `text` aunque la parte sea
-`Alert.Body`.
+clases eligieron una y la usan en todas: en `Callout` la clase se llama `text` aunque el texto vaya
+suelto.
 
 ## Overlays
 
@@ -226,7 +226,7 @@ recetas de sombra, no pantallas. No seguir igualándolo: el conjunto armado es l
   otra salida: el spinner gira lento, no quieto.
 - **Ajustes en un modal, no en una página**: al cerrar seguís donde estabas. Un panel que pide
   leerse entero lleva velo (`Popover` con `veil`), sin blur.
-- **Una zona de riesgo es un `Alert tone="bad"`** con `role="group"`: la receta visual se reusa, la
+- **Una zona de riesgo es un `Callout tone="bad"`** con `role="group"`: la receta visual se reusa, la
   urgencia de `role="alert"` no.
 - **Una confirmación no lleva X**, y con `tone="bad"` el foco arranca en cancelar.
 - **Un diálogo se arma con sus partes y el cuerpo es lo que scrollea.** El nombre sale del título
@@ -303,7 +303,7 @@ test de comportamiento: lo agarra un guardián que lee el CSS, o se mide en un n
 asertar sobre estilo, `__tests__/estilo.ts` resuelve la clase contra el módulo del que salió.
 
 **JSX se come el espacio**: un texto que toca un elemento inline a través de un salto de línea se
-pega (`el\n<code>Alert</code>` se dibuja "elAlert"). En el corte va `{' '}`. Hay un test.
+pega (`el\n<code>Callout</code>` se dibuja "elCallout"). En el corte va `{' '}`. Hay un test.
 
 ## El dev server se despega del disco
 

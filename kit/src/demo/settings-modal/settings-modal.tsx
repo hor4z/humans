@@ -1,7 +1,7 @@
 import cls from './settings-modal.module.css'
 import { useState } from 'react'
 import { cx } from '@milo/ui/lib/cx'
-import { Alert } from '@milo/ui/alert'
+import { Callout } from '@milo/ui/callout'
 import { Button } from '@milo/ui/button'
 import { Chip } from '@milo/ui/chip'
 import { Row } from '@milo/ui/row'
@@ -180,16 +180,14 @@ function SecuritySection() {
         <Button size="sm" variant="ghost" iconEnd={<Icon name="download" />}>Descargar</Button>
       </Row>
       <div className={cls.dangerZone}>
-        <Alert tone="bad" size="sm" role="group" aria-label="Borrar la cuenta">
-          <Alert.Title>Borrar la cuenta</Alert.Title>
-          <Alert.Body>
-            Se van los espacios que coordinás y las actividades que escribiste. Las entregas de los
-            aprendices quedan con su autor, no con vos.
-          </Alert.Body>
-          <Alert.Actions>
+        <Callout tone="bad" size="sm" role="group" aria-label="Borrar la cuenta">
+          <Callout.Title>Borrar la cuenta</Callout.Title>
+          Se van los espacios que coordinás y las actividades que escribiste. Las entregas de los
+          aprendices quedan con su autor, no con vos.
+          <Callout.Actions>
             <Button size="sm" variant="bad">Borrar la cuenta</Button>
-          </Alert.Actions>
-        </Alert>
+          </Callout.Actions>
+        </Callout>
       </div>
     </div>
   )

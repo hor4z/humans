@@ -75,8 +75,8 @@ export function LayoutSection() {
       <Note title="Un glifo al lado de un texto se centra con su primera línea">
         Y para eso su caja mide lo que mide esa línea (24 al lado de un título, 20 al lado de un
         párrafo) con el glifo centrado adentro. No alcanza con empujarlo un píxel a ojo: el{' '}
-        <code>Alert</code> quedaba 4px más arriba que su título y el <code>Callout</code> 1px,
-        mientras el <code>Toast</code> caía justo. Cuatro piezas con la misma forma y cuatro
+        <code>Callout</code> con tono quedaba 4px más arriba que su título y sin tono 1px,
+        mientras el <code>Toast</code> caía justo. Piezas con la misma forma y cuatro
         recetas distintas se ve enseguida, aunque cada una por separado parezca bien.
       </Note>
 

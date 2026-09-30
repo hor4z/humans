@@ -624,34 +624,25 @@ function A11yItem({ children }: { children: ReactNode }) {
 export const A11y = Object.assign(A11yRoot, { Item: A11yItem })
 
 function PracticesRoot({ children }: { children: ReactNode }) {
+  return <ul className={s.practices}>{children}</ul>
+}
+
+function Practice({ children }: { children: ReactNode }) {
   return (
-    <table className={s.guide}>
-      <thead>
-        <tr><th scope="col" className={s.guideHeadName}>Guía</th><th scope="col">Práctica</th></tr>
-      </thead>
-      <tbody>{children}</tbody>
-    </table>
+    <li className={s.practice}>
+      {Children.map(children, c => (typeof c === 'string' ? <Rich text={c} /> : c))}
+    </li>
   )
 }
 
 /** Lo que conviene hacer. Una línea, concreta, con la pieza adentro. */
 function Do({ children }: { children: ReactNode }) {
-  return (
-    <tr>
-      <td className={s.guideName}><Chip size="sm" color="ok" icon="check">Sí</Chip></td>
-      <td>{Children.map(children, c => (typeof c === 'string' ? <Rich text={c} /> : c))}</td>
-    </tr>
-  )
+  return <Practice>{children}</Practice>
 }
 
 /** Lo que no, y por qué. Sin el porqué es una orden y no una guía. */
 function Dont({ children }: { children: ReactNode }) {
-  return (
-    <tr>
-      <td className={s.guideName}><Chip size="sm" color="bad" icon="close">No</Chip></td>
-      <td>{Children.map(children, c => (typeof c === 'string' ? <Rich text={c} /> : c))}</td>
-    </tr>
-  )
+  return <Practice>{children}</Practice>
 }
 
 /** Cómo se usa bien esta pieza, con el porqué. Es también lo que un agente necesita para no equivocarse con ella. */

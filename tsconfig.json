@@ -18,9 +18,6 @@
       "@milo/ui/accordion": [
         "./src/accordion/accordion.tsx"
       ],
-      "@milo/ui/alert": [
-        "./src/alert/alert.tsx"
-      ],
       "@milo/ui/avatar": [
         "./src/avatar/avatar.tsx"
       ],
@@ -29,6 +26,9 @@
       ],
       "@milo/ui/button": [
         "./src/button/button.tsx"
+      ],
+      "@milo/ui/callout": [
+        "./src/callout/callout.tsx"
       ],
       "@milo/ui/card": [
         "./src/card/card.tsx"
@@ -167,9 +167,6 @@
       ],
       "@milo/ui/tooltip": [
         "./src/tooltip/tooltip.tsx"
-      ],
-      "@milo/ui/blocks/editor/callout": [
-        "./src/blocks/editor/callout/callout.tsx"
       ],
       "@milo/ui/blocks/editor/checklist": [
         "./src/blocks/editor/checklist/checklist.tsx"
