@@ -30,9 +30,6 @@
       "@milo/ui/button": [
         "./src/button/button.tsx"
       ],
-      "@milo/ui/button-group": [
-        "./src/button-group/button-group.tsx"
-      ],
       "@milo/ui/card": [
         "./src/card/card.tsx"
       ],

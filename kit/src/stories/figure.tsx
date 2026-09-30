@@ -19,8 +19,8 @@ export function FigureStory() {
             <Figure.Caption>Con una foto va cover: llena el hueco y el borde no importa</Figure.Caption>
           </Figure>
           <Figure
-            src="/mascotas/otto.webp"
-            alt="Otto, una nutria de pie con un pañuelo azul"
+            src="/dibujos/triangulo.svg"
+            alt="Un triángulo rectángulo con catetos de 3 y 4 cm y la hipotenusa sin medir"
             fit="contain"
           >
             <Figure.Caption>Con un dibujo va contain: recortar se lleva justo lo que hay que ver</Figure.Caption>

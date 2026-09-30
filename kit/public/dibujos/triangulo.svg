@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 260" font-family="Inter, system-ui, sans-serif" font-size="20">
+  <rect width="320" height="260" fill="#ffffff"/>
+  <path d="M60 210 H260 V60 Z" fill="#e7f0ff" stroke="#1f2937" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M240 210 V190 H260" fill="none" stroke="#1f2937" stroke-width="2"/>
+  <text x="160" y="240" text-anchor="middle" fill="#1f2937">4 cm</text>
+  <text x="272" y="142" fill="#1f2937">3 cm</text>
+  <text x="138" y="124" text-anchor="end" fill="#1b73e7" font-weight="600">?</text>
+</svg>

@@ -6,7 +6,7 @@ const media = [
   ['Imagen', 'Figure', 'Lo que se entiende de un vistazo.', 'Texto alternativo y proporción reservada antes de cargar. Sin texto adentro.'],
   ['Audio', 'AudioPlayer', 'La voz de alguien: llega el tono, que un texto no lleva.', 'Su transcripción y la onda. No arranca solo.'],
   ['Video', 'todavía no hay pieza', 'Lo que pasa en el tiempo: un procedimiento, un experimento.', 'Subtítulos y controles desde el primer cuadro, en su proporción original.'],
-  ['Animación', 'los bucles de las mascotas', 'Un gesto corto que acompaña y no informa.', 'Con `prefers-reduced-motion` se reemplaza por la imagen quieta, no se atenúa.'],
+  ['Animación', 'todavía no hay pieza', 'Un gesto corto que acompaña y no informa.', 'Con `prefers-reduced-motion` se reemplaza por la imagen quieta, no se atenúa.'],
 ] as const
 
 const written = [
@@ -17,7 +17,7 @@ const written = [
 ] as const
 
 const rules = [
-  ['Nada suena sin que alguien lo pida', 'Ni un audio, ni un aviso, ni un efecto. Si dos pueden sonar juntos, arrancar uno detiene al otro. El bucle mudo y corto de una mascota es la excepción.'],
+  ['Nada suena sin que alguien lo pida', 'Ni un audio, ni un aviso, ni un efecto. Si dos pueden sonar juntos, arrancar uno detiene al otro.'],
   ['La proporción se reserva antes de cargar', 'Es la del archivo: con las barras negras metidas adentro del cuadro el sistema ya no puede escalar bien.'],
   ['El alt dice para qué está, no qué se ve', 'Decorativa va con `alt=""` y el lector la saltea. Si es contenido y no entra en una línea, era texto.'],
   ['El volumen es del sistema operativo', 'Un control adentro compite con el de afuera y pierde.'],

@@ -19,7 +19,6 @@ npm run kit           # el sitio a kit/dist
 npm run props         # la tabla de props, desde los tipos
 npm run paths         # el paths de tsconfig.json y el exports de cada familia de bloques
 npm run icons -- …    # search · add · check · refresh (ver Iconos)
-npm run mascotas      # los archivos de una mascota (hay una skill para eso)
 ```
 
 Ningún número de este archivo cuenta piezas, tests ni iconos: se desactualizan. Los cuenta el

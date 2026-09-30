@@ -1,6 +1,6 @@
 import cls from './dashboard.module.css'
 import { Stack } from './kit'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Avatar } from '@milo/ui/avatar'
 import { Button } from '@milo/ui/button'
 import { Card } from '@milo/ui/card'
@@ -21,7 +21,6 @@ import { Segmented } from '@milo/ui/segmented'
 import { SettingsModal } from './demo/settings-modal/settings-modal'
 import { useToast } from '@milo/ui/toast'
 import { Tooltip } from '@milo/ui/tooltip'
-import { useStill } from './mascots/still'
 import { face, person as p } from './fixtures'
 
 const AR = 'America/Argentina/Buenos_Aires'
@@ -176,7 +175,6 @@ export function Dashboard() {
         </div>
 
         <div className={cls.sideColumn}>
-          <Otto />
           <Card surface="muted" className={cls.sideCard}>
             <Stack>
               <div className={cls.taskHeader}>
@@ -247,41 +245,6 @@ function Alerts() {
 }
 
 /** Lo que dura una pasada del bucle: 100 cuadros a 12 por segundo. */
-const ONE_LOOP = 8333
-
-/** Se asoma una vez y se esconde un rato largo al azar: en bucle deja de ser una aparición. */
-function Otto() {
-  const still = useStill()
-  const [turn, setTurn] = useState(0)
-  const [shown, setShown] = useState(false)
-
-  useEffect(() => {
-    if (still) return
-    let clock: ReturnType<typeof setTimeout>
-    const peek = () => {
-      setTurn(v => v + 1)
-      setShown(true)
-      clock = setTimeout(hide, ONE_LOOP)
-    }
-    const hide = () => {
-      setShown(false)
-      clock = setTimeout(peek, 40000 + Math.random() * 80000)
-    }
-    clock = setTimeout(peek, 6000)
-    return () => clearTimeout(clock)
-  }, [still])
-
-  if (still || !shown) return null
-  return (
-    <img
-      key={turn}
-      src="/mascotas/otto-anima.webp"
-      alt=""
-      className={cls.mascotPeek}
-    />
-  )
-}
-
 function Stat({ label, value, delta, icon, tone = 'ok' }: {
   label: string
   value: string

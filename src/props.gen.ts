@@ -322,24 +322,6 @@ export const propsByComponent: Record<string, ComponentDoc> = {
     ],
     "html": "button"
   },
-  "ButtonGroup": {
-    "props": [
-      {
-        "name": "label",
-        "type": "string",
-        "required": true,
-        "doc": "Qué agrupa. Sin esto un lector lee los botones sueltos, sin saber que van juntos."
-      },
-      {
-        "name": "vertical",
-        "type": "boolean",
-        "required": false,
-        "doc": "Apilados, para un menú lateral angosto."
-      }
-    ],
-    "html": "div",
-    "doc": "Botones pegados, con el canto solo en los extremos: una sola acción repartida en dos o tres pasos, o un conmutador de vista. Para elegir uno entre varios va `Segmented`, que trae el teclado."
-  },
   "Callout": {
     "props": [
       {

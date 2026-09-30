@@ -32,12 +32,9 @@ import { ReorderStory } from './stories/reorder'
 import { CommandMenuStory } from './stories/command-menu'
 import { ToolbarStory } from './stories/toolbar'
 import { StepsStory } from './stories/steps'
-import { AmeliaStory } from './mascots/amelia'
-import { OttoStory } from './mascots/otto'
 import { WritingSection } from './foundations/writing'
 import { ChecklistStory } from './stories/checklist'
 import { ButtonStory } from './stories/button'
-import { ButtonGroupStory } from './stories/button-group'
 import { SplitButtonStory } from './stories/split-button'
 import { ToggleButtonStory } from './stories/toggle-button'
 import { CopyButtonStory } from './stories/copy-button'
@@ -127,14 +124,6 @@ const groups: Group[] = [
     ],
   },
   {
-    label: 'Mascotas',
-    section: 'system',
-    stories: [
-      { id: 'otto', label: 'Otto', alias: 'otto mascota personaje nutria hurón ilustración', render: () => <OttoStory /> },
-      { id: 'amelia', label: 'Amelia', alias: 'amelia mascota personaje chica estudiante ilustración', render: () => <AmeliaStory /> },
-    ],
-  },
-  {
     label: 'Acciones',
     section: 'system',
     stories: [
@@ -145,7 +134,6 @@ const groups: Group[] = [
         render: () => <ButtonStory />,
         children: [
           { id: 'icon-button', label: 'Botón de icono', alias: 'IconButton botón icono redondo acción', render: () => <IconButtonStory /> },
-          { id: 'button-group', label: 'Grupo de botones', alias: 'ButtonGroup grupo pegados juntos barra', render: () => <ButtonGroupStory /> },
           { id: 'split-button', label: 'Botón partido', alias: 'SplitButton partido flecha menú acción principal', render: () => <SplitButtonStory /> },
           { id: 'toggle-button', label: 'Botón de alternancia', alias: 'ToggleButton toggle alternar hundido pressed', render: () => <ToggleButtonStory /> },
           { id: 'copy-button', label: 'Botón de copiar', alias: 'CopyButton copiar portapapeles clipboard', render: () => <CopyButtonStory /> },
