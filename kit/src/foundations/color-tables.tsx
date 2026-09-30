@@ -13,6 +13,8 @@ export type ContrastRow = {
   bg: string
   /** El umbral: 4,5 para texto, 3 para un control. */
   min: 3 | 4.5
+  /** El papel de abajo, cuando alguno de los dos es translúcido. Sin esto es `--surface`. */
+  on?: string
   /** Solo en una excepción: por qué se acepta. */
   why?: string
 }
@@ -21,7 +23,7 @@ const fmt = (n: number) => n.toFixed(2).replace('.', ',')
 
 /** Los pares de color y su contraste, calculado con los tokens del tema puesto: no hay un número escrito a mano que se despegue del valor. */
 export function ContrastTable({ label, rows }: { label: string; rows: readonly ContrastRow[] }) {
-  const vals = useTokens(rows.flatMap(r => [r.fg, r.bg]))
+  const vals = useTokens(rows.flatMap(r => [r.fg, r.bg, r.on ?? '--surface']))
   const showWhy = rows.some(r => r.why)
   return (
     <Table label={label} minWidth={showWhy ? 680 : 520}>
@@ -36,7 +38,7 @@ export function ContrastTable({ label, rows }: { label: string; rows: readonly C
       </Table.Header>
       <Table.Body>
         {rows.map(r => {
-          const value = contrast(vals[r.fg] ?? '', vals[r.bg] ?? '')
+          const value = contrast(vals[r.fg] ?? '', vals[r.bg] ?? '', vals[r.on ?? '--surface'])
           const passes = value !== undefined && value >= r.min
           return (
             <Table.Row key={`${r.fg}${r.bg}`}>
