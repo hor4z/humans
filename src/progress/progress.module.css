@@ -45,20 +45,20 @@
   }
 
   .track {
-    height: 0.75rem;
+    height: 0.5rem;
     width: 100%;
     overflow: hidden;
-    border-radius: var(--radius-xs);
+    border-radius: var(--radius-full);
     background-color: var(--track);
   }
 
   .thin {
-    height: 0.375rem;
+    height: 0.25rem;
   }
 
   .fill {
     height: 100%;
-    border-radius: var(--radius-xs);
+    border-radius: var(--radius-full);
     transition-property: width;
     transition-duration: var(--duration-normal);
     transition-timing-function: var(--ease-out);
