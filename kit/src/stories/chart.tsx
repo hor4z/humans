@@ -1,7 +1,7 @@
 import cls from './chart.module.css'
-import { Avatar } from '@milo/ui/avatar'
-import { Card } from '@milo/ui/card'
-import { BarChart } from '@milo/ui/chart'
+import { Avatar } from '@humans/ui/avatar'
+import { Card } from '@humans/ui/card'
+import { BarChart } from '@humans/ui/chart'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 import { face } from '../fixtures'
 
@@ -40,7 +40,7 @@ export function ChartStory() {
     <Page
       title="BarChart"
       kind="Datos"
-      imports="import { BarChart } from '@milo/ui/chart'"
+      imports="import { BarChart } from '@humans/ui/chart'"
       lead="Compara cantidades con barras. Cuando hay un total, muestra el avance dentro de ese total."
     >
       <Hero>

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { RubricReview, type Criterion, type Mark } from '@milo/ui/blocks/rubric/rubric-review'
+import { RubricReview, type Criterion, type Mark } from '@humans/ui/blocks/rubric/rubric-review'
 import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const criteria: Criterion[] = [
@@ -69,7 +69,7 @@ export function RubricReviewStory() {
     <Page
       title="RubricReview"
       kind="Rúbrica"
-      imports="import { RubricReview } from '@milo/ui/blocks/rubric/rubric-review'"
+      imports="import { RubricReview } from '@humans/ui/blocks/rubric/rubric-review'"
       lead="Permite evaluar un trabajo con una rúbrica y consultar la devolución."
     >
       <Hero>

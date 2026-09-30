@@ -1,6 +1,6 @@
-import { AudioPlayer } from '@milo/ui/blocks/media/audio-player'
-import { IconButton } from '@milo/ui/icon-button'
-import { Tooltip } from '@milo/ui/tooltip'
+import { AudioPlayer } from '@humans/ui/blocks/media/audio-player'
+import { IconButton } from '@humans/ui/icon-button'
+import { Tooltip } from '@humans/ui/tooltip'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section, Stack } from '../kit'
 
 /** Salen de `npm run picos -- kit/public/audio/consigna.mp3 --barras 64`. */
@@ -38,7 +38,7 @@ export function AudioPlayerStory() {
     <Page
       title="AudioPlayer"
       kind="Medios"
-      imports="import { AudioPlayer } from '@milo/ui/blocks/media/audio-player'"
+      imports="import { AudioPlayer } from '@humans/ui/blocks/media/audio-player'"
       lead="Reproduce un archivo de audio con controles de pausa, posición y velocidad. Puede mostrar la onda del archivo."
     >
       <Hero>

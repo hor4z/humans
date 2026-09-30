@@ -1,4 +1,4 @@
-@layer milo.reset, milo.components, milo.app;
+@layer humans.reset, humans.components, humans.app;
 
 @import "./styles/tokens/index.css";
 @import "./styles/base.css";

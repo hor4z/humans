@@ -1,4 +1,4 @@
-@layer milo.app {
+@layer humans.app {
   .groups {
     display: flex;
     flex-direction: column;

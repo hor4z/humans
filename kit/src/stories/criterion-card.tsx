@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CriterionCard, type Criterion } from '@milo/ui/blocks/rubric/criterion-card'
+import { CriterionCard, type Criterion } from '@humans/ui/blocks/rubric/criterion-card'
 import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const chart: Criterion = {
@@ -39,7 +39,7 @@ export function CriterionCardStory() {
     <Page
       title="CriterionCard"
       kind="Rúbrica"
-      imports="import { CriterionCard } from '@milo/ui/blocks/rubric/criterion-card'"
+      imports="import { CriterionCard } from '@humans/ui/blocks/rubric/criterion-card'"
       lead="Presenta un criterio de evaluación con sus niveles en un panel expandible."
     >
       <Hero>

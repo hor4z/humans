@@ -1,9 +1,9 @@
 import cls from './row.module.css'
 import { useState } from 'react'
-import { Button } from '@milo/ui/button'
-import { Row } from '@milo/ui/row'
-import { Select } from '@milo/ui/select'
-import { Switch } from '@milo/ui/switch'
+import { Button } from '@humans/ui/button'
+import { Row } from '@humans/ui/row'
+import { Select } from '@humans/ui/select'
+import { Switch } from '@humans/ui/switch'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function RowStory() {
@@ -15,7 +15,7 @@ export function RowStory() {
     <Page
       title="Row"
       kind="Superficies"
-      imports="import { Row } from '@milo/ui/row'"
+      imports="import { Row } from '@humans/ui/row'"
       lead="Agrupa el nombre, la descripción y el control de un ajuste."
     >
       <Hero>
@@ -56,7 +56,7 @@ export function RowStory() {
 </Row>
 <Row>
   <Row.Label>Correo</Row.Label>
-  <span>melina@milo.app</span>
+  <span>melina@humans.app</span>
 </Row>
 <Row>
   <Row.Label>Contraseña</Row.Label>
@@ -80,7 +80,7 @@ export function RowStory() {
             </Row>
             <Row>
               <Row.Label>Correo</Row.Label>
-              <span className={cls.accountEmail}>melina@milo.app</span>
+              <span className={cls.accountEmail}>melina@humans.app</span>
             </Row>
             <Row>
               <Row.Label>Contraseña</Row.Label>

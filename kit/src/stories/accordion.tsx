@@ -1,4 +1,4 @@
-import { Accordion } from '@milo/ui/accordion'
+import { Accordion } from '@humans/ui/accordion'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function AccordionStory() {
@@ -6,7 +6,7 @@ export function AccordionStory() {
     <Page
       title="Accordion"
       kind="Navegación"
-      imports="import { Accordion } from '@milo/ui/accordion'"
+      imports="import { Accordion } from '@humans/ui/accordion'"
       lead="Agrupa contenido que se puede expandir, como preguntas frecuentes o detalles de una configuración."
     >
       <Hero>

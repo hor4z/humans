@@ -1,4 +1,4 @@
-@layer milo.app {
+@layer humans.app {
   .insetBox {
     border-radius: var(--radius-md);
     box-shadow: 0 0 0 1px var(--border);

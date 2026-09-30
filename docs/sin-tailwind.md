@@ -39,7 +39,7 @@ el call site sigue en utilidades, la precedencia cambia de forma irreparable:
   Medido: 2.041 nodos con una capa, 1.116 con la otra.
 
 De ahí la conclusión: **las piezas y el kit se migran juntos, en la misma vuelta,
-con dos capas propias** (`milo.components` para las piezas, `milo.app` para el
+con dos capas propias** (`humans.components` para las piezas, `humans.app` para el
 kit) y se saca la librería en el mismo paso. Es la única configuración donde la
 precedencia queda definida por el sistema y no heredada de una librería.
 

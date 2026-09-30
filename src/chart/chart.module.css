@@ -1,4 +1,4 @@
-@layer milo.components {
+@layer humans.components {
   .root {
     margin: 0;
   }
@@ -22,7 +22,7 @@
     cursor: default;
     flex-direction: column;
     justify-content: flex-end;
-    --milo-outline-style: none;
+    --humans-outline-style: none;
     outline-style: none;
   }
 
@@ -52,8 +52,8 @@
 
   .trackRing {
     &:is(:where(:global(.group)):focus-visible *) {
-      --milo-ring-color: var(--border-strong);
-      --milo-ring-inset: inset;
+      --humans-ring-color: var(--border-strong);
+      --humans-ring-inset: inset;
     }
   }
 
@@ -181,7 +181,7 @@
   @media (hover:hover) {
     .trackHover:is(:where(:global(.group)):hover *) {
         box-shadow: 0 0 0 1px var(--border-strong);
-        --milo-ring-inset: inset;
+        --humans-ring-inset: inset;
     }
   }
 

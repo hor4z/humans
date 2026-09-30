@@ -79,7 +79,7 @@ describe('el CSS del sistema se sostiene solo', () => {
       ...[...bridge.matchAll(/@property\s+(--[\w-]+)/g)].map(m => m[1]),
       ...sources.flatMap(f => [...f.text.matchAll(/'(--[a-z][\w-]*)'\s*:/g)].map(m => m[1])),
     ])
-    const own = /^--milo-/
+    const own = /^--humans-/
 
     const orphaned: string[] = []
     for (const f of css) {

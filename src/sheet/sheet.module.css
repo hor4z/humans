@@ -1,4 +1,4 @@
-@layer milo.components {
+@layer humans.components {
   .panel {
     position: absolute;
     inset-block: 0;

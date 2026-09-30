@@ -1,4 +1,4 @@
-@layer milo.components {
+@layer humans.components {
   .labelSoftGreen {
     background-color: var(--label-green-soft);
     color: var(--label-green-ink);

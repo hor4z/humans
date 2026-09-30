@@ -1,4 +1,4 @@
-import { Progress } from '@milo/ui/progress'
+import { Progress } from '@humans/ui/progress'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section, Stack } from '../kit'
 
 export function ProgressStory() {
@@ -6,7 +6,7 @@ export function ProgressStory() {
     <Page
       title="Progress"
       kind="Datos"
-      imports="import { Progress } from '@milo/ui/progress'"
+      imports="import { Progress } from '@humans/ui/progress'"
       lead="Muestra el avance de una tarea con un total conocido."
     >
       <Hero>

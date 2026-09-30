@@ -3,211 +3,211 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@milo/ui/icons.meta": [
+      "@humans/ui/icons.meta": [
         "./src/icons.meta.ts"
       ],
-      "@milo/ui/icons": [
+      "@humans/ui/icons": [
         "./src/icons.gen.ts"
       ],
-      "@milo/ui/props": [
+      "@humans/ui/props": [
         "./src/props.gen.ts"
       ],
-      "@milo/ui/lib/*": [
+      "@humans/ui/lib/*": [
         "./src/lib/*"
       ],
-      "@milo/ui/accordion": [
+      "@humans/ui/accordion": [
         "./src/accordion/accordion.tsx"
       ],
-      "@milo/ui/avatar": [
+      "@humans/ui/avatar": [
         "./src/avatar/avatar.tsx"
       ],
-      "@milo/ui/breadcrumb": [
+      "@humans/ui/breadcrumb": [
         "./src/breadcrumb/breadcrumb.tsx"
       ],
-      "@milo/ui/button": [
+      "@humans/ui/button": [
         "./src/button/button.tsx"
       ],
-      "@milo/ui/callout": [
+      "@humans/ui/callout": [
         "./src/callout/callout.tsx"
       ],
-      "@milo/ui/card": [
+      "@humans/ui/card": [
         "./src/card/card.tsx"
       ],
-      "@milo/ui/chart": [
+      "@humans/ui/chart": [
         "./src/chart/chart.tsx"
       ],
-      "@milo/ui/checkbox": [
+      "@humans/ui/checkbox": [
         "./src/checkbox/checkbox.tsx"
       ],
-      "@milo/ui/chip": [
+      "@humans/ui/chip": [
         "./src/chip/chip.tsx"
       ],
-      "@milo/ui/collapsible": [
+      "@humans/ui/collapsible": [
         "./src/collapsible/collapsible.tsx"
       ],
-      "@milo/ui/confirm-dialog": [
+      "@humans/ui/confirm-dialog": [
         "./src/confirm-dialog/confirm-dialog.tsx"
       ],
-      "@milo/ui/copy-button": [
+      "@humans/ui/copy-button": [
         "./src/copy-button/copy-button.tsx"
       ],
-      "@milo/ui/date-picker": [
+      "@humans/ui/date-picker": [
         "./src/date-picker/date-picker.tsx"
       ],
-      "@milo/ui/divider": [
+      "@humans/ui/divider": [
         "./src/divider/divider.tsx"
       ],
-      "@milo/ui/dropdown": [
+      "@humans/ui/dropdown": [
         "./src/dropdown/dropdown.tsx"
       ],
-      "@milo/ui/empty-state": [
+      "@humans/ui/empty-state": [
         "./src/empty-state/empty-state.tsx"
       ],
-      "@milo/ui/field": [
+      "@humans/ui/field": [
         "./src/field/field.tsx"
       ],
-      "@milo/ui/filter": [
+      "@humans/ui/filter": [
         "./src/filter/filter.tsx"
       ],
-      "@milo/ui/icon": [
+      "@humans/ui/icon": [
         "./src/icon/icon.tsx"
       ],
-      "@milo/ui/icon-button": [
+      "@humans/ui/icon-button": [
         "./src/icon-button/icon-button.tsx"
       ],
-      "@milo/ui/indicator": [
+      "@humans/ui/indicator": [
         "./src/indicator/indicator.tsx"
       ],
-      "@milo/ui/kbd": [
+      "@humans/ui/kbd": [
         "./src/kbd/kbd.tsx"
       ],
-      "@milo/ui/link": [
+      "@humans/ui/link": [
         "./src/link/link.tsx"
       ],
-      "@milo/ui/list": [
+      "@humans/ui/list": [
         "./src/list/list.tsx"
       ],
-      "@milo/ui/menu": [
+      "@humans/ui/menu": [
         "./src/menu/menu.tsx"
       ],
-      "@milo/ui/modal": [
+      "@humans/ui/modal": [
         "./src/modal/modal.tsx"
       ],
-      "@milo/ui/nav": [
+      "@humans/ui/nav": [
         "./src/nav/nav.tsx"
       ],
-      "@milo/ui/pagination": [
+      "@humans/ui/pagination": [
         "./src/pagination/pagination.tsx"
       ],
-      "@milo/ui/popover": [
+      "@humans/ui/popover": [
         "./src/popover/popover.tsx"
       ],
-      "@milo/ui/portal": [
+      "@humans/ui/portal": [
         "./src/portal/portal.tsx"
       ],
-      "@milo/ui/progress": [
+      "@humans/ui/progress": [
         "./src/progress/progress.tsx"
       ],
-      "@milo/ui/radio": [
+      "@humans/ui/radio": [
         "./src/radio/radio.tsx"
       ],
-      "@milo/ui/reorder": [
+      "@humans/ui/reorder": [
         "./src/reorder/reorder.tsx"
       ],
-      "@milo/ui/row": [
+      "@humans/ui/row": [
         "./src/row/row.tsx"
       ],
-      "@milo/ui/search": [
+      "@humans/ui/search": [
         "./src/search/search.tsx"
       ],
-      "@milo/ui/segmented": [
+      "@humans/ui/segmented": [
         "./src/segmented/segmented.tsx"
       ],
-      "@milo/ui/select": [
+      "@humans/ui/select": [
         "./src/select/select.tsx"
       ],
-      "@milo/ui/sheet": [
+      "@humans/ui/sheet": [
         "./src/sheet/sheet.tsx"
       ],
-      "@milo/ui/skeleton": [
+      "@humans/ui/skeleton": [
         "./src/skeleton/skeleton.tsx"
       ],
-      "@milo/ui/slider": [
+      "@humans/ui/slider": [
         "./src/slider/slider.tsx"
       ],
-      "@milo/ui/spinner": [
+      "@humans/ui/spinner": [
         "./src/spinner/spinner.tsx"
       ],
-      "@milo/ui/split-button": [
+      "@humans/ui/split-button": [
         "./src/split-button/split-button.tsx"
       ],
-      "@milo/ui/steps": [
+      "@humans/ui/steps": [
         "./src/steps/steps.tsx"
       ],
-      "@milo/ui/switch": [
+      "@humans/ui/switch": [
         "./src/switch/switch.tsx"
       ],
-      "@milo/ui/table": [
+      "@humans/ui/table": [
         "./src/table/table.tsx"
       ],
-      "@milo/ui/tabs": [
+      "@humans/ui/tabs": [
         "./src/tabs/tabs.tsx"
       ],
-      "@milo/ui/text-field": [
+      "@humans/ui/text-field": [
         "./src/text-field/text-field.tsx"
       ],
-      "@milo/ui/textarea": [
+      "@humans/ui/textarea": [
         "./src/textarea/textarea.tsx"
       ],
-      "@milo/ui/toast": [
+      "@humans/ui/toast": [
         "./src/toast/toast.tsx"
       ],
-      "@milo/ui/toggle-button": [
+      "@humans/ui/toggle-button": [
         "./src/toggle-button/toggle-button.tsx"
       ],
-      "@milo/ui/tooltip": [
+      "@humans/ui/tooltip": [
         "./src/tooltip/tooltip.tsx"
       ],
-      "@milo/ui/blocks/editor/checklist": [
+      "@humans/ui/blocks/editor/checklist": [
         "./src/blocks/editor/checklist/checklist.tsx"
       ],
-      "@milo/ui/blocks/editor/command-menu": [
+      "@humans/ui/blocks/editor/command-menu": [
         "./src/blocks/editor/command-menu/command-menu.tsx"
       ],
-      "@milo/ui/blocks/editor/mention": [
+      "@humans/ui/blocks/editor/mention": [
         "./src/blocks/editor/mention/mention.tsx"
       ],
-      "@milo/ui/blocks/editor/quote": [
+      "@humans/ui/blocks/editor/quote": [
         "./src/blocks/editor/quote/quote.tsx"
       ],
-      "@milo/ui/blocks/editor/task-list": [
+      "@humans/ui/blocks/editor/task-list": [
         "./src/blocks/editor/task-list/task-list.tsx"
       ],
-      "@milo/ui/blocks/editor/toolbar": [
+      "@humans/ui/blocks/editor/toolbar": [
         "./src/blocks/editor/toolbar/toolbar.tsx"
       ],
-      "@milo/ui/blocks/media/audio-player": [
+      "@humans/ui/blocks/media/audio-player": [
         "./src/blocks/media/audio-player/audio-player.tsx"
       ],
-      "@milo/ui/blocks/rubric/criterion-card": [
+      "@humans/ui/blocks/rubric/criterion-card": [
         "./src/blocks/rubric/criterion-card/criterion-card.tsx"
       ],
-      "@milo/ui/blocks/rubric/rubric": [
+      "@humans/ui/blocks/rubric/rubric": [
         "./src/blocks/rubric/rubric/rubric.tsx"
       ],
-      "@milo/ui/blocks/rubric/rubric-review": [
+      "@humans/ui/blocks/rubric/rubric-review": [
         "./src/blocks/rubric/rubric-review/rubric-review.tsx"
       ],
-      "@milo/ui/blocks/rubric/self-assessment": [
+      "@humans/ui/blocks/rubric/self-assessment": [
         "./src/blocks/rubric/self-assessment/self-assessment.tsx"
       ],
-      "@milo/ui/blocks/task/choice": [
+      "@humans/ui/blocks/task/choice": [
         "./src/blocks/task/choice/choice.tsx"
       ],
-      "@milo/ui/blocks/task/number-answer": [
+      "@humans/ui/blocks/task/number-answer": [
         "./src/blocks/task/number-answer/number-answer.tsx"
       ],
-      "@milo/ui/blocks/task/open-question": [
+      "@humans/ui/blocks/task/open-question": [
         "./src/blocks/task/open-question/open-question.tsx"
       ]
     }

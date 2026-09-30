@@ -1,11 +1,11 @@
 import cls from './rubric.module.css'
 import { useState } from 'react'
-import { SelfAssessment } from '@milo/ui/blocks/rubric/self-assessment'
-import { ConfirmDialog } from '@milo/ui/confirm-dialog'
-import { Rubric, type Criterion } from '@milo/ui/blocks/rubric/rubric'
-import { useToast } from '@milo/ui/toast'
-import { labelColors } from '@milo/ui/lib/colors'
-import { counted } from '@milo/ui/lib/number'
+import { SelfAssessment } from '@humans/ui/blocks/rubric/self-assessment'
+import { ConfirmDialog } from '@humans/ui/confirm-dialog'
+import { Rubric, type Criterion } from '@humans/ui/blocks/rubric/rubric'
+import { useToast } from '@humans/ui/toast'
+import { labelColors } from '@humans/ui/lib/colors'
+import { counted } from '@humans/ui/lib/number'
 
 /** Quién mira la rúbrica: uno la define, el otro se prepara con ella. */
 export type RubricMode = 'teacher' | 'student'

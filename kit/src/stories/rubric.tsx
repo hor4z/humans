@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Rubric, type Criterion, type CriterionDraft } from '@milo/ui/blocks/rubric/rubric'
-import { labelColors } from '@milo/ui/lib/colors'
+import { Rubric, type Criterion, type CriterionDraft } from '@humans/ui/blocks/rubric/rubric'
+import { labelColors } from '@humans/ui/lib/colors'
 import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const base: Criterion[] = [
@@ -56,7 +56,7 @@ export function RubricStory() {
     <Page
       title="Rubric"
       kind="Rúbrica"
-      imports="import { Rubric } from '@milo/ui/blocks/rubric/rubric'"
+      imports="import { Rubric } from '@humans/ui/blocks/rubric/rubric'"
       lead="Organiza criterios, niveles y ponderaciones de una evaluación."
     >
       <Hero>

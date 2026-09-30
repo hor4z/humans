@@ -1,4 +1,4 @@
-@layer milo.app {
+@layer humans.app {
   .tooltipValue {
     font-size: var(--type-meta);
     line-height: var(--type-meta-lh);

@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { Button } from '@milo/ui/button'
-import { Field } from '@milo/ui/field'
-import { Icon } from '@milo/ui/icon'
-import { Modal } from '@milo/ui/modal'
+import { Button } from '@humans/ui/button'
+import { Field } from '@humans/ui/field'
+import { Icon } from '@humans/ui/icon'
+import { Modal } from '@humans/ui/modal'
 import { SettingsModal } from '../demo/settings-modal/settings-modal'
-import { TextField } from '@milo/ui/text-field'
+import { TextField } from '@humans/ui/text-field'
 import { A11y, Anatomy, Demo, Grid, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function ModalStory() {
@@ -18,7 +18,7 @@ export function ModalStory() {
     <Page
       title="Modal"
       kind="Superficies"
-      imports="import { Modal } from '@milo/ui/modal'"
+      imports="import { Modal } from '@humans/ui/modal'"
       lead="Abre un diálogo para una tarea breve, manteniendo el contexto de la página."
     >
       <Hero>

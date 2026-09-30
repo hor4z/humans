@@ -29,7 +29,7 @@ describe('el sitio entero', () => {
   it('la portada se dibuja', () => {
     location.hash = ''
     render(<PrefsProvider><App /></PrefsProvider>)
-    expect(screen.getByRole('heading', { name: /El sistema de milo/ })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /El sistema de humans/ })).toBeInTheDocument()
   })
 
   it('la portada no manda a ninguna vista que no exista', () => {

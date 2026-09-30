@@ -1,4 +1,4 @@
-@layer milo.components {
+@layer humans.components {
   .toneAccent {
     background-color: var(--accent-fill);
     color: var(--on-accent);

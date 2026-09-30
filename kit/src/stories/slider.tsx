@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Slider } from '@milo/ui/slider'
+import { Slider } from '@humans/ui/slider'
 import { A11y, Anatomy, Frame, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function SliderStory() {
@@ -12,7 +12,7 @@ export function SliderStory() {
     <Page
       title="Slider"
       kind="Formularios"
-      imports="import { Slider } from '@milo/ui/slider'"
+      imports="import { Slider } from '@humans/ui/slider'"
       lead="Permite ajustar un valor dentro de un rango cuando importa más la aproximación que la precisión."
     >
       <Hero>

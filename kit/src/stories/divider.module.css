@@ -1,4 +1,4 @@
-@layer milo.app {
+@layer humans.app {
   .aboveText {
     padding-bottom: 0.75rem;
     font-size: var(--type-body);

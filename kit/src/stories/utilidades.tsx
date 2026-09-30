@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react'
-import { clock, day, dayAndTime, duration, timeAgo, zoneLabel } from '@milo/ui/lib/time'
-import { bytes, count, counted, decimals, delta, plural, share, span, withUnit } from '@milo/ui/lib/number'
-import { colorForName } from '@milo/ui/lib/colors'
-import { Table } from '@milo/ui/table'
+import { clock, day, dayAndTime, duration, timeAgo, zoneLabel } from '@humans/ui/lib/time'
+import { bytes, count, counted, decimals, delta, plural, share, span, withUnit } from '@humans/ui/lib/number'
+import { colorForName } from '@humans/ui/lib/colors'
+import { Table } from '@humans/ui/table'
 import { A11y, Example, Mono, Page, Practices, Rich, Section } from '../kit'
 
 const RIGHT_NOW = new Date('2026-03-09T18:20:00-03:00')
@@ -38,7 +38,7 @@ export function UtilidadesStory() {
     <Page
       title="Utilidades"
       kind="Fundamentos"
-      imports="import { timeAgo } from '@milo/ui/lib/time'"
+      imports="import { timeAgo } from '@humans/ui/lib/time'"
       lead="Funciones y hooks compartidos para dar formato a los datos y resolver comportamientos frecuentes."
     >
       <Section title="Tablas en memoria" note="`useTable` combina búsqueda, filtros, orden y paginación. El ejemplo completo está en [Table](#table).">
@@ -110,9 +110,9 @@ export function UtilidadesStory() {
       </Section>
 
       <Section title="Cómo se escribe">
-        <Example code={`import { timeAgo } from '@milo/ui/lib/time'
-import { counted } from '@milo/ui/lib/number'
-import { useDisclosure } from '@milo/ui/lib/use-disclosure'
+        <Example code={`import { timeAgo } from '@humans/ui/lib/time'
+import { counted } from '@humans/ui/lib/number'
+import { useDisclosure } from '@humans/ui/lib/use-disclosure'
 
 <p>{counted(entregas.length, ['entrega', 'entregas'])} · {timeAgo(ultima)}</p>
 

@@ -1,4 +1,4 @@
-@layer milo.app {
+@layer humans.app {
   .paragraphText {
     font-size: var(--type-reading);
     line-height: var(--type-reading-lh);

@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { Button } from '@milo/ui/button'
-import { ConfirmDialog } from '@milo/ui/confirm-dialog'
-import { Icon } from '@milo/ui/icon'
-import { useToast } from '@milo/ui/toast'
+import { Button } from '@humans/ui/button'
+import { ConfirmDialog } from '@humans/ui/confirm-dialog'
+import { Icon } from '@humans/ui/icon'
+import { useToast } from '@humans/ui/toast'
 import { A11y, Anatomy, Demo, Grid, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function ConfirmStory() {
@@ -14,7 +14,7 @@ export function ConfirmStory() {
     <Page
       title="ConfirmDialog"
       kind="Superficies"
-      imports="import { ConfirmDialog } from '@milo/ui/confirm-dialog'"
+      imports="import { ConfirmDialog } from '@humans/ui/confirm-dialog'"
       lead="Solicita confirmación antes de una acción importante. Explica la consecuencia y ofrece una salida segura."
     >
       <Hero>

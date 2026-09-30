@@ -1,4 +1,4 @@
-@layer milo.components {
+@layer humans.components {
   .root {
     display: flex;
     min-width: 0;

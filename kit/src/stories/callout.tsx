@@ -1,8 +1,8 @@
 import s from './callout.module.css'
 import { useState } from 'react'
-import { Button } from '@milo/ui/button'
-import { Callout } from '@milo/ui/callout'
-import { Icon } from '@milo/ui/icon'
+import { Button } from '@humans/ui/button'
+import { Callout } from '@humans/ui/callout'
+import { Icon } from '@humans/ui/icon'
 import { A11y, Anatomy, Demo, Frame, Hero, Page, Practices, Props, Section, Stack } from '../kit'
 
 export function CalloutStory() {
@@ -12,7 +12,7 @@ export function CalloutStory() {
     <Page
       title="Callout"
       kind="Avisos"
-      imports="import { Callout } from '@milo/ui/callout'"
+      imports="import { Callout } from '@humans/ui/callout'"
       lead="Destaca una aclaración o un aviso persistente. El tono distingue información, éxito, advertencia y error."
     >
       <Hero>

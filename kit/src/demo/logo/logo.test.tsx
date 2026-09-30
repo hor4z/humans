@@ -10,8 +10,8 @@ describe('Logo', () => {
   })
 
   it('sola lleva su nombre', () => {
-    render(<Logo label="milo" />)
-    expect(screen.getByRole('img', { name: 'milo' })).toBeInTheDocument()
+    render(<Logo label="humans" />)
+    expect(screen.getByRole('img', { name: 'humans' })).toBeInTheDocument()
   })
 
   it('toma el color del texto, así sirve en los dos temas', () => {

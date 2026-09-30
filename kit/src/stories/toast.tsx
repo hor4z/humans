@@ -1,6 +1,6 @@
-import { Button } from '@milo/ui/button'
-import { Icon } from '@milo/ui/icon'
-import { useToast } from '@milo/ui/toast'
+import { Button } from '@humans/ui/button'
+import { Icon } from '@humans/ui/icon'
+import { useToast } from '@humans/ui/toast'
 import { A11y, Anatomy, Cluster, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function ToastStory() {
@@ -10,7 +10,7 @@ export function ToastStory() {
     <Page
       title="Toast"
       kind="Avisos"
-      imports="import { ToastProvider, useToast } from '@milo/ui/toast'"
+      imports="import { ToastProvider, useToast } from '@humans/ui/toast'"
       lead="Confirma el resultado de una acción mediante un aviso temporal y una acción opcional."
     >
       <Hero>

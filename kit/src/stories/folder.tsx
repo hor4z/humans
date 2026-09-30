@@ -1,8 +1,8 @@
-import { useToast } from '@milo/ui/toast'
+import { useToast } from '@humans/ui/toast'
 import cls from './folder.module.css'
-import { Card } from '@milo/ui/card'
+import { Card } from '@humans/ui/card'
 import { Folder } from '../demo/folder/folder'
-import { Icon } from '@milo/ui/icon'
+import { Icon } from '@humans/ui/icon'
 import { A11y, Anatomy, Demo, Hero, Mono, Page, Panel, Practices, Props, Section, Stack } from '../kit'
 import { person } from '../fixtures'
 

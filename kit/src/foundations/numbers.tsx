@@ -1,6 +1,6 @@
 import cls from './numbers.module.css'
-import { Table } from '@milo/ui/table'
-import { bytes, count, decimals, delta, share, span, withUnit } from '@milo/ui/lib/number'
+import { Table } from '@humans/ui/table'
+import { bytes, count, decimals, delta, share, span, withUnit } from '@humans/ui/lib/number'
 import { A11y, Note, Page, Panel, Rich, Section, Stack, Specimen } from '../kit'
 
 const which = [

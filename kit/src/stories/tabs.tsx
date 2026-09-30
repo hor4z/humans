@@ -1,6 +1,6 @@
 import cls from './tabs.module.css'
 import { useState } from 'react'
-import { Tabs } from '@milo/ui/tabs'
+import { Tabs } from '@humans/ui/tabs'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function TabsStory() {
@@ -10,7 +10,7 @@ export function TabsStory() {
     <Page
       title="Tabs"
       kind="Navegación"
-      imports="import { Tabs } from '@milo/ui/tabs'"
+      imports="import { Tabs } from '@humans/ui/tabs'"
       lead="Alterna entre secciones de contenido relacionadas dentro de la misma vista."
     >
       <Hero>

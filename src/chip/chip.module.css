@@ -1,4 +1,4 @@
-@layer milo.components {
+@layer humans.components {
   .sizeSm {
     min-height: 1.25rem;
     gap: var(--space-1);

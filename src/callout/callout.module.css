@@ -1,4 +1,4 @@
-@layer milo.components {
+@layer humans.components {
   .neutral {
     background-color: var(--surface-muted);
     color: var(--text-muted);

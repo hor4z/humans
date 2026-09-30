@@ -1,8 +1,8 @@
 import cls from './divider.module.css'
-import { Avatar } from '@milo/ui/avatar'
-import { Divider } from '@milo/ui/divider'
-import { Icon } from '@milo/ui/icon'
-import { Kbd } from '@milo/ui/kbd'
+import { Avatar } from '@humans/ui/avatar'
+import { Divider } from '@humans/ui/divider'
+import { Icon } from '@humans/ui/icon'
+import { Kbd } from '@humans/ui/kbd'
 import { A11y, Anatomy, Frame, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function DividerStory() {
@@ -10,7 +10,7 @@ export function DividerStory() {
     <Page
       title="Divider"
       kind="Superficies"
-      imports="import { Divider } from '@milo/ui/divider'"
+      imports="import { Divider } from '@humans/ui/divider'"
       lead="Separa grupos de contenido relacionados cuando el espaciado no alcanza."
     >
       <Hero>

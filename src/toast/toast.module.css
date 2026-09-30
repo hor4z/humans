@@ -1,4 +1,4 @@
-@layer milo.components {
+@layer humans.components {
   .viewport {
     position: fixed;
     right: max(1rem, env(safe-area-inset-right));

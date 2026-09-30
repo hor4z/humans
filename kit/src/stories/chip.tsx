@@ -1,8 +1,8 @@
 import cls from './chip.module.css'
 import { useState } from 'react'
-import { Card } from '@milo/ui/card'
-import { Chip } from '@milo/ui/chip'
-import { labelColors } from '@milo/ui/lib/colors'
+import { Card } from '@humans/ui/card'
+import { Chip } from '@humans/ui/chip'
+import { labelColors } from '@humans/ui/lib/colors'
 import { A11y, Anatomy, Cluster, Demo, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function ChipStory() {
@@ -15,7 +15,7 @@ export function ChipStory() {
     <Page
       title="Chip"
       kind="Datos"
-      imports="import { Chip } from '@milo/ui/chip'"
+      imports="import { Chip } from '@humans/ui/chip'"
       lead="Identifica un estado, una categoría o una selección mediante texto y un color de apoyo."
     >
       <Hero>

@@ -8,12 +8,12 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const src = join(root, 'src')
 
 const paths = {
-  '@milo/ui/icons.meta': ['./src/icons.meta.ts'],
-  '@milo/ui/icons': ['./src/icons.gen.ts'],
-  '@milo/ui/props': ['./src/props.gen.ts'],
-  '@milo/ui/lib/*': ['./src/lib/*'],
+  '@humans/ui/icons.meta': ['./src/icons.meta.ts'],
+  '@humans/ui/icons': ['./src/icons.gen.ts'],
+  '@humans/ui/props': ['./src/props.gen.ts'],
+  '@humans/ui/lib/*': ['./src/lib/*'],
 }
-for (const p of pieces(src)) if (p.file) paths[`@milo/ui/${p.subpath}`] = [`./${relative(root, p.file)}`]
+for (const p of pieces(src)) if (p.file) paths[`@humans/ui/${p.subpath}`] = [`./${relative(root, p.file)}`]
 
 const tsconfigFile = join(root, 'tsconfig.json')
 const tsconfig = JSON.parse(readFileSync(tsconfigFile, 'utf8'))

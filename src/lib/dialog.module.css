@@ -1,4 +1,4 @@
-@layer milo.components {
+@layer humans.components {
   .viewport {
     position: fixed;
     inset: 0;
@@ -24,9 +24,9 @@
   }
 
   .blur {
-    --milo-backdrop-blur: blur(3px);
-    -webkit-backdrop-filter: var(--milo-backdrop-blur,) var(--milo-backdrop-brightness,) var(--milo-backdrop-contrast,) var(--milo-backdrop-grayscale,) var(--milo-backdrop-hue-rotate,) var(--milo-backdrop-invert,) var(--milo-backdrop-opacity,) var(--milo-backdrop-saturate,) var(--milo-backdrop-sepia,);
-    backdrop-filter: var(--milo-backdrop-blur,) var(--milo-backdrop-brightness,) var(--milo-backdrop-contrast,) var(--milo-backdrop-grayscale,) var(--milo-backdrop-hue-rotate,) var(--milo-backdrop-invert,) var(--milo-backdrop-opacity,) var(--milo-backdrop-saturate,) var(--milo-backdrop-sepia,);
+    --humans-backdrop-blur: blur(3px);
+    -webkit-backdrop-filter: var(--humans-backdrop-blur,) var(--humans-backdrop-brightness,) var(--humans-backdrop-contrast,) var(--humans-backdrop-grayscale,) var(--humans-backdrop-hue-rotate,) var(--humans-backdrop-invert,) var(--humans-backdrop-opacity,) var(--humans-backdrop-saturate,) var(--humans-backdrop-sepia,);
+    backdrop-filter: var(--humans-backdrop-blur,) var(--humans-backdrop-brightness,) var(--humans-backdrop-contrast,) var(--humans-backdrop-grayscale,) var(--humans-backdrop-hue-rotate,) var(--humans-backdrop-invert,) var(--humans-backdrop-opacity,) var(--humans-backdrop-saturate,) var(--humans-backdrop-sepia,);
   }
 
   .panel {

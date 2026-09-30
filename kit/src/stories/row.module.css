@@ -1,4 +1,4 @@
-@layer milo.app {
+@layer humans.app {
   .list {
     max-width: 520px;
     overflow: hidden;

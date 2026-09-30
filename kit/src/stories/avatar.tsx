@@ -1,5 +1,5 @@
 import cls from './avatar.module.css'
-import { Avatar } from '@milo/ui/avatar'
+import { Avatar } from '@humans/ui/avatar'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 import { face, person } from '../fixtures'
 
@@ -8,7 +8,7 @@ export function AvatarStory() {
     <Page
       title="Avatar"
       kind="Datos"
-      imports="import { Avatar } from '@milo/ui/avatar'"
+      imports="import { Avatar } from '@humans/ui/avatar'"
       lead="Identifica a una persona con su foto o sus iniciales. Ambas variantes comparten tamaño y jerarquía."
     >
       <Hero>

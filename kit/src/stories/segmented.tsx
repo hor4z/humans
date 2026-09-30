@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Segmented } from '@milo/ui/segmented'
+import { Segmented } from '@humans/ui/segmented'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function SegmentedStory() {
@@ -12,7 +12,7 @@ export function SegmentedStory() {
     <Page
       title="Segmented"
       kind="Formularios"
-      imports="import { Segmented } from '@milo/ui/segmented'"
+      imports="import { Segmented } from '@humans/ui/segmented'"
       lead="Permite elegir entre pocas opciones relacionadas que conviene mantener visibles."
     >
       <Hero>

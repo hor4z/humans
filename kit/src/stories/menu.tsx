@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { Button } from '@milo/ui/button'
-import { Divider } from '@milo/ui/divider'
-import { Icon } from '@milo/ui/icon'
-import { Menu } from '@milo/ui/menu'
-import { Popover } from '@milo/ui/popover'
+import { Button } from '@humans/ui/button'
+import { Divider } from '@humans/ui/divider'
+import { Icon } from '@humans/ui/icon'
+import { Menu } from '@humans/ui/menu'
+import { Popover } from '@humans/ui/popover'
 import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function MenuStory() {
@@ -13,7 +13,7 @@ export function MenuStory() {
     <Page
       title="Menu"
       kind="Acciones"
-      imports="import { Menu } from '@milo/ui/menu'"
+      imports="import { Menu } from '@humans/ui/menu'"
       lead="Agrupa acciones con iconos, atajos, separadores y rótulos de sección."
     >
       <Hero>

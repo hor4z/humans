@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { Checkbox } from '@milo/ui/checkbox'
-import { Field } from '@milo/ui/field'
-import { Select } from '@milo/ui/select'
-import { Switch } from '@milo/ui/switch'
-import { TextField } from '@milo/ui/text-field'
-import { Textarea } from '@milo/ui/textarea'
+import { Checkbox } from '@humans/ui/checkbox'
+import { Field } from '@humans/ui/field'
+import { Select } from '@humans/ui/select'
+import { Switch } from '@humans/ui/switch'
+import { TextField } from '@humans/ui/text-field'
+import { Textarea } from '@humans/ui/textarea'
 import { A11y, Anatomy, Demo, Frame, Hero, Page, Panel, Practices, Props, Section, Stack } from '../kit'
 
 export function FieldStory() {
@@ -19,7 +19,7 @@ export function FieldStory() {
     <Page
       title="Field"
       kind="Formularios"
-      imports="import { Field } from '@milo/ui/field'"
+      imports="import { Field } from '@humans/ui/field'"
       lead="Asocia una etiqueta, una ayuda y un mensaje de error con un control de formulario."
     >
       <Hero>
