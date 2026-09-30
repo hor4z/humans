@@ -499,9 +499,6 @@ export function App() {
           </div>}
 
           <div className={cls.railFoot}>
-            <span className={cls.railCount}>
-              {everything.length} vistas
-            </span>
             <IconButton
               icon={prefs.theme === 'dark' ? 'light_mode' : 'dark_mode'}
               label={prefs.theme === 'dark' ? 'Tema claro' : 'Tema oscuro'}
