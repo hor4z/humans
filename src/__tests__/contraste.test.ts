@@ -48,6 +48,21 @@ describe('contraste de los tonos de estado', () => {
   }
 })
 
+const softs = [
+  '--ok-050', '--warn-050', '--bad-050', '--blue-050',
+  ...['green', 'teal', 'blue', 'purple', 'pink', 'orange'].map(c => `--label-${c}-soft`),
+]
+
+describe('en claro, un fondo suave va debajo del papel', () => {
+  for (const soft of softs) {
+    it(`${soft} es más oscuro que el lienzo`, () => {
+      const fill = value(soft, 'light')!
+      const canvas = value('--shade-02', 'light')!
+      expect(ratio(fill, '#000000')).toBeLessThan(ratio(canvas, '#000000'))
+    })
+  }
+})
+
 /** Las superficies sobre las que el sistema escribe en gris. */
 const surfaces = ['--shade-01', '--shade-02', '--shade-03', '--shade-04']
 
