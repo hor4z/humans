@@ -925,6 +925,7 @@
   }
 
   .exampleTabs {
+    gap: 0;
     overflow: hidden;
     border-radius: var(--radius-lg);
     background-color: var(--surface-muted);
