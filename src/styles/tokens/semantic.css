@@ -10,8 +10,8 @@
   --surface-active: var(--shade-09-a08);
   --surface-inverted: var(--shade-09);
   --popover: var(--shade-01);
-  --scrim: rgb(18 18 18 / 0.14);
-  --veil: rgb(58 58 58 / 0.4);
+  --scrim: rgb(17 24 39 / 0.14);
+  --veil: rgb(17 24 39 / 0.4);
 
   --border: var(--shade-04);
   --border-strong: var(--shade-05);
@@ -25,7 +25,7 @@
   --text-inverted: var(--shade-01);
 
   --solid: var(--shade-09);
-  --solid-hover: #000000;
+  --solid-hover: #030712;
   --on-solid: var(--shade-01);
 
   --brand: var(--blue-600);
@@ -42,14 +42,14 @@
   --yellow-border: var(--yellow-300);
   --yellow-ink: var(--yellow-800);
 
-  --on-label: #121212;
+  --on-label: #111827;
 
   --accent: var(--accent-500);
   --accent-hover: var(--accent-600);
   --accent-subtle: var(--accent-050);
   --on-accent: #ffffff;
   --on-ok: #ffffff;
-  --on-warn: #121212;
+  --on-warn: #111827;
   --brand-ink: var(--blue-700);
 
   --space-orange: #e2761b;
@@ -72,28 +72,27 @@
   --relief-raised:
     0 0 0 1px var(--edge),
     inset 0 1px 0 0 var(--light-a33),
-    0 3px 4px -1px rgb(0 0 0 / 0.15);
+    0 3px 4px -1px rgb(17 24 39 / 0.15);
   --relief-inset:
     0 0 0 1px var(--shade-09-a11),
     inset 0 2px 0.8px 0 var(--light-a27),
-    inset 0 -1px 0.6px 0 rgb(0 0 0 / 0.2),
-    0 1px 4.2px -1px rgb(0 0 0 / 0.25);
+    inset 0 -1px 0.6px 0 rgb(17 24 39 / 0.2),
+    0 1px 4.2px -1px rgb(17 24 39 / 0.25);
   --relief-card:
-    0 1px 1px 0 rgb(0 0 0 / 0.05),
-    0 3px 3px 0 rgb(0 0 0 / 0.03),
-    0 6px 3px 0 rgb(0 0 0 / 0.02);
+    0 1px 1px 0 rgb(17 24 39 / 0.05),
+    0 3px 3px 0 rgb(17 24 39 / 0.03),
+    0 6px 3px 0 rgb(17 24 39 / 0.02);
   --relief-toolbar:
-    0 1px 4px -4px rgb(0 0 0 / 0.08),
-    0 8px 16px -12px rgb(0 0 0 / 0.13);
+    0 1px 4px -4px rgb(17 24 39 / 0.08),
+    0 8px 16px -12px rgb(17 24 39 / 0.13);
   --relief-popover:
-    0 10px 21px 0 rgb(0 0 0 / 0.07),
-    0 38px 38px 0 rgb(0 0 0 / 0.06),
-    0 86px 52px 0 rgb(0 0 0 / 0.04);
-
-  --grad-raised: linear-gradient(in oklab, #e5e5e5 0%, #e2e2e2 100%);
+    0 10px 21px 0 rgb(17 24 39 / 0.07),
+    0 38px 38px 0 rgb(17 24 39 / 0.06),
+    0 86px 52px 0 rgb(17 24 39 / 0.04);
 
 
-  --grad-mark: linear-gradient(to bottom, rgb(255 255 255 / 0.20), rgb(255 255 255 / 0) 60%);
+
+  --grad-mark: linear-gradient(to bottom, rgb(249 250 251 / 0.20), rgb(249 250 251 / 0) 60%);
   --relief-mark:
     inset 0 0 0 1px color-mix(in oklab, currentColor 10%, transparent),
     inset 0 -1px 0 0 color-mix(in oklab, currentColor 16%, transparent),
@@ -107,12 +106,12 @@
   --switch-on: var(--brand);
   --switch-off: var(--shade-04);
   --switch-on-inset: inset 0 1px 0.6px 0 rgb(0 45 105 / 0.35);
-  --switch-off-inset: inset 0 0 1px 0.5px rgb(18 18 18 / 0.1);
+  --switch-off-inset: inset 0 0 1px 0.5px rgb(17 24 39 / 0.1);
   --switch-thumb: var(--shade-02);
   --switch-thumb-shadow:
-    inset 0 1px 0.5px 0 rgb(255 255 255 / 0.82),
-    0 0 2.6px 0 rgb(0 0 0 / 0.25),
-    0 1px 4px 0 rgb(0 0 0 / 0.14);
+    inset 0 1px 0.5px 0 rgb(249 250 251 / 0.82),
+    0 0 2.6px 0 rgb(17 24 39 / 0.25),
+    0 1px 4px 0 rgb(17 24 39 / 0.14);
 
   --field-bg: var(--shade-01);        
   --field-bg-hover: var(--shade-02);
@@ -124,7 +123,7 @@
 
   --focus-border: var(--blue-500);
 
-  --track: var(--shade-09-a08);
+  --track: var(--shade-09-a04);
   --chart-fill: var(--brand);
   --chart-ok: var(--ok);
   --chart-warn: var(--warn);
@@ -133,6 +132,8 @@
 
 [data-theme="dark"] {
   color-scheme: dark;
+  --on-label: #121212;
+  --on-warn: #121212;
   --veil: rgb(0 0 0 / 0.55);
   --switch-on: var(--brand);
   --switch-off: var(--shade-04);
@@ -173,7 +174,6 @@
   --scrim: rgb(0 0 0 / 0.55);
   --solid: var(--shade-09);
   --solid-hover: #ffffff;
-  --grad-raised: linear-gradient(in oklab, #333333 0%, #2c2c2c 100%);
 
   --grad-mark: linear-gradient(to bottom, color-mix(in oklab, currentColor 10%, transparent), transparent 60%);
   --relief-mark:

@@ -1,26 +1,26 @@
 :root {
-  --shade-01: #ffffff;  
-  --shade-02: #f1f2f4;  
-  --shade-03: #e9eaec;
-  --shade-04: #dee0e2;
-  --shade-05: #cfd1d4;
-  --shade-06: #616264;  
-  --shade-07: #48494a;
-  --shade-08: #363738;
-  --shade-09: #2b2b2d;  
-  --shade-placeholder: #68696b;
+  --shade-01: #f3f4f6;  
+  --shade-02: #e5e7eb;  
+  --shade-03: #dcdfe4;
+  --shade-04: #d1d5db;
+  --shade-05: #b8bec8;
+  --shade-06: #4b5563;  
+  --shade-07: #374151;
+  --shade-08: #1f2937;
+  --shade-09: #111827;  
+  --shade-placeholder: #565e6b;
 
-  --shade-09-a04: rgb(43 43 45 / 0.04);
-  --shade-09-a06: rgb(43 43 45 / 0.06);
-  --shade-09-a08: rgb(43 43 45 / 0.08);
-  --shade-09-a11: rgb(43 43 45 / 0.11);
-  --shade-09-a28: rgb(43 43 45 / 0.28);
-  --shade-09-a35: rgb(43 43 45 / 0.35);
+  --shade-09-a04: rgb(17 24 39 / 0.04);
+  --shade-09-a06: rgb(17 24 39 / 0.06);
+  --shade-09-a08: rgb(17 24 39 / 0.08);
+  --shade-09-a11: rgb(17 24 39 / 0.11);
+  --shade-09-a28: rgb(17 24 39 / 0.28);
+  --shade-09-a35: rgb(17 24 39 / 0.35);
 
-  --light-a33: rgb(255 255 255 / 0.33);
-  --light-a27: rgb(255 255 255 / 0.27);
-  --edge: #c5c7ca;
-  --icon-muted: #48494a;
+  --light-a33: rgb(249 250 251 / 0.33);
+  --light-a27: rgb(249 250 251 / 0.27);
+  --edge: #aab1bc;
+  --icon-muted: #374151;
 
   --blue-050: #e7f7ff;
   --blue-100: #cdecff;
@@ -84,12 +84,6 @@
   --bad-border: #ffc7be;
   --info-border: #c0dbff;
 
-  --tint-1: #eef2ef;
-  --tint-2: #ecf1f7;
-  --tint-3: #f9efe9;
-  --tint-4: #f1eef7;
-  --tint-5: #fbf4e6;
-  --tint-6: #f9eef1;
 }
 
 [data-theme="dark"] {
@@ -178,10 +172,4 @@
   --bad-border: #652622;
   --info-border: #1d3d68;
 
-  --tint-1: #1b201d;
-  --tint-2: #191f27;
-  --tint-3: #241d19;
-  --tint-4: #1f1d26;
-  --tint-5: #221f18;
-  --tint-6: #231b1e;
 }

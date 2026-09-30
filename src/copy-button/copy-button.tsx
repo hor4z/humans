@@ -1,6 +1,5 @@
 import s from './copy-button.module.css'
-import { Icon } from '../icon/icon'
-import { control } from '../lib/control'
+import { IconButton } from '../icon-button/icon-button'
 import { cx } from '../lib/cx'
 import { useAnnounce } from '../lib/use-announce'
 import { useClipboard } from '../lib/use-clipboard'
@@ -19,16 +18,13 @@ export function CopyButton({ value, label = 'Copiar', copiedLabel = 'Copiado', s
 }) {
   const { copied, copy } = useClipboard()
   const announce = useAnnounce()
-  const c = control[size]
   return (
-    <button
-      type="button"
-      aria-label={copied ? copiedLabel : label}
-      data-size={size}
+    <IconButton
+      icon={copied ? 'check' : 'content_copy'}
+      label={copied ? copiedLabel : label}
+      size={size}
       onClick={async () => { if (await copy(value)) announce(copiedLabel) }}
-      className={cx(`${s.root} touch-target`, s.motion, c.square, c.radius, className)}
-    >
-      <Icon name={copied ? 'check' : 'content_copy'} size={c.icon} weight={400} className={copied ? s.done : s.idle} />
-    </button>
+      className={cx(copied && s.done, className)}
+    />
   )
 }

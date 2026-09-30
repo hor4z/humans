@@ -73,6 +73,7 @@ import { SheetStory } from './stories/sheet'
 import { LinkStory } from './stories/link'
 import { TabsStory } from './stories/tabs'
 import { AccordionStory } from './stories/accordion'
+import { CollapsibleStory } from './stories/collapsible'
 import { BreadcrumbStory } from './stories/breadcrumb'
 import { IndicatorStory } from './stories/indicator'
 import { SearchStory } from './stories/search'
@@ -82,7 +83,7 @@ import { SelfAssessmentStory } from './stories/self-assessment'
 import { SumTableStory } from './stories/sum-table'
 import { NumberAnswerStory } from './stories/number-answer'
 import { OpenQuestionStory } from './stories/open-question'
-import { ColumnPickerStory } from './stories/column-picker'
+import { FilterStory } from './stories/filter'
 import { ProgressStory } from './stories/progress'
 import { CriterionCardStory } from './stories/criterion-card'
 import { RubricReviewStory } from './stories/rubric-review'
@@ -177,6 +178,7 @@ const groups: Group[] = [
     section: 'system',
     stories: [
       { id: 'tabs', label: 'Solapas', alias: 'Tabs solapas pestañas paneles', render: () => <TabsStory /> },
+      { id: 'collapsible', label: 'Plegable', alias: 'Collapsible plegable colapsar expandir desplegar cuerpo', render: () => <CollapsibleStory /> },
       { id: 'accordion', label: 'Acordeón', alias: 'Accordion acordeón desplegable details preguntas frecuentes', render: () => <AccordionStory /> },
       { id: 'breadcrumb', label: 'Migas de pan', alias: 'Breadcrumb ruta migas volver jerarquía', render: () => <BreadcrumbStory /> },
       { id: 'reorder', label: 'Reordenar', alias: 'Reorder reordenar arrastrar soltar mover orden bloques manija drag', render: () => <ReorderStory /> },
@@ -191,7 +193,7 @@ const groups: Group[] = [
       { id: 'table', label: 'Tabla', alias: 'Table tabla grilla filas columnas datos', render: () => <TableStory /> },
       { id: 'list', label: 'Lista', alias: 'lista filas acciones', render: () => <ListStory /> },
       { id: 'bar-chart', label: 'Gráfico de barras', alias: 'BarChart gráfico barras chart datos progreso visualización ejes leyenda tabla', render: () => <ChartStory /> },
-      { id: 'column-picker', label: 'Selector de columnas', alias: 'ColumnPicker columnas tabla elegir mostrar ocultar', render: () => <ColumnPickerStory /> },
+      { id: 'filter', label: 'Filtro', alias: 'Filter filtro columnas tabla elegir mostrar ocultar', render: () => <FilterStory /> },
       { id: 'indicator', label: 'Indicador', alias: 'Indicator indicador badge marca punto contador aviso notificación campana', render: () => <IndicatorStory /> },
       { id: 'progress', label: 'Barra de progreso', alias: 'Progress progreso barra porcentaje avance', render: () => <ProgressStory /> },
       { id: 'skeleton', label: 'Esqueleto', alias: 'Skeleton esqueleto carga hueco placeholder', render: () => <SkeletonStory /> },

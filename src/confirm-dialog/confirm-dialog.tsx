@@ -1,10 +1,8 @@
 import cls from './confirm-dialog.module.css'
-import { createContext, useContext, useId, useRef, type ComponentPropsWithoutRef, type ReactNode } from 'react'
+import { createContext, useContext, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import { Button } from '../button/button'
-import { useEscape } from '../lib/esc'
-import { useFocusTrap, useScrollLock } from '../lib/overlay-hooks'
-import { Portal } from '../portal/portal'
 import { cx } from '../lib/cx'
+import { Dialog } from '../lib/dialog'
 
 type Ctx = {
   onCancel: () => void
@@ -27,31 +25,15 @@ function Root({
   /** Bad pinta el botón de confirmar y arranca el foco en cancelar. */
   tone?: 'neutral' | 'bad'
 }) {
-  const panel = useRef<HTMLDivElement>(null)
-  const titleId = useId()
   const onCancel = () => onOpenChange(false)
-  useScrollLock(open)
-  useEscape(open, onCancel)
-  useFocusTrap(open, panel)
-  if (!open) return null
   return (
-    <Portal>
-      <div className={cls.viewport}>
-        <div className={`${cls.veil} ui-fade`} onClick={onCancel} />
-        <div
-          ref={panel}
-          role="alertdialog"
-          aria-modal="true"
-          aria-labelledby={titleId}
-          tabIndex={-1}
-          className={`${cls.panel} ui-zoom bg-surface`}
-        >
-          <ConfirmContext.Provider value={{ onCancel, onConfirm, tone, titleId }}>
-            {children}
-          </ConfirmContext.Provider>
-        </div>
-      </div>
-    </Portal>
+    <Dialog open={open} onClose={onCancel} role="alertdialog" centered blurred panelClass={`${cls.panel} ui-zoom bg-surface`}>
+      {titleId => (
+        <ConfirmContext.Provider value={{ onCancel, onConfirm, tone, titleId }}>
+          {children}
+        </ConfirmContext.Provider>
+      )}
+    </Dialog>
   )
 }
 

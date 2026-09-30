@@ -1,23 +1,4 @@
 @layer milo.components {
-  .viewport {
-    position: fixed;
-    inset: 0;
-    z-index: 40;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-  }
-
-  .veil {
-    position: absolute;
-    inset: 0;
-    background-color: var(--scrim);
-    --milo-backdrop-blur: blur(3px);
-    -webkit-backdrop-filter: var(--milo-backdrop-blur,) var(--milo-backdrop-brightness,) var(--milo-backdrop-contrast,) var(--milo-backdrop-grayscale,) var(--milo-backdrop-hue-rotate,) var(--milo-backdrop-invert,) var(--milo-backdrop-opacity,) var(--milo-backdrop-saturate,) var(--milo-backdrop-sepia,);
-    backdrop-filter: var(--milo-backdrop-blur,) var(--milo-backdrop-brightness,) var(--milo-backdrop-contrast,) var(--milo-backdrop-grayscale,) var(--milo-backdrop-hue-rotate,) var(--milo-backdrop-invert,) var(--milo-backdrop-opacity,) var(--milo-backdrop-saturate,) var(--milo-backdrop-sepia,);
-  }
-
   .panel {
     position: relative;
     z-index: 10;

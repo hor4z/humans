@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { contrast } from '../lib/contrast'
 
 const css = readFileSync(join(import.meta.dirname, '../styles/tokens/primitives.css'), 'utf8')
 const roles = readFileSync(join(import.meta.dirname, '../styles/tokens/semantic.css'), 'utf8')
@@ -21,17 +22,8 @@ function value(token: string, theme: 'light' | 'dark'): string | undefined {
   return ref ? value(ref[1], theme) : raw
 }
 
-function luminance(hex: string) {
-  const h = hex.replace('#', '')
-  const n = h.length === 3 ? h.split('').map(c => c + c).join('') : h
-  const [r, g, b] = [0, 2, 4].map(i => parseInt(n.slice(i, i + 2), 16) / 255)
-    .map(s => (s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4)))
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b
-}
-
 function ratio(a: string, b: string) {
-  const [x, y] = [luminance(a), luminance(b)]
-  return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05)
+  return contrast(a, b)!
 }
 
 const pairs: [string, string][] = [
@@ -158,7 +150,7 @@ describe('el texto sugerido de un campo se lee', () => {
 const labels = ['--label-green', '--label-teal', '--label-blue', '--label-purple', '--label-pink', '--label-orange']
 
 describe('el texto de una etiqueta de color se lee', () => {
-  const ink = '#121212'
+  const ink = '#111827'
   for (const theme of ['light', 'dark'] as const) {
     for (const label of labels) {
       it(`${label} en ${theme} aguanta la tinta encima`, () => {
@@ -183,7 +175,7 @@ describe('el texto de una etiqueta de color se lee', () => {
 
   it('la tinta del rol es la misma que se mide acá', () => {
     const semantic = readFileSync(join(import.meta.dirname, '../styles/tokens/semantic.css'), 'utf8')
-    expect(semantic).toMatch(/--on-label:\s*#121212/)
+    expect(semantic).toMatch(/--on-label:\s*#111827/)
   })
 })
 

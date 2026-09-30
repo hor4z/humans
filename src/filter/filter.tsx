@@ -1,9 +1,10 @@
-import { Icon } from '../icon/icon'
+import { Icon, type IconName } from '../icon/icon'
 import s from './filter.module.css'
 import type { ComponentPropsWithoutRef } from 'react'
 import { Avatar } from '../avatar/avatar'
 import { Button } from '../button/button'
 import { Checkbox } from '../checkbox/checkbox'
+import { IconButton } from '../icon-button/icon-button'
 import { cx } from '../lib/cx'
 import { Popover } from '../popover/popover'
 
@@ -14,6 +15,10 @@ function Bar({ className, ...props }: ComponentPropsWithoutRef<'div'>) {
 
 type FilterOption = {
   value: string
+  /** Lo que se lee, cuando el valor es un id. Sin esto se lee el valor. */
+  label?: string
+  /** Se ve tildada y no se puede sacar. */
+  locked?: boolean
   /** En cuántas filas cae, contado sobre lo que los otros filtros dejaron. */
   count?: number
   /** La persona, cuando el filtro es de personas. */
@@ -29,10 +34,13 @@ type FilterProps = {
   value: string[]
   /** Recibe la lista nueva de valores elegidos. */
   onValueChange: (v: string[]) => void
+  /** Con un glifo el disparador es un botón de solo icono, con el rótulo como nombre y como encabezado del panel: para elegir qué se ve y no qué se filtra. */
+  icon?: IconName
+  className?: string
 }
 
 /** Un filtro: un botón que dice qué filtra, y un panel para elegir. */
-function Root({ label, options, value, onValueChange }: FilterProps) {
+function Root({ label, options, value, onValueChange, icon, className }: FilterProps) {
   const toggle = (v: string) =>
     onValueChange(value.includes(v) ? value.filter(x => x !== v) : [...value, v])
 
@@ -40,9 +48,11 @@ function Root({ label, options, value, onValueChange }: FilterProps) {
 
   return (
     <Popover
-      align="start"
+      align={icon ? 'end' : 'start'}
       width={220}
-      trigger={({ onClick, ref, ...rest }) => (
+      trigger={({ onClick, ref, ...rest }) => icon ? (
+        <IconButton ref={ref} onClick={onClick} {...rest} icon={icon} label={label} size="sm" variant="muted" className={cx(s.iconTrigger, className)} />
+      ) : (
         <Button
           ref={ref}
           onClick={onClick}
@@ -58,27 +68,30 @@ function Root({ label, options, value, onValueChange }: FilterProps) {
     >
       {() => (
         <div className={`${s.panel} ui-pop bg-popover`}>
+          {icon && <p className={s.panelLabel}>{label}</p>}
           {options.map(o => (
             <label
               key={o.value}
               className={cx(
                 s.option,
                 o.person ? s.personOption : s.plainOption,
+                o.locked && s.locked,
               )}
             >
               <Checkbox
-                label={o.count === undefined ? o.value : `${o.value}, ${o.count}`}
-                checked={value.includes(o.value)}
-                onCheckedChange={() => toggle(o.value)}
+                label={o.count === undefined ? (o.label ?? o.value) : `${o.label ?? o.value}, ${o.count}`}
+                checked={o.locked || value.includes(o.value)}
+                onCheckedChange={() => !o.locked && toggle(o.value)}
+                disabled={o.locked}
               />
               {o.person && <Avatar name={o.person.name} src={o.person.src} size={22} className={s.avatar} />}
-              <span aria-hidden="true" className={s.optionLabel}>{o.value}</span>
+              <span aria-hidden="true" className={s.optionLabel}>{o.label ?? o.value}</span>
               {o.count !== undefined && (
                 <span aria-hidden="true" className={`${s.optionCount} tabular`}>{o.count}</span>
               )}
             </label>
           ))}
-          {value.length > 0 && (
+          {!icon && value.length > 0 && (
             <button
               type="button"
               onClick={() => onValueChange([])}

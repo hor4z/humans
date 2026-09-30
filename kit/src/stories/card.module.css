@@ -19,7 +19,7 @@
 
   .cover {
     border-radius: var(--radius-sm);
-    background-color: var(--tint-2);
+    background-color: var(--brand-soft);
   }
 
   .coverBody {

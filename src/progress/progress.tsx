@@ -14,6 +14,8 @@ type ProgressProps = ComponentPropsWithoutRef<'div'> & {
   label?: string
   /** `brand` para lo que avanza y `ok` para lo que terminó; `warn` y `bad` solo cuando llenar la barra es el problema. */
   tone?: 'brand' | 'ok' | 'warn' | 'bad'
+  /** `sm` es la barra fina, para la que va pegada a un encabezado. */
+  size?: 'sm' | 'md'
 }
 
 const fillTone = { brand: s.fillBrand, ok: s.fillOk, warn: s.fillWarn, bad: s.fillBad }
@@ -28,7 +30,7 @@ function Hint({ children }: { children: ReactNode }) {
   return <>{children}</>
 }
 
-function Root({ value, max = 100, label, tone = 'brand', className, children, ...props }: ProgressProps) {
+function Root({ value, max = 100, label, tone = 'brand', size = 'md', className, children, ...props }: ProgressProps) {
   const [shown, rest] = takePart(children, Label)
   const [hint] = takePart(rest, Hint)
   const clamped = Math.min(max, Math.max(0, value))
@@ -49,7 +51,7 @@ function Root({ value, max = 100, label, tone = 'brand', className, children, ..
         aria-valuenow={Math.round(clamped)}
         aria-valuemin={0}
         aria-valuemax={max}
-        className={s.track}
+        className={cx(s.track, size === 'sm' && s.thin)}
       >
         <div className={cx(s.fill, fillTone[tone])} style={{ width: `${pct}%` }} />
       </div>

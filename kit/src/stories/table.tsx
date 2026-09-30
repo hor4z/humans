@@ -2,7 +2,6 @@ import cls from './table.module.css'
 import { useMemo, useState } from 'react'
 import { Avatar } from '@milo/ui/avatar'
 import { Chip } from '@milo/ui/chip'
-import { ColumnPicker } from '@milo/ui/column-picker'
 import { Dropdown } from '@milo/ui/dropdown'
 import { EmptyState } from '@milo/ui/empty-state'
 import { Filter } from '@milo/ui/filter'
@@ -196,7 +195,7 @@ export function TableStory() {
     options={people.map(p => ({ value: p.name, count: peopleCounts[p.name] ?? 0, person: p }))}
   />
   {filtering && <Filter.Reset onClick={clear} />}
-  <ColumnPicker columns={columns} value={visible} onValueChange={setVisible} />
+  <Filter icon="view_column" label="Columnas" options={columns.map(c => ({ value: c.id, label: c.label, locked: c.locked }))} value={visible} onValueChange={setVisible} />
 </Filter.Bar>
 
 <Table label="Actividades del espacio" minWidth={980}>
@@ -318,8 +317,10 @@ export function TableStory() {
                 options={people.map(p => ({ value: p.name, count: peopleCounts[p.name] ?? 0, person: p }))}
               />
               {filtering && <Filter.Reset onClick={clear} />}
-              <ColumnPicker
-                columns={columns}
+              <Filter
+                icon="view_column"
+                label="Columnas"
+                options={columns.map(c => ({ value: c.id, label: c.label, locked: c.locked }))}
                 value={visible}
                 onValueChange={setVisible}
               />

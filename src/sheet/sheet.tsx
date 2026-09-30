@@ -1,10 +1,8 @@
 import s from './sheet.module.css'
-import { createContext, useContext, useId, useRef, type ComponentPropsWithoutRef, type ReactNode } from 'react'
+import { createContext, useContext, type ComponentPropsWithoutRef, type ReactNode } from 'react'
 import { IconButton } from '../icon-button/icon-button'
 import { cx } from '../lib/cx'
-import { useEscape } from '../lib/esc'
-import { useFocusTrap, useScrollLock } from '../lib/overlay-hooks'
-import { Portal } from '../portal/portal'
+import { Dialog } from '../lib/dialog'
 
 type Ctx = { onClose: () => void; titleId: string }
 const SheetContext = createContext<Ctx | null>(null)
@@ -24,36 +22,21 @@ function Root({
   /** Solo si no hay `Sheet.Title`: con título, el nombre sale de ahí. */
   label?: string
 }) {
-  const panel = useRef<HTMLDivElement>(null)
-  const titleId = useId()
   const onClose = () => onOpenChange(false)
-  useScrollLock(open)
-  useEscape(open, onClose)
-  useFocusTrap(open, panel)
-  if (!open) return null
   return (
-    <Portal>
-      <div className={s.viewport}>
-        <div className={`${s.veil} ui-fade`} onClick={onClose} />
-        <div
-          ref={panel}
-          role="dialog"
-          aria-modal="true"
-          aria-label={label}
-          aria-labelledby={label ? undefined : titleId}
-          tabIndex={-1}
-          style={{ width, maxWidth: '100%', ['--slide-from' as string]: side === 'right' ? '12px' : '-12px' }}
-          className={cx(
-            `${s.panel} ui-slide bg-surface`,
-            side === 'right' ? s.right : s.left,
-          )}
-        >
-          <SheetContext.Provider value={{ onClose, titleId }}>
-            {children}
-          </SheetContext.Provider>
-        </div>
-      </div>
-    </Portal>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      label={label}
+      panelClass={cx(`${s.panel} ui-slide bg-surface`, side === 'right' ? s.right : s.left)}
+      panelStyle={{ width, maxWidth: '100%', ['--slide-from' as string]: side === 'right' ? '12px' : '-12px' }}
+    >
+      {titleId => (
+        <SheetContext.Provider value={{ onClose, titleId }}>
+          {children}
+        </SheetContext.Provider>
+      )}
+    </Dialog>
   )
 }
 

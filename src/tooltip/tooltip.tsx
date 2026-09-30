@@ -1,5 +1,6 @@
 import s from './tooltip.module.css'
-import { cloneElement, isValidElement, useEffect, useId, useLayoutEffect, useRef, useState, type ReactElement, type ReactNode } from 'react'
+import { cloneElement, isValidElement, useEffect, useId, useRef, useState, type ReactElement, type ReactNode } from 'react'
+import { useAnchor } from '../lib/anchor'
 import { useDismiss } from '../lib/dismiss'
 import { useEscape } from '../lib/esc'
 import { Portal } from '../portal/portal'
@@ -22,7 +23,6 @@ export function Tooltip({ label, children, side = 'top', delay = 500 }: {
   const [open, setOpen] = useState(false)
   const anchor = useRef<HTMLSpanElement>(null)
   const bubble = useRef<HTMLDivElement>(null)
-  const [pos, setPos] = useState({ top: 0, left: 0 })
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
   const visible = useRef(false)
   const id = useId()
@@ -47,19 +47,7 @@ export function Tooltip({ label, children, side = 'top', delay = 500 }: {
 
   useEscape(open, close)
 
-  useLayoutEffect(() => {
-    if (!open || !anchor.current) return
-    const r = anchor.current.getBoundingClientRect()
-    const w = bubble.current?.offsetWidth ?? 0
-    const h = bubble.current?.offsetHeight ?? 0
-    const fitsAbove = r.top - 8 - h >= 8
-    const fitsBelow = r.bottom + 8 + h <= window.innerHeight - 8
-    const above = side === 'top' ? fitsAbove || !fitsBelow : !fitsBelow && fitsAbove
-    setPos({
-      top: above ? r.top - 8 - h : r.bottom + 8,
-      left: Math.max(8, Math.min(r.left + r.width / 2 - w / 2, window.innerWidth - w - 8)),
-    })
-  }, [open, side])
+  const pos = useAnchor(open, anchor, bubble, { align: 'center', prefer: side === 'top' ? 'above' : 'below' })
 
   useDismiss(open, close, [anchor, bubble])
 

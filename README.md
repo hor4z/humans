@@ -84,9 +84,9 @@ esa puerta.
 - **Shell:** sidebar 220 `fixed` (72 contraído), topbar 80, padding lateral 20, item de nav 40.
 - **Controles:** tres alturas con un rol cada una, 32 inline, 36 en panel, 40 la principal.
 - **Radios:** 6 · 10 · 12 · 16 · 24. El radio de un hijo es el del padre menos su padding.
-- **Color:** rampa casi neutra de nueve pasos (`#fcfcfc` → `#121212`). La interfaz es monocroma;
+- **Color:** rampa gray de nueve pasos (`#f3f4f6` → `#111827`). La interfaz es monocroma;
   las tres excepciones (el azul de marca, las marcas de una lista y las etiquetas de color)
-  están acotadas a una pieza cada una. Bordes y hovers en alpha, nunca gris opaco.
+  están acotadas a una pieza cada una. Los hovers van en alpha sobre la rampa.
 - **Relieve:** cinco recetas (`raised`, `solid`, `pressed`, `inset` y la elevación en capas). El
   estado activo se marca con relieve o canto, no tiñendo el texto.
 - **Iconos:** Material Symbols Rounded, subseteado a los 172 que usamos, servido desde el repo
@@ -111,7 +111,7 @@ Acciones: `Button` · `IconButton` · `Menu` · `Dropdown`
 Formularios: `Field` · `Sheet` · `Search` · `TextField` · `Textarea` · `Select` · `DatePicker` ·
 `Checkbox` · `Radio` · `Switch` · `Slider` · `Stepper` · `Segmented`
 Navegación: `Tabs` · `Accordion` · `Breadcrumb` · `Tree` · `Reorder` · `Steps` · `NavItem`
-Datos: `Table` · `List` · `BarChart` · `ColumnPicker` · `Indicator` · `Chip` · `Progress` ·
+Datos: `Table` · `List` · `BarChart` · `Indicator` · `Chip` · `Progress` ·
 `AudioPlayer` · `Skeleton` · `Avatar`
 Avisos: `Alert` · `Toast` · `EmptyState` · `Spinner` · `Tooltip`
 Superficies: `Card` · `Row` · `Modal` · `ConfirmDialog` · `Popover` · `Divider` · `Link` ·

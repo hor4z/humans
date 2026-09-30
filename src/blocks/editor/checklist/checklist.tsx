@@ -1,6 +1,8 @@
 import s from './checklist.module.css'
 import { Children, cloneElement, isValidElement, useId, useState, type ReactElement, type ReactNode } from 'react'
+import { Collapsible } from '../../../collapsible/collapsible'
 import { Icon } from '../../../icon/icon'
+import { Progress } from '../../../progress/progress'
 import { Spinner } from '../../../spinner/spinner'
 import { Tooltip } from '../../../tooltip/tooltip'
 import { cx } from '../../../lib/cx'
@@ -103,7 +105,6 @@ function Root({ defaultOpen = false, size = 'md', value, onValueChange, children
   const done = ladder
     ? Math.min(Math.max(value, 0), total)
     : steps.filter(c => (isValidElement<ItemProps>(c) ? c.props.state : undefined) === 'done').length
-  const pct = total === 0 ? 0 : (done / total) * 100
 
   let step = -1
   const items = ladder
@@ -129,11 +130,7 @@ function Root({ defaultOpen = false, size = 'md', value, onValueChange, children
           onClick={() => setOpen(v => !v)}
           className={s.trigger}
         >
-          <Icon
-            name="keyboard_arrow_down"
-            size={20}
-            className={cx(s.chevron, open && s.chevronOpen, 'icon-muted')}
-          />
+          <Collapsible.Chevron open={open} />
         </button>
         <p id={titleId} className={s.title}>{title}</p>
         <p className={`${s.count} tabular`}>
@@ -141,9 +138,7 @@ function Root({ defaultOpen = false, size = 'md', value, onValueChange, children
           <span className="sr-only"> pasos hechos</span>
         </p>
       </div>
-      <span className={s.track} aria-hidden="true">
-        <span className={s.fill} style={{ width: `${pct}%` }} />
-      </span>
+      <Progress value={done} max={total} label="Pasos hechos" size="sm" className={s.progress} />
       {open && (
         <div id={bodyId} className={`${s.body} bg-surface`}>
           <div className={s.items}>{items}</div>

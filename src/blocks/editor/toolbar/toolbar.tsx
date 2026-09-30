@@ -1,8 +1,9 @@
 import s from './toolbar.module.css'
-import { useLayoutEffect, useRef, type FocusEvent, type KeyboardEvent, type ReactNode } from 'react'
-import { Icon, type IconName } from '../../../icon/icon'
-import { control } from '../../../lib/control'
+import { useLayoutEffect, type FocusEvent, type ReactNode } from 'react'
+import { IconButton } from '../../../icon-button/icon-button'
+import type { IconName } from '../../../icon/icon'
 import { cx } from '../../../lib/cx'
+import { useRovingFocus } from '../../../lib/roving'
 import { ToggleButton } from '../../../toggle-button/toggle-button'
 
 function Root({ label, children, className }: {
@@ -11,9 +12,8 @@ function Root({ label, children, className }: {
   children: ReactNode
   className?: string
 }) {
-  const barRef = useRef<HTMLDivElement>(null)
-
-  const enabledButtons = () => [...(barRef.current?.querySelectorAll<HTMLButtonElement>('button:not(:disabled)') ?? [])]
+  const rove = useRovingFocus<HTMLDivElement>('button:not(:disabled)', 'horizontal')
+  const enabledButtons = () => [...(rove.ref.current?.querySelectorAll<HTMLButtonElement>('button:not(:disabled)') ?? [])]
 
   const roveTo = (active?: HTMLButtonElement) => {
     const enabled = enabledButtons()
@@ -24,26 +24,12 @@ function Root({ label, children, className }: {
 
   useLayoutEffect(() => { roveTo() })
 
-  const onKey = (e: KeyboardEvent<HTMLDivElement>) => {
-    const step = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0
-    const toEdge = e.key === 'Home' ? 0 : e.key === 'End' ? -1 : null
-    if (!step && toEdge === null) return
-    const buttons = enabledButtons()
-    if (!buttons.length) return
-    e.preventDefault()
-    const next = toEdge !== null
-      ? buttons.at(toEdge)!
-      : buttons[(buttons.indexOf(document.activeElement as HTMLButtonElement) + step + buttons.length) % buttons.length]
-    roveTo(next)
-    next.focus()
-  }
-
   return (
     <div
-      ref={barRef}
+      ref={rove.ref}
       role="toolbar"
       aria-label={label}
-      onKeyDown={onKey}
+      onKeyDown={rove.onKeyDown}
       onFocus={(e: FocusEvent<HTMLDivElement>) => roveTo(e.target.closest('button') ?? undefined)}
       className={cx(`${s.root} bg-popover`, className)}
     >
@@ -67,15 +53,14 @@ function Button({ icon, label, pressed, onPressedChange, disabled, onClick }: {
 }) {
   if (pressed === undefined) {
     return (
-      <button
-        type="button"
-        aria-label={label}
+      <IconButton
+        icon={icon}
+        label={label}
+        size="sm"
         disabled={disabled}
         onClick={onClick}
-        className={cx(s.button, s.disabled, s.buttonPlain)}
-      >
-        <Icon name={icon} size={control.sm.icon} />
-      </button>
+        className={s.button}
+      />
     )
   }
   return (

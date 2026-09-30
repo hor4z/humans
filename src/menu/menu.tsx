@@ -1,6 +1,7 @@
 import cls from './menu.module.css'
-import { useRef, type KeyboardEvent, type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import { cx } from '../lib/cx'
+import { useRovingFocus } from '../lib/roving'
 import { takePart } from '../lib/parts'
 import { Kbd } from '../kbd/kbd'
 import { Icon, type IconName } from '../icon/icon'
@@ -13,26 +14,14 @@ function Root({ children, label, width, className }: {
   width?: number
   className?: string
 }) {
-  const box = useRef<HTMLDivElement>(null)
-
-  const move = (e: KeyboardEvent<HTMLDivElement>) => {
-    const step = e.key === 'ArrowDown' ? 1 : e.key === 'ArrowUp' ? -1 : 0
-    const edge = e.key === 'Home' ? 0 : e.key === 'End' ? -1 : null
-    if (!step && edge === null) return
-    const items = [...(box.current?.querySelectorAll<HTMLButtonElement>('[role^="menuitem"]:not(:disabled)') ?? [])]
-    if (!items.length) return
-    e.preventDefault()
-    if (edge !== null) return items.at(edge)!.focus()
-    const i = items.indexOf(document.activeElement as HTMLButtonElement)
-    items[(i + step + items.length) % items.length].focus()
-  }
+  const rove = useRovingFocus<HTMLDivElement>('[role^="menuitem"]:not(:disabled)', 'vertical')
 
   return (
     <div
-      ref={box}
+      ref={rove.ref}
       role="menu"
       aria-label={label}
-      onKeyDown={move}
+      onKeyDown={rove.onKeyDown}
       style={width ? { width } : undefined}
       className={cx(
         `${cls.root} ui-pop bg-popover`,
@@ -45,7 +34,6 @@ function Root({ children, label, width, className }: {
   )
 }
 
-/** Una fila del menú. */
 /** El atajo, a la derecha, en un `Kbd`. */
 function Shortcut({ children }: { children: ReactNode }) {
   return <>{children}</>

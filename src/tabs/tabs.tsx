@@ -1,6 +1,7 @@
 import s from './tabs.module.css'
-import { createContext, useContext, useId, useRef, useState, type ComponentPropsWithoutRef } from 'react'
+import { createContext, useContext, useId, useState, type ComponentPropsWithoutRef } from 'react'
 import { cx } from '../lib/cx'
+import { useRovingFocus } from '../lib/roving'
 
 type TabsCtx = { value: string; setValue: (v: string) => void; name: string }
 
@@ -41,27 +42,13 @@ function List({ label, className, children, ...props }: ComponentPropsWithoutRef
   /** De qué son estas solapas. Sin esto un lector las anuncia como "lista de solapas" y con dos en una pantalla no se distinguen. */
   label?: string
 }) {
-  const ref = useRef<HTMLDivElement>(null)
-  const toEdge = (i: 0 | -1) => {
-    const tabs = [...(ref.current?.querySelectorAll<HTMLButtonElement>('[role="tab"]') ?? [])]
-    tabs.at(i)?.focus()
-  }
-  const move = (step: number) => {
-    const tabs = [...(ref.current?.querySelectorAll<HTMLButtonElement>('[role="tab"]') ?? [])]
-    const i = tabs.indexOf(document.activeElement as HTMLButtonElement)
-    if (i < 0) return
-    tabs[(i + step + tabs.length) % tabs.length].focus()
-  }
+  const rove = useRovingFocus<HTMLDivElement>('[role="tab"]', 'horizontal')
   return (
     <div
-      ref={ref}
+      ref={rove.ref}
       role="tablist"
       aria-label={label}
-      onKeyDown={e => {
-        if (e.key === 'ArrowRight') { e.preventDefault(); move(1) }
-        if (e.key === 'ArrowLeft') { e.preventDefault(); move(-1) }
-        if (e.key === 'Home' || e.key === 'End') { e.preventDefault(); toEdge(e.key === 'Home' ? 0 : -1) }
-      }}
+      onKeyDown={rove.onKeyDown}
       className={cx(s.list, className)}
       {...props}
     >
