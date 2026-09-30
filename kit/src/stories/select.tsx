@@ -23,7 +23,7 @@ export function SelectStory() {
       title="Select"
       kind="Formularios"
       imports="import { Select } from '@milo/ui/select'"
-      lead="Elegir un valor de una lista corta. Es un botón con un listbox propio y el teclado a mano, no un `<select>` nativo."
+      lead="Permite elegir un valor de una lista desplegable con navegación por teclado."
     >
       <Hero>
         <Select value={level} onValueChange={setLevel} width={160} options={['4.º grado', '5.º grado', '6.º grado', '7.º grado']} />

@@ -13,7 +13,7 @@ export function SwitchStory() {
       title="Switch"
       kind="Formularios"
       imports="import { Switch } from '@milo/ui/switch'"
-      lead="Una llave de luz: prende y apaga algo que se aplica al momento, sin un botón de guardar que lo confirme. El azul es el de lo que quien lo usa decidió, no el naranja de lo que pasó solo."
+      lead="Activa o desactiva una opción que se aplica de inmediato."
     >
       <Hero>
         <Switch checked={on} onCheckedChange={setOn} label="Sugerencias" />

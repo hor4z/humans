@@ -26,7 +26,7 @@ export function ListStory() {
       kind="Datos"
       imports="import { List } from '@milo/ui/list'
 import { useState } from 'react'"
-      lead="Filas altas, cada una con una marca de color, un título y una línea de apoyo. No es `Row`: no hay divisores, cada fila es su propia caja con aire alrededor, y la marca de color deja encontrar una fila de reojo sin leerla."
+      lead="Agrupa elementos con título, información de apoyo y acciones."
     >
       <Hero>
         <Frame width="md">
@@ -35,13 +35,13 @@ import { useState } from 'react'"
               <List.Title>En reposo</List.Title>
               <List.Hint>Fondo apagado, sin sombra.</List.Hint>
             </List.Item>
-            <List.Item icon="menu_book" color="purple" active>
+            <List.Item icon="menu_book" color="purple" active={current !== 'Se toca'}>
               <List.Title>Elegida</List.Title>
               <List.Hint>Hundida un paso.</List.Hint>
             </List.Item>
-            <List.Item icon="star_shine" color="blue" onClick={() => {}}>
+            <List.Item icon="star_shine" color="blue" active={current === 'Se toca'} onClick={() => setCurrent('Se toca')}>
               <List.Title>Se toca</List.Title>
-              <List.Hint>Pasá el mouse: sube al papel y toma sombra.</List.Hint>
+              <List.Hint>Seleccioná la fila para ver su estado activo.</List.Hint>
             </List.Item>
           </List>
         </Frame>
@@ -78,7 +78,7 @@ import { useState } from 'react'"
 
         <Demo label="Como índice: el color identifica el espacio, no el estado" code={`<List>
   {spaces.map(e => (
-    <List.Item key={e.title} icon={e.icon} color={e.color} onClick={() => openSpace(e)}>
+    <List.Item key={e.title} icon={e.icon} color={e.color} active={current === e.title} onClick={() => setCurrent(e.title)}>
       <List.Title>{e.title}</List.Title>
       <List.Hint>{e.hint}</List.Hint>
       <List.Trailing><Icon name="chevron_right" size={20} className="icon-muted" /></List.Trailing>
@@ -88,7 +88,7 @@ import { useState } from 'react'"
           <Frame width="md">
             <List>
               {spaces.map(e => (
-                <List.Item key={e.title} icon={e.icon} color={e.color} onClick={() => {}}>
+                <List.Item key={e.title} icon={e.icon} color={e.color} active={current === e.title} onClick={() => setCurrent(e.title)}>
                   <List.Title>{e.title}</List.Title>
                   <List.Hint>{e.hint}</List.Hint>
                   <List.Trailing><Icon name="chevron_right" size={20} className="icon-muted" /></List.Trailing>

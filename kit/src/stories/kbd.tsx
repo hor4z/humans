@@ -8,7 +8,7 @@ export function KbdStory() {
       title="Kbd"
       kind="Superficies"
       imports="import { Kbd } from '@milo/ui/kbd'"
-      lead="La tecla dibujada, para recordar un atajo: en el buscador del riel, en la paleta de comandos o como sufijo de un campo cuando lo que sigue es una unidad."
+      lead="Representa una tecla o una combinación de teclas dentro de una instrucción."
     >
       <Hero>
         <Kbd>K</Kbd>
@@ -20,7 +20,7 @@ export function KbdStory() {
       </Hero>
 
       <Anatomy>
-        <Anatomy.Part name="Tecla" required>La caja hundida con el símbolo, el nombre o la unidad adentro: radio 6, canto, luz arriba y una sombra de caída corta.</Anatomy.Part>
+        <Anatomy.Part name="Tecla" required>La caja hundida con el símbolo, el nombre o la unidad adentro: radio 6, borde neutro y una sombra interior suave.</Anatomy.Part>
       </Anatomy>
 
       <Section title="Ejemplos">

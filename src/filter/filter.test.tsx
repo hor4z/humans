@@ -5,6 +5,25 @@ import { describe, expect, it } from 'vitest'
 import { Filter } from './filter'
 
 describe('Filter', () => {
+  it('agrega una condición, permite editarla y quitarla', async () => {
+    function Demo() {
+      const [value, setValue] = useState<Record<string, string[]>>({})
+      return <Filter.Builder fields={[{ key: 'status', label: 'Estado', options: [{ value: 'Abierta' }, { value: 'Corregida' }] }, { key: 'subject', label: 'Materia', options: [{ value: 'Matemática' }] }]} value={value} onValueChange={setValue} />
+    }
+    render(<Demo />)
+    await userEvent.click(screen.getByRole('button', { name: 'Agregar filtro' }))
+    await userEvent.click(screen.getByRole('button', { name: /Estado/ }))
+    await userEvent.click(screen.getByRole('checkbox', { name: 'Abierta' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Listo' }))
+    expect(screen.getByRole('button', { name: /Estado: Abierta/ })).toBeInTheDocument()
+    await userEvent.click(screen.getByRole('button', { name: /Estado: Abierta/ }))
+    await userEvent.click(screen.getByRole('checkbox', { name: 'Corregida' }))
+    await userEvent.keyboard('{Escape}')
+    expect(screen.getByRole('button', { name: /Estado: Abierta \+1/ })).toBeInTheDocument()
+    await userEvent.click(screen.getByRole('button', { name: 'Quitar filtro Estado' }))
+    expect(screen.queryByRole('button', { name: /Estado: Abierta/ })).not.toBeInTheDocument()
+  })
+
   it('elige varias y las cuenta en el botón', async () => {
     const Demo = () => {
       const [v, setV] = useState<string[]>([])

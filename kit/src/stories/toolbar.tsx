@@ -12,7 +12,7 @@ export function ToolbarStory() {
       title="Toolbar"
       kind="Editor"
       imports="import { Toolbar } from '@milo/ui/blocks/editor/toolbar'"
-      lead="La barra que aparece sobre el texto seleccionado. Una sola parada de tabulación, y adentro se mueve con flechas."
+      lead="Agrupa acciones de edición con navegación por teclado."
     >
       <Hero>
         <Toolbar label="Formato del texto">

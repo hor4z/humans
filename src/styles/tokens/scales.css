@@ -1,4 +1,14 @@
 :root {
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+
   --radius-xs: 4px;
   --radius-sm: 6px;
   --radius-md: 10px;
@@ -23,32 +33,32 @@
   --font-weight-semibold: 500;
   --font-weight-bold: 600;
 
-  --type-meta: 0.75rem;        
-  --type-meta-lh: 1rem;        
+  --type-meta: 0.75rem;
+  --type-meta-lh: 1rem;
   --type-meta-ls: 0.01em;
 
-  --type-label: 0.8125rem;     
-  --type-label-lh: 1.125rem;   
+  --type-label: 0.8125rem;
+  --type-label-lh: 1.125rem;
   --type-label-ls: 0.005em;
 
-  --type-body: 0.875rem;       
-  --type-body-lh: 1.25rem;     
+  --type-body: 0.875rem;
+  --type-body-lh: 1.25rem;
   --type-body-ls: 0em;
 
-  --type-reading: 1rem;        
-  --type-reading-lh: 1.5rem;   
+  --type-reading: 1rem;
+  --type-reading-lh: 1.5rem;
   --type-reading-ls: 0em;
 
-  --type-title: 1.25rem;       
-  --type-title-lh: 1.75rem;    
+  --type-title: 1.25rem;
+  --type-title-lh: 1.75rem;
   --type-title-ls: -0.01em;
 
-  --type-heading: 1.75rem;     
-  --type-heading-lh: 2.25rem;  
+  --type-heading: 1.75rem;
+  --type-heading-lh: 2.25rem;
   --type-heading-ls: -0.015em;
 
-  --type-display: 2.5rem;      
-  --type-display-lh: 2.75rem;  
+  --type-display: 2.5rem;
+  --type-display-lh: 2.75rem;
   --type-display-ls: -0.02em;
 
   --duration-fast: 120ms;

@@ -10,8 +10,8 @@
     max-width: 240px;
     border-radius: var(--radius-md);
     background-color: var(--solid);
-    padding-inline: 0.5rem;
-    padding-block: 0.25rem;
+    padding-inline: var(--space-2);
+    padding-block: var(--space-1);
     font-size: var(--type-body);
     line-height: var(--type-body-lh);
     letter-spacing: var(--type-body-ls);

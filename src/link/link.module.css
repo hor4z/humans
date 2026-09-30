@@ -3,7 +3,7 @@
     display: inline-flex;
     min-height: 24px;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--space-1);
     border-radius: var(--radius-sm);
     color: var(--brand-ink);
     text-decoration-line: underline;

@@ -14,10 +14,10 @@ const shell = [
 const radii = [
   { token: '--radius-xs', cls: css.radiusXs, role: 'lo más chico que se toca: una casilla, un radio. Sobre 18px el escalón siguiente ya se lee redondo' },
   { token: '--radius-sm', cls: css.radiusSm, role: 'marcas hundidas: un kbd, un badge' },
-  { token: '--radius-md', cls: css.radiusMd, role: 'lo chico: un control de 32, un chip, un tooltip, un esqueleto' },
-  { token: '--radius-lg', cls: css.radiusLg, role: 'lo que se toca de 36 para arriba: botón md y lg, item de nav' },
+  { token: '--radius-md', cls: css.radiusMd, role: 'controles de 36 px, chips y tooltips' },
+  { token: '--radius-lg', cls: css.radiusLg, role: 'controles de 40 y 44 px' },
   { token: '--radius-xl', cls: css.radiusXl, role: 'todo lo que es una superficie: una tarjeta, una fila, un panel flotante, un modal' },
-  { token: '--radius-2xl', cls: css.radiusXxl, role: 'no lo usa nadie: era del modal, y a 24 sobre un panel chico la esquina se come el borde' },
+  { token: '--radius-2xl', cls: css.radiusXxl, role: 'superficies amplias que requieren mayor redondeo' },
   { token: '--radius-full', cls: css.radiusFull, role: 'lo que es redondo de verdad: un avatar, un punto, un pulgar' },
 ] as const
 
@@ -40,7 +40,7 @@ export function MeasureSection() {
     <Page
       title="Espaciado y medidas"
       kind="Fundamentos"
-      lead="Diez pasos de espaciado, seis radios y un puñado de medidas de shell. Lo que las tres escalas tienen en común es que no dan a elegir entre dos cosas iguales: cada paso existe porque hace algo que el de al lado no hace."
+      lead="Una escala compartida de espaciados, radios y tamaños para mantener proporciones consistentes."
       >
         <Section title="Medidas del shell">
           <div className={`${css.shellList} bg-surface`}>
@@ -50,13 +50,13 @@ export function MeasureSection() {
 
         <Section
           title="Alturas de control"
-          note="Tres alturas y un rol cada una. La de 36 y la de 40 comparten el escalón de cuerpo (14) y radio 12; la de 44 sube a lectura (16); la de 32 baja a 14 y a radio 10, porque va inline en una fila densa y el radio sigue al alto. El peso es el mismo en las tres: 500, que es el de lo accionable."
+          note="Tres alturas y un rol cada una. La de 36 usa cuerpo (14) y radio 10; la de 40 mantiene cuerpo y sube a radio 12; la de 44 usa lectura (16) y radio 12. El peso de las acciones es 600. El espaciado compartido sale de los tokens `--space-*`, en pasos de 4 px."
         >
           <Stack>
             {[
-              { h: 32, name: 'sm', role: 'inline en una fila densa' },
-              { h: 36, name: 'md', role: 'acciones dentro de un panel' },
-              { h: 40, name: 'lg', role: 'la acción principal' },
+              { h: 36, name: 'sm', role: 'inline en una fila densa' },
+              { h: 40, name: 'md', role: 'acciones dentro de un panel' },
+              { h: 44, name: 'lg', role: 'la acción principal' },
             ].map(c => (
               <div key={c.h} className={css.heightRow}>
                 <span className={css.heightName}><Mono>{c.name}</Mono></span>
@@ -70,7 +70,7 @@ export function MeasureSection() {
 
         <Section
           title="El espaciado: diez pasos"
-          note="Antes esto no era una escala: los call sites tomaban los dieciocho valores de Tailwind, y dos cosas que hacen lo mismo quedaban separadas por 10 en un lado y por 12 en el otro. Eso no se ve como un error, se ve como desprolijidad, que es peor porque no se puede señalar. La grilla es de 4, con dos sub-pasos abajo."
+          note="Usá los tokens `--space-*` para mantener un ritmo de 4 px. Reservá 2 px para detalles internos de los controles."
         >
           <div className={`${css.spaceList} bg-surface`}>
             {spacing.map(e => (
@@ -88,7 +88,7 @@ export function MeasureSection() {
           note="Las alturas de pieza. Un control de 36, una fila de tabla de 56, una marca de 44: esas salen de la escalera de controles y de lo que la pieza tiene que contener, no de la grilla del aire. Mezclarlas es lo que lleva a subir un padding para arreglar una altura."
         >
           <div className={css.freeGrid}>
-            {[[32, 'control sm'], [36, 'control md'], [40, 'control lg'], [44, 'marca de lista'], [56, 'fila de tabla']].map(([px, role]) => (
+            {[[36, 'control sm'], [40, 'control md'], [44, 'control lg'], [44, 'marca de lista'], [56, 'fila de tabla']].map(([px, role]) => (
               <div key={role as string} className={`${css.freeCard} bg-surface`}>
                 <span className={css.freeBar} style={{ height: px as number }} />
                 <span className={css.freeMeta}>

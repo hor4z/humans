@@ -3,7 +3,7 @@
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--space-2);
   }
 
   .text {
@@ -11,7 +11,7 @@
     border-left-style: solid;
     border-left-width: 2px;
     border-color: var(--brand);
-    padding-left: 1rem;
+    padding-left: var(--space-4);
     font-size: var(--type-reading);
     line-height: var(--type-reading-lh);
     letter-spacing: var(--type-reading-ls);
@@ -19,7 +19,7 @@
   }
 
   .caption {
-    padding-left: 1rem;
+    padding-left: var(--space-4);
     font-size: var(--type-meta);
     line-height: var(--type-meta-lh);
     letter-spacing: var(--type-meta-ls);

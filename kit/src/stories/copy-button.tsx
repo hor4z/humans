@@ -9,7 +9,7 @@ export function CopyButtonStory() {
       kind="Acciones"
       imports="import { CopyButton } from '@milo/ui/copy-button'
 import { TextField } from '@milo/ui/text-field'"
-      lead="Copiar un texto al portapapeles. Va pegado a lo que copia, y si el navegador no deja copiar, el botón no dice que copió."
+      lead="Copia texto al portapapeles y comunica si la operación se completó."
     >
       <Hero>
         <CopyButton value="npm install @milo/ui" />

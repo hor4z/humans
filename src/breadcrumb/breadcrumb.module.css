@@ -3,21 +3,21 @@
     display: flex;
     min-width: 0;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--space-1);
   }
 
   .items {
     display: flex;
     min-width: 0;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--space-1);
   }
 
   .item {
     display: flex;
     min-width: 0;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--space-1);
   }
 
   .current {
@@ -58,5 +58,9 @@
 
   .icon {
     flex-shrink: 0;
+  }
+
+  @media (pointer: coarse) {
+    .step { min-height: 2.75rem; }
   }
 }

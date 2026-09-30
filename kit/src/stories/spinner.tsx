@@ -9,7 +9,7 @@ export function SpinnerStory() {
       title="Spinner"
       kind="Avisos"
       imports="import { Spinner } from '@milo/ui/spinner'"
-      lead="La espera de algo que no se sabe cuánto tarda. Pista completa más un arco encima del mismo grosor, que gira parejo: sin la pista, un arco suelto no dice 'esperá', dice que falta un trozo de la interfaz."
+      lead="Indica que una operación está en curso cuando su progreso no se puede medir."
     >
       <Hero>
         <Spinner size={16} />

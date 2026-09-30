@@ -16,7 +16,7 @@ export function RowStory() {
       title="Row"
       kind="Superficies"
       imports="import { Row } from '@milo/ui/row'"
-      lead="La fila de un panel de ajustes: qué es a la izquierda, con qué se cambia a la derecha. 56 de alto y padding 16/24, iguales en todas."
+      lead="Agrupa el nombre, la descripción y el control de un ajuste."
     >
       <Hero>
         <div className={cls.list}>

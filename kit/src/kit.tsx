@@ -137,7 +137,11 @@ export function Page({ title, lead, imports, kind, children }: PageProps) {
 
   return (
     <article className={s.page}>
-      <header className={s.pageHeaderPiece}>{header}</header>
+      <header className={s.pageHeaderPiece}>
+        {header}
+        <p className={s.pageLead}><Rich text={lead} /></p>
+        {imports && <Code>{imports}</Code>}
+      </header>
       <InPiece.Provider value>
         <Tabs defaultValue="overview">
           <Tabs.List label={`Secciones de ${title}`}>
@@ -148,11 +152,6 @@ export function Page({ title, lead, imports, kind, children }: PageProps) {
 
           <Tabs.Panel value="overview" keepMounted className={s.overview}>
             {hero}
-            <section className={s.section}>
-              <h2 className={s.sectionTitle}>Uso</h2>
-              <p className={s.pageLead}><Rich text={lead} /></p>
-              {imports && <Code>{imports}</Code>}
-            </section>
             {anatomy && (
               <section className={s.section}>
                 <h2 className={s.sectionTitle}>Anatomía</h2>
@@ -168,7 +167,9 @@ export function Page({ title, lead, imports, kind, children }: PageProps) {
             {examples.length > 0 && (
               <section className={s.section}>
                 <h2 className={s.sectionTitle}>Ejemplos</h2>
-                <SectionLevel.Provider value="h3">{examples}</SectionLevel.Provider>
+                <div className={s.exampleGroups}>
+                  <SectionLevel.Provider value="h3">{examples}</SectionLevel.Provider>
+                </div>
               </section>
             )}
           </Tabs.Panel>
@@ -199,7 +200,7 @@ export function Hero({ children }: { children: ReactNode }) {
   return (
     <>
       <h2 className="sr-only">Vista previa</h2>
-      <div className={s.hero}>{children}</div>
+      <div className={`${s.hero} bg-surface`}>{children}</div>
     </>
   )
 }
@@ -373,7 +374,7 @@ const frameWidths = { xs: s.frameXs, sm: s.frameSm, md: s.frameMd, lg: s.frameLg
 const stackAligns = { stretch: '', start: s.stackStart, center: s.stackCenter }
 
 /** Una columna con aire entre cada cosa. Es `Cluster` de arriba abajo, y comparte su escala de gap. */
-export function Stack({ gap = 'md', align = 'stretch', width, children, className }: {
+export function Stack({ gap = 'lg', align = 'stretch', width, children, className }: {
   /** El aire entre una cosa y la siguiente. */
   gap?: keyof typeof clusterGaps
   /** Cómo se alinean entre sí las cosas de distinto ancho. */
@@ -434,7 +435,7 @@ function ExampleCard({ title, description, code, lang, width, fill, mono, classN
         </figcaption>
       )}
       <Canvas className={cx(s.demoCanvas, fill && s.demoFill, className)}>
-        {width ? <Frame width={width}>{children}</Frame> : children}
+        {width ? <Frame width={width} className={cx(s.demoItems, fill && s.demoItemsFill)}>{children}</Frame> : children}
       </Canvas>
       {description ? (
         <Tabs defaultValue="description" className={s.exampleTabs}>

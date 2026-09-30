@@ -22,7 +22,7 @@ type TextFieldProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> & {
 
 /** El campo de texto. */
 export function TextField({ icon, suffix, size = 'md', className, ref, inputRef, onChange, onValueChange, ...rest }: TextFieldProps) {
-  const iconSize = size === 'sm' ? 16 : size === 'md' ? 18 : 20
+  const iconSize = size === 'sm' ? 16 : size === 'md' ? 20 : 24
   const field = useField()
   const id = useControlId(rest.id)
   return (

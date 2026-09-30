@@ -12,7 +12,7 @@ export function ChecklistStory() {
       title="Checklist"
       kind="Editor"
       imports="import { Checklist } from '@milo/ui/blocks/editor/checklist'"
-      lead="Los primeros pasos de algo, con cuánto va hecho a la vista y el detalle plegado. Es lo que acompaña a alguien la primera semana y desaparece cuando ya no hace falta."
+      lead="Presenta una secuencia de tareas con su progreso y detalles expandibles."
     >
       <Hero>
         <Stack width="md">

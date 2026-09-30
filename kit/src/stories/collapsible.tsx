@@ -23,7 +23,7 @@ export function CollapsibleStory() {
       title="Collapsible"
       kind="Navegación"
       imports="import { Collapsible } from '@milo/ui/collapsible'"
-      lead="El cuerpo que se abre y se cierra animado, con su flecha. Es lo que comparten las tarjetas plegables del sistema: el botón lo dibuja cada una."
+      lead="Muestra u oculta contenido desde un disparador. Conserva la relación accesible entre ambos."
     >
       <Hero>
         <Plegable />

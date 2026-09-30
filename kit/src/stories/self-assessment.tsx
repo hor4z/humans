@@ -49,7 +49,7 @@ export function SelfAssessmentStory() {
       title="SelfAssessment"
       kind="Rúbrica"
       imports="import { SelfAssessment } from '@milo/ui/blocks/rubric/self-assessment'"
-      lead="Dónde se ubica quien entrega, aspecto por aspecto, contra la misma rúbrica con la que lo van a mirar. No es la nota que se va a sacar: es para ver qué falta antes de entregar."
+      lead="Permite revisar el propio trabajo contra los criterios de una rúbrica."
     >
       <Hero>
         <Stack width="sm">

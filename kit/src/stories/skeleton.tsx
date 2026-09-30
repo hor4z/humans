@@ -50,7 +50,7 @@ export function SkeletonStory() {
       kind="Datos"
       imports="import { Icon } from '@milo/ui/icon'
 import { Skeleton } from '@milo/ui/skeleton'"
-      lead="El hueco que ocupa algo que todavía no llegó. Tiene que medir lo mismo que el contenido real, o al llegar los datos la pantalla salta y se pierde lo que se estaba leyendo."
+      lead="Reserva el espacio del contenido mientras carga para evitar saltos en la página."
     >
       <Hero>
         <Cluster gap="lg" align="start">

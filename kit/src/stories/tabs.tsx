@@ -11,7 +11,7 @@ export function TabsStory() {
       title="Tabs"
       kind="Navegación"
       imports="import { Tabs } from '@milo/ui/tabs'"
-      lead="Un mismo lugar que muestra contenidos que se comparan entre sí: las entregas, la rúbrica y los ajustes de una actividad."
+      lead="Alterna entre secciones de contenido relacionadas dentro de la misma vista."
     >
       <Hero>
         <Tabs defaultValue="entregas">

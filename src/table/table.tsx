@@ -1,5 +1,11 @@
 import cls from './table.module.css'
-import { Children, isValidElement, type ReactNode, type ThHTMLAttributes, type TdHTMLAttributes } from 'react'
+import { Children, isValidElement, useState, useRef, useEffect, type ReactNode, type ThHTMLAttributes, type TdHTMLAttributes } from 'react'
+import { Icon } from '../icon/icon'
+import { Button } from '../button/button'
+import { Checkbox } from '../checkbox/checkbox'
+import { Popover } from '../popover/popover'
+import { Search } from '../search/search'
+import { fold } from '../lib/cx'
 import { cx } from '../lib/cx'
 import { useSideScroll } from '../lib/side-scroll'
 
@@ -25,7 +31,7 @@ function Root({ children, label, minWidth = 640, className }: {
         aria-label={scrolls ? `${label ?? 'Tabla'}, se desplaza de costado` : undefined}
         className={`${cls.scroller} zebra`}
       >
-        <table className={cls.table} style={{ minWidth }}>
+        <table aria-label={label} className={cls.table} style={{ minWidth }}>
           {body}
         </table>
       </div>
@@ -35,6 +41,7 @@ function Root({ children, label, minWidth = 640, className }: {
           className={cls.clipShadow}
         />
       )}
+      {scrolls && <p className={cls.scrollHint}><Icon name="compare_arrows" size={16} /> Deslizá para ver todas las columnas</p>}
       {footer}
     </div>
   )
@@ -64,16 +71,19 @@ function Row({ children, onClick, active, className }: {
   children: ReactNode
   /** Sin esto la fila no toma hover ni cursor. */
   onClick?: () => void
-  /** La fila elegida: apagada, no teñida. */
+  /** Destaca la fila activa sin ocultar el foco del teclado. */
   active?: boolean
   className?: string
 }) {
   return (
     <tr
-      onClick={onClick}
+      onClick={onClick ? e => {
+        if ((e.target as HTMLElement).closest('button,a,input,select,textarea,[role="checkbox"],[role="switch"],[role="menuitem"],[role="menu"]')) return
+        onClick()
+      } : undefined}
       tabIndex={onClick ? 0 : undefined}
       onKeyDown={onClick
-        ? e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick() } }
+        ? e => { if (e.target !== e.currentTarget) return; if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClick() } }
         : undefined}
       className={cx(
         cls.row,
@@ -93,17 +103,25 @@ type CellProps = { children?: ReactNode; className?: string }
 type Align = 'left' | 'right'
 
 /** Un encabezado de columna: 11/600 con tracking, en tinta. */
-function Head({ children, scope = 'col', align, className, ...rest }: CellProps & {
+function Head({ children, scope = 'col', align, className, sort, onSort, ...rest }: CellProps & {
   /** A la derecha cuando la columna es de números, para que el encabezado caiga sobre ellos. */
   align?: Align
+  /** Dirección actual, o none si la columna todavía no ordena. */
+  sort?: 'ascending' | 'descending' | 'none'
+  /** Hace que el encabezado sea un control de orden. */
+  onSort?: () => void
 } & ThHTMLAttributes<HTMLTableCellElement>) {
   return (
     <th
       scope={scope}
+      aria-sort={sort}
       className={cx(cls.headCell, align === 'right' && cls.alignRight, className)}
       {...rest}
     >
-      {children}
+      {onSort ? <button type="button" className={cls.sortButton} onClick={onSort}>
+        {children}<Icon name={sort === 'ascending' ? 'arrow_upward' : sort === 'descending' ? 'arrow_downward' : 'sort'} size={16} />
+        <span className="sr-only">{sort === 'ascending' ? ': ordenar de mayor a menor' : ': ordenar de menor a mayor'}</span>
+      </button> : children}
     </th>
   )
 }
@@ -160,5 +178,41 @@ function Footer({ children }: { children: ReactNode }) {
   return <>{children}</>
 }
 
+export type TableColumn = { id: string; label: string; locked?: boolean }
+
+/** Configura las columnas visibles sin mezclar presentación y filtros de datos. */
+function Columns({ columns, value, onValueChange, defaultValue }: {
+  columns: TableColumn[]
+  value: string[]
+  onValueChange: (value: string[]) => void
+  defaultValue?: string[]
+}) {
+  const [query, setQuery] = useState('')
+  const [open, setOpen] = useState(false)
+  const panel = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    if (!open) return
+    const frame = requestAnimationFrame(() => panel.current?.querySelector<HTMLElement>('input, button:not(:disabled)')?.focus({ preventScroll: true }))
+    return () => cancelAnimationFrame(frame)
+  }, [open])
+  const visible = columns.filter(column => column.locked || value.includes(column.id))
+  const options = columns.filter(column => fold(column.label).includes(fold(query)))
+  const update = (ids: string[]) => onValueChange(columns.filter(column => column.locked || ids.includes(column.id)).map(column => column.id))
+  return <Popover align="end" width={288} onOpenChange={open => { setOpen(open); setQuery('') }} trigger={props => <Button {...props} size="sm" variant="muted" iconStart={<Icon name="view_column" />}>Columnas <span className={cls.columnCount}>{visible.length}/{columns.length}</span></Button>}>
+    {close => <div ref={panel} className={`${cls.columnPanel} bg-popover`}>
+      <div className={cls.columnHeader}><strong>Columnas visibles</strong><span>Elegí los datos que necesitás comparar.</span></div>
+      {columns.length > 5 && <Search size="sm" block placeholder="Buscar columna" value={query} onValueChange={setQuery} />}
+      <div className={cls.columnOptions}>
+        {options.map(column => <label key={column.id} className={cls.columnOption}>
+          <Checkbox label={column.label} checked={column.locked || value.includes(column.id)} disabled={column.locked || (visible.length === 1 && value.includes(column.id))} onCheckedChange={checked => update(checked ? [...value, column.id] : value.filter(id => id !== column.id))} />
+          <span aria-hidden="true">{column.label}</span>{column.locked && <span className={cls.columnRequired}>Fija</span>}
+        </label>)}
+        {!options.length && <p className={cls.columnRequired}>No hay columnas con ese nombre.</p>}
+      </div>
+      <div className={cls.columnActions}><Button size="sm" variant="ghost" onClick={() => update(defaultValue?.length ? defaultValue : columns.map(column => column.id))}>Restablecer</Button><Button size="sm" onClick={close}>Listo</Button></div>
+    </div>}
+  </Popover>
+}
+
 /** La tabla, en piezas. */
-export const Table = Object.assign(Root, { Header, Footer, Body, Foot, Row, Head, Cell, Title, Hint, Num, Empty })
+export const Table = Object.assign(Root, { Header, Footer, Body, Foot, Row, Head, Cell, Title, Hint, Num, Empty, Columns })

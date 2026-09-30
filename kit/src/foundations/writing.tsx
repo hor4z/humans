@@ -4,6 +4,11 @@ import { Page, Section, Stack } from '../kit'
 
 const pairs: { bad: string; good: string; by: string }[] = [
   {
+    bad: 'Advertencia: archivo inválido.',
+    good: 'El archivo supera los 20 MB. Elegí uno más liviano.',
+    by: 'Usá aviso para algo que requiere atención y error para una acción que falló. Explicá la causa y el próximo paso.',
+  },
+  {
     bad: 'Error: la operación no pudo ser completada.',
     good: 'No se pudieron traer las entregas.',
     by: 'Decí qué pasó, no que hubo un error. La palabra "error" no agrega información y asusta.',
@@ -20,8 +25,8 @@ const pairs: { bad: string; good: string; by: string }[] = [
   },
   {
     bad: 'Se ha guardado exitosamente.',
-    good: 'Guardado.',
-    by: 'Lo que salió bien no necesita explicación. Una palabra alcanza.',
+    good: 'Borrador guardado.',
+    by: 'Confirmá el resultado y nombrá lo que cambió. El detalle solo agrega información nueva.',
   },
   {
     bad: 'Campo requerido',
@@ -34,7 +39,7 @@ export function WritingSection() {
   return (
     <Page
       title="Cómo se escribe"
-      lead="La interfaz habla en segunda persona, en presente y en argentino. El texto es parte del diseño: una pantalla bien dibujada con un cartel que dice 'ha ocurrido un error inesperado' está mal terminada."
+      lead="Texto breve, directo y en voseo: explicá qué pasó y cuál es el próximo paso."
     >
       <Section
         title="Las reglas"

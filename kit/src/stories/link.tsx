@@ -8,7 +8,7 @@ export function LinkStory() {
       title="Link"
       kind="Superficies"
       imports="import { Link } from '@milo/ui/link'"
-      lead="El enlace de un párrafo: va a algún lado. Fuera de un párrafo (una fila, una barra) va un `Button` con `variant=&quot;ghost&quot;`, que tiene el alto de un control."
+      lead="Navega a otra página o recurso. Usá un botón cuando la interacción ejecuta una acción."
     >
       <Hero>
         <p className={cls.paragraphText}>

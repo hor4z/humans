@@ -36,7 +36,7 @@ export function ButtonStory() {
       title="Button"
       kind="Acciones"
       imports="import { Button } from '@milo/ui/button'"
-      lead="Dispara una acción. Lo que elegís con `variant` es cuánto pesa en la pantalla, y el color sale de eso. El texto va un escalón arriba del de su entorno: con el mismo tamaño de letra no se lee como accionable."
+      lead="Ejecuta una acción. La variante define su jerarquía: principal, secundaria, discreta o destructiva."
     >
       <Hero>
         <Button variant="brand">Crear actividad</Button>

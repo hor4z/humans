@@ -1,9 +1,14 @@
 @layer milo.components {
+  .builder { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+  .condition { display: inline-flex; align-items: center; gap: 2px; padding-right: 2px; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface-muted); max-width: 100%; }
+  .condition > button:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .builderHeader { display: flex; align-items: center; gap: var(--space-2); margin-bottom: var(--space-2); color: var(--text); font-size: var(--type-body); line-height: var(--type-body-lh); letter-spacing: var(--type-body-ls); }
+  .optionList { max-height: 200px; overflow-y: auto; margin-block: var(--space-2); }
   .bar {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
   }
 
   .barFaces {
@@ -18,7 +23,7 @@
     border-style: solid;
     border-width: 1px;
     border-color: var(--border);
-    padding: 0.5rem;
+    padding: var(--space-2);
     box-shadow: var(--relief-popover);
   }
 
@@ -27,9 +32,9 @@
   }
 
   .panelLabel {
-    padding-inline: 0.5rem;
-    padding-top: 0.25rem;
-    padding-bottom: 0.5rem;
+    padding-inline: var(--space-2);
+    padding-top: var(--space-1);
+    padding-bottom: var(--space-2);
     font-size: var(--type-label);
     line-height: var(--type-label-lh);
     letter-spacing: var(--type-label-ls);
@@ -46,9 +51,9 @@
     display: flex;
     cursor: pointer;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
     border-radius: var(--radius-lg);
-    padding-inline: 0.5rem;
+    padding-inline: var(--space-2);
     transition-property: color,background-color,border-color,outline-color,text-decoration-color,fill,stroke;
     transition-duration: var(--duration-fast);
     transition-timing-function: var(--ease-out);
@@ -89,13 +94,13 @@
   }
 
   .clearAll {
-    margin-top: 0.25rem;
+    margin-top: var(--space-1);
     display: flex;
     height: 2rem;
     width: 100%;
     align-items: center;
     border-radius: var(--radius-lg);
-    padding-inline: 0.5rem;
+    padding-inline: var(--space-2);
     font-size: var(--type-body);
     line-height: var(--type-body-lh);
     letter-spacing: var(--type-body-ls);

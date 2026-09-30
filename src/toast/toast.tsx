@@ -63,17 +63,16 @@ export function ToastProvider({ children, max = 3 }: {
   return (
     <ToastCtx.Provider value={api}>
       {children}
-      {list.length > 0 && (
-        <Portal>
-          <ol
-            aria-live="polite"
-            aria-label="Avisos"
-            className={cls.viewport}
-          >
-            {list.map(t => <ToastItem key={t.id} toast={t} onDismiss={dismiss} />)}
-          </ol>
-        </Portal>
-      )}
+      <Portal>
+        <ol
+          aria-live="polite"
+          aria-relevant="additions text"
+          aria-label="Avisos"
+          className={cls.viewport}
+        >
+          {list.map(t => <ToastItem key={t.id} toast={t} onDismiss={dismiss} />)}
+        </ol>
+      </Portal>
     </ToastCtx.Provider>
   )
 }
@@ -97,11 +96,11 @@ function ToastItem({ toast, onDismiss }: { toast: ToastRecord; onDismiss: (id: s
       onPointerEnter={() => setPaused(true)}
       onPointerLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
-      onBlur={() => setPaused(false)}
+      onBlur={e => { if (!e.currentTarget.contains(e.relatedTarget)) setPaused(false) }}
       aria-labelledby={id}
     >
       <span className={cx(cls.icon, toneClass[tone])}>
-        <Icon name={toneIcon[tone]} size={18} />
+        <Icon name={toneIcon[tone]} size={20} />
       </span>
       <div className={cls.body}>
         <p id={id} className={cls.title}>{title}</p>
@@ -110,7 +109,7 @@ function ToastItem({ toast, onDismiss }: { toast: ToastRecord; onDismiss: (id: s
       <div className={cls.trailing}>
         {meta && <span className={cls.meta}>{meta}</span>}
         {action && (
-          <Button size="sm" variant="brand" onClick={() => { action.onClick?.(); close() }}>
+          <Button size="sm" variant="ghost" onClick={() => { action.onClick?.(); close() }}>
             {action.label}
           </Button>
         )}

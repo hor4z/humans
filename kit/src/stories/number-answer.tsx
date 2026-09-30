@@ -13,7 +13,7 @@ export function NumberAnswerStory() {
       title="NumberAnswer"
       kind="Consigna"
       imports="import { NumberAnswer } from '@milo/ui/blocks/task/number-answer'"
-      lead="Un número que sale de una cuenta: un promedio, una diferencia, una métrica. La tolerancia existe porque una medición no da siempre lo mismo, así que la respuesta es un rango y no un valor."
+      lead="Recoge una respuesta numérica y permite evaluar un margen de tolerancia."
     >
       <Hero>
         <Stack width="sm">

@@ -4,7 +4,7 @@ import { Children, Fragment, isValidElement, type ElementType, type ReactNode } 
 function hasContent(node: ReactNode): boolean {
   if (node === null || node === undefined || node === false || node === '') return false
   if (Array.isArray(node)) return node.some(hasContent)
-  if (isValidElement<{ children?: ReactNode }>(node)) return hasContent(node.props.children)
+  if (isValidElement<{ children?: ReactNode }>(node) && node.type === Fragment) return hasContent(node.props.children)
   return true
 }
 
@@ -21,5 +21,5 @@ function flatten(children: ReactNode): ReactNode[] {
 export function takePart(children: ReactNode, part: ElementType): [ReactNode[], ReactNode[]] {
   const all = flatten(children)
   const isPart = (c: ReactNode) => isValidElement(c) && c.type === part
-  return [all.filter(c => isPart(c) && hasContent(c)), all.filter(c => !isPart(c))]
+  return [all.filter(c => isPart(c) && isValidElement<{ children?: ReactNode }>(c) && hasContent(c.props.children)), all.filter(c => !isPart(c))]
 }

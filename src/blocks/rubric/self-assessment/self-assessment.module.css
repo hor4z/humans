@@ -4,13 +4,13 @@
     flex-direction: column;
     border-radius: var(--radius-xl);
     background-color: var(--surface-muted);
-    padding: 0.25rem;
+    padding: var(--space-1);
   }
 
   .header {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
     padding: 0.75rem 0.75rem 0.625rem;
   }
 
@@ -46,15 +46,15 @@
   }
 
   .progress {
-    margin-inline: 0.75rem;
-    margin-bottom: 0.75rem;
+    margin-inline: var(--space-3);
+    margin-bottom: var(--space-3);
   }
 
   .items {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    padding-inline: 0.25rem;
-    padding-bottom: 0.25rem;
+    gap: var(--space-2);
+    padding-inline: var(--space-1);
+    padding-bottom: var(--space-1);
   }
 }

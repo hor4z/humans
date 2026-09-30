@@ -1,20 +1,21 @@
 import cls from './table.module.css'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { Avatar } from '@milo/ui/avatar'
+import { Button } from '@milo/ui/button'
+import { Checkbox } from '@milo/ui/checkbox'
 import { Chip } from '@milo/ui/chip'
-import { Dropdown } from '@milo/ui/dropdown'
 import { EmptyState } from '@milo/ui/empty-state'
 import { Filter } from '@milo/ui/filter'
-import { facets } from '@milo/ui/lib/facets'
+import { Icon } from '@milo/ui/icon'
 import { IconButton } from '@milo/ui/icon-button'
-import { fold } from '@milo/ui/lib/cx'
 import { timeAgo } from '@milo/ui/lib/time'
+import { useTable } from '@milo/ui/lib/use-table'
 import { Pagination } from '@milo/ui/pagination'
 import { Search } from '@milo/ui/search'
+import { Sheet } from '@milo/ui/sheet'
 import { Table } from '@milo/ui/table'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 import { person as p } from '../fixtures'
-
 const NOW = new Date('2026-03-09T15:00:00-03:00')
 const ago = (ms: number) => timeAgo(new Date(NOW.getTime() - ms), { now: NOW })
 const MIN = 60_000, H = 60 * MIN, D = 24 * H
@@ -57,458 +58,169 @@ const all = [
   { name: 'Los climas del mundo', space: 'Sociales · 5.º A', status: 'Abierta', students: [p('Bianca Toro', 6), p('Ciro Vega')], total: 9, teacher: p('Nadia Britos'), done: 2, when: ago(6 * D) },
 ]
 
-const PAGE_SIZE = 4
+type Activity = typeof all[number]
+const columns = [
+  { id: 'actividad', label: 'Actividad', locked: true },
+  { id: 'estado', label: 'Estado' },
+  { id: 'estudiantes', label: 'Estudiantes' },
+  { id: 'docente', label: 'Docente' },
+  { id: 'entregas', label: 'Entregas' },
+  { id: 'acciones', label: 'Acciones' },
+]
+const defaultColumns = ['actividad', 'estado', 'entregas', 'acciones']
+const searchActivity = (a: Activity) => `${a.name} ${a.space} ${a.teacher.name}`
+const fields = { estado: (a: Activity) => a.status, materia: (a: Activity) => a.space.split(' · ')[0], docente: (a: Activity) => a.teacher.name }
+const sorters = { actividad: (a: Activity, b: Activity) => a.name.localeCompare(b.name, 'es'), entregas: (a: Activity, b: Activity) => a.total - b.total }
+
+function downloadRows(rows: Activity[]) {
+  const cells = [['Actividad', 'Espacio', 'Estado', 'Entregas'], ...rows.map(a => [a.name, a.space, a.status, String(a.total)])]
+  const csv = cells.map(row => row.map(value => `"${value.replaceAll('"', '""')}"`).join(',')).join('\r\n')
+  const url = URL.createObjectURL(new Blob(['\uFEFF', csv], { type: 'text/csv;charset=utf-8' }))
+  const link = document.createElement('a')
+  link.href = url
+  link.download = 'actividades.csv'
+  link.click()
+  setTimeout(() => URL.revokeObjectURL(url), 0)
+}
 
 export function TableStory() {
-  const [query, setQuery] = useState('')
-  const [statuses, setStatuses] = useState<string[]>([])
-  const [pickedSpaces, setPickedSpaces] = useState<string[]>([])
-  const [pickedPeople, setPickedPeople] = useState<string[]>([])
+  const data = useTable({ rows: all, search: searchActivity, fields, sorters, pageSize: 5, initialSort: { key: 'actividad', direction: 'asc' } })
+  const [visible, setVisible] = useState(defaultColumns)
+  const [selected, setSelected] = useState<string[]>([])
+  const [detail, setDetail] = useState<Activity | null>(null)
+  const view = (key: string) => visible.includes(key)
+  const selectedHere = data.rows.filter(a => selected.includes(a.name)).length
+  const sort = (key: string) => data.sort?.key === key ? data.sort.direction === 'asc' ? 'ascending' as const : 'descending' as const : 'none' as const
+  const filterFields = Object.entries(fields).map(([key, getter]) => ({
+    key, label: { estado: 'Estado', materia: 'Materia', docente: 'Docente' }[key]!,
+    options: [...new Set(all.map(getter))].map(value => ({ value, count: data.counts(key)[value] ?? 0 })),
+  }))
+  const toggleAll = (checked: boolean) => setSelected(current => checked ? [...new Set([...current, ...data.rows.map(a => a.name)])] : current.filter(name => !data.rows.some(a => a.name === name)))
 
-  const columns = [
-    { id: 'actividad', label: 'Actividad', locked: true },
-    { id: 'estudiantes', label: 'Estudiantes' },
-    { id: 'docente', label: 'Docente' },
-    { id: 'estado', label: 'Estado' },
-    { id: 'corregidas', label: 'Corregidas' },
-    { id: 'entregas', label: 'Entregas' },
-    { id: 'acciones', label: 'Acciones' },
-  ]
-  const [visible, setVisible] = useState(columns.map(c => c.id))
-  const view = (id: string) => visible.includes(id)
-  const [page, setPage] = useState(0)
-
-  const narrow = <T,>(set: (v: T) => void) => (v: T) => { set(v); setPage(0) }
-
-  const subject = (a: typeof all[number]) => a.space.split(' · ')[0]
-
-  const people = useMemo(() => {
-    const views = new Map<string, { name: string; src?: string }>()
-    for (const a of all) for (const e of a.students) if (!views.has(e.name)) views.set(e.name, e)
-    return [...views.values()]
-  }, [])
-
-  const byText = useMemo(
-    () => all.filter(a => !query.trim() || fold(a.name + ' ' + a.space).includes(fold(query))),
-    [query],
-  )
-  const withPeople = (a: typeof all[number]) =>
-    !pickedPeople.length || a.students.some(e => pickedPeople.includes(e.name))
-
-  const statusCounts = facets(
-    byText.filter(a => (!pickedSpaces.length || pickedSpaces.includes(subject(a))) && withPeople(a)),
-    a => a.status,
-  )
-  const spaceCounts = facets(
-    byText.filter(a => (!statuses.length || statuses.includes(a.status)) && withPeople(a)),
-    subject,
-  )
-  const peopleCounts = useMemo(() => {
-    const n: Record<string, number> = {}
-    for (const a of byText) {
-      if (statuses.length && !statuses.includes(a.status)) continue
-      if (pickedSpaces.length && !pickedSpaces.includes(subject(a))) continue
-      for (const e of a.students) n[e.name] = (n[e.name] ?? 0) + 1
-    }
-    return n
-  }, [byText, statuses, pickedSpaces])
-
-  const list = byText.filter(a =>
-    (!statuses.length || statuses.includes(a.status))
-    && (!pickedSpaces.length || pickedSpaces.includes(subject(a)))
-    && withPeople(a))
-
-  const from = page * PAGE_SIZE
-  const onScreen = list.slice(from, from + PAGE_SIZE)
-  const hasMore = from + PAGE_SIZE < list.length
-  const filtering = query.trim() !== '' || statuses.length > 0 || pickedSpaces.length > 0 || pickedPeople.length > 0
-  const clear = () => { setQuery(''); setStatuses([]); setPickedSpaces([]); setPickedPeople([]); setPage(0) }
-
-  return (
-    <Page
-      title="Table"
-      kind="Datos"
-      imports="import { Table } from '@milo/ui/table'"
-      lead="Piezas que se arman, no un componente que recibe `columns` y `rows`: una tabla de datos y una de personas comparten la grilla y nada más, y una API de columnas termina con un `render` por columna."
-    >
-      <Hero>
-        <Table label="Actividades del espacio" minWidth={640}>
-          <Table.Header>
-            <Table.Row>
-              <Table.Head>Actividad</Table.Head>
-              <Table.Head>Estudiantes</Table.Head>
-              <Table.Head>Estado</Table.Head>
-              <Table.Head align="right">Entregas</Table.Head>
-            </Table.Row>
-          </Table.Header>
+  return <Page title="Table" kind="Datos" imports="import { Table } from '@milo/ui/table'" lead="Datos fáciles de recorrer, comparar y gestionar. Búsqueda, filtros y columnas se adaptan a la tarea.">
+    <Hero>
+      <div className={cls.workspace}>
+        <div className={cls.workspaceHeader}>
+          <div><h2 className={cls.workspaceTitle}>Actividades <Chip size="sm">{all.length}</Chip></h2><p className={cls.workspaceHint}>Organizá el trabajo de tus espacios.</p></div>
+          <Button size="sm" variant="ghost" iconStart={<Icon name="download" />} disabled={!data.total} onClick={() => downloadRows(data.filteredRows)}>Exportar CSV</Button>
+        </div>
+        <div className={cls.toolbar}>
+          <Search size="sm" value={data.query} onValueChange={data.setQuery} placeholder="Buscar actividad, espacio o docente" block />
+          <Table.Columns columns={columns} value={visible} onValueChange={setVisible} defaultValue={defaultColumns} />
+        </div>
+        <div className={cls.filterBar}><Filter.Builder fields={filterFields} value={data.filters} onValueChange={data.setFilters} /><span className={cls.resultCount} role="status">{data.total} {data.total === 1 ? 'resultado' : 'resultados'}</span></div>
+        {selected.length > 0 && <div className={cls.selectionBar}><span>{selected.length} seleccionadas</span><Button size="sm" variant="ghost" onClick={() => downloadRows(all.filter(a => selected.includes(a.name)))}>Exportar selección</Button><Button size="sm" variant="ghost" onClick={() => setSelected([])}>Deseleccionar</Button></div>}
+        <Table label="Actividades de tus espacios" minWidth={visible.length > 4 ? 880 : 600}>
+          <Table.Header><Table.Row>
+            <Table.Head><Checkbox label="Seleccionar esta página" checked={data.rows.length > 0 && selectedHere === data.rows.length} indeterminate={selectedHere > 0 && selectedHere < data.rows.length} disabled={!data.rows.length} onCheckedChange={toggleAll} /></Table.Head>
+            <Table.Head sort={sort('actividad')} onSort={() => data.toggleSort('actividad')}>Actividad</Table.Head>
+            {view('estado') && <Table.Head>Estado</Table.Head>}
+            {view('estudiantes') && <Table.Head>Estudiantes</Table.Head>}
+            {view('docente') && <Table.Head>Docente</Table.Head>}
+            {view('entregas') && <Table.Head align="right" sort={sort('entregas')} onSort={() => data.toggleSort('entregas')}>Entregas</Table.Head>}
+            {view('acciones') && <Table.Head><span className="sr-only">Acciones</span></Table.Head>}
+          </Table.Row></Table.Header>
           <Table.Body>
-            {spaces.slice(0, 3).map(a => (
-              <Table.Row key={a.name}>
-                <Table.Cell>
-                  <Table.Title>{a.name}</Table.Title>
-                  <Table.Hint>{a.space}</Table.Hint>
-                </Table.Cell>
-                <Table.Cell><Avatar.Group people={a.students} /></Table.Cell>
-                <Table.Cell><Chip color={tone[a.status as keyof typeof tone]}>{a.status}</Chip></Table.Cell>
-                <Table.Num>{a.total || '-'}</Table.Num>
-              </Table.Row>
-            ))}
+            {data.rows.map(a => <Table.Row key={a.name} active={selected.includes(a.name)} onClick={() => setDetail(a)}>
+              <Table.Cell fit><Checkbox label={`Seleccionar ${a.name}`} checked={selected.includes(a.name)} onCheckedChange={checked => setSelected(current => checked ? [...current, a.name] : current.filter(name => name !== a.name))} /></Table.Cell>
+              <Table.Cell><Table.Title>{a.name}</Table.Title><Table.Hint>{a.space}</Table.Hint></Table.Cell>
+              {view('estado') && <Table.Cell><Chip size="sm" color={tone[a.status as keyof typeof tone]} dot>{a.status}</Chip></Table.Cell>}
+              {view('estudiantes') && <Table.Cell><Avatar.Group people={a.students} size={24} /></Table.Cell>}
+              {view('docente') && <Table.Cell><span className={cls.teacherCell}><Avatar name={a.teacher.name} src={a.teacher.src} size={24} />{a.teacher.name}</span></Table.Cell>}
+              {view('entregas') && <Table.Num>{a.total}</Table.Num>}
+              {view('acciones') && <Table.Cell fit><IconButton icon="chevron_right" label={`Ver ${a.name}`} size="sm" onClick={() => setDetail(a)} /></Table.Cell>}
+            </Table.Row>)}
+            {!data.total && <Table.Empty colSpan={visible.length + 1}><EmptyState size="sm" icon="search_off" bordered={false}><EmptyState.Title>No encontramos actividades</EmptyState.Title><EmptyState.Body>Probá otra búsqueda o quitá algún filtro.</EmptyState.Body><EmptyState.Action><Button size="sm" onClick={data.clear}>Limpiar búsqueda y filtros</Button></EmptyState.Action></EmptyState></Table.Empty>}
           </Table.Body>
+          <Table.Footer><Pagination><Pagination.Status from={data.from} to={data.to} total={data.total} noun={['actividad', 'actividades']} /><Pagination.Prev disabled={data.page === 0} onClick={() => data.setPage(data.page - 1)} /><Pagination.Next disabled={data.page >= data.pageCount - 1} onClick={() => data.setPage(data.page + 1)} /></Pagination></Table.Footer>
         </Table>
-      </Hero>
+        <p className={cls.workspaceHint}>Abrí una fila para ver el detalle. Las casillas seleccionan sin abrirla.</p>
+      </div>
+      <Sheet open={detail !== null} onOpenChange={open => { if (!open) setDetail(null) }}>
+        <Sheet.Header><Sheet.Title>{detail?.name}</Sheet.Title></Sheet.Header>
+        <Sheet.Body>{detail && <dl className={cls.details}><dt>Espacio</dt><dd>{detail.space}</dd><dt>Estado</dt><dd><Chip color={tone[detail.status as keyof typeof tone]}>{detail.status}</Chip></dd><dt>Docente</dt><dd>{detail.teacher.name}</dd><dt>Entregas</dt><dd>{detail.total}</dd><dt>Revisadas</dt><dd>{detail.done}</dd><dt>Última actividad</dt><dd>{detail.when}</dd></dl>}</Sheet.Body>
+        <Sheet.Footer><Button size="sm" onClick={() => setDetail(null)}>Cerrar detalle</Button></Sheet.Footer>
+      </Sheet>
+    </Hero>
 
-      <Anatomy>
-        <Anatomy.Part name="Encabezado" required>`Table.Header` con una `Table.Row` de `Table.Head`; `align="right"` para las columnas de números.</Anatomy.Part>
-        <Anatomy.Part name="Cuerpo" required>`Table.Body` con una `Table.Row` por fila. Con `onClick` la fila entera se toca.</Anatomy.Part>
-        <Anatomy.Part name="Celda">`Table.Cell`, con `Table.Title` y `Table.Hint` para el nombre y su línea de apoyo. `Table.Num` es la de números, alineada a la derecha.</Anatomy.Part>
-        <Anatomy.Part name="Fila de totales">{'`Table.Foot`: el `<tfoot>` con la suma de lo que hay a la vista.'}</Anatomy.Part>
-        <Anatomy.Part name="Vacío">`Table.Empty` ocupa la fila entera cuando no hay resultados.</Anatomy.Part>
-        <Anatomy.Part name="Franja de abajo">`Table.Footer`: la paginación, adentro del marco y fuera del scroll.</Anatomy.Part>
-      </Anatomy>
+    <Anatomy>
+      <Anatomy.Part name="Herramientas">Búsqueda, `Filter.Builder` y `Table.Columns` organizan la vista sin ocultar las condiciones activas.</Anatomy.Part>
+      <Anatomy.Part name="Encabezados" required>`Table.Head` identifica cada columna. Con `onSort` y `sort` permite ordenar y anuncia la dirección.</Anatomy.Part>
+      <Anatomy.Part name="Filas" required>`Table.Row` conserva la estructura de tabla y permite abrir detalles con Enter o Espacio.</Anatomy.Part>
+      <Anatomy.Part name="Celdas">`Table.Title` destaca el dato principal; `Table.Hint` añade contexto; `Table.Num` alinea cifras.</Anatomy.Part>
+      <Anatomy.Part name="Pie">`Table.Footer` mantiene la paginación fuera del desplazamiento horizontal.</Anatomy.Part>
+    </Anatomy>
 
-      <Section
-        title="La tabla entera"
-        note="Una tabla de trabajo lleva tres cosas más que la grilla: el filtro, el total y la paginación."
-      >
-        <Demo fill code={`<Filter.Bar>
-  <Search
-    value={query}
-    onValueChange={narrow(setQuery)}
-    placeholder="Buscar por actividad o espacio"
-  />
-  <Filter
-    label="Estado"
-    value={statuses}
-    onValueChange={narrow(setStatuses)}
-    options={['Abierta', 'Corregida', 'Borrador'].map(v => ({ value: v, count: statusCounts[v] ?? 0 }))}
-  />
-  <Filter
-    label="Materia"
-    value={pickedSpaces}
-    onValueChange={narrow(setPickedSpaces)}
-    options={['Matemática', 'Ciencias', 'Lengua', 'Sociales'].map(v => ({ value: v, count: spaceCounts[v] ?? 0 }))}
-  />
-  <Filter
-    label="Estudiantes"
-    value={pickedPeople}
-    onValueChange={narrow(setPickedPeople)}
-    options={people.map(p => ({ value: p.name, count: peopleCounts[p.name] ?? 0, person: p }))}
-  />
-  {filtering && <Filter.Reset onClick={clear} />}
-  <Filter icon="view_column" label="Columnas" options={columns.map(c => ({ value: c.id, label: c.label, locked: c.locked }))} value={visible} onValueChange={setVisible} />
-</Filter.Bar>
-
-<Table label="Actividades del espacio" minWidth={980}>
-  <Table.Footer>
-    <Pagination>
-      <Pagination.Status
-        from={from + 1}
-        to={from + onScreen.length}
-        total={list.length}
-        noun={['actividad', 'actividades']}
-      />
-      <Pagination.Prev disabled={page === 0} onClick={() => setPage(p => p - 1)} />
-      <Pagination.Next disabled={!hasMore} onClick={() => setPage(p => p + 1)} />
-    </Pagination>
-  </Table.Footer>
-  <Table.Header>
-    <Table.Row>
-      <Table.Head>Actividad</Table.Head>
-      {view('estudiantes') && <Table.Head>Estudiantes</Table.Head>}
-      {view('docente') && <Table.Head>Docente</Table.Head>}
-      {view('estado') && <Table.Head>Estado</Table.Head>}
-      {view('corregidas') && <Table.Head align="right">Corregidas</Table.Head>}
-      {view('entregas') && <Table.Head align="right">Entregas</Table.Head>}
-      {view('acciones') && <Table.Head><span className="sr-only">Acciones</span></Table.Head>}
-    </Table.Row>
-  </Table.Header>
-  <Table.Body>
-    {onScreen.map(a => (
-      <Table.Row key={a.name} onClick={() => open(a)}>
-        <Table.Cell>
-          <Table.Title>{a.name}</Table.Title>
-          <Table.Hint>{a.space}</Table.Hint>
-        </Table.Cell>
-        {view('estudiantes') && <Table.Cell><Avatar.Group people={a.students} /></Table.Cell>}
-        {view('docente') && (
-          <Table.Cell>
-            <span className={s.teacherCell}>
-              <Avatar name={a.teacher.name} src={a.teacher.src} size={24} />
-              <span className={s.teacherName}>{a.teacher.name}</span>
-            </span>
-          </Table.Cell>
-        )}
-        {view('estado') && <Table.Cell><Chip color={tone[a.status]}>{a.status}</Chip></Table.Cell>}
-        {view('corregidas') && (
-          <Table.Num>
-            {a.total ? <>{a.done}<span className={s.fractionTotal}> / {a.total}</span></> : '-'}
-          </Table.Num>
-        )}
-        {view('entregas') && <Table.Num>{a.total || '-'}</Table.Num>}
-        {view('acciones') && (
-          <Table.Cell fit>
-            <Dropdown
-              items={[
-                { label: 'Abrir', icon: 'open_in_new' },
-                { label: 'Duplicar', icon: 'content_copy' },
-                { label: 'Archivar', icon: 'inventory_2' },
-              ]}
-              trigger={({ onClick, ref, ...rest }) => (
-                <IconButton
-                  ref={ref}
-                  onClick={e => { e.stopPropagation(); onClick() }}
-                  {...rest}
-                  icon="more_horiz"
-                  label={\`Acciones de \${a.name}\`}
-                  size="sm"
-                />
-              )}
-            />
-          </Table.Cell>
-        )}
-      </Table.Row>
-    ))}
-    {onScreen.length === 0 && (
-      <Table.Empty colSpan={visible.length}>
-        <EmptyState size="sm" icon="search_off">
-          <EmptyState.Title>Ninguna actividad con eso</EmptyState.Title>
-          <EmptyState.Body>Probá con otras palabras, o sacá alguno de los filtros puestos.</EmptyState.Body>
-          <EmptyState.Action><Filter.Reset onClick={clear}>Limpiar los filtros</Filter.Reset></EmptyState.Action>
-        </EmptyState>
-      </Table.Empty>
-    )}
-  </Table.Body>
-  {onScreen.length > 0 && (
-    <Table.Foot>
-      <Table.Row>
-        <Table.Cell colSpan={1 + ['estudiantes', 'docente', 'estado'].filter(view).length}>
-          Total{filtering ? ' de lo filtrado' : ''}
-        </Table.Cell>
-        {view('corregidas') && <Table.Num>{list.reduce((n, a) => n + a.done, 0)}</Table.Num>}
-        {view('entregas') && <Table.Num>{list.reduce((n, a) => n + a.total, 0)}</Table.Num>}
-        {view('acciones') && <Table.Cell />}
-      </Table.Row>
-    </Table.Foot>
-  )}
+    <Section title="Componer una tabla" note="La presentación y los datos son independientes. Usá las piezas que necesite cada pantalla.">
+      <Demo label="Estructura mínima" fill code={`<Table label="Actividades" minWidth={480}>
+  <Table.Header><Table.Row>
+    <Table.Head>Actividad</Table.Head>
+    <Table.Head align="right">Entregas</Table.Head>
+  </Table.Row></Table.Header>
+  <Table.Body><Table.Row>
+    <Table.Cell><Table.Title>Fracciones equivalentes</Table.Title>
+      <Table.Hint>Matemática · 4.º A</Table.Hint></Table.Cell>
+    <Table.Num>18</Table.Num>
+  </Table.Row></Table.Body>
 </Table>`}>
-          <div>
-            <Filter.Bar className={cls.filterGap}>
-              <Search
-                value={query}
-                onValueChange={narrow(setQuery)}
-                placeholder="Buscar por actividad o espacio"
-              />
-              <Filter
-                label="Estado"
-                value={statuses}
-                onValueChange={narrow(setStatuses)}
-                options={['Abierta', 'Corregida', 'Borrador'].map(v => ({ value: v, count: statusCounts[v] ?? 0 }))}
-              />
-              <Filter
-                label="Materia"
-                value={pickedSpaces}
-                onValueChange={narrow(setPickedSpaces)}
-                options={['Matemática', 'Ciencias', 'Lengua', 'Sociales'].map(v => ({ value: v, count: spaceCounts[v] ?? 0 }))}
-              />
-              <Filter
-                label="Estudiantes"
-                value={pickedPeople}
-                onValueChange={narrow(setPickedPeople)}
-                options={people.map(p => ({ value: p.name, count: peopleCounts[p.name] ?? 0, person: p }))}
-              />
-              {filtering && <Filter.Reset onClick={clear} />}
-              <Filter
-                icon="view_column"
-                label="Columnas"
-                options={columns.map(c => ({ value: c.id, label: c.label, locked: c.locked }))}
-                value={visible}
-                onValueChange={setVisible}
-              />
-            </Filter.Bar>
+        <Table label="Ejemplo de estructura" minWidth={300}><Table.Header><Table.Row><Table.Head>Actividad</Table.Head><Table.Head align="right">Entregas</Table.Head></Table.Row></Table.Header><Table.Body><Table.Row><Table.Cell><Table.Title>Fracciones equivalentes</Table.Title><Table.Hint>Matemática · 4.º A</Table.Hint></Table.Cell><Table.Num>18</Table.Num></Table.Row></Table.Body></Table>
+      </Demo>
+      <Demo label="Datos, filtros y columnas" fill code={`import { useState } from 'react'
+import { useTable } from '@milo/ui/lib/use-table'
+import { Table } from '@milo/ui/table'
+import { Filter } from '@milo/ui/filter'
+import { Search } from '@milo/ui/search'
 
-            <Table
-              label="Actividades del espacio"
-              minWidth={980}
-            >
-              <Table.Footer>
-                <Pagination>
-                    <Pagination.Status
-                      from={from + 1}
-                      to={from + onScreen.length}
-                      total={list.length}
-                      noun={['actividad', 'actividades']}
-                    />
-                    <Pagination.Prev disabled={page === 0} onClick={() => setPage(p => p - 1)} />
-                    <Pagination.Next disabled={!hasMore} onClick={() => setPage(p => p + 1)} />
-                  </Pagination>
-              </Table.Footer>
-              <Table.Header>
-                <Table.Row>
-                  <Table.Head>Actividad</Table.Head>
-                  {view('estudiantes') && <Table.Head>Estudiantes</Table.Head>}
-                  {view('docente') && <Table.Head>Docente</Table.Head>}
-                  {view('estado') && <Table.Head>Estado</Table.Head>}
-                  {view('corregidas') && <Table.Head align="right">Corregidas</Table.Head>}
-                  {view('entregas') && <Table.Head align="right">Entregas</Table.Head>}
-                  {view('acciones') && <Table.Head><span className="sr-only">Acciones</span></Table.Head>}
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                {onScreen.map(a => (
-                  <Table.Row key={a.name} onClick={() => {}}>
-                    <Table.Cell>
-                      <Table.Title>{a.name}</Table.Title>
-                      <Table.Hint>{a.space}</Table.Hint>
-                    </Table.Cell>
-                    {view('estudiantes') && <Table.Cell><Avatar.Group people={a.students} /></Table.Cell>}
-                    {view('docente') && (
-                      <Table.Cell>
-                        <span className={cls.teacherCell}>
-                          <Avatar name={a.teacher.name} src={a.teacher.src} size={24} />
-                          <span className={cls.teacherName}>{a.teacher.name}</span>
-                        </span>
-                      </Table.Cell>
-                    )}
-                    {view('estado') && <Table.Cell><Chip color={tone[a.status as keyof typeof tone]}>{a.status}</Chip></Table.Cell>}
-                    {view('corregidas') && (
-                      <Table.Num>
-                        {a.total ? <>{a.done}<span className={cls.fractionTotal}> / {a.total}</span></> : '-'}
-                      </Table.Num>
-                    )}
-                    {view('entregas') && <Table.Num>{a.total || '-'}</Table.Num>}
-                    {view('acciones') && (
-                    <Table.Cell fit>
-                      <Dropdown
-                        items={[
-                          { label: 'Abrir', icon: 'open_in_new' },
-                          { label: 'Duplicar', icon: 'content_copy' },
-                          { label: 'Archivar', icon: 'inventory_2' },
-                        ]}
-                        trigger={({ onClick, ref, ...rest }) => (
-                          <IconButton
-                            ref={ref}
-                            onClick={e => { e.stopPropagation(); onClick() }}
-                            {...rest}
-                            icon="more_horiz"
-                            label={`Acciones de ${a.name}`}
-                            size="sm"
-                          />
-                        )}
-                      />
-                    </Table.Cell>
-                    )}
-                  </Table.Row>
-                ))}
-                {onScreen.length === 0 && (
-                  <Table.Empty colSpan={visible.length}>
-                    <EmptyState size="sm" icon="search_off">
-                      <EmptyState.Title>Ninguna actividad con eso</EmptyState.Title>
-                      <EmptyState.Body>Probá con otras palabras, o sacá alguno de los filtros puestos.</EmptyState.Body>
-                      <EmptyState.Action><Filter.Reset onClick={clear}>Limpiar los filtros</Filter.Reset></EmptyState.Action>
-                    </EmptyState>
-                  </Table.Empty>
-                )}
-              </Table.Body>
-              {onScreen.length > 0 && (
-                <Table.Foot>
-                  <Table.Row>
-                    <Table.Cell colSpan={1 + ['estudiantes', 'docente', 'estado'].filter(view).length}>
-                      Total{filtering ? ' de lo filtrado' : ''}
-                    </Table.Cell>
-                    {view('corregidas') && <Table.Num>{list.reduce((n, a) => n + a.done, 0)}</Table.Num>}
-                    {view('entregas') && <Table.Num>{list.reduce((n, a) => n + a.total, 0)}</Table.Num>}
-                    {view('acciones') && <Table.Cell />}
-                  </Table.Row>
-                </Table.Foot>
-              )}
-            </Table>
-          </div>
-        </Demo>
-      </Section>
+const activities = [
+  { name: 'Fracciones equivalentes', status: 'Abierta' },
+  { name: 'El sistema solar', status: 'Corregida' },
+]
+const columns = [{ id: 'name', label: 'Actividad', locked: true },
+  { id: 'status', label: 'Estado' }]
 
-      <Section
-        title="La pieza"
-        note="Las filas alternan papel: en una tabla ancha, un divisor de un píxel no alcanza para seguir una fila hasta el final."
-      >
-        <Demo fill code={`<Table label="Entregas por estudiante" minWidth={720}>
-  <Table.Header>
-    <Table.Row>
-      <Table.Head>Actividad</Table.Head>
-      <Table.Head>Estudiantes</Table.Head>
-      <Table.Head>Estado</Table.Head>
-      <Table.Head align="right">Entregas</Table.Head>
-    </Table.Row>
-  </Table.Header>
-  <Table.Body>
-    {spaces.map(a => (
-      <Table.Row key={a.name} onClick={() => open(a)}>
-        <Table.Cell>
-          <Table.Title>{a.name}</Table.Title>
-          <Table.Hint>{a.space}</Table.Hint>
-        </Table.Cell>
-        <Table.Cell>
-          <Avatar.Group people={a.students} />
-        </Table.Cell>
-        <Table.Cell>
-          <Chip color={tone[a.status]}>{a.status}</Chip>
-        </Table.Cell>
-        <Table.Num>{a.total || '-'}</Table.Num>
-      </Table.Row>
-    ))}
-  </Table.Body>
-</Table>`}>
-          <Table label="Entregas por estudiante" minWidth={720}>
-            <Table.Header>
-              <Table.Row>
-                <Table.Head>Actividad</Table.Head>
-                <Table.Head>Estudiantes</Table.Head>
-                <Table.Head>Estado</Table.Head>
-                <Table.Head align="right">Entregas</Table.Head>
-              </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {spaces.map(a => (
-                <Table.Row key={a.name} onClick={() => {}}>
-                  <Table.Cell>
-                    <Table.Title>{a.name}</Table.Title>
-                    <Table.Hint>{a.space}</Table.Hint>
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Avatar.Group people={a.students} />
-                  </Table.Cell>
-                  <Table.Cell>
-                    <Chip color={tone[a.status as keyof typeof tone]}>{a.status}</Chip>
-                  </Table.Cell>
-                  <Table.Num>{a.total || '-'}</Table.Num>
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table>
-        </Demo>
-      </Section>
-
-      <Section title="Props">
-        <Props of="Table" />
-      </Section>
-
-      <Section title="Cómo se usa bien">
-        <Practices>
-          <Practices.Do>`label` dice de qué es: cuando scrollea se vuelve una región enfocable, y dos regiones con el mismo nombre se leen como una.</Practices.Do>
-          <Practices.Do>La paginación va en `Table.Footer`, que vive adentro del marco pero fuera del scroll.</Practices.Do>
-          <Practices.Do>La columna de personas es un `Avatar.Group`: el monte, el sobrante y el `ring` sobre otro fondo están en [Avatar](#avatar).</Practices.Do>
-          <Practices.Dont>{'`Table.Foot` es el `<tfoot>` y `Table.Footer` es la franja de abajo: no son lo mismo.'}</Practices.Dont>
-        </Practices>
-      </Section>
-
-      <Section title="Accesibilidad">
-        <A11y>
-          <A11y.Item>{'Es una `<table>` de verdad: encabezados con `scope`, filas y celdas con su semántica.'}</A11y.Item>
-          <A11y.Item>Una fila que se toca entra en el orden de tabulación y contesta a Enter y a la barra: no es un click y nada más.</A11y.Item>
-          <A11y.Item>Cuando las columnas no entran, el scroll lateral es una parada de tabulación con nombre: sin barra a la vista, es la única forma de llegar a la derecha sin mouse.</A11y.Item>
-          <A11y.Item>{'La franja de paginación es un `<nav>` con su nombre y anuncia el tramo con `role="status"` cuando cambia.'}</A11y.Item>
-          <A11y.Item>Las opciones de filtros y columnas se nombran una por una.</A11y.Item>
-        </A11y>
-      </Section>
-    </Page>
-  )
+function ActivityTable() {
+  const [visible, setVisible] = useState(['name', 'status'])
+  const data = useTable({ rows: activities, pageSize: 10,
+    search: row => row.name,
+    fields: { status: row => row.status },
+    sorters: { name: (a, b) => a.name.localeCompare(b.name, 'es') },
+  })
+  return <>
+    <Search value={data.query} onValueChange={data.setQuery} placeholder="Buscar actividad" />
+    <Filter.Builder value={data.filters} onValueChange={data.setFilters}
+      fields={[{ key: 'status', label: 'Estado', options: [
+        { value: 'Abierta' }, { value: 'Corregida' },
+      ] }]} />
+    <Table.Columns columns={columns} value={visible} onValueChange={setVisible} />
+    <Table label="Actividades">
+      <Table.Header><Table.Row>
+        <Table.Head onSort={() => data.toggleSort('name')}
+          sort={data.sort?.direction === 'asc' ? 'ascending' : data.sort ? 'descending' : 'none'}>Actividad</Table.Head>
+        {visible.includes('status') && <Table.Head>Estado</Table.Head>}
+      </Table.Row></Table.Header>
+      <Table.Body>{data.rows.map(row => <Table.Row key={row.name}>
+        <Table.Cell>{row.name}</Table.Cell>
+        {visible.includes('status') && <Table.Cell>{row.status}</Table.Cell>}
+      </Table.Row>)}</Table.Body>
+    </Table>
+  </>
+}`}>
+        <p className={cls.workspaceHint}>El ejemplo principal usa estas utilidades. El código siguiente muestra cómo combinarlas.</p>
+      </Demo>
+    </Section>
+    <Section title="Props"><Props of={['Table', 'TableColumn']} /></Section>
+    <Section title="Cómo se usa bien"><Practices>
+      <Practices.Do>Mostrá primero las columnas necesarias para la tarea. Dejá las secundarias en el selector de columnas.</Practices.Do>
+      <Practices.Do>Combiná filtros distintos con AND y valores del mismo filtro con OR. Mantené visibles las condiciones elegidas.</Practices.Do>
+      <Practices.Do>La búsqueda, los filtros y el orden vuelven a la primera página. La selección se conserva al cambiar de página.</Practices.Do>
+      <Practices.Dont>No escondas el estado vacío ni representes cero con un guion: son datos diferentes.</Practices.Dont>
+      <Practices.Dont>`useTable` procesa datos en memoria. Para conjuntos grandes, delegá búsqueda, filtros y paginación al servidor y mantené los controles.</Practices.Dont>
+    </Practices></Section>
+    <Section title="Accesibilidad"><A11y>
+      <A11y.Item>La tabla conserva encabezados nativos y un nombre accesible con `label`.</A11y.Item>
+      <A11y.Item>Los encabezados ordenables son botones con `aria-sort` en la columna.</A11y.Item>
+      <A11y.Item>Las acciones de una celda funcionan sin activar también la fila. El foco permanece visible al recorrerla.</A11y.Item>
+      <A11y.Item>En pantallas pequeñas, la región se puede desplazar con teclado y muestra una indicación visible.</A11y.Item>
+    </A11y></Section>
+  </Page>
 }

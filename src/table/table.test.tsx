@@ -4,6 +4,35 @@ import { describe, expect, it, vi } from 'vitest'
 import { Table } from './table'
 
 describe('Table', () => {
+  it('las acciones de una celda no activan también la fila', async () => {
+    const row = vi.fn(), action = vi.fn()
+    render(<Table label="Actividades"><Table.Body><Table.Row onClick={row}><Table.Cell><button onClick={action}>Abrir menú</button></Table.Cell></Table.Row></Table.Body></Table>)
+    expect(screen.getByRole('table', { name: 'Actividades' })).toBeInTheDocument()
+    await userEvent.click(screen.getByRole('button', { name: 'Abrir menú' }))
+    await userEvent.keyboard('{Enter}')
+    expect(action).toHaveBeenCalledTimes(2)
+    expect(row).not.toHaveBeenCalled()
+  })
+
+  it('el encabezado anuncia el orden y permite cambiarlo', async () => {
+    const onSort = vi.fn()
+    render(<Table><Table.Header><Table.Row><Table.Head sort="ascending" onSort={onSort}>Nombre</Table.Head></Table.Row></Table.Header></Table>)
+    expect(screen.getByRole('columnheader')).toHaveAttribute('aria-sort', 'ascending')
+    await userEvent.click(screen.getByRole('button', { name: /Nombre/ }))
+    expect(onSort).toHaveBeenCalledOnce()
+  })
+
+  it('las columnas fijas no pueden ocultarse y se restablece la configuración', async () => {
+    const change = vi.fn()
+    render(<Table.Columns columns={[{ id: 'name', label: 'Nombre', locked: true }, { id: 'state', label: 'Estado' }]} value={['name']} onValueChange={change} />)
+    await userEvent.click(screen.getByRole('button', { name: /Columnas/ }))
+    expect(screen.getByRole('checkbox', { name: 'Nombre' })).toBeDisabled()
+    await userEvent.click(screen.getByRole('checkbox', { name: 'Estado' }))
+    expect(change).toHaveBeenLastCalledWith(['name', 'state'])
+    await userEvent.click(screen.getByRole('button', { name: 'Restablecer' }))
+    expect(change).toHaveBeenLastCalledWith(['name', 'state'])
+  })
+
   it('arma la grilla con su pie', () => {
     render(
       <Table>

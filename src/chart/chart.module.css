@@ -11,7 +11,7 @@
     position: relative;
     display: flex;
     align-items: flex-end;
-    gap: 0.75rem;
+    gap: var(--space-3);
   }
 
   .bar {
@@ -80,9 +80,9 @@
   }
 
   .labels {
-    margin-top: 0.75rem;
+    margin-top: var(--space-3);
     display: flex;
-    gap: 0.75rem;
+    gap: var(--space-3);
   }
 
   .label {
@@ -111,8 +111,8 @@
     z-index: 20;
     white-space: nowrap;
     border-radius: var(--radius-md);
-    padding-inline: 0.75rem;
-    padding-block: 0.5rem;
+    padding-inline: var(--space-3);
+    padding-block: var(--space-2);
     box-shadow: var(--relief-popover);
   }
 
@@ -122,7 +122,7 @@
   }
 
   .tooltipAbove {
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--space-2);
   }
 
   .center {
@@ -136,7 +136,7 @@
   .tooltipRow {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--space-2);
   }
 
   .tooltipSwatch {

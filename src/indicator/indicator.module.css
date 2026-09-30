@@ -59,7 +59,7 @@
     left: calc(100% - 1rem);
     min-height: 1rem;
     min-width: 1rem;
-    padding-inline: 0.25rem;
+    padding-inline: var(--space-1);
     font-size: var(--type-meta);
     line-height: var(--type-meta-lh);
     letter-spacing: var(--type-meta-ls);

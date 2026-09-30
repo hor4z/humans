@@ -21,7 +21,7 @@ export function SearchStory() {
     <Page
       title="Search"
       kind="Formularios"
-      lead="Un campo con la lupa y una cruz que aparece cuando hay algo escrito. Es un `TextField` por dentro y no un campo aparte: se dibuja igual que los otros y hereda su inversión contra el fondo."
+      lead="Permite buscar contenido y limpiar la consulta con una acción visible."
       imports="import { Search } from '@milo/ui/search'"
     >
       <Hero>

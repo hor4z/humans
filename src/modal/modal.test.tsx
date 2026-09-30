@@ -26,6 +26,36 @@ describe('Modal', () => {
     expect(onOpenChange).toHaveBeenCalled()
   })
 
+  it('Tab y Shift+Tab desde el contenedor mantienen el foco adentro', async () => {
+    const visible = vi.spyOn(HTMLElement.prototype, 'offsetParent', 'get').mockReturnValue(document.body)
+    try {
+      render(<SettingsDialog />)
+      const panel = screen.getByRole('dialog')
+      panel.focus()
+      await userEvent.tab({ shift: true })
+      expect(screen.getByRole('button', { name: 'Guardar' })).toHaveFocus()
+      await userEvent.tab()
+      expect(screen.getByRole('button', { name: 'Cerrar' })).toHaveFocus()
+      panel.focus()
+      await userEvent.tab()
+      expect(screen.getByRole('button', { name: 'Cerrar' })).toHaveFocus()
+    } finally {
+      visible.mockRestore()
+    }
+  })
+
+  it('restaura el scroll y el padding originales al cerrar', () => {
+    document.body.style.overflow = 'auto'
+    document.body.style.paddingRight = '8px'
+    const { unmount } = render(<SettingsDialog />)
+    expect(document.body.style.overflow).toBe('hidden')
+    unmount()
+    expect(document.body.style.overflow).toBe('auto')
+    expect(document.body.style.paddingRight).toBe('8px')
+    document.body.style.overflow = ''
+    document.body.style.paddingRight = ''
+  })
+
   it('el nombre sale del título, no de una prop aparte', () => {
     render(<SettingsDialog />)
     const box = screen.getByRole('dialog')

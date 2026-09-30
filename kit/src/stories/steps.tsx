@@ -29,7 +29,7 @@ export function StepsStory() {
       title="Steps"
       kind="Navegación"
       imports="import { Steps } from '@milo/ui/steps'"
-      lead="Por dónde va algo que tiene etapas: una actividad en partes, un proceso de diseño, un formulario largo. Dice dónde estás y cuánto falta, que es lo que una barra de progreso no puede decir."
+      lead="Muestra las etapas de un proceso y destaca la etapa actual."
     >
       <Hero>
         <div>

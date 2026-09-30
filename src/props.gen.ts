@@ -1438,9 +1438,15 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "name": "className",
         "type": "string",
         "required": false
+      },
+      {
+        "name": "summary",
+        "type": "boolean",
+        "required": false,
+        "doc": "Resume los valores elegidos en el disparador."
       }
     ],
-    "doc": "Los filtros de una tabla: la barra, cada filtro y el botón que los limpia."
+    "doc": "Los filtros de una tabla: condiciones, barra y acciones de limpieza."
   },
   "Filter.Bar": {
     "props": [],
@@ -1451,6 +1457,78 @@ export const propsByComponent: Record<string, ComponentDoc> = {
     "props": [],
     "html": "button",
     "doc": "El botón que devuelve la tabla a como estaba."
+  },
+  "Filter.Builder": {
+    "props": [
+      {
+        "name": "fields",
+        "type": "FilterDefinition[]",
+        "required": true
+      },
+      {
+        "name": "value",
+        "type": "Record<string, string[]>",
+        "required": true
+      },
+      {
+        "name": "onValueChange",
+        "type": "(value: Record<string, string[]>) => void",
+        "required": true
+      }
+    ],
+    "doc": "Agrega condiciones a demanda: valores alternativos dentro de cada filtro y combinación entre filtros."
+  },
+  "FilterOption": {
+    "props": [
+      {
+        "name": "value",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "doc": "Lo que se lee, cuando el valor es un id. Sin esto se lee el valor."
+      },
+      {
+        "name": "locked",
+        "type": "boolean",
+        "required": false,
+        "doc": "Se ve tildada y no se puede sacar."
+      },
+      {
+        "name": "count",
+        "type": "number",
+        "required": false,
+        "doc": "En cuántas filas cae, contado sobre lo que los otros filtros dejaron."
+      },
+      {
+        "name": "person",
+        "type": "{ name: string; src?: string }",
+        "required": false,
+        "doc": "La persona, cuando el filtro es de personas."
+      }
+    ]
+  },
+  "FilterDefinition": {
+    "props": [
+      {
+        "name": "key",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "options",
+        "type": "FilterOption[]",
+        "required": true
+      }
+    ]
   },
   "Icon": {
     "props": [
@@ -3326,7 +3404,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "name": "active",
         "type": "boolean",
         "required": false,
-        "doc": "La fila elegida: apagada, no teñida."
+        "doc": "Destaca la fila activa sin ocultar el foco del teclado."
       },
       {
         "name": "className",
@@ -3353,6 +3431,18 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "type": "Align",
         "required": false,
         "doc": "A la derecha cuando la columna es de números, para que el encabezado caiga sobre ellos."
+      },
+      {
+        "name": "sort",
+        "type": "'ascending' | 'descending' | 'none'",
+        "required": false,
+        "doc": "Dirección actual, o none si la columna todavía no ordena."
+      },
+      {
+        "name": "onSort",
+        "type": "() => void",
+        "required": false,
+        "doc": "Hace que el encabezado sea un control de orden."
       }
     ],
     "html": "th",
@@ -3452,6 +3542,50 @@ export const propsByComponent: Record<string, ComponentDoc> = {
       }
     ],
     "doc": "La fila entera cuando no hay ninguna: adentro va un `EmptyState`."
+  },
+  "Table.Columns": {
+    "props": [
+      {
+        "name": "columns",
+        "type": "TableColumn[]",
+        "required": true
+      },
+      {
+        "name": "value",
+        "type": "string[]",
+        "required": true
+      },
+      {
+        "name": "onValueChange",
+        "type": "(value: string[]) => void",
+        "required": true
+      },
+      {
+        "name": "defaultValue",
+        "type": "string[]",
+        "required": false
+      }
+    ],
+    "doc": "Configura las columnas visibles sin mezclar presentación y filtros de datos."
+  },
+  "TableColumn": {
+    "props": [
+      {
+        "name": "id",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": true
+      },
+      {
+        "name": "locked",
+        "type": "boolean",
+        "required": false
+      }
+    ]
   },
   "Tabs": {
     "props": [
@@ -3827,10 +3961,24 @@ export const propsByComponent: Record<string, ComponentDoc> = {
       },
       {
         "name": "side",
-        "type": "'top' | 'bottom'",
+        "type": "'top' | 'bottom' | 'left' | 'right'",
         "required": false,
         "def": "'top'",
         "doc": "Dónde va si entra."
+      },
+      {
+        "name": "align",
+        "type": "'start' | 'center' | 'end'",
+        "required": false,
+        "def": "'center'",
+        "doc": "Alineación sobre el lado elegido."
+      },
+      {
+        "name": "offset",
+        "type": "number",
+        "required": false,
+        "def": "8",
+        "doc": "Separación respecto del control, en píxeles."
       },
       {
         "name": "delay",

@@ -40,7 +40,7 @@ export function CriterionCardStory() {
       title="CriterionCard"
       kind="Rúbrica"
       imports="import { CriterionCard } from '@milo/ui/blocks/rubric/criterion-card'"
-      lead="Un aspecto adentro de una rúbrica: la marca, el nombre y, plegados, sus renglones. Cerrada ocupa una fila, así que una rúbrica de ocho aspectos mide lo mismo que una de dos."
+      lead="Presenta un criterio de evaluación con sus niveles en un panel expandible."
     >
       <Hero>
         <Stack width="sm">

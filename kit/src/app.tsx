@@ -2,11 +2,16 @@ import cls from './app.module.css'
 import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { Button } from '@milo/ui/button'
 import { EmptyState } from '@milo/ui/empty-state'
-import { Icon } from '@milo/ui/icon'
+import { Icon, type IconName } from '@milo/ui/icon'
+import { useMediaQuery } from '@milo/ui/lib/use-media-query'
+import { useFocusTrap, useScrollLock } from '@milo/ui/lib/overlay-hooks'
+import { useEscape } from '@milo/ui/lib/esc'
+import { useLocalStorage } from '@milo/ui/lib/use-local-storage'
 import { IconButton } from '@milo/ui/icon-button'
 import { cx, fold } from '@milo/ui/lib/cx'
 import { usePrefs } from './demo/prefs/prefs'
 import { Search } from '@milo/ui/search'
+import { Tooltip } from '@milo/ui/tooltip'
 import { ToastProvider } from '@milo/ui/toast'
 import { Intro } from './intro'
 import { Dashboard } from './dashboard'
@@ -191,8 +196,8 @@ const groups: Group[] = [
     stories: [
       { id: 'callout', label: 'Bloque destacado', alias: 'Callout Alert aviso alerta error banner mensaje bloque destacado aclaración pista recordar nota', render: () => <CalloutStory /> },
       { id: 'toast', label: 'Notificación', alias: 'toast notificación aviso pasajero deshacer', render: () => <ToastStory /> },
-      { id: 'empty-state', label: 'Vacío', alias: 'EmptyState vacío sin resultados nada', render: () => <EmptyStateStory /> },
-      { id: 'spinner', label: 'Girador', alias: 'Spinner cargando loading esperar', render: () => <SpinnerStory /> },
+      { id: 'empty-state', label: 'Estado vacío', alias: 'EmptyState vacío sin resultados nada', render: () => <EmptyStateStory /> },
+      { id: 'spinner', label: 'Indicador de carga', alias: 'Spinner cargando loading esperar', render: () => <SpinnerStory /> },
       { id: 'tooltip', label: 'Etiqueta flotante', alias: 'Tooltip ayuda globo hover', render: () => <TooltipStory /> },
     ],
   },
@@ -267,14 +272,38 @@ const groups: Group[] = [
 const flatten = (stories: Story[]): Story[] => stories.flatMap(s => [s, ...(s.children ?? [])])
 const everything = groups.flatMap(g => flatten(g.stories).map(s => ({ ...s, group: g.label })))
 
+const groupIcons: Record<string, IconName> = {
+  Fundamentos: 'palette', Acciones: 'touch_app', Formularios: 'tune', Navegación: 'explore',
+  Datos: 'table_rows', Avisos: 'notifications', Superficies: 'layers', Editor: 'edit',
+  Consigna: 'menu_book', Rúbrica: 'checklist', Medios: 'volume_up', 'Del sitio': 'folder',
+}
+
+const destinationIcons: Record<string, IconName> = {
+  accessibility: 'accessibility', typography: 'format_bold', color: 'palette', measure: 'square_foot',
+  layout: 'grid_view', icon: 'star_shine', time: 'schedule', writing: 'edit',
+  button: 'touch_app', menu: 'menu', dropdown: 'keyboard_arrow_down', field: 'tune',
+  search: 'search', 'date-picker': 'calendar_month', checkbox: 'checklist',
+  tabs: 'tab', accordion: 'view_list', breadcrumb: 'chevron_right', table: 'table_rows',
+  list: 'view_list', avatar: 'person', chart: 'bar_chart', progress: 'bar_chart',
+  toast: 'notifications', modal: 'open_in_new', link: 'link', divider: 'horizontal_rule',
+}
+
 export function App() {
   const [current, setCurrent] = useState(() => location.hash.slice(1) || INTRO)
   const [query, setQuery] = useState('')
+  const [closedGroups, setClosedGroups] = useLocalStorage<string[]>('milo.closed-groups', [])
+  const [collapsed, setCollapsed] = useLocalStorage('milo.rail-collapsed', false)
+  const desktop = useMediaQuery('(min-width: 64rem)')
+  const compact = desktop && collapsed
+  const rail = useRef<HTMLElement>(null)
   const [railOpen, setRailOpen] = useState(false)
   const [abiertos, setAbiertos] = useState<string[]>([])
   const { prefs, set } = usePrefs()
   const searchRef = useRef<HTMLInputElement>(null)
   const main = useRef<HTMLElement>(null)
+  useFocusTrap(railOpen && !desktop, rail)
+  useScrollLock(railOpen && !desktop)
+  useEscape(railOpen && !desktop, () => setRailOpen(false))
 
   useEffect(() => {
     const onHash = () => {
@@ -292,12 +321,19 @@ export function App() {
       const typing = where?.tagName === 'INPUT' || where?.tagName === 'TEXTAREA' || where?.isContentEditable
       if (e.key === '/' && !typing) {
         e.preventDefault()
-        searchRef.current?.focus()
+        if (!desktop) setRailOpen(true)
+        setCollapsed(false)
+        requestAnimationFrame(() => searchRef.current?.focus())
       }
     }
     addEventListener('keydown', onKey)
     return () => removeEventListener('keydown', onKey)
-  }, [])
+  }, [desktop, setCollapsed])
+
+  useEffect(() => {
+    if (!desktop && !railOpen) return
+    rail.current?.querySelector<HTMLElement>('[aria-current="page"]')?.scrollIntoView?.({ block: 'nearest' })
+  }, [current, desktop, railOpen])
 
   const go = (id: string) => {
     location.hash = id
@@ -340,24 +376,36 @@ export function App() {
 
         <nav
           id="riel"
+          ref={rail}
+          tabIndex={-1}
+          aria-label="Navegación del sistema"
+          role={railOpen && !desktop ? 'dialog' : undefined}
+          aria-modal={railOpen && !desktop ? true : undefined}
+          inert={!desktop && !railOpen}
           className={cx(
-            cls.rail,
+            `${cls.rail} bg-surface`,
+            compact && cls.railCompact,
             cls.railMotion,
             railOpen ? cls.railOpen : cls.railClosed,
           )}
         >
           <div className={cls.railHead}>
-            <button onClick={() => go(INTRO)} className={cls.brand}>
+            <div className={cls.brandRow}>
+            <button type="button" aria-label="milo: introducción" onClick={() => go(INTRO)} className={cls.brand}>
+              <span className={cls.brandMark}><Icon name="deployed_code" size={20} /></span>
               <span className={cls.brandName}>milo</span>
-              <span className={cls.brandTagline}>design system</span>
             </button>
+            {desktop && !compact && <IconButton icon={compact ? 'chevron_right' : 'chevron_left'} label={compact ? 'Expandir panel lateral' : 'Plegar panel lateral'} size="sm" aria-expanded={!compact} onClick={() => setCollapsed(v => !v)} />}
+            {!desktop && <IconButton icon="close" label="Cerrar el índice" size="sm" onClick={() => setRailOpen(false)} />}
+            </div>
 
-            <Search
+            {compact ? <IconButton icon="search" label="Buscar componentes" size="sm" onClick={() => { setCollapsed(false); requestAnimationFrame(() => searchRef.current?.focus()) }} /> : <Search
               ref={searchRef}
               value={query}
               onValueChange={setQuery}
-              placeholder="Buscar"
-              aria-label="Buscar una pieza"
+              placeholder="Buscar en milo"
+              data-autofocus
+              aria-label="Buscar componentes"
               shortcut="/"
               block
               onKeyDown={e => {
@@ -376,10 +424,19 @@ export function App() {
                   document.querySelector<HTMLButtonElement>('nav [data-pieza]')?.focus()
                 }
               }}
-            />
+            />}
           </div>
 
-          <div className={cls.railScroll}>
+          {compact ? <div className={cls.compactNav}>
+            <CompactLink label="Introducción" icon="home" active={current === INTRO} onClick={() => go(INTRO)} />
+            {sections.map(section => <div key={section.key} className={cls.compactGroup}>
+              {groups.filter(g => g.section === section.key).map(g => <CompactLink key={g.label} label={g.label} icon={groupIcons[g.label] ?? 'layers'} active={flatten(g.stories).some(s => s.id === current)} onClick={() => { setQuery(''); setCollapsed(false); setClosedGroups(groups.filter(x => x.label !== g.label).map(x => x.label)) }} />)}
+            </div>)}
+            <div className={cls.compactGroup}>
+              <CompactLink label="Dashboard" icon="dashboard" active={current === 'dashboard'} onClick={() => go('dashboard')} />
+              <CompactLink label="Documento" icon="description" active={current === 'documento'} onClick={() => go('documento')} />
+            </div>
+          </div> : <div className={cls.railScroll}>
             <SideLink active={current === INTRO} onClick={() => go(INTRO)} icon="deployed_code">Introducción</SideLink>
             {sections.map(section => {
               const shown = filtered.some(g => g.section === section.key)
@@ -387,12 +444,24 @@ export function App() {
               return (
                 <div key={section.key} className={cls.railSection}>
                   <div className={cls.railSectionLabel}>{section.label}</div>
-                  {filtered.filter(g => g.section === section.key).map(g => (
+                  {filtered.filter(g => g.section === section.key).map(g => {
+                    const groupId = `group-${fold(g.label).replace(/[^a-z0-9]+/g, '-')}`
+                    const expanded = !compact && (Boolean(query) || !closedGroups.includes(g.label))
+                    return (
                     <div key={g.label} className={cls.navGroup}>
-                      <div className={cls.navGroupLabel}>
-                        {g.label}
-                      </div>
-                      <div className={cls.navGroupItems}>
+                      <button
+                        type="button"
+                        className={cx(cls.groupToggle, compact && flatten(g.stories).some(s => s.id === current) && cls.navItemActive)}
+                        title={compact ? g.label : undefined}
+                        aria-label={g.label}
+                        aria-expanded={expanded}
+                        aria-controls={groupId}
+                        onClick={() => { if (compact) { setCollapsed(false); setClosedGroups(groups.filter(x => x.label !== g.label).map(x => x.label)) } else setClosedGroups(xs => xs.includes(g.label) ? xs.filter(x => x !== g.label) : [...xs, g.label]) }}
+                      >
+                        <Icon name={groupIcons[g.label] ?? 'layers'} size={18} /><span className={cls.groupText}>{g.label}</span>
+                        <Icon name="keyboard_arrow_down" size={16} className={cx(cls.navChevron, expanded && cls.navChevronOpen)} />
+                      </button>
+                      <div id={groupId} className={cls.navGroupItems} hidden={!expanded}>
                         {g.stories.map(s => {
                           const desplegado = abiertos.includes(s.id)
                             || Boolean(s.children?.some(c => c.id === current))
@@ -400,6 +469,7 @@ export function App() {
                           return (
                             <Fragment key={s.id}>
                               <SideLink
+                                icon={destinationIcons[s.id] ?? groupIcons[g.label] ?? 'deployed_code'}
                                 active={current === s.id}
                                 expanded={s.children?.length ? desplegado : undefined}
                                 onClick={() => {
@@ -413,14 +483,14 @@ export function App() {
                                 {s.label}
                               </SideLink>
                               {desplegado && s.children?.map(c => (
-                                <SideLink key={c.id} active={current === c.id} onClick={() => go(c.id)} piece sub>{c.label}</SideLink>
+                                <SideLink icon={destinationIcons[c.id] ?? 'deployed_code'} key={c.id} active={current === c.id} onClick={() => go(c.id)} piece sub>{c.label}</SideLink>
                               ))}
                             </Fragment>
                           )
                         })}
                       </div>
                     </div>
-                  ))}
+                  )})}
                   {section.key === 'blocks' && !query && (
                     <div className={cls.navGroup}>
                       <div className={cls.navGroupLabel}>En uso</div>
@@ -435,11 +505,12 @@ export function App() {
             })}
 
             {filtered.length === 0 && (
-              <p className={cls.railEmpty}>Nada con "{query}".</p>
+              <p className={cls.railEmpty}>No hay resultados para "{query}". Probá otro nombre.</p>
             )}
-          </div>
+          </div>}
 
           <div className={cls.railFoot}>
+            {compact && <IconButton icon="chevron_right" label="Expandir panel lateral" size="sm" onClick={() => setCollapsed(false)} />}
             <span className={cls.railCount}>
               {everything.length} vistas
             </span>
@@ -466,7 +537,7 @@ export function App() {
           <span className={cls.topBarTitle}>milo · design system</span>
         </header>
 
-        <main ref={main} className={cls.main}>
+        <main ref={main} className={cx(cls.main, compact && cls.mainCompact)} inert={railOpen && !desktop}>
           <div key={current} className={cx(cls.viewSlot, current === 'documento' && cls.viewWide)}>
             {current === INTRO && <Intro go={go} />}
             {current === 'dashboard' && <Dashboard />}
@@ -492,7 +563,7 @@ export function App() {
 function SideLink({ active, onClick, icon, piece, sub, expanded, children }: {
   active: boolean
   onClick: () => void
-  icon?: 'deployed_code' | 'dashboard' | 'description'
+  icon?: IconName
   piece?: boolean
   /** La sangría del tercer nivel: la columna del texto del padre, no un valor nuevo. */
   sub?: boolean
@@ -502,16 +573,18 @@ function SideLink({ active, onClick, icon, piece, sub, expanded, children }: {
 }) {
   return (
     <button
+      type="button"
       onClick={onClick}
       data-pieza={piece ? '' : undefined}
       onKeyDown={e => {
         if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return
         e.preventDefault()
-        const all = [...document.querySelectorAll<HTMLButtonElement>('nav [data-pieza]')]
+        const all = [...document.querySelectorAll<HTMLButtonElement>('nav [data-pieza]')].filter(el => !el.closest('[hidden]'))
         const i = all.indexOf(e.currentTarget)
         const next = all[i + (e.key === 'ArrowDown' ? 1 : -1)]
         next?.focus()
       }}
+      title={typeof children === 'string' ? children : undefined}
       aria-current={active ? 'page' : undefined}
       aria-expanded={expanded}
       className={cx(
@@ -531,4 +604,8 @@ function SideLink({ active, onClick, icon, piece, sub, expanded, children }: {
       )}
     </button>
   )
+}
+
+function CompactLink({ label, icon, active, onClick }: { label: string; icon: IconName; active: boolean; onClick: () => void }) {
+  return <Tooltip label={label} side="right" delay={200}><IconButton icon={icon} label={label} size="sm" variant="ghost" aria-current={active ? 'page' : undefined} className={active ? cls.compactActive : undefined} onClick={onClick} /></Tooltip>
 }

@@ -7,7 +7,7 @@ export function PopoverStory() {
   return (
     <Page
       title="Popover"
-      lead="El panel anclado a un disparador, para lo que se lee sin salir de la pantalla. Pone la posición, el cierre y el velo, no el aspecto."
+      lead="Muestra contenido contextual junto a su disparador, sin cambiar de página."
       kind="Superficies"
       imports="import { Popover } from '@milo/ui/popover'"
     >

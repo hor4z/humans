@@ -24,7 +24,7 @@ export function SheetStory() {
       title="Sheet"
       kind="Formularios"
       imports="import { Sheet } from '@milo/ui/sheet'"
-      lead="El panel que entra de costado, para un formulario largo que no justifica cambiar de pantalla. Lo de atrás se queda donde estaba y al cerrar seguís en el mismo lugar, con el scroll donde lo dejaste."
+      lead="Abre un panel lateral para consultar detalles o completar una tarea sin perder el contexto."
     >
       <Hero>
         <Button variant="brand" onClick={() => setOpen(true)}>Nueva actividad</Button>

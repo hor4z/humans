@@ -1,5 +1,6 @@
 import s from './filter.module.css'
 import { useState } from 'react'
+import { Table } from '@milo/ui/table'
 import { Filter } from '@milo/ui/filter'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
@@ -18,6 +19,7 @@ const states = [
 ]
 
 export function FilterStory() {
+  const [conditions, setConditions] = useState<Record<string, string[]>>({})
   const [picked, setPicked] = useState<string[]>([])
   const [visible, setVisible] = useState(['actividad', 'estudiantes', 'estado'])
 
@@ -25,8 +27,9 @@ export function FilterStory() {
     <Page
       title="Filter"
       kind="Datos"
-      imports="import { Filter } from '@milo/ui/filter'"
-      lead="Elegir varias opciones de una lista. Con un rótulo filtra filas; con un glifo elige qué columnas se ven. Es una sola pieza: el panel y la lista de opciones son los mismos."
+      imports="import { Table } from '@milo/ui/table'
+import { Filter } from '@milo/ui/filter'"
+      lead="Permite seleccionar varias opciones para filtrar datos o elegir las columnas visibles."
     >
       <Hero>
         <Filter label="Estado" options={states} value={picked} onValueChange={setPicked} />
@@ -53,23 +56,20 @@ export function FilterStory() {
 />`}>
           <Filter label="Estado" options={states} value={picked} onValueChange={setPicked} />
         </Demo>
-        <Demo label="Elegir columnas: con `icon` el botón es solo un glifo" code={`const [visible, setVisible] = useState(['actividad', 'estudiantes', 'estado'])
-
-<Filter
-  icon="view_column"
-  label="Columnas"
-  options={[
-    { value: 'actividad', label: 'Actividad', locked: true },
-    { value: 'estudiantes', label: 'Estudiantes' },
-    { value: 'docente', label: 'Docente' },
-    { value: 'estado', label: 'Estado' },
-    { value: 'entregas', label: 'Entregas' },
-  ]}
+        <Demo label="Condiciones a demanda" code={`const [conditions, setConditions] = useState({})
+<Filter.Builder fields={[
+  { key: 'estado', label: 'Estado', options: states },
+  { key: 'materia', label: 'Materia', options: [{ value: 'Matemática' }, { value: 'Lengua' }] },
+]} value={conditions} onValueChange={setConditions} />`}>
+          <Filter.Builder fields={[{ key: 'estado', label: 'Estado', options: states }, { key: 'materia', label: 'Materia', options: [{ value: 'Matemática' }, { value: 'Lengua' }] }]} value={conditions} onValueChange={setConditions} />
+        </Demo>
+        <Demo label="Visibilidad de columnas" code={`<Table.Columns
+  columns={columns.map(column => ({ id: column.value, label: column.label, locked: column.locked }))}
   value={visible}
   onValueChange={setVisible}
 />`}>
-          <Filter icon="view_column" label="Columnas" options={columns} value={visible} onValueChange={setVisible} />
-          <span className={s.pickedList}>{visible.join(' · ')}</span>
+          <Table.Columns columns={columns.map(column => ({ id: column.value, label: column.label, locked: column.locked }))} value={visible} onValueChange={setVisible} />
+          <span className={s.pickedList}>{visible.length} columnas visibles</span>
         </Demo>
       </Section>
 
@@ -79,7 +79,7 @@ export function FilterStory() {
 
       <Section title="Cómo se usa bien">
         <Practices>
-          <Practices.Do>La primera columna va `locked`: una tabla sin la columna que nombra cada fila deja de ser una tabla.</Practices.Do>
+          <Practices.Do>Usá `Filter.Builder` para agregar condiciones y `Table.Columns` para elegir qué datos se muestran. Son tareas diferentes.</Practices.Do>
           <Practices.Dont>No escondas lo apagado: una opción que desaparece obliga a aprender el menú de nuevo.</Practices.Dont>
         </Practices>
       </Section>

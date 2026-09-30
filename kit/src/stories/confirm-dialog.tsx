@@ -15,7 +15,7 @@ export function ConfirmStory() {
       title="ConfirmDialog"
       kind="Superficies"
       imports="import { ConfirmDialog } from '@milo/ui/confirm-dialog'"
-      lead="La pregunta antes de algo que no se deshace. Mismas partes que el `Modal`, sin X: la salida segura ya está a la vista y es el botón de cancelar."
+      lead="Solicita confirmación antes de una acción importante. Explica la consecuencia y ofrece una salida segura."
     >
       <Hero>
         <Button variant="bad" iconStart={<Icon name="delete" />} onClick={() => setHeroOpen(true)}>Borrar la actividad</Button>

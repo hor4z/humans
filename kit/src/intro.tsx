@@ -1,139 +1,89 @@
 import cls from './intro.module.css'
-import { InlineCode, Stack } from './kit'
-import { Callout } from '@milo/ui/callout'
+import { useState } from 'react'
 import { Avatar } from '@milo/ui/avatar'
 import { Button } from '@milo/ui/button'
-import { Card } from '@milo/ui/card'
-import { BarChart } from '@milo/ui/chart'
 import { Chip } from '@milo/ui/chip'
 import { Icon, type IconName } from '@milo/ui/icon'
 import { Progress } from '@milo/ui/progress'
 import { Switch } from '@milo/ui/switch'
 import { TextField } from '@milo/ui/text-field'
-import { useState } from 'react'
 import { face } from './fixtures'
 
-const shortcuts: { id: string; icon: IconName; title: string; body: string }[] = [
-  { id: 'accessibility', icon: 'accessibility', title: 'Accesibilidad', body: 'Contraste, teclado y lectores, que es lo que hay que leer antes de tocar nada.' },
-  { id: 'color', icon: 'palette', title: 'Color', body: 'Una rampa gray y cuatro familias acotadas.' },
-  { id: 'dashboard', icon: 'dashboard', title: 'Dashboard', body: 'Las piezas de la app, juntas en una pantalla real.' },
-  { id: 'documento', icon: 'description', title: 'Documento', body: 'Los bloques, juntos en una consigna de verdad.' },
+const paths: { id: string; icon: IconName; title: string; body: string; number: string }[] = [
+  { id: 'color', icon: 'palette', title: 'Una base compartida', body: 'Color, tipografía y espaciado. Las decisiones que conectan toda la interfaz.', number: '01' },
+  { id: 'button', icon: 'touch_app', title: 'Piezas para construir', body: 'Controles, estados y código de uso. Del primer botón al flujo completo.', number: '02' },
+  { id: 'accessibility', icon: 'accessibility', title: 'Accesible desde el inicio', body: 'Foco visible, navegación por teclado y nombres que se entienden.', number: '03' },
 ]
 
 export function Intro({ go }: { go: (id: string) => void }) {
-  const [demo, setDemo] = useState(true)
+  const [title, setTitle] = useState('Fracciones equivalentes')
+  const [notices, setNotices] = useState(true)
+  const [published, setPublished] = useState(false)
+  const reset = () => { setTitle('Fracciones equivalentes'); setNotices(true); setPublished(false) }
 
   return (
     <div className={cls.intro}>
-      <section className={`${cls.hero} bg-surface`}>
-        <div className={cls.heroGlow}>
-          <div className={cls.heroGlowTop} />
-          <div className={cls.heroGlowBottom} />
-        </div>
-
+      <section className={cls.hero} aria-labelledby="intro-title">
         <div className={cls.heroContent}>
-          <Chip size="sm" color="info" icon="bolt" className={cls.heroChip}>Inter · Material Symbols · CSS nativo</Chip>
-
-          <Stack gap="lg">
-            <h1 className={cls.heroTitle}>
-              El sistema de milo, funcionando
-            </h1>
-            <p className={cls.heroLead}>
-              Cada pieza de acá es el componente real, con su teclado, sus estados y sus tests. La base
-              son las piezas elementales, <InlineCode>@milo/ui/button</InlineCode>; los
-              bloques las ponen en contexto, <InlineCode>@milo/ui/blocks/editor/quote</InlineCode>.
-            </p>
-          </Stack>
-
-          <div className={cls.heroActions}>
-            <Button variant="brand" iconStart={<Icon name="arrow_forward" />} onClick={() => go('accessibility')}>Ver los fundamentos</Button>
-            <Button variant="muted" iconStart={<Icon name="dashboard" />} onClick={() => go('dashboard')}>Ver el dashboard</Button>
-            <Button variant="muted" iconStart={<Icon name="description" />} onClick={() => go('documento')}>Ver un documento</Button>
+          <span className={cls.eyebrow}><span className={cls.brandDot} /> DISEÑAR CON MILO</span>
+          <h1 id="intro-title" className={cls.heroTitle}>El sistema de milo.<br /><span>Todo encaja.</span></h1>
+          <p className={cls.heroLead}>Una misma manera de dar forma a cada idea. Componentes, fundamentos y ejemplos para construir con claridad.</p>
+          <div className={cls.actions}>
+            <Button size="sm" variant="brand" iconEnd={<Icon name="arrow_forward" />} onClick={() => go('button')}>Explorar componentes</Button>
+            <Button size="sm" variant="ghost" onClick={() => go('color')}>Ver fundamentos</Button>
           </div>
+          <div className={cls.heroNote}><Icon name="deployed_code" size={16} /> Componentes reales. Código listo para usar.</div>
+        </div>
 
+        <div className={cls.playground}>
+          <div className={cls.previewHeader}><span>EL SISTEMA EN ACCIÓN</span><Chip size="sm" color="info" dot>Interactivo</Chip></div>
+          <div className={`${cls.activity} bg-surface`}>
+            <div className={cls.activityTop}>
+              <span className={cls.courseIcon}><Icon name="menu_book" size={20} /></span>
+              <div><p className={cls.courseName}>Matemática</p><p className={cls.meta}>4.º A · Actividad</p></div>
+              <span className={cls.status} role="status"><Chip size="sm" color={published ? 'ok' : undefined}>{published ? 'Publicada' : 'Borrador'}</Chip></span>
+            </div>
+            <label className={cls.fieldLabel} htmlFor="intro-activity-name">Nombre de la actividad</label>
+            <TextField id="intro-activity-name" value={title} onValueChange={setTitle} size="sm" disabled={published} />
+            <div className={cls.peopleRow}>
+              <Avatar.Group people={[{ name: 'Ana Pérez', src: face(1) }, { name: 'Bruno Díaz', src: face(2) }, { name: 'Carla Sosa', src: face(3) }]} />
+              <span className={cls.meta}>24 estudiantes</span>
+            </div>
+            <Progress value={18} max={24}><Progress.Label>Entregas revisadas</Progress.Label><Progress.Hint>18 de 24</Progress.Hint></Progress>
+            <div className={cls.setting}><label htmlFor="intro-notices">Avisar al publicar</label><Switch id="intro-notices" checked={notices} onCheckedChange={setNotices} /></div>
+            <div className={cls.previewActions}>
+              <Button size="sm" variant="ghost" onClick={reset}>Restablecer</Button>
+              <Button size="sm" variant="brand" disabled={published || !title.trim()} iconEnd={<Icon name={published ? 'check' : 'arrow_forward'} />} onClick={() => setPublished(true)}>{published ? 'Publicada' : 'Publicar'}</Button>
+            </div>
+          </div>
+          <p className={cls.previewHint}>Probá los controles. Los cambios quedan en esta vista.</p>
         </div>
       </section>
 
-      <section className={cls.shortcutGrid}>
-        {shortcuts.map(a => (
-          <button
-            key={a.id}
-            onClick={() => go(a.id)}
-            className={`${cls.shortcutCard} group bg-surface`}
-          >
-            <span className={`${cls.shortcutBadge} inset-relief`}>
-              <Icon name={a.icon} size={20} className="icon-muted" />
-            </span>
-            <span className={cls.shortcutTitle}>
-              {a.title}
-              <Icon name="chevron_right" size={16} className={`${cls.shortcutChevron} icon-muted`} />
-            </span>
-            <span className={cls.shortcutBody}>{a.body}</span>
+      <section className={cls.paths} aria-label="Explorar el sistema">
+        {paths.map(path => <button type="button" key={path.id} className={cls.pathCard} onClick={() => go(path.id)}>
+          <span className={cls.pathTop}><Icon name={path.icon} size={24} /><span className={cls.pathNumber}>{path.number}</span></span>
+          <span className={cls.pathTitle}>{path.title}<Icon name="arrow_forward" size={16} /></span>
+          <span className={cls.pathBody}>{path.body}</span>
+        </button>)}
+      </section>
+
+      <section className={cls.examples} aria-labelledby="intro-examples">
+        <div className={cls.sectionHeader}><div><span className={cls.eyebrow}>EN CONTEXTO</span><h2 id="intro-examples" className={cls.sectionTitle}>De las piezas a la experiencia.</h2></div><p className={cls.sectionLead}>Así se combinan los componentes en una pantalla completa.</p></div>
+        <div className={cls.exampleGrid}>
+          <button type="button" className={cls.exampleCard} onClick={() => go('dashboard')}>
+            <div className={cls.dashboardPreview} aria-hidden="true">
+              <div className={cls.miniStats}><span>Entregas<strong>79</strong></span><span>Revisadas<strong>67</strong></span><span>Pendientes<strong>12</strong></span></div>
+              <div className={cls.miniChart}>{[45, 65, 52, 88, 70, 100, 80].map((h, i) => <span key={i} style={{ height: `${h}%` }} />)}</div>
+            </div>
+            <span className={cls.exampleCaption}><span><strong>Una vista de tu semana</strong><span>Datos, filtros y acciones en un dashboard.</span></span><Icon name="arrow_forward" size={20} /></span>
           </button>
-        ))}
-      </section>
-
-      <section className={cls.showcase}>
-        <div className={cls.showcaseHeader}>
-          <Stack gap="sm">
-            <h2 className={cls.showcaseTitle}>Una muestra</h2>
-            <p className={cls.showcaseLead}>
-              Las mismas piezas que hay en el riel, apoyadas juntas. Si algo de acá no se ve como el resto,
-              es un bug del sistema y no de la pantalla.
-            </p>
-          </Stack>
-          <Button size="sm" variant="ghost" iconEnd={<Icon name="chevron_right" />} onClick={() => go('button')}>Ver todas</Button>
+          <button type="button" className={cls.exampleCard} onClick={() => go('documento')}>
+            <div className={cls.documentPreview} aria-hidden="true"><div className={cls.miniDocument}><span className={cls.documentMeta}>ECONOMÍA · 4.º B</span><strong>Creá tu propio emprendimiento</strong><span className={cls.documentLine} /><span className={cls.documentLineShort} /><span className={cls.documentCallout}><Icon name="lightbulb" size={16} /> Una idea. Muchas posibilidades.</span></div></div>
+            <span className={cls.exampleCaption}><span><strong>Un espacio para aprender</strong><span>Contenido, consignas y evaluación.</span></span><Icon name="arrow_forward" size={20} /></span>
+          </button>
         </div>
-
-        <div className={cls.showcaseGrid}>
-          <Card className={cls.chartCard}>
-            <BarChart
-              label="Corregidas esta semana"
-              height={150}
-              highlight={2}
-              data={[
-                { label: 'Lun', value: 18, total: 24 },
-                { label: 'Mar', value: 6, total: 14 },
-                { label: 'Mié', value: 27, total: 29 },
-                { label: 'Jue', value: 16, total: 32 },
-                { label: 'Vie', value: 17, total: 17 },
-              ]}
-            />
-          </Card>
-
-          <Stack>
-            <Card className={cls.chipCard}>
-              <TextField size="md" icon="search" placeholder="Buscar una actividad…" />
-              <div className={cls.chipRow}>
-                <Chip color="green">Abierta</Chip>
-                <Chip color="blue">Corregida</Chip>
-                <Chip size="sm" color="warn" icon="schedule">Vence mañana</Chip>
-              </div>
-              <Progress value={18} max={24}>
-                <Progress.Label>Corregidas</Progress.Label>
-                <Progress.Hint>18 de 24</Progress.Hint>
-              </Progress>
-            </Card>
-
-            <Card className={cls.peopleCard}>
-              <div className={cls.peopleRow}>
-                <Avatar.Group people={[
-                  { name: 'Ana Pérez', src: face(1) },
-                  { name: 'Bruno Díaz', src: face(2) },
-                  { name: 'Carla Sosa', src: face(3) },
-                ]} />
-                <span className={cls.peopleNote}>tres entregaron</span>
-              </div>
-              <Switch checked={demo} onCheckedChange={setDemo} label="Avisos" />
-            </Card>
-          </Stack>
-        </div>
-
-        <Callout tone="ok">
-          <Callout.Title>Todo lo de arriba es el componente real: tocalo.</Callout.Title>
-        </Callout>
       </section>
-
     </div>
   )
 }

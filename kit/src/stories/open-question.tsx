@@ -10,7 +10,7 @@ export function OpenQuestionStory() {
       title="OpenQuestion"
       kind="Consigna"
       imports="import { OpenQuestion } from '@milo/ui/blocks/task/open-question'"
-      lead="Una pregunta que se responde escribiendo. No la corrige nadie solo: lo que se escribe acá lo lee una persona, y por eso la pieza no tiene noción de respuesta correcta."
+      lead="Presenta una consigna de respuesta escrita para su posterior revisión."
     >
       <Hero>
         <Stack width="md" gap="lg">

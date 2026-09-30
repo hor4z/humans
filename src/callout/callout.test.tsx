@@ -47,7 +47,7 @@ describe('Callout', () => {
   it('se puede descartar', async () => {
     const onDismiss = vi.fn()
     render(<Callout tone="info" onDismiss={onDismiss}><Callout.Title>Hola</Callout.Title></Callout>)
-    await userEvent.click(screen.getByRole('button', { name: 'Descartar' }))
+    await userEvent.click(screen.getByRole('button', { name: 'Cerrar el aviso' }))
     expect(onDismiss).toHaveBeenCalled()
   })
 })

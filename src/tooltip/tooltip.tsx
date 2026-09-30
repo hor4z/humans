@@ -10,13 +10,17 @@ let lastClosedAt = 0
 const WARM_WINDOW = 400
 
 /** La etiqueta que dice qué hace un control que no lo dice solo: un icono suelto, un valor truncado, una acción con una consecuencia que conviene aclarar. */
-export function Tooltip({ label, children, side = 'top', delay = 500 }: {
+export function Tooltip({ label, children, side = 'top', align = 'center', offset = 8, delay = 500 }: {
   /** Lo que dice la etiqueta. */
   label: ReactNode
   /** El control que explica; se envuelve, no se pide render prop. */
   children: ReactNode
   /** Dónde va si entra. */
-  side?: 'top' | 'bottom'
+  side?: 'top' | 'bottom' | 'left' | 'right'
+  /** Alineación sobre el lado elegido. */
+  align?: 'start' | 'center' | 'end'
+  /** Separación respecto del control, en píxeles. */
+  offset?: number
   /** Ms del primero; los siguientes abren en 0 dentro de una ventana de 400. */
   delay?: number
 }) {
@@ -47,7 +51,7 @@ export function Tooltip({ label, children, side = 'top', delay = 500 }: {
 
   useEscape(open, close)
 
-  const pos = useAnchor(open, anchor, bubble, { align: 'center', prefer: side === 'top' ? 'above' : 'below' })
+  const pos = useAnchor(open, anchor, bubble, { align, gap: offset, prefer: side === 'top' ? 'above' : side === 'bottom' ? 'below' : side })
 
   useDismiss(open, close, [anchor, bubble])
 

@@ -3,7 +3,7 @@
     display: inline-flex;
     white-space: nowrap;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--space-1);
     border-radius: var(--radius-sm);
     padding-inline: 0.125rem;
     vertical-align: baseline;

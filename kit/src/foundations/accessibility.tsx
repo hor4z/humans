@@ -33,7 +33,7 @@ export function AccessibilitySection() {
     <Page
       title="Accesibilidad"
       kind="Fundamentos"
-      lead="Las reglas que cada pieza ya cumple y que se verifican con tests. Se usa en educación: quien no puede leer la pantalla no puede hacer la tarea."
+      lead="Criterios de contraste, navegación por teclado y semántica para construir interfaces accesibles."
     >
       <Section title="Las reglas">
         <Table label="Las reglas de accesibilidad del sistema" minWidth={520}>

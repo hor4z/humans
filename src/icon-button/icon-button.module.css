@@ -20,8 +20,5 @@
     }
   }
 
-  .radius {
-    border-radius: var(--radius-md);
-  }
 
 }

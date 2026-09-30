@@ -5,7 +5,7 @@
 
   .horizontal {
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--space-2);
   }
 
   .vertical {
@@ -22,12 +22,12 @@
   .itemHorizontal {
     flex: 1;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: var(--space-2);
   }
 
   .itemVertical {
-    gap: 0.75rem;
-    padding-bottom: 1.5rem;
+    gap: var(--space-3);
+    padding-bottom: var(--space-6);
     &:last-child {
       padding-bottom: 0;
     }
@@ -148,7 +148,7 @@
 
   @media (min-width:40rem) {
     .bodyHorizontal {
-        padding-right: 1rem;
+        padding-right: var(--space-4);
     }
   }
 }

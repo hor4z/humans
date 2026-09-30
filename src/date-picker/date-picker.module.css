@@ -37,7 +37,7 @@
     border-style: solid;
     border-width: 1px;
     border-color: var(--border);
-    padding: 0.75rem;
+    padding: var(--space-3);
     box-shadow: var(--relief-popover);
   }
 
@@ -45,8 +45,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 0.5rem;
-    padding-bottom: 0.5rem;
+    gap: var(--space-2);
+    padding-bottom: var(--space-2);
   }
 
   .prev {
@@ -87,17 +87,17 @@
   .grid {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: var(--space-1);
   }
 
   .weekdays {
     display: grid;
     grid-template-columns: repeat(7,minmax(0,1fr));
-    gap: 0.25rem;
+    gap: var(--space-1);
   }
 
   .weekday {
-    padding-bottom: 0.25rem;
+    padding-bottom: var(--space-1);
     text-align: center;
     font-size: var(--type-meta);
     line-height: var(--type-meta-lh);
@@ -109,7 +109,7 @@
   .week {
     display: grid;
     grid-template-columns: repeat(7,minmax(0,1fr));
-    gap: 0.25rem;
+    gap: var(--space-1);
   }
 
   .day {
