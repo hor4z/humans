@@ -59,7 +59,7 @@
 
   .brandMark {
     flex-shrink: 0;
-    color: var(--text);
+    color: var(--brand);
   }
 
   .railHead {
