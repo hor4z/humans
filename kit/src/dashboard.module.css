@@ -151,7 +151,6 @@
   }
 
   .sideColumn {
-    position: relative;
     min-width: 0;
   }
 
@@ -220,17 +219,6 @@
     letter-spacing: var(--type-meta-ls);
     font-weight: var(--font-weight-medium);
     color: var(--text-muted);
-  }
-
-  .mascotPeek {
-    pointer-events: none;
-    position: absolute;
-    left: 100%;
-    top: 3rem;
-    z-index: 20;
-    display: none;
-    height: 8rem;
-    width: auto;
   }
 
   .statCard {
@@ -305,12 +293,6 @@
   @media (min-width:40rem) {
     .folderGrid {
         grid-template-columns: repeat(4,minmax(0,1fr));
-    }
-  }
-
-  @media (min-width:80rem) {
-    .mascotPeek {
-        display: block;
     }
   }
 }

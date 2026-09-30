@@ -23,7 +23,6 @@ import { TimeSection } from './foundations/time'
 import { AudioPlayerStory } from './stories/audio-player'
 import { LayoutSection } from './foundations/layout'
 import { CalloutStory } from './stories/callout'
-import { FigureStory } from './stories/figure'
 import { QuoteStory } from './stories/quote'
 import { TaskListStory } from './stories/task-list'
 import { MentionStory } from './stories/mention'
@@ -32,12 +31,9 @@ import { ReorderStory } from './stories/reorder'
 import { CommandMenuStory } from './stories/command-menu'
 import { ToolbarStory } from './stories/toolbar'
 import { StepsStory } from './stories/steps'
-import { AmeliaStory } from './mascots/amelia'
-import { OttoStory } from './mascots/otto'
 import { WritingSection } from './foundations/writing'
 import { ChecklistStory } from './stories/checklist'
 import { ButtonStory } from './stories/button'
-import { ButtonGroupStory } from './stories/button-group'
 import { SplitButtonStory } from './stories/split-button'
 import { ToggleButtonStory } from './stories/toggle-button'
 import { CopyButtonStory } from './stories/copy-button'
@@ -78,9 +74,7 @@ import { BreadcrumbStory } from './stories/breadcrumb'
 import { IndicatorStory } from './stories/indicator'
 import { SearchStory } from './stories/search'
 import { ChoiceStory } from './stories/choice'
-import { CompareTableStory } from './stories/compare-table'
 import { SelfAssessmentStory } from './stories/self-assessment'
-import { SumTableStory } from './stories/sum-table'
 import { NumberAnswerStory } from './stories/number-answer'
 import { OpenQuestionStory } from './stories/open-question'
 import { FilterStory } from './stories/filter'
@@ -127,14 +121,6 @@ const groups: Group[] = [
     ],
   },
   {
-    label: 'Mascotas',
-    section: 'system',
-    stories: [
-      { id: 'otto', label: 'Otto', alias: 'otto mascota personaje nutria hurón ilustración', render: () => <OttoStory /> },
-      { id: 'amelia', label: 'Amelia', alias: 'amelia mascota personaje chica estudiante ilustración', render: () => <AmeliaStory /> },
-    ],
-  },
-  {
     label: 'Acciones',
     section: 'system',
     stories: [
@@ -145,7 +131,6 @@ const groups: Group[] = [
         render: () => <ButtonStory />,
         children: [
           { id: 'icon-button', label: 'Botón de icono', alias: 'IconButton botón icono redondo acción', render: () => <IconButtonStory /> },
-          { id: 'button-group', label: 'Grupo de botones', alias: 'ButtonGroup grupo pegados juntos barra', render: () => <ButtonGroupStory /> },
           { id: 'split-button', label: 'Botón partido', alias: 'SplitButton partido flecha menú acción principal', render: () => <SplitButtonStory /> },
           { id: 'toggle-button', label: 'Botón de alternancia', alias: 'ToggleButton toggle alternar hundido pressed', render: () => <ToggleButtonStory /> },
           { id: 'copy-button', label: 'Botón de copiar', alias: 'CopyButton copiar portapapeles clipboard', render: () => <CopyButtonStory /> },
@@ -233,7 +218,6 @@ const groups: Group[] = [
       { id: 'toolbar', label: 'Barra de formato', alias: 'Toolbar barra herramientas formato negrita cursiva editor texto enriquecido', render: () => <ToolbarStory /> },
       { id: 'command-menu', label: 'Paleta de comandos', alias: 'CommandMenu comandos paleta barra slash menú buscar bloques editor notion', render: () => <CommandMenuStory /> },
       { id: 'callout', label: 'Bloque destacado', alias: 'Callout bloque destacado aclaración pista recordar contenido editor', render: () => <CalloutStory /> },
-      { id: 'figure', label: 'Imagen con pie', alias: 'Figure imagen figura pie epígrafe foto alt caption editor', render: () => <FigureStory /> },
       { id: 'quote', label: 'Cita', alias: 'cita blockquote fuente atribución textual editor', render: () => <QuoteStory /> },
       { id: 'task-list', label: 'Lista de tareas', alias: 'TaskList tareas checklist pasos pendientes marcar hacer editor', render: () => <TaskListStory /> },
       { id: 'checklist', label: 'Lista de pasos', alias: 'Checklist primeros pasos onboarding progreso acordeón plegable checklist', render: () => <ChecklistStory /> },
@@ -247,8 +231,6 @@ const groups: Group[] = [
       { id: 'choice', label: 'Pregunta con opciones', alias: 'Choice opciones multiple choice pregunta respuesta elegir correcta quiz', render: () => <ChoiceStory /> },
       { id: 'open-question', label: 'Pregunta abierta', alias: 'OpenQuestion pregunta abierta respuesta escribir texto libre consigna', render: () => <OpenQuestionStory /> },
       { id: 'number-answer', label: 'Respuesta numérica', alias: 'NumberAnswer número cálculo cuenta promedio métrica unidad tolerancia margen', render: () => <NumberAnswerStory /> },
-      { id: 'compare-table', label: 'Cuadro comparativo', alias: 'CompareTable comparar cuadro grilla competencia contrastar completar', render: () => <CompareTableStory /> },
-      { id: 'sum-table', label: 'Tabla que se suma', alias: 'SumTable presupuesto suma total costeo materiales tope capital gasto', render: () => <SumTableStory /> },
     ],
   },
   {

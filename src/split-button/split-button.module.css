@@ -1,4 +1,41 @@
 @layer milo.components {
+  .root {
+    display: inline-flex;
+    isolation: isolate;
+  }
+
+  .root > * {
+    position: relative;
+  }
+
+  .root > *:focus-visible {
+    z-index: 1;
+  }
+
+  .root > *:not(:first-child) {
+    margin-left: -1px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .root > *:not(:last-child) {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .root > *:not(:first-child)::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    translate: 0 -50%;
+    width: 1px;
+    height: 80%;
+    background-color: color-mix(in oklab, currentColor 16%, transparent);
+    pointer-events: none;
+    z-index: 2;
+  }
+
   .chevron {
     padding-inline: 0;
   }

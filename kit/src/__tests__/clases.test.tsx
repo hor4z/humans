@@ -15,7 +15,7 @@ const globals = new Set(
     ?.map(s => s.slice(1)) ?? [],
 )
 
-const modules = import.meta.glob('../{stories,foundations,mascots}/*.tsx', { eager: true }) as
+const modules = import.meta.glob('../{stories,foundations}/*.tsx', { eager: true }) as
   Record<string, Record<string, unknown>>
 
 const views: [string, ComponentType][] = []

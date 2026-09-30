@@ -69,7 +69,6 @@
     "test:watch": "vitest",
     "props": "node scripts/props.mjs",
     "icons": "node scripts/icons.mjs",
-    "mascotas": "python3 kit/scripts/mascotas.py",
     "picos": "python3 kit/scripts/picos.py",
     "test:changed": "vitest run --changed",
     "test:guards": "vitest run src/__tests__ kit/src/__tests__",

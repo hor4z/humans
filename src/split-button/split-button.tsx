@@ -1,7 +1,6 @@
 import s from './split-button.module.css'
 import { createContext, useContext, type ReactNode } from 'react'
 import { Button } from '../button/button'
-import { ButtonGroup } from '../button-group/button-group'
 import { Icon, type IconName } from '../icon/icon'
 import { Menu } from '../menu/menu'
 import { Popover } from '../popover/popover'
@@ -72,7 +71,7 @@ function Root({ variant = 'brand', size = 'md', disabled, menuLabel, children }:
   const moreLabel = menuLabel ?? (name ? `Más opciones de ${name}` : 'Más opciones')
 
   return (
-    <ButtonGroup label={name ?? moreLabel}>
+    <div role="group" aria-label={name ?? moreLabel} className={s.root}>
       <SplitContext.Provider value={{ variant, size, disabled, close: () => {} }}>
         {action}
       </SplitContext.Provider>
@@ -103,7 +102,7 @@ function Root({ variant = 'brand', size = 'md', disabled, menuLabel, children }:
           </Menu>
         )}
       </Popover>
-    </ButtonGroup>
+    </div>
   )
 }
 

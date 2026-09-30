@@ -8,8 +8,6 @@ import { Divider } from '@milo/ui/divider'
 import { Choice } from '@milo/ui/blocks/task/choice'
 import { NumberAnswer } from '@milo/ui/blocks/task/number-answer'
 import { OpenQuestion } from '@milo/ui/blocks/task/open-question'
-import { CompareTable } from '@milo/ui/blocks/task/compare-table'
-import { SumTable, type SumCell } from '@milo/ui/blocks/task/sum-table'
 import { Mention } from '@milo/ui/blocks/editor/mention'
 import { Chip } from '@milo/ui/chip'
 import { Icon } from '@milo/ui/icon'
@@ -43,8 +41,6 @@ const blocks: CommandGroup[] = [
   {
     label: 'Datos',
     items: [
-      { id: 'sum', label: 'Tabla que se suma', hint: 'Un presupuesto, con tope', icon: 'table_rows' },
-      { id: 'compare', label: 'Cuadro comparativo', hint: 'Dos o tres cosas, fila por fila', icon: 'compare_arrows' },
       { id: 'chart', label: 'Gráfico', hint: 'Barras o líneas', icon: 'bar_chart' },
       { id: 'divider', label: 'Separador', icon: 'horizontal_rule' },
     ],
@@ -73,35 +69,6 @@ const salidas = [
   { id: 'proveedor', label: 'Buscar otro proveedor' },
 ]
 
-const cliente = [
-  { id: 'quien', label: '¿Quién te compra?', placeholder: 'Los que salen del club a la noche' },
-  { id: 'edad', label: '¿Qué edad tiene?', placeholder: 'Entre 15 y 25' },
-  { id: 'problema', label: '¿Qué le resolvés?', placeholder: 'No hay nada abierto después de las 22' },
-  { id: 'porque', label: '¿Por qué a vos?', placeholder: 'Porque llevo hasta la puerta y el otro no' },
-]
-
-const gastos = [
-  { id: 'materia', label: 'Materia prima o productos', qtyExample: 'bolsas', priceExample: 'cada una' },
-  { id: 'herramientas', label: 'Herramientas', qtyExample: 'cuántas', priceExample: 'cada una' },
-  { id: 'packaging', label: 'Packaging', qtyExample: 'unidades', priceExample: 'cada una' },
-  { id: 'publicidad', label: 'Publicidad', qtyExample: 'meses', priceExample: 'por mes' },
-  { id: 'transporte', label: 'Transporte', qtyExample: 'viajes', priceExample: 'por viaje' },
-  { id: 'otros', label: 'Otros', qtyExample: 'cuántos', priceExample: 'cada uno' },
-]
-
-const frentes = [
-  { id: 'producto', label: 'Producto', placeholder: 'Qué vende' },
-  { id: 'precio', label: 'Precio', placeholder: 'Cuánto sale' },
-  { id: 'publico', label: 'Público', placeholder: 'A quién' },
-  { id: 'venta', label: 'Forma de venta', placeholder: 'Local, redes' },
-]
-
-const competidores = [
-  { id: 'mio', label: 'El tuyo' },
-  { id: 'uno', label: 'Competidor 1' },
-  { id: 'dos', label: 'Competidor 2' },
-]
-
 function useAutosave(delay = 900) {
   const [saving, setSaving] = useState(false)
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined)
@@ -122,15 +89,15 @@ export function DocumentStory() {
   const [corregido, setCorregido] = useState(false)
   const [rubro, setRubro] = useState<string[]>([])
   const [porque, setPorque] = useState('')
-  const [quien, setQuien] = useState<Record<string, Record<string, string>>>({})
-  const [presupuesto, setPresupuesto] = useState<Record<string, SumCell>>({})
+  const [quien, setQuien] = useState('')
+  const [presupuesto, setPresupuesto] = useState('')
   const [precio, setPrecio] = useState('')
   const [margen, setMargen] = useState('')
   const [veinte, setVeinte] = useState('')
   const [cincuenta, setCincuenta] = useState('')
   const [salida, setSalida] = useState<string[]>([])
   const [defensa, setDefensa] = useState('')
-  const [competencia, setCompetencia] = useState<Record<string, Record<string, string>>>({})
+  const [competencia, setCompetencia] = useState('')
   const [diferencia, setDiferencia] = useState('')
   const [ingresos, setIngresos] = useState('')
   const [costos, setCostos] = useState('')
@@ -237,19 +204,21 @@ export function DocumentStory() {
 
           <h2 className={cls.sourceHeading}>2. Quién te compra</h2>
 
-          <CompareTable rows={cliente} columns={[{ id: 'vos', label: 'Tu respuesta' }]} value={quien} onValueChange={setQuien}>
-            <CompareTable.Prompt>Contestá las cuatro, en una línea cada una</CompareTable.Prompt>
-            <CompareTable.Hint>La última es la más difícil y es la que importa: por qué a vos y no al que ya está.</CompareTable.Hint>
-          </CompareTable>
+          <OpenQuestion value={quien} onValueChange={setQuien} rows={3} maxLength={320}
+            placeholder="Los que salen del club a la noche, entre 15 y 25, porque no hay nada abierto después de las 22">
+            <OpenQuestion.Prompt>¿Quién te compra, qué le resolvés y por qué a vos?</OpenQuestion.Prompt>
+            <OpenQuestion.Hint>La última es la más difícil y es la que importa: por qué a vos y no al que ya está.</OpenQuestion.Hint>
+          </OpenQuestion>
 
           <Divider />
 
           <h2 className={cls.sourceHeading}>3. Tu presupuesto</h2>
 
-          <SumTable rows={gastos} value={presupuesto} onValueChange={setPresupuesto} cap={100000}>
-            <SumTable.Prompt>Repartí los $100.000</SumTable.Prompt>
-            <SumTable.Hint>No hace falta gastarlos todos: lo que sobra es lo que te banca el primer mes flojo.</SumTable.Hint>
-          </SumTable>
+          <OpenQuestion value={presupuesto} onValueChange={setPresupuesto} rows={3} maxLength={320}
+            placeholder="$40.000 de materia prima, $15.000 de packaging...">
+            <OpenQuestion.Prompt>Repartí los $100.000</OpenQuestion.Prompt>
+            <OpenQuestion.Hint>No hace falta gastarlos todos: lo que sobra es lo que te banca el primer mes flojo.</OpenQuestion.Hint>
+          </OpenQuestion>
 
           <Divider />
 
@@ -315,10 +284,11 @@ export function DocumentStory() {
 
           <h2 className={cls.sourceHeading}>6. Contra quién competís</h2>
 
-          <CompareTable rows={frentes} columns={competidores} value={competencia} onValueChange={setCompetencia}>
-            <CompareTable.Prompt>Buscá dos emprendimientos reales que vendan algo parecido</CompareTable.Prompt>
-            <CompareTable.Hint>Reales: con nombre, y con el precio que cobran de verdad.</CompareTable.Hint>
-          </CompareTable>
+          <OpenQuestion value={competencia} onValueChange={setCompetencia} rows={3} maxLength={320}
+            placeholder="La pizzería de la esquina cobra $6.000 la grande y solo vende en el local">
+            <OpenQuestion.Prompt>Buscá dos emprendimientos reales que vendan algo parecido</OpenQuestion.Prompt>
+            <OpenQuestion.Hint>Reales: con nombre, y con el precio que cobran de verdad.</OpenQuestion.Hint>
+          </OpenQuestion>
 
           <OpenQuestion value={diferencia} onValueChange={setDiferencia} rows={2} maxLength={240}
             placeholder="Ninguno de los dos entrega de noche, y ahí es cuando la gente lo quiere">

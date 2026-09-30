@@ -104,7 +104,7 @@ import { Indicator } from '@milo/ui/indicator'"
           </Variant>
           <Variant
             name="uno al lado del otro"
-            note="En una barra van sin caja y separados por el aire. Si tienen que leerse como un grupo, va `ButtonGroup`."
+            note="En una barra van sin caja y separados por el aire."
             code={`<IconButton icon="undo" label="Deshacer" size="sm" />
 <IconButton icon="redo" label="Rehacer" size="sm" />
 <IconButton icon="content_copy" label="Duplicar" size="sm" />

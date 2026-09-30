@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest'
 import type { ComponentType } from 'react'
 import { ToastProvider } from '@milo/ui/toast'
 
-const modules = import.meta.glob('../{stories,foundations,mascots}/*.tsx', { eager: true }) as
+const modules = import.meta.glob('../{stories,foundations}/*.tsx', { eager: true }) as
   Record<string, Record<string, unknown>>
 
 const views: [string, ComponentType][] = []

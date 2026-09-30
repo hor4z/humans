@@ -13,11 +13,11 @@ Lo decidido está en `CLAUDE.md` y en el kit. Esto es lo que todavía no se hizo
 
 | | por qué todavía no |
 |---|---|
-| bloque de preguntas y respuestas | del editor. Hoy lo suple un `CompareTable` de una columna, que corta la pregunta: `Table.Title` trunca a propósito. No hay que adaptar `Table` ni `CompareTable` |
-| bloque de tabla dinámica | del editor: que quien escribe arme las columnas y las filas. Las dos tablas de hoy reciben su forma por prop |
+| bloque de preguntas y respuestas | del editor. Hoy lo suple una `OpenQuestion` por pregunta. No hay que adaptar `Table` |
+| bloque de tabla dinámica | del editor: que quien escribe arme las columnas y las filas |
 | campo de fichas | asignar personas a una entrega. `Chip` ya dibuja la ficha; falta el campo que las arma |
 | menú contextual | el clic derecho sobre un bloque. `Menu` y `Popover` ya están: falta la posición y la tecla de menú |
-| imágenes, como fundamento | `Figure` resuelve la pieza; falta la doctrina de proporción, carga y texto alternativo |
+| imagen con pie | salió `Figure`; la doctrina de proporción, carga y texto alternativo ya está en Fundamentos › Medios |
 | deshacer | hoy vive en el `Toast` con acción, que alcanza para una acción por vez y no para un editor |
 | imprimir | un docente imprime una consigna, y no hay hoja de estilos de impresión |
 | de derecha a izquierda | no hay idiomas que lo pidan; si aparece, cambia el layout y no las piezas |
