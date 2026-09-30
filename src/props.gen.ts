@@ -2487,6 +2487,13 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "required": false,
         "def": "'brand'",
         "doc": "`brand` para lo que avanza y `ok` para lo que terminó; `warn` y `bad` solo cuando llenar la barra es el problema."
+      },
+      {
+        "name": "size",
+        "type": "'sm' | 'md'",
+        "required": false,
+        "def": "'md'",
+        "doc": "`sm` es la barra fina, para la que va pegada a un encabezado."
       }
     ],
     "html": "div",

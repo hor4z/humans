@@ -55,23 +55,8 @@
   }
 
   .progress {
-    display: flex;
-    height: 0.75rem;
-    overflow: hidden;
-    border-radius: var(--radius-full);
     margin-inline: 0.75rem;
     margin-bottom: 0.75rem;
-    background-color: var(--track);
-  }
-
-  .fill {
-    display: block;
-    height: 100%;
-    border-radius: var(--radius-full);
-    background-color: var(--brand);
-    transition-property: inline-size;
-    transition-duration: var(--duration-content);
-    transition-timing-function: var(--ease-out);
   }
 
   .body {

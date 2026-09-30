@@ -2,6 +2,7 @@ import s from './self-assessment.module.css'
 import { useId, useState, type ReactNode } from 'react'
 import { CriterionCard, namesFor, type Criterion } from '../criterion-card/criterion-card'
 import { Icon } from '../../../icon/icon'
+import { Progress } from '../../../progress/progress'
 import { cx } from '../../../lib/cx'
 import { counted } from '../../../lib/number'
 import { useDisclosure } from '../../../lib/use-disclosure'
@@ -68,12 +69,7 @@ function Root({ criteria, value, onValueChange, defaultOpen = true, children, cl
         </span>
       </div>
 
-      <div aria-hidden className={s.progress}>
-        <span
-          style={{ inlineSize: `${criteria.length === 0 ? 0 : (placed / criteria.length) * 100}%` }}
-          className={s.fill}
-        />
-      </div>
+      <Progress value={placed} max={criteria.length} label="Aspectos resueltos" className={s.progress} />
 
       <div className={cx(s.body, panel.open && s.bodyOpen)}>
         <div id={bodyId} inert={!panel.open} className={s.bodyInner}>
