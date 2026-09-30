@@ -42,7 +42,7 @@ function Hint({ children }: { children: ReactNode }) {
 
 /** Un cuadro comparativo que se completa: dos o tres cosas en las columnas, en qué se las mira en los renglones. La grilla es de quien arma la consigna y las celdas son de quien la resuelve, así que nadie compara peras con manzanas por accidente. */
 function Root({
-  rows, columns, value, onChange, lines = 1, readOnly, children, className,
+  rows, columns, value, onValueChange, lines = 1, readOnly, children, className,
 }: {
   /** En qué se comparan, en el orden en que se leen. */
   rows: CompareRow[]
@@ -50,8 +50,8 @@ function Root({
   columns: CompareColumn[]
   /** Lo cargado, por renglón y después por columna. */
   value: Record<string, Record<string, string>>
-  /** Recibe el renglón, la columna y el texto nuevo. */
-  onChange?: (rowId: string, columnId: string, next: string) => void
+  /** Recibe el cuadro entero con la celda nueva adentro. */
+  onValueChange?: (next: Record<string, Record<string, string>>) => void
   /** Los renglones de arranque de cada celda. Uno, porque acá entra una frase: la celda crece sola hasta el triple si hace falta. */
   lines?: number
   /** Se lee y no se completa. */
@@ -65,9 +65,9 @@ function Root({
   const [prompt, rest] = takePart(children, Prompt)
   const [hint] = takePart(rest, Hint)
 
-  const quieto = readOnly || !onChange
-  const celda = (r: CompareRow, c: CompareColumn) => value[r.id]?.[c.id] ?? ''
-  const nombra = (r: CompareRow, c: CompareColumn) =>
+  const still = readOnly || !onValueChange
+  const cell = (r: CompareRow, c: CompareColumn) => value[r.id]?.[c.id] ?? ''
+  const names = (r: CompareRow, c: CompareColumn) =>
     columns.length === 1 ? r.label : `${r.label} de ${c.label}`
 
   return (
@@ -92,17 +92,17 @@ function Root({
               <Table.Cell><Table.Title>{r.label}</Table.Title></Table.Cell>
               {columns.map(c => (
                 <Table.Cell key={c.id}>
-                  {quieto
-                    ? <span className={cx(s.text, !celda(r, c) && s.empty)}>{celda(r, c) || 'Sin completar'}</span>
+                  {still
+                    ? <span className={cx(s.text, !cell(r, c) && s.empty)}>{cell(r, c) || 'Sin completar'}</span>
                     : (
                         <Textarea
                           rows={lines}
                           maxRows={lines * 3}
-                          value={celda(r, c)}
+                          value={cell(r, c)}
                           placeholder={r.placeholder}
-                          aria-label={nombra(r, c)}
+                          aria-label={names(r, c)}
                           className={s.control}
-                          onChange={e => onChange(r.id, c.id, e.target.value)}
+                          onChange={e => onValueChange?.({ ...value, [r.id]: { ...value[r.id], [c.id]: e.target.value } })}
                         />
                       )}
                 </Table.Cell>

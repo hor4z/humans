@@ -38,7 +38,7 @@
     transition-timing-function: var(--ease-out);
   }
 
-  .railItemActive {
+  .railItemCurrent {
     color: var(--brand-ink);
 
     &::before {
@@ -52,7 +52,7 @@
     }
   }
 
-  .railItemIdle {
+  .railItemPlain {
     color: var(--text);
   }
 
@@ -181,7 +181,7 @@
   }
 
   @media (hover:hover) {
-    .railItemIdle:hover {
+    .railItemPlain:hover {
         background-color: var(--surface-hover);
     }
   }

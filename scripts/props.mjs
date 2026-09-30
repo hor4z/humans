@@ -60,7 +60,7 @@ const extract = (file) => {
   })
 
   /** Lo que el kit dibuja de una función: sus props, de qué etiqueta hereda y su docblock. */
-  const leer = (n) => {
+  const read = (n) => {
     const param = n.parameters?.[0]
     if (!param) return null
 
@@ -89,13 +89,11 @@ const extract = (file) => {
     return { props: rows, ...(html ? { html } : {}), ...(doc ? { doc } : {}) }
   }
 
-  // todas las declaraciones locales, porque las partes de una familia no se exportan
   const locales = new Map()
   ts.forEachChild(sf, (n) => {
     if (ts.isFunctionDeclaration(n) && n.name) locales.set(n.name.text, n)
   })
 
-  // las familias: export const Modal = Object.assign(Root, { Header, Title })
   const enFamilia = new Set()
   ts.forEachChild(sf, (n) => {
     if (!ts.isVariableStatement(n)) return
@@ -107,12 +105,12 @@ const extract = (file) => {
       if (!call || !ts.isCallExpression(call)) continue
       if (call.expression.getText(sf) !== 'Object.assign') continue
 
-      const [raiz, partes] = call.arguments
-      const raizNode = locales.get(raiz?.getText(sf))
+      const [root, partes] = call.arguments
+      const raizNode = locales.get(root?.getText(sf))
       if (raizNode) {
-        enFamilia.add(raiz.getText(sf))
+        enFamilia.add(root.getText(sf))
         const doc = docDe(n) || docDe(decl)
-        const leido = leer(raizNode)
+        const leido = read(raizNode)
         if (leido) pieces[name] = doc ? { ...leido, doc } : leido
       }
       if (!partes || !ts.isObjectLiteralExpression(partes)) continue
@@ -125,19 +123,18 @@ const extract = (file) => {
         const parteNode = locales.get(destino)
         if (!parteNode) continue
         enFamilia.add(destino)
-        const leido = leer(parteNode)
+        const leido = read(parteNode)
         if (leido) pieces[`${name}.${alias}`] = leido
       }
     }
   })
 
-  // las piezas sueltas, que siguen siendo un export function
   ts.forEachChild(sf, (n) => {
     if (!ts.isFunctionDeclaration(n) || !n.name) return
     if (!n.modifiers?.some(m => m.kind === ts.SyntaxKind.ExportKeyword)) return
     const name = n.name.text
     if (!/^[A-Z]/.test(name) || enFamilia.has(name)) return
-    const leido = leer(n)
+    const leido = read(n)
     if (leido) pieces[name] = leido
   })
 
@@ -161,8 +158,8 @@ const extract = (file) => {
   return pieces
 }
 
-const todo = {}
-for (const p of pieces(src).sort((a, b) => a.name.localeCompare(b.name))) if (p.file?.endsWith('.tsx')) Object.assign(todo, extract(p.file))
+const all = {}
+for (const p of pieces(src).sort((a, b) => a.name.localeCompare(b.name))) if (p.file?.endsWith('.tsx')) Object.assign(all, extract(p.file))
 
 const site = {}
 for (const d of demos(kitSrc)) {
@@ -197,7 +194,7 @@ import type { ComponentDoc } from '@milo/ui/props'
 
 export const sitePropsByComponent: Record<string, ComponentDoc> = ${JSON.stringify(site, null, 2)}
 `
-const outputs = [[out, render(todo)], [siteOut, siteBody]]
+const outputs = [[out, render(all)], [siteOut, siteBody]]
 
 if (process.argv.includes('--check')) {
   const stale = outputs.filter(([file, body]) => { try { return readFileSync(file, 'utf8') !== body } catch { return true } })
@@ -205,8 +202,8 @@ if (process.argv.includes('--check')) {
     console.error('✗ props.gen.ts quedó viejo: corré `npm run props`')
     process.exit(1)
   }
-  console.log(`✓ props.gen.ts al día (${Object.keys(todo).length} piezas, ${Object.keys(site).length} del sitio)`)
+  console.log(`✓ props.gen.ts al día (${Object.keys(all).length} piezas, ${Object.keys(site).length} del sitio)`)
 } else {
   for (const [file, body] of outputs) writeFileSync(file, body)
-  console.log(`✓ ${Object.keys(todo).length} piezas, ${Object.values(todo).flatMap(p => p.props).length} props, ${Object.keys(site).length} del sitio`)
+  console.log(`✓ ${Object.keys(all).length} piezas, ${Object.values(all).flatMap(p => p.props).length} props, ${Object.keys(site).length} del sitio`)
 }

@@ -40,15 +40,15 @@ export function namesFor(criterion: Criterion): string[] | undefined {
 }
 
 /** Un aspecto adentro de una rúbrica: la marca, el nombre y, plegados, sus renglones. Cerrado ocupa una fila, así que una rúbrica de ocho aspectos mide lo mismo que una de dos. */
-export function CriterionCard({ criterion, total, open, onToggle, onRemove, level, onLevel, meta, children, className }: {
+export function CriterionCard({ criterion, total, open, onOpenChange, onRemove, level, onLevel, meta, children, className }: {
   /** Lo que la tarjeta muestra. */
   criterion: Criterion
   /** La suma de los pesos de la rúbrica: con eso la tarjeta dice cuánto vale este aspecto. */
   total: number
   /** Es controlada: la rúbrica decide cuál está abierta. */
   open: boolean
-  /** Recibe el pedido de abrir o cerrar. */
-  onToggle: () => void
+  /** Recibe si tiene que quedar abierta. */
+  onOpenChange: (open: boolean) => void
   /** Sin esto el aspecto no se puede sacar. */
   onRemove?: () => void
   /** En qué nivel quedó: el índice del renglón elegido. Los renglones son excluyentes, así que es uno y no una lista. */
@@ -64,7 +64,7 @@ export function CriterionCard({ criterion, total, open, onToggle, onRemove, leve
   const id = useId()
   const titleId = `${id}-title`
   const bodyId = `${id}-body`
-  const nombres = namesFor(criterion)
+  const names = namesFor(criterion)
 
   const roving = useRovingRadio(
     String(level ?? 0),
@@ -80,7 +80,7 @@ export function CriterionCard({ criterion, total, open, onToggle, onRemove, leve
           aria-expanded={open}
           aria-controls={bodyId}
           aria-labelledby={titleId}
-          onClick={onToggle}
+          onClick={() => onOpenChange(!open)}
           className={s.trigger}
         >
           <Icon
@@ -122,25 +122,25 @@ export function CriterionCard({ criterion, total, open, onToggle, onRemove, leve
               className={s.ladder}
             >
               {criterion.levels.map((text, i) => {
-                const elegido = i === level
-                const cuerpo = (
+                const chosen = i === level
+                const body = (
                   <>
-                    {onLevel || elegido
+                    {onLevel || chosen
                       ? (
-                          <span aria-hidden className={cx(s.pick, elegido && s.met)}>
-                            {elegido && <Icon name="check" size={12} weight={600} />}
+                          <span aria-hidden className={cx(s.pick, chosen && s.met)}>
+                            {chosen && <Icon name="check" size={12} weight={600} />}
                           </span>
                         )
                       : <span aria-hidden className={s.bullet} />}
-                    <span className={cx(s.stepText, elegido && s.stepMet)}>
-                      {nombres?.[i] && (
+                    <span className={cx(s.stepText, chosen && s.stepMet)}>
+                      {names?.[i] && (
                         <>
-                          <span className={s.levelName}>{nombres[i]}</span>
+                          <span className={s.levelName}>{names[i]}</span>
                           <span aria-hidden className={s.separator}>·</span>
                         </>
                       )}
                       {text}
-                      {!onLevel && elegido && (
+                      {!onLevel && chosen && (
                         <span className="sr-only">, es el nivel en el que quedó</span>
                       )}
                     </span>
@@ -154,15 +154,15 @@ export function CriterionCard({ criterion, total, open, onToggle, onRemove, leve
                             ref={roving.ref(String(i))}
                             type="button"
                             role="radio"
-                            aria-checked={elegido}
+                            aria-checked={chosen}
                             tabIndex={roving.tabIndex(String(i))}
                             onClick={() => onLevel(i)}
                             className={s.option}
                           >
-                            {cuerpo}
+                            {body}
                           </button>
                         )
-                      : <span className={s.option}>{cuerpo}</span>}
+                      : <span className={s.option}>{body}</span>}
                   </li>
                 )
               })}

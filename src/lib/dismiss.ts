@@ -1,6 +1,6 @@
 import { useEffect, type RefObject } from 'react'
 
-const dentro = (refs: RefObject<HTMLElement | null>[], t: EventTarget | null) =>
+const isInside = (refs: RefObject<HTMLElement | null>[], t: EventTarget | null) =>
   t instanceof Node && refs.some(r => r.current?.contains(t))
 
 /** Soltar algo al tocar afuera, y nada más. Va con `pointerdown` y no con `click` porque el mismo gesto que abre otra cosa la cerraría y la reabriría. */
@@ -11,7 +11,7 @@ export function useOutside(
 ) {
   useEffect(() => {
     if (!active) return
-    const outside = (e: PointerEvent) => { if (!dentro(refs, e.target)) close() }
+    const outside = (e: PointerEvent) => { if (!isInside(refs, e.target)) close() }
     document.addEventListener('pointerdown', outside)
     return () => document.removeEventListener('pointerdown', outside)
   }, [active])
@@ -27,7 +27,7 @@ export function useDismiss(
   useEffect(() => {
     if (!active) return
     const scrolled = (e: Event) => {
-      if (e.type === 'scroll' && dentro(refs, e.target)) return
+      if (e.type === 'scroll' && isInside(refs, e.target)) return
       close()
     }
     window.addEventListener('scroll', scrolled, true)

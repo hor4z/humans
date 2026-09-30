@@ -12,6 +12,8 @@ type TextareaProps = Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'rows' | 
   resize?: 'auto' | 'vertical' | 'none'
   /** Muestra la cuenta abajo a la derecha. Lee `maxLength` y `minLength`; sin ninguno de los dos cuenta y nada más. */
   counter?: boolean
+  /** Recibe el texto nuevo, no el evento. El `onChange` nativo sigue andando. */
+  onValueChange?: (v: string) => void
 }
 
 /** Lo que la cuenta dice, que no siempre es un número. */
@@ -38,7 +40,7 @@ const counterInk = {
 
 /** El campo de varias líneas: la misma caja que `TextField`, estirada. */
 export function Textarea({
-  rows = 3, maxRows, resize = 'auto', counter, className, onChange, value, defaultValue, ...rest
+  rows = 3, maxRows, resize = 'auto', counter, className, onChange, onValueChange, value, defaultValue, ...rest
 }: TextareaProps) {
   const ref = useRef<HTMLTextAreaElement>(null)
   const field = useField()
@@ -96,7 +98,7 @@ export function Textarea({
         rows={rows}
         value={value}
         defaultValue={defaultValue}
-        onChange={e => { measure(); setOwnValue(e.target.value); onChange?.(e) }}
+        onChange={e => { measure(); setOwnValue(e.target.value); onChange?.(e); onValueChange?.(e.target.value) }}
         className={cx(
           cls.input,
           counter ? cls.inputWithCounter : cls.inputAlone,

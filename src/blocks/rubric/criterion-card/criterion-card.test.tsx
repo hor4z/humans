@@ -11,7 +11,7 @@ const criterion: Criterion = {
   levels: ['Una sola medición', 'Las tres, sin el error', 'Las tres, con el error'],
 }
 
-const arma = (props: Record<string, unknown> = {}) => {
+const setup = (props: Record<string, unknown> = {}) => {
   const onToggle = vi.fn()
   const onRemove = vi.fn()
   render(
@@ -19,7 +19,7 @@ const arma = (props: Record<string, unknown> = {}) => {
       criterion={criterion}
       total={12}
       open
-      onToggle={onToggle}
+      onOpenChange={onToggle}
       onRemove={onRemove}
       {...props}
     />,
@@ -29,47 +29,47 @@ const arma = (props: Record<string, unknown> = {}) => {
 
 describe('CriterionCard', () => {
   it('la cabecera pliega, y toma su nombre del título de al lado', async () => {
-    const { onToggle } = arma()
-    const disparador = screen.getByRole('button', { name: /^Toma de datos/ })
+    const { onToggle } = setup()
+    const trigger = screen.getByRole('button', { name: /^Toma de datos/ })
 
-    expect(disparador).toHaveAttribute('aria-expanded', 'true')
-    await userEvent.click(disparador)
+    expect(trigger).toHaveAttribute('aria-expanded', 'true')
+    await userEvent.click(trigger)
     expect(onToggle).toHaveBeenCalled()
   })
 
   it('cerrada, los niveles no juntan foco ni los lee nadie', () => {
-    arma({ open: false })
-    const disparador = screen.getByRole('button', { name: /^Toma de datos/ })
-    expect(disparador).toHaveAttribute('aria-expanded', 'false')
-    expect(document.getElementById(disparador.getAttribute('aria-controls')!))
+    setup({ open: false })
+    const trigger = screen.getByRole('button', { name: /^Toma de datos/ })
+    expect(trigger).toHaveAttribute('aria-expanded', 'false')
+    expect(document.getElementById(trigger.getAttribute('aria-controls')!))
       .toHaveAttribute('inert')
   })
 
   it('dice cuánto vale, para quien no ve la barra de la rúbrica', () => {
-    arma()
+    setup()
     expect(screen.getByText(', vale 25% de la nota')).toBeInTheDocument()
   })
 
   it('los niveles van en orden, del más flojo al más completo', () => {
-    arma()
-    const pasos = screen.getAllByRole('listitem')
-    expect(pasos.map(p => p.textContent)).toEqual(criterion.levels)
+    setup()
+    const steps = screen.getAllByRole('listitem')
+    expect(steps.map(p => p.textContent)).toEqual(criterion.levels)
   })
 
   it('el tacho dice de qué criterio es, y avisa', async () => {
-    const { onRemove } = arma()
+    const { onRemove } = setup()
     await userEvent.click(screen.getByRole('button', { name: 'Sacar Toma de datos de la rúbrica' }))
     expect(onRemove).toHaveBeenCalled()
   })
 
   it('sin onRemove no hay nada que sacar', () => {
-    arma({ onRemove: undefined })
+    setup({ onRemove: undefined })
     expect(screen.queryByRole('button', { name: /^Sacar/ })).not.toBeInTheDocument()
   })
 
   it('definiendo la rúbrica no hay nada que marcar: los renglones van con viñeta', () => {
     const { container } = render(
-      <CriterionCard criterion={criterion} total={12} open onToggle={() => {}} />,
+      <CriterionCard criterion={criterion} total={12} open onOpenChange={() => {}} />,
     )
     expect(container.querySelectorAll('[class*=bullet]')).toHaveLength(criterion.levels.length)
     expect(container.querySelector('[class*=pick]')).not.toBeInTheDocument()
@@ -77,7 +77,7 @@ describe('CriterionCard', () => {
 
   it('leyendo una devolución, la marca va solo en el nivel que quedó', () => {
     const { container } = render(
-      <CriterionCard criterion={criterion} total={12} level={1} open onToggle={() => {}} />,
+      <CriterionCard criterion={criterion} total={12} level={1} open onOpenChange={() => {}} />,
     )
     expect(container.querySelectorAll('[class*=pick]')).toHaveLength(1)
     expect(container.querySelectorAll('[class*=bullet]')).toHaveLength(criterion.levels.length - 1)

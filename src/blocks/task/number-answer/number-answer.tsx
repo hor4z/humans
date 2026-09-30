@@ -18,12 +18,12 @@ function Hint({ children }: { children: ReactNode }) {
 
 /** Un número que sale de una cuenta: un promedio, una diferencia, una métrica. La tolerancia existe porque una medición no da siempre lo mismo, así que la respuesta es un rango y no un valor. */
 function Root({
-  value, onChange, unit, placeholder, expected, tolerance = 0, revealed, readOnly, children, className,
+  value, onValueChange, unit, placeholder, expected, tolerance = 0, revealed, readOnly, children, className,
 }: {
   /** Lo escrito, tal cual, para no pelearle al que está tipeando. */
   value: string
   /** Recibe el texto nuevo. Sin esto se lee y no se responde. */
-  onChange?: (next: string) => void
+  onValueChange?: (next: string) => void
   /** Lo que se mide: dB, cm, segundos. Va pegado al campo, no adentro del número. */
   unit?: string
   /** La forma que se espera, no el número que va: con `expected` puesto, un ejemplo verosímil se copia y la pregunta deja de preguntar nada. */
@@ -45,9 +45,9 @@ function Root({
   const [prompt, rest] = takePart(children, Prompt)
   const [hint] = takePart(rest, Hint)
 
-  const conUnidad = (v: number) => (unit ? `${amount(v)} ${unit}` : amount(v))
+  const withUnit = (v: number) => (unit ? `${amount(v)} ${unit}` : amount(v))
   const n = parseNumber(value)
-  const quieto = revealed || readOnly || !onChange
+  const still = revealed || readOnly || !onValueChange
   const acertó = revealed && expected !== undefined && n !== null && Math.abs(n - expected) <= tolerance
 
   return (
@@ -61,9 +61,9 @@ function Root({
           inputMode="decimal"
           value={value}
           placeholder={placeholder}
-          readOnly={quieto}
+          readOnly={still}
           aria-labelledby={promptId}
-          onChange={e => onChange?.(e.target.value)}
+          onChange={e => onValueChange?.(e.target.value)}
           suffix={unit ? <span className={s.unit}>{unit}</span> : undefined}
           className={s.control}
         />
@@ -74,7 +74,7 @@ function Root({
             </span>
             {acertó
               ? 'Cae adentro del margen'
-              : `Da ${conUnidad(expected)}${tolerance ? `, con ${amount(tolerance)} de margen` : ''}`}
+              : `Da ${withUnit(expected)}${tolerance ? `, con ${amount(tolerance)} de margen` : ''}`}
           </p>
         )}
       </div>

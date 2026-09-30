@@ -27,12 +27,12 @@
     transition-timing-function: var(--ease-out);
   }
 
-  .tabActive {
+  .tabSelected {
     font-weight: var(--font-weight-semibold);
     color: var(--brand-ink);
   }
 
-  .tabIdle {
+  .tabPlain {
     color: var(--text-muted);
   }
 
@@ -51,7 +51,7 @@
   }
 
   @media (hover:hover) {
-    .tabIdle:hover {
+    .tabPlain:hover {
         color: var(--text);
     }
   }

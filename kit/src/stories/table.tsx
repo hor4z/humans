@@ -5,7 +5,8 @@ import { Chip } from '@milo/ui/chip'
 import { ColumnPicker } from '@milo/ui/column-picker'
 import { Dropdown } from '@milo/ui/dropdown'
 import { EmptyState } from '@milo/ui/empty-state'
-import { Filter, FilterBar, FilterReset, facets } from '@milo/ui/filter'
+import { Filter } from '@milo/ui/filter'
+import { facets } from '@milo/ui/lib/facets'
 import { IconButton } from '@milo/ui/icon-button'
 import { fold } from '@milo/ui/lib/cx'
 import { timeAgo } from '@milo/ui/lib/time'
@@ -13,14 +14,11 @@ import { Pagination } from '@milo/ui/pagination'
 import { Search } from '@milo/ui/search'
 import { Table } from '@milo/ui/table'
 import { A11y, Example, Footnote, Mono, Page, Practices, Props, Section, Stack } from '../kit'
-
-const face = (n: number) => `/avatars/${String(n).padStart(2, '0')}.webp`
+import { person as p } from '../fixtures'
 
 const NOW = new Date('2026-03-09T15:00:00-03:00')
 const ago = (ms: number) => timeAgo(new Date(NOW.getTime() - ms), { now: NOW })
 const MIN = 60_000, H = 60 * MIN, D = 24 * H
-
-const p = (name: string, photo?: number) => ({ name, src: photo ? face(photo) : undefined })
 
 const tone = { 'Abierta': 'green', 'Corregida': 'blue' } as const
 
@@ -138,7 +136,7 @@ export function TableStory() {
         title="La tabla entera"
         note="Una tabla de trabajo lleva tres cosas más que la grilla: el filtro, el total y la paginación. Van juntas porque se leen juntas: cuántas hay depende de con qué se recortó."
       >
-        <FilterBar className={cls.filterGap}>
+        <Filter.Bar className={cls.filterGap}>
           <Search
             value={query}
             onValueChange={narrow(setQuery)}
@@ -162,13 +160,13 @@ export function TableStory() {
             onValueChange={narrow(setPickedPeople)}
             options={people.map(p => ({ value: p.name, count: peopleCounts[p.name] ?? 0, person: p }))}
           />
-          {filtering && <FilterReset onClick={clear} />}
+          {filtering && <Filter.Reset onClick={clear} />}
           <ColumnPicker
             columns={columns}
             value={visible}
             onValueChange={setVisible}
           />
-        </FilterBar>
+        </Filter.Bar>
 
         <Table
           label="Actividades del espacio"
@@ -248,7 +246,7 @@ export function TableStory() {
                 <EmptyState size="sm" icon="search_off">
                   <EmptyState.Title>Ninguna actividad con eso</EmptyState.Title>
                   <EmptyState.Body>Probá con otras palabras, o sacá alguno de los filtros puestos.</EmptyState.Body>
-                  <EmptyState.Action><FilterReset onClick={clear}>Limpiar los filtros</FilterReset></EmptyState.Action>
+                  <EmptyState.Action><Filter.Reset onClick={clear}>Limpiar los filtros</Filter.Reset></EmptyState.Action>
                 </EmptyState>
               </Table.Empty>
             )}

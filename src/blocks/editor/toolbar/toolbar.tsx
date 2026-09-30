@@ -69,7 +69,7 @@ function Button({ icon, label, pressed, disabled, onClick }: {
         aria-label={label}
         disabled={disabled}
         onClick={onClick}
-        className={cx(s.button, s.disabled, s.buttonOff)}
+        className={cx(s.button, s.disabled, s.buttonPlain)}
       >
         <Icon name={icon} size={18} />
       </button>

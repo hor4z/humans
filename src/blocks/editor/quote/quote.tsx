@@ -16,11 +16,11 @@ function Source({ children }: { children: ReactNode }) {
 }
 
 function Root({ children, cite, className }: QuoteProps) {
-  const [source, texto] = takePart(children, Source)
+  const [source, text] = takePart(children, Source)
   return (
     <figure className={cx(cls.root, className)}>
       <blockquote cite={cite} className={cls.text}>
-        {texto}
+        {text}
       </blockquote>
       {source.length > 0 && (
         <figcaption className={cls.caption}>

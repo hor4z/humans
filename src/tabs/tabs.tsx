@@ -76,25 +76,25 @@ function Tab({ value, className, children, ...props }: ComponentPropsWithoutRef<
   value: string
 }) {
   const { value: current, setValue, name } = useTabs('Tab')
-  const active = current === value
+  const selected = current === value
   return (
     <button
       type="button"
       role="tab"
       id={`${name}-tab-${value}`}
-      aria-selected={active}
+      aria-selected={selected}
       aria-controls={`${name}-panel-${value}`}
-      tabIndex={active ? 0 : -1}
+      tabIndex={selected ? 0 : -1}
       onClick={() => setValue(value)}
       className={cx(
         s.tab,
-        active ? s.tabActive : s.tabIdle,
+        selected ? s.tabSelected : s.tabPlain,
         className,
       )}
       {...props}
     >
       {children}
-      {active && <span className={s.marker} />}
+      {selected && <span className={s.marker} />}
     </button>
   )
 }

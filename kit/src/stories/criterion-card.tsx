@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { CriterionCard, type Criterion } from '@milo/ui/blocks/rubric/criterion-card'
 import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
-const grafico: Criterion = {
+const chart: Criterion = {
   id: 'grafico',
   label: 'El gráfico',
   weight: 4,
@@ -15,7 +15,7 @@ const grafico: Criterion = {
   ],
 }
 
-const medicion: Criterion = {
+const measurement: Criterion = {
   id: 'medicion',
   label: 'Cómo midieron',
   detail: 'Se mira que los números se puedan comparar entre sí: el mismo aparato en todas las mediciones, los mismos tres momentos en todos los lugares, y anotado qué estaba pasando alrededor.',
@@ -47,29 +47,29 @@ export function CriterionCardStory() {
           <Variant name="una abierta por vez" note="Tocá la flecha de la otra: la primera se cierra sola.">
             <Stack width="sm">
               <CriterionCard
-                criterion={grafico}
+                criterion={chart}
                 total={15}
                 open={open === 'grafico'}
-                onToggle={() => setOpen(o => (o === 'grafico' ? null : 'grafico'))}
+                onOpenChange={() => setOpen(o => (o === 'grafico' ? null : 'grafico'))}
                 onRemove={() => {}}
               />
               <CriterionCard
-                criterion={medicion}
+                criterion={measurement}
                 total={15}
                 open={open === 'medicion'}
-                onToggle={() => setOpen(o => (o === 'medicion' ? null : 'medicion'))}
+                onOpenChange={() => setOpen(o => (o === 'medicion' ? null : 'medicion'))}
                 onRemove={() => {}}
               />
             </Stack>
           </Variant>
           <Variant name="con descripción" note="`detail` se lee recién al abrirla, arriba de los renglones. Plegada sigue siendo una fila, que es lo que la pieza promete.">
             <Stack width="sm">
-              <CriterionCard criterion={medicion} total={15} open onToggle={() => {}} />
+              <CriterionCard criterion={measurement} total={15} open onOpenChange={() => {}} />
             </Stack>
           </Variant>
           <Variant name="de solo lectura" note="Sin `onRemove` no hay tacho: es la misma tarjeta para quien no escribió la rúbrica.">
             <Stack width="sm">
-              <CriterionCard criterion={grafico} total={15} open onToggle={() => {}} />
+              <CriterionCard criterion={chart} total={15} open onOpenChange={() => {}} />
             </Stack>
           </Variant>
         </Panel>
@@ -91,7 +91,7 @@ export function CriterionCardStory() {
   criterion={aspecto}
   total={sumaDeLosPesos}
   open={abierto === aspecto.id}
-  onToggle={() => abrir(aspecto.id)}
+  onOpenChange={() => abrir(aspecto.id)}
   onRemove={() => sacar(aspecto.id)}
 />`} />
       </Section>

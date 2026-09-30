@@ -23,8 +23,8 @@ describe('Search', () => {
 
   it('la cruz está centrada: es cuadrada y centra su glifo', () => {
     render(<Search value="frac" onValueChange={() => {}} />)
-    const cruz = screen.getByRole('button', { name: 'Limpiar la búsqueda' })
-    expect(style(cruz)).toContain('justify-content: center')
+    const cross = screen.getByRole('button', { name: 'Limpiar la búsqueda' })
+    expect(style(cross)).toContain('justify-content: center')
   })
 
   it('`inputRef` llega al input: es lo que un atajo necesita para enfocarlo', () => {

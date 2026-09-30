@@ -6,10 +6,10 @@ import { SettingsModal } from './settings-modal'
 
 const user = { name: 'Melina Rivero', email: 'melina@milo.app', alias: 'Profe Meli', school: 'Escuela 12' }
 
-function openModal(onClose = () => {}) {
+function openModal(onOpenChange = () => {}) {
   return render(
     <PrefsProvider>
-      <SettingsModal open onClose={onClose} user={user} />
+      <SettingsModal open onOpenChange={onOpenChange} user={user} />
     </PrefsProvider>,
   )
 }
@@ -18,7 +18,7 @@ describe('SettingsModal', () => {
   beforeEach(() => localStorage.clear())
 
   it('cerrado no dibuja nada', () => {
-    render(<PrefsProvider><SettingsModal open={false} onClose={() => {}} user={user} /></PrefsProvider>)
+    render(<PrefsProvider><SettingsModal open={false} onOpenChange={() => {}} user={user} /></PrefsProvider>)
     expect(screen.queryByRole('dialog')).toBeNull()
   })
 
@@ -43,9 +43,9 @@ describe('SettingsModal', () => {
   })
 
   it('Escape cierra', async () => {
-    const onClose = vi.fn()
-    openModal(onClose)
+    const onOpenChange = vi.fn()
+    openModal(onOpenChange)
     await userEvent.keyboard('{Escape}')
-    expect(onClose).toHaveBeenCalledOnce()
+    expect(onOpenChange).toHaveBeenCalledOnce()
   })
 })

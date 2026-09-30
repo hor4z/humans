@@ -1,9 +1,7 @@
 import cls from './avatar.module.css'
 import { Avatar } from '@milo/ui/avatar'
 import { A11y, Demo, Example, Page, Practices, Props, Section } from '../kit'
-
-const face = (n: number) => `/avatars/${String(n).padStart(2, '0')}.webp`
-const person = (name: string, photo?: number) => ({ name, src: photo ? face(photo) : undefined })
+import { face, person } from '../fixtures'
 
 export function AvatarStory() {
   return (

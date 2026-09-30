@@ -5,7 +5,7 @@ import { A11y, Example, Page, Panel, Practices, Props, Section, Variant } from '
 export function ToggleButtonStory() {
   const [bold, setBold] = useState(true)
   const [italic, setItalic] = useState(false)
-  const [soloSinCorregir, setSoloSinCorregir] = useState(false)
+  const [onlyUngraded, setOnlyUngraded] = useState(false)
 
   return (
     <Page
@@ -24,7 +24,7 @@ export function ToggleButtonStory() {
             <ToggleButton size="sm" pressed={italic} onPressedChange={setItalic} icon="format_italic" label="Cursiva" />
           </Variant>
           <Variant name="con texto" note="Un filtro que se prende y se apaga: hay un estado, no una opción entre varias.">
-            <ToggleButton size="sm" pressed={soloSinCorregir} onPressedChange={setSoloSinCorregir} icon="filter_alt">
+            <ToggleButton size="sm" pressed={onlyUngraded} onPressedChange={setOnlyUngraded} icon="filter_alt">
               Solo sin corregir
             </ToggleButton>
           </Variant>

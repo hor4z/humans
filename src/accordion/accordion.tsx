@@ -4,14 +4,22 @@ import { Icon } from '../icon/icon'
 import { cx } from '../lib/cx'
 
 /** Una fila que se abre. Es un `<details>`, así que funciona sin JavaScript. */
-function Item({ defaultOpen, className, children }: {
-  /** Arranca abierta. */
+function Item({ open, defaultOpen, onOpenChange, className, children }: {
+  /** Controlada: la abre y la cierra quien la usa. */
+  open?: boolean
+  /** Arranca abierta y después se maneja sola. */
   defaultOpen?: boolean
+  /** Recibe si quedó abierta, cada vez que cambia. */
+  onOpenChange?: (open: boolean) => void
   className?: string
   children: ReactNode
 }) {
   return (
-    <details open={defaultOpen} className={cx(`${s.root} group`, className)}>
+    <details
+      open={open ?? defaultOpen}
+      onToggle={e => onOpenChange?.(e.currentTarget.open)}
+      className={cx(`${s.root} group`, className)}
+    >
       {children}
     </details>
   )

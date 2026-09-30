@@ -30,7 +30,7 @@ export function TextareaStory() {
             <Textarea
               aria-label="Consigna, con techo de seis filas"
               value={withCap}
-              onChange={e => setWithCap(e.target.value)}
+              onValueChange={setWithCap}
               rows={3}
               maxRows={6}
 
@@ -40,7 +40,7 @@ export function TextareaStory() {
             <Textarea
               aria-label="Consigna, sin techo"
               value={noCap}
-              onChange={e => setNoCap(e.target.value)}
+              onValueChange={setNoCap}
               rows={2}
 
             />
@@ -57,7 +57,7 @@ export function TextareaStory() {
             <Textarea
               aria-label="Devolución para el estudiante"
               value={feedback}
-              onChange={e => setFeedback(e.target.value)}
+              onValueChange={setFeedback}
               counter
               maxLength={400}
               rows={3}
@@ -68,7 +68,7 @@ export function TextareaStory() {
             <Textarea
               aria-label="Devolución con techo corto"
               value={near}
-              onChange={e => setNear(e.target.value)}
+              onValueChange={setNear}
               counter
               maxLength={60}
               rows={3}
@@ -79,7 +79,7 @@ export function TextareaStory() {
             <Textarea
               aria-label="Devolución con mínimo"
               value={belowMin}
-              onChange={e => setBelowMin(e.target.value)}
+              onValueChange={setBelowMin}
               counter
               minLength={20}
               maxLength={400}
@@ -99,7 +99,7 @@ export function TextareaStory() {
             <Textarea
               aria-label="Consigna de la actividad"
               value={short}
-              onChange={e => setShort(e.target.value)}
+              onValueChange={setShort}
               placeholder="Escribí la consigna de la actividad…"
               rows={3}
               maxRows={8}
@@ -120,7 +120,7 @@ export function TextareaStory() {
         <Cluster align="start">
           <Demo width="xs" fill label="auto · el default">
             <Textarea aria-label="Consigna, alto automático"
-              value={mode} onChange={e => setMode(e.target.value)} rows={2} maxRows={6} />
+              value={mode} onValueChange={setMode} rows={2} maxRows={6} />
           </Demo>
           <Demo width="xs" fill label="vertical · el tirador nativo">
             <Textarea aria-label="Consigna, alto arrastrable"
@@ -146,7 +146,7 @@ export function TextareaStory() {
   counter
   maxLength={280}
   value={consigna}
-  onChange={e => setConsigna(e.target.value)}
+  onValueChange={setConsigna}
 />`} />
         </Section>
 

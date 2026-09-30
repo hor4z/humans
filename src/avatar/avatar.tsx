@@ -4,7 +4,7 @@ import { colorForName, markFill } from '../lib/colors'
 import { cx } from '../lib/cx'
 
 /** La inicial de una persona o de un espacio: una letra, o dos si el nombre las tiene. */
-function iniciales(name: string) {
+function initials(name: string) {
   return name.trim().split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase()
 }
 
@@ -19,11 +19,11 @@ function Root({ name, src, size = 40, label, className }: {
   label?: string
   className?: string
 }) {
-  const [rota, setRota] = useState(false)
-  useEffect(() => { setRota(false) }, [src])
+  const [broken, setBroken] = useState(false)
+  useEffect(() => { setBroken(false) }, [src])
 
   const fill = markFill[colorForName(name)]
-  const muestraFoto = Boolean(src) && !rota
+  const showsPhoto = Boolean(src) && !broken
 
   return (
     <span
@@ -31,14 +31,14 @@ function Root({ name, src, size = 40, label, className }: {
       style={{ width: size, height: size, fontSize: Math.max(10, Math.round(size * 0.3)), lineHeight: 1 }}
       {...(label ? { role: 'img', 'aria-label': label } : { 'aria-hidden': true })}
     >
-      {iniciales(name)}
-      {muestraFoto && (
+      {initials(name)}
+      {showsPhoto && (
         <img
           src={src}
           alt=""
           loading="lazy"
           decoding="async"
-          onError={() => setRota(true)}
+          onError={() => setBroken(true)}
           className={cls.photo}
         />
       )}
@@ -88,7 +88,6 @@ function Group({
           +{rest}
         </span>
       )}
-      {/* va en sr-only y no en `hidden`: lo oculto con `hidden` no lo lee nadie */}
       <span className="sr-only">{label ?? people.map(p => p.name).join(', ')}</span>
     </span>
   )

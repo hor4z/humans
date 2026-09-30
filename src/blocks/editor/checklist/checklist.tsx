@@ -20,12 +20,12 @@ function Footer({ hint, children }: {
   hint?: string
   children: ReactNode
 }) {
-  const glifo = <Icon name="info" size={16} className={s.footerIcon} />
+  const glyphName = <Icon name="info" size={16} className={s.footerIcon} />
   return (
     <p className={`${s.footer} ${s.footerQuiet} icon-filled`}>
       {hint
-        ? <Tooltip label={hint}><span className={s.footerNote}>{glifo}</span></Tooltip>
-        : glifo}
+        ? <Tooltip label={hint}><span className={s.footerNote}>{glyphName}</span></Tooltip>
+        : glyphName}
       <span>{children}</span>
     </p>
   )
@@ -44,7 +44,7 @@ type ItemProps = {
 /** Un paso. El estado lo dice la marca de la izquierda, no el color del texto. */
 function Item({ state = 'todo', hint, onClick, children }: ItemProps) {
   const Tag = onClick && state !== 'blocked' ? 'button' : 'div'
-  const texto = (
+  const text = (
     <>
       <span className={s.mark}>
         {state === 'done' && (
@@ -72,13 +72,13 @@ function Item({ state = 'todo', hint, onClick, children }: ItemProps) {
       data-state={state}
       className={cx(s.item, s.itemMotion, state === 'blocked' && s.blocked, Tag === 'button' && s.interactive)}
     >
-      {texto}
+      {text}
     </Tag>
   )
 }
 
 /** Los primeros pasos de algo, con cuánto va hecho a la vista y el detalle plegado. El contador sale de los pasos, así que no se puede despegar de ellos. */
-function Root({ defaultOpen = false, size = 'md', value, onChange, children, className }: {
+function Root({ defaultOpen = false, size = 'md', value, onValueChange, children, className }: {
   /** Arranca abierta. Cerrada ocupa una fila y dice lo mismo. */
   defaultOpen?: boolean
   /** `sm` adentro de un panel denso: los pasos bajan a texto de cuerpo y las filas se achican. */
@@ -86,7 +86,7 @@ function Root({ defaultOpen = false, size = 'md', value, onChange, children, cla
   /** Cuántos pasos van hechos. Con esto la lista es una escalera: cada paso incluye a los de arriba, así que el estado de cada uno lo decide la pieza y no el call site. */
   value?: number
   /** Recibe cuántos pasos quedan hechos al tocar uno. Tocar el que ya es el último desmarca de ahí para abajo. */
-  onChange?: (value: number) => void
+  onValueChange?: (value: number) => void
   children: ReactNode
   className?: string
 }) {
@@ -94,29 +94,29 @@ function Root({ defaultOpen = false, size = 'md', value, onChange, children, cla
   const bodyId = useId()
   const titleId = useId()
 
-  const [title, sinTitle] = takePart(children, Title)
-  const [footer, cuerpo] = takePart(sinTitle, Footer)
+  const [title, withoutTitle] = takePart(children, Title)
+  const [footer, body] = takePart(withoutTitle, Footer)
 
-  const pasos = Children.toArray(cuerpo).filter(c => isValidElement(c) && c.type === Item)
-  const total = pasos.length
-  const escalera = value !== undefined
-  const hechos = escalera
+  const steps = Children.toArray(body).filter(c => isValidElement(c) && c.type === Item)
+  const total = steps.length
+  const ladder = value !== undefined
+  const done = ladder
     ? Math.min(Math.max(value, 0), total)
-    : pasos.filter(c => (isValidElement<ItemProps>(c) ? c.props.state : undefined) === 'done').length
-  const pct = total === 0 ? 0 : (hechos / total) * 100
+    : steps.filter(c => (isValidElement<ItemProps>(c) ? c.props.state : undefined) === 'done').length
+  const pct = total === 0 ? 0 : (done / total) * 100
 
-  let paso = -1
-  const items = escalera
-    ? Children.map(cuerpo, c => {
+  let step = -1
+  const items = ladder
+    ? Children.map(body, c => {
         if (!isValidElement(c) || c.type !== Item) return c
-        paso += 1
-        const at = paso
+        step += 1
+        const at = step
         return cloneElement(c as ReactElement<ItemProps>, {
-          state: at < hechos ? 'done' : 'todo',
-          onClick: () => onChange?.(hechos === at + 1 ? at : at + 1),
+          state: at < done ? 'done' : 'todo',
+          onClick: () => onValueChange?.(done === at + 1 ? at : at + 1),
         })
       })
-    : cuerpo
+    : body
 
   return (
     <div className={cx(s.root, size === 'sm' && s.compact, className)}>
@@ -137,7 +137,7 @@ function Root({ defaultOpen = false, size = 'md', value, onChange, children, cla
         </button>
         <p id={titleId} className={s.title}>{title}</p>
         <p className={`${s.count} tabular`}>
-          {hechos}/{total}
+          {done}/{total}
           <span className="sr-only"> pasos hechos</span>
         </p>
       </div>

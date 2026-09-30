@@ -6,7 +6,7 @@ import { Slider } from './slider'
 describe('Slider', () => {
   it('es un input de rango con su nombre y avisa el valor nuevo', () => {
     const onChange = vi.fn()
-    render(<Slider value={40} onChange={onChange} label="Duración" />)
+    render(<Slider value={40} onValueChange={onChange} label="Duración" />)
     const s = screen.getByRole('slider', { name: 'Duración' })
     expect(s).toHaveValue('40')
     fireEvent.change(s, { target: { value: '55' } })
@@ -14,7 +14,7 @@ describe('Slider', () => {
   })
 
   it('el rango y el paso son los que se le pasan', () => {
-    render(<Slider value={12} onChange={() => {}} min={12} max={40} step={2} label="Tamaño" />)
+    render(<Slider value={12} onValueChange={() => {}} min={12} max={40} step={2} label="Tamaño" />)
     const s = screen.getByRole('slider')
     expect(s).toHaveAttribute('min', '12')
     expect(s).toHaveAttribute('max', '40')
@@ -26,7 +26,7 @@ describe('Slider', () => {
       <Field>
         <Field.Label>Duración</Field.Label>
         <Field.Hint>En minutos</Field.Hint>
-        <Slider value={30} onChange={() => {}} />
+        <Slider value={30} onValueChange={() => {}} />
       </Field>,
     )
     const s = screen.getByRole('slider', { name: 'Duración' })
@@ -34,7 +34,7 @@ describe('Slider', () => {
   })
 
   it('apagado no recibe cambios', () => {
-    render(<Slider value={40} onChange={() => {}} label="Duración" disabled />)
+    render(<Slider value={40} onValueChange={() => {}} label="Duración" disabled />)
     expect(screen.getByRole('slider')).toBeDisabled()
   })
 })

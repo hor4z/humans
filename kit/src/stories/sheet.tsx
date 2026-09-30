@@ -34,7 +34,7 @@ export function SheetStory() {
           <Button variant="brand" onClick={() => setOpen(true)}>Nueva actividad</Button>
         </Canvas>
 
-        <Sheet open={open} onClose={() => setOpen(false)}>
+        <Sheet open={open} onOpenChange={() => setOpen(false)}>
           <Sheet.Header><Sheet.Title>Nueva actividad</Sheet.Title></Sheet.Header>
           <Sheet.Body>
             <Field.Set legend="Lo básico">
@@ -44,7 +44,7 @@ export function SheetStory() {
               </Field>
               <Field>
                 <Field.Label>Espacio</Field.Label>
-                <Select value={space} onChange={setSpace} options={['Matemática · 4.º A', 'Lengua · 6.º', 'Ciencias · 5.º B']} />
+                <Select value={space} onValueChange={setSpace} options={['Matemática · 4.º A', 'Lengua · 6.º', 'Ciencias · 5.º B']} />
               </Field>
               <Field>
                 <Field.Label>Consigna</Field.Label>
@@ -54,7 +54,7 @@ export function SheetStory() {
               <Field>
                 <Field.Label>Entregas fuera de fecha</Field.Label>
                 <Field.Hint>Permitir que entreguen después del cierre</Field.Hint>
-                <Switch checked={late} onChange={setLate} label="Entregas fuera de fecha" />
+                <Switch checked={late} onCheckedChange={setLate} label="Entregas fuera de fecha" />
               </Field>
             </Field.Set>
           </Sheet.Body>
@@ -81,17 +81,17 @@ export function SheetStory() {
           <Button variant="muted" iconStart={<Icon name="filter_list" />} onClick={() => setLeftOpen(true)}>Filtros</Button>
         </Canvas>
 
-        <Sheet open={leftOpen} onClose={() => setLeftOpen(false)} side="left" width={360}>
+        <Sheet open={leftOpen} onOpenChange={() => setLeftOpen(false)} side="left" width={360}>
           <Sheet.Header><Sheet.Title>Filtros</Sheet.Title></Sheet.Header>
           <Sheet.Body>
             <Stack gap="xl">
               <Field>
                 <Field.Label>Espacio</Field.Label>
-                <Select value={spaceFilter} onChange={setSpaceFilter} options={['Todos', 'Matemática · 4.º A', 'Lengua · 6.º']} />
+                <Select value={spaceFilter} onValueChange={setSpaceFilter} options={['Todos', 'Matemática · 4.º A', 'Lengua · 6.º']} />
               </Field>
               <Field>
                 <Field.Label>Estado</Field.Label>
-                <Select value={statusFilter} onChange={setStatusFilter} options={['Cualquiera', 'Abierta', 'Corregida', 'Borrador']} />
+                <Select value={statusFilter} onValueChange={setStatusFilter} options={['Cualquiera', 'Abierta', 'Corregida', 'Borrador']} />
               </Field>
             </Stack>
           </Sheet.Body>
@@ -112,7 +112,7 @@ export function SheetStory() {
       <Section title="Cómo se escribe">
         <Example code={`const { open, onOpen, onClose } = useDisclosure()
 
-<Sheet open={open} onClose={onClose} width={460}>
+<Sheet open={open} onOpenChange={onClose} width={460}>
   <Sheet.Header><Sheet.Title>Nueva actividad</Sheet.Title></Sheet.Header>
   <Sheet.Body>{campos}</Sheet.Body>
   <Sheet.Footer><Button variant="brand">Guardar</Button></Sheet.Footer>

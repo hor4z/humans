@@ -31,15 +31,15 @@ export function SelectStory() {
       >
         <Cluster align="start">
           <Demo label="width 160">
-            <Select value={level} onChange={setLevel} width={160} options={['4.º grado', '5.º grado', '6.º grado', '7.º grado']} />
+            <Select value={level} onValueChange={setLevel} width={160} options={['4.º grado', '5.º grado', '6.º grado', '7.º grado']} />
           </Demo>
           <Demo label="al ancho del contenido">
-            <Select value={subject} onChange={setSubject} options={['Matemática', 'Lengua', 'Ciencias', 'Geografía', 'Convivencia']} />
+            <Select value={subject} onValueChange={setSubject} options={['Matemática', 'Lengua', 'Ciencias', 'Geografía', 'Convivencia']} />
           </Demo>
           <Demo width="sm" label="valor largo · se trunca">
             <Select
               value={long}
-              onChange={setLong}
+              onValueChange={setLong}
               width={280}
               options={['Solo yo', 'Todo el equipo', 'Cualquiera con el link puede ver y comentar']}
             />
@@ -55,7 +55,7 @@ export function SelectStory() {
           <Demo label="un glifo">
             <Select
               value={withIcon}
-              onChange={setWithIcon}
+              onValueChange={setWithIcon}
               width={180}
               leading={<Icon name="calculate" size={16} />}
               options={['Matemática', 'Lengua', 'Ciencias']}
@@ -64,7 +64,7 @@ export function SelectStory() {
           <Demo label="una carpeta de color">
             <Select
               value={space}
-              onChange={setSpace}
+              onValueChange={setSpace}
               width={200}
               leading={<Icon.Folder color="blue" size={16} />}
               options={['Matemática · 4.º A', 'Lengua · 6.º', 'Ciencias · 5.º B']}
@@ -73,7 +73,7 @@ export function SelectStory() {
           <Demo label="un avatar">
             <Select
               value={teacher}
-              onChange={setTeacher}
+              onValueChange={setTeacher}
               width={190}
               leading={<Avatar name="Melina Rivero" size={20} />}
               options={['Melina Rivero', 'Juan Pérez', 'Ana Gómez']}
@@ -102,7 +102,7 @@ export function SelectStory() {
           <Demo label="en vivo · alterna cada 2s">
             <Select
               value={loading ? 'Buscando espacios…' : space}
-              onChange={setSpace}
+              onValueChange={setSpace}
               width={200}
               loading={loading}
               options={['Matemática · 4.º A', 'Lengua · 6.º', 'Ciencias · 5.º B']}
@@ -113,7 +113,7 @@ export function SelectStory() {
 
       <Section title="Cómo se escribe">
         <Example code={`const [espacio, setEspacio] = useState('Matemática')
-<Select value={espacio} onChange={setEspacio} options={espacios} width={180} />`} />
+<Select value={espacio} onValueChange={setEspacio} options={espacios} width={180} />`} />
       </Section>
 
       <Section title="Props">

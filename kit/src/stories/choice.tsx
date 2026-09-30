@@ -3,14 +3,14 @@ import { Button } from '@milo/ui/button'
 import { Choice } from '@milo/ui/blocks/task/choice'
 import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
-const lugares = [
+const places = [
   { id: 'patio', label: 'El patio en el recreo' },
   { id: 'biblioteca', label: 'La biblioteca a las 11' },
   { id: 'pasillo', label: 'El pasillo entre horas' },
   { id: 'aula', label: 'El aula con la puerta cerrada' },
 ]
 
-const cuidados = [
+const care = [
   { id: 'aparato', label: 'Usar siempre el mismo teléfono' },
   { id: 'hora', label: 'Medir a la misma hora en todos los lugares' },
   { id: 'app', label: 'Cambiar de app si una mide más lindo' },
@@ -18,9 +18,9 @@ const cuidados = [
 ]
 
 export function ChoiceStory() {
-  const [una, setUna] = useState<string[]>([])
-  const [varias, setVarias] = useState<string[]>(['aparato'])
-  const [revelado, setRevelado] = useState(false)
+  const [one, setOne] = useState<string[]>([])
+  const [many, setMany] = useState<string[]>(['aparato'])
+  const [revealed, setRevealed] = useState(false)
 
   return (
     <Page
@@ -36,7 +36,7 @@ export function ChoiceStory() {
         <Panel>
           <Variant name="una sola" note="Es un grupo de opción única: una sola parada de tabulación y las flechas mueven entre las tarjetas.">
             <Stack width="sm">
-              <Choice options={lugares} value={una} onChange={setUna}>
+              <Choice options={places} value={one} onValueChange={setOne}>
                 <Choice.Prompt>¿Dónde esperás que dé más alto?</Choice.Prompt>
                 <Choice.Hint>Todavía no midieron nada: se contesta con lo que cada uno cree.</Choice.Hint>
               </Choice>
@@ -44,7 +44,7 @@ export function ChoiceStory() {
           </Variant>
           <Variant name="varias correctas" note="Cada tarjeta es una casilla y tiene su propia parada de tabulación, porque marcar una no descarta a las otras.">
             <Stack width="sm">
-              <Choice multiple options={cuidados} value={varias} onChange={setVarias}>
+              <Choice multiple options={care} value={many} onValueChange={setMany}>
                 <Choice.Prompt>¿Qué hay que cuidar para que los números se puedan comparar?</Choice.Prompt>
               </Choice>
             </Stack>
@@ -61,16 +61,16 @@ export function ChoiceStory() {
             <Stack width="sm">
               <Choice
                 multiple
-                options={cuidados}
-                value={varias}
-                onChange={setVarias}
+                options={care}
+                value={many}
+                onValueChange={setMany}
                 correct={['aparato', 'hora', 'contexto']}
-                revealed={revelado}
+                revealed={revealed}
               >
                 <Choice.Prompt>¿Qué hay que cuidar para que los números se puedan comparar?</Choice.Prompt>
               </Choice>
-              <Button size="sm" variant="ghost" onClick={() => setRevelado(v => !v)}>
-                {revelado ? 'Volver a antes' : 'Mostrar cuáles iban'}
+              <Button size="sm" variant="ghost" onClick={() => setRevealed(v => !v)}>
+                {revealed ? 'Volver a antes' : 'Mostrar cuáles iban'}
               </Button>
             </Stack>
           </Variant>
@@ -86,7 +86,7 @@ export function ChoiceStory() {
         <Example code={`<Choice
   options={opciones}
   value={marcadas}
-  onChange={setMarcadas}
+  onValueChange={setMarcadas}
   correct={['aparato', 'hora']}
   revealed={yaSeCorrigio}
 >

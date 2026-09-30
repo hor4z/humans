@@ -3,8 +3,8 @@ import { Checklist } from '@milo/ui/blocks/editor/checklist'
 import { A11y, Example, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 export function ChecklistStory() {
-  const [conectada, setConectada] = useState(false)
-  const [nivel, setNivel] = useState(2)
+  const [connected, setConnected] = useState(false)
+  const [level, setLevel] = useState(2)
 
   return (
     <Page
@@ -35,14 +35,14 @@ export function ChecklistStory() {
                 <Checklist.Title>Primeros pasos</Checklist.Title>
                 <Checklist.Item state="done">Creá tu primer espacio</Checklist.Item>
                 <Checklist.Item
-                  state={conectada ? 'done' : 'doing'}
-                  onClick={() => setConectada(v => !v)}
+                  state={connected ? 'done' : 'doing'}
+                  onClick={() => setConnected(v => !v)}
                 >
                   Conectá tu cuenta de la escuela
                 </Checklist.Item>
                 <Checklist.Item
-                  state={conectada ? 'todo' : 'blocked'}
-                  hint={conectada ? undefined : 'Primero hace falta conectar la cuenta de la escuela'}
+                  state={connected ? 'todo' : 'blocked'}
+                  hint={connected ? undefined : 'Primero hace falta conectar la cuenta de la escuela'}
                 >
                   Sumá a tus estudiantes
                 </Checklist.Item>
@@ -71,7 +71,7 @@ export function ChecklistStory() {
         <Panel>
           <Variant name="tres de cuatro" note="El contador y la barra salen del mismo número, y tocar un paso ya marcado vuelve al anterior.">
             <Stack width="md">
-              <Checklist defaultOpen value={nivel} onChange={setNivel}>
+              <Checklist defaultOpen value={level} onValueChange={setLevel}>
                 <Checklist.Title>Toma de datos</Checklist.Title>
                 <Checklist.Item>Una sola medición anotada</Checklist.Item>
                 <Checklist.Item>Las tres, sin el error</Checklist.Item>

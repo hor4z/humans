@@ -16,13 +16,13 @@ export type BarDatum = {
 }
 
 /** El gráfico de barras. */
-export function BarChart({ data, highlight, title, height = 220, className }: {
+export function BarChart({ data, highlight, label, height = 220, className }: {
   /** Label, value (lo hecho), total, y opcionales detail y caption. */
   data: BarDatum[]
   /** El índice de la barra de la que habla la pantalla: le pesa la etiqueta. */
   highlight?: number
-  /** Para el lector de pantalla y la tabla de abajo. */
-  title: string
+  /** El nombre del gráfico: lo lee el lector de pantalla, y es el título de la tabla que lo acompaña. */
+  label: string
   /** El alto del área de barras, sin las etiquetas. */
   height?: number
   className?: string
@@ -99,7 +99,7 @@ export function BarChart({ data, highlight, title, height = 220, className }: {
             key={i}
             className={cx(
               cls.label,
-              i === hover || i === focused || i === highlight ? cls.labelOn : cls.labelOff,
+              i === hover || i === focused || i === highlight ? cls.labelActive : cls.labelIdle,
             )}
           >
             {d.label}
@@ -108,7 +108,7 @@ export function BarChart({ data, highlight, title, height = 220, className }: {
       </div>
 
       <table id={tableId} className="sr-only">
-        <caption>{title}</caption>
+        <caption>{label}</caption>
         <thead>
           <tr><th scope="col">Categoría</th><th scope="col">Hecho</th><th scope="col">Total</th></tr>
         </thead>

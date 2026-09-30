@@ -74,8 +74,8 @@ function Item({
   onSelect?: () => void
   className?: string
 }) {
-  const [shortcut, sinShortcut] = takePart(children, Shortcut)
-  const [hint, texto] = takePart(sinShortcut, Hint)
+  const [shortcut, withoutShortcut] = takePart(children, Shortcut)
+  const [hint, text] = takePart(withoutShortcut, Hint)
   return (
     <button
       type="button"
@@ -91,8 +91,8 @@ function Item({
         className,
       )}
     >
-      {icon && <Icon name={icon} size={20} className={danger ? undefined : 'icon-muted'} />}
-      <span className={cls.label}>{texto}</span>
+      {icon && <Icon name={icon} size={20} weight={400} className={cls.icon} />}
+      <span className={cls.label}>{text}</span>
       {shortcut.length > 0 && <Kbd>{shortcut}</Kbd>}
       {hint.length > 0 && <span className={cls.hint}>{hint}</span>}
       {checked && <Icon name="check" size={18} />}

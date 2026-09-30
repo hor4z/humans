@@ -180,7 +180,7 @@ function Live() {
     >
       <Card className={cls.playground}>
         <span className={cls.playgroundLabel}>
-          <Switch checked={off} onChange={setOff} label="Deshabilitar todo" />
+          <Switch checked={off} onCheckedChange={setOff} label="Deshabilitar todo" />
           <button type="button" onClick={() => setOff(v => !v)} className={cls.playgroundToggle}>Deshabilitar todo</button>
         </span>
         <div className={cls.playgroundRow}>

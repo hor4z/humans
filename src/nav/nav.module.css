@@ -1,5 +1,11 @@
 @layer milo.components {
   .root {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .item {
     position: relative;
     display: flex;
     height: 2.5rem;
@@ -28,7 +34,7 @@
     padding-left: calc((var(--nav-item-h) - 34px) / 2);
   }
 
-  .active {
+  .current {
     font-weight: var(--font-weight-semibold);
     color: var(--brand-ink);
 
@@ -116,7 +122,7 @@
     transition-timing-function: var(--ease-out);
   }
 
-  .subitemActive {
+  .subitemCurrent {
     font-weight: var(--font-weight-semibold);
     color: var(--brand-ink);
 

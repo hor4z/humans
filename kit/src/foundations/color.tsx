@@ -8,7 +8,7 @@ import { Footnote, Note, Page, Ramp, Rich, Section, Stack, Swatch, useTokens } f
 
 const blue = ['--blue-050', '--blue-100', '--blue-200', '--blue-300', '--blue-400', '--blue-500', '--blue-600', '--blue-700', '--blue-800', '--blue-900'] as const
 const yellow = ['--yellow-050', '--yellow-100', '--yellow-200', '--yellow-300', '--yellow-400', '--yellow-500', '--yellow-600', '--yellow-700', '--yellow-800', '--yellow-900'] as const
-const gris = ['--shade-01', '--shade-02', '--shade-03', '--shade-04', '--shade-05', '--shade-06', '--shade-07', '--shade-08', '--shade-09'] as const
+const gray = ['--shade-01', '--shade-02', '--shade-03', '--shade-04', '--shade-05', '--shade-06', '--shade-07', '--shade-08', '--shade-09'] as const
 const amber = ['--accent-050', '--accent-500', '--accent-600'] as const
 
 const marks = ['--mark-green', '--mark-purple', '--mark-orange', '--mark-blue', '--mark-pink'] as const
@@ -100,6 +100,7 @@ export function ColorSection() {
           <Swatch token="--brand-ink" note="la tinta sobre el suave" />
           <Swatch token="--brand-border" note="la línea de una pieza de marca" />
           <Swatch token="--solid" note="el mismo botón, en tinta" />
+          <Swatch token="--solid-hover" note="el extremo de la rampa: el único lado adonde el hover va sin aclarar" />
           <Swatch token="--on-brand" note="lo que va encima del azul" />
         </div>
         <Note title="solid y brand son el mismo rol">
@@ -154,7 +155,7 @@ export function ColorSection() {
         title="La rampa neutra, y lo que dibuja"
         note="Nueve pasos, y **casi** neutra: lleva C 0.0025 del tono del azul. Un gris exactamente neutro al lado de un azul saturado se ve de otro sistema; uno que se nota azul convierte una interfaz de dos colores en una de tres."
       >
-        <Ramp tokens={gris} />
+        <Ramp tokens={gray} />
         <div className={cls.neutralRamp}>
           <Group title="Superficies">
             <Swatch token="--canvas" note="el escritorio: la página" />
@@ -272,10 +273,12 @@ export function ColorSection() {
         note="La pista es lo que había para hacer y el relleno es lo hecho. **No son los tonos de estado aunque en claro coincidan**: un tono de estado está anclado donde el blanco encima se lee, y un relleno no lleva texto encima, así que lo que necesita es despegarse de su pista."
       >
         <div className={`${cls.dataCard} bg-surface`}>
-          <Progress label="Corregidas" value={18} max={24} >
+          <Progress value={18} max={24}>
+            <Progress.Label>Corregidas</Progress.Label>
             <Progress.Hint>18 de 24</Progress.Hint>
           </Progress>
-          <Progress label="Espacio usado" value={22} max={24} tone="warn" >
+          <Progress value={22} max={24} tone="warn">
+            <Progress.Label>Espacio usado</Progress.Label>
             <Progress.Hint>22 de 24 GB</Progress.Hint>
           </Progress>
         </div>

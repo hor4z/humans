@@ -31,12 +31,12 @@ export function DatePickerStory() {
               <Field>
                 <Field.Label>Abre</Field.Label>
                 <Field.Hint>Desde cuándo se puede entregar</Field.Hint>
-                <DatePicker value={from} onChange={setFrom} />
+                <DatePicker value={from} onValueChange={setFrom} />
               </Field>
               <Field>
                 <Field.Label>Vence</Field.Label>
                 <Field.Hint>Después de esta fecha no entra nada</Field.Hint>
-                <DatePicker value={due} onChange={setDue} min={from} placeholder="Sin fecha de cierre" />
+                <DatePicker value={due} onValueChange={setDue} min={from} placeholder="Sin fecha de cierre" />
               </Field>
             </Field.Set>
           </Stack>
@@ -48,7 +48,7 @@ export function DatePickerStory() {
         note="Sin `Field` alrededor hay que nombrarlo con `label`. El campo dice la fecha en palabras: 03/09/2026 quiere decir dos cosas distintas según de dónde sea quien lo lee."
       >
         <Canvas>
-          <DatePicker value={loose} onChange={setLoose} label="Fecha del examen" width={260} />
+          <DatePicker value={loose} onValueChange={setLoose} label="Fecha del examen" width={260} />
         </Canvas>
       </Section>
 
@@ -57,7 +57,7 @@ export function DatePickerStory() {
         note="`min` y `max` apagan lo que queda afuera en vez de esconderlo: un día que desaparece deja a quien mira buscando dónde está, y uno apagado dice que existe y que no se puede."
       >
         <Canvas>
-          <DatePicker value={bounded} onChange={setBounded} min={today()} label="Nueva entrega" placeholder="No se puede antes de hoy" width={260} />
+          <DatePicker value={bounded} onValueChange={setBounded} min={today()} label="Nueva entrega" placeholder="No se puede antes de hoy" width={260} />
         </Canvas>
       </Section>
 
@@ -75,7 +75,7 @@ export function DatePickerStory() {
 
       <Section title="Cómo se escribe">
         <Example code={`const [fecha, setFecha] = useState('')
-<DatePicker value={fecha} onChange={setFecha} min={hoy} label="Cierra el" />`} />
+<DatePicker value={fecha} onValueChange={setFecha} min={hoy} label="Cierra el" />`} />
       </Section>
 
       <Section title="Props">

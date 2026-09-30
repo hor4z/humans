@@ -2,21 +2,21 @@ import { useState } from 'react'
 import { SumTable, type SumCell } from '@milo/ui/blocks/task/sum-table'
 import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
-const gastos = [
+const expenses = [
   { id: 'materia', label: 'Materia prima o productos' },
   { id: 'herramientas', label: 'Herramientas' },
   { id: 'packaging', label: 'Packaging' },
   { id: 'publicidad', label: 'Publicidad' },
 ]
 
-const cargado: Record<string, SumCell> = {
+const loaded: Record<string, SumCell> = {
   materia: { qty: '30', price: '2000' },
   herramientas: { qty: '1', price: '12000' },
   packaging: { qty: '30', price: '300' },
 }
 
 export function SumTableStory() {
-  const [value, setValue] = useState<Record<string, SumCell>>(cargado)
+  const [value, setValue] = useState<Record<string, SumCell>>(loaded)
 
   return (
     <Page
@@ -32,7 +32,7 @@ export function SumTableStory() {
         <Panel>
           <Variant name="con tope" note="Cambiá una cantidad y mirá el aviso: dice cuánto queda, y cuando te pasás dice de cuánto.">
             <Stack width="md">
-              <SumTable rows={gastos} value={value} onChange={(id, c) => setValue(v => ({ ...v, [id]: c }))} cap={100000}>
+              <SumTable rows={expenses} value={value} onValueChange={setValue} cap={100000}>
                 <SumTable.Prompt>Repartí los $100.000</SumTable.Prompt>
                 <SumTable.Hint>No hace falta gastarlos todos: lo que sobra es lo que te banca el primer mes flojo.</SumTable.Hint>
               </SumTable>
@@ -40,7 +40,7 @@ export function SumTableStory() {
           </Variant>
           <Variant name="sin tope" note="Sin `cap` la tabla suma y no opina, que es lo que hace falta cuando no hay un límite sino una cuenta.">
             <Stack width="md">
-              <SumTable rows={gastos} value={cargado}>
+              <SumTable rows={expenses} value={loaded}>
                 <SumTable.Prompt>Lo que salió armar el primer lote</SumTable.Prompt>
               </SumTable>
             </Stack>
@@ -57,7 +57,7 @@ export function SumTableStory() {
         <Example code={`<SumTable
   rows={gastos}
   value={presupuesto}
-  onChange={(id, celda) => guardar(id, celda)}
+  onValueChange={(id, celda) => guardar(id, celda)}
   cap={100000}
 >
   <SumTable.Prompt>Repartí los $100.000</SumTable.Prompt>

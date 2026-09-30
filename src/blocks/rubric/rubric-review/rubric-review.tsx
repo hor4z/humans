@@ -40,13 +40,13 @@ export type Mark = {
 }
 
 /** Cuánto del tramo se llena: hasta el nivel elegido. */
-const parte = (mark: Mark, c: Criterion) =>
+const part = (mark: Mark, c: Criterion) =>
   mark.level === undefined ? 0 : (mark.level + 1) / c.levels.length
 
-const tocado = (mark: Mark) => mark.level !== undefined || !!mark.note
+const touched = (mark: Mark) => mark.level !== undefined || !!mark.note
 
 /** Cómo se llama el nivel en el que quedó, para decirlo al costado del nombre. */
-const nivel = (mark: Mark, c: Criterion) =>
+const level = (mark: Mark, c: Criterion) =>
   mark.level === undefined
     ? 'sin corregir'
     : namesFor(c)?.[mark.level] ?? `nivel ${mark.level + 1}`
@@ -93,16 +93,16 @@ function Root({ criteria, marks, by, onLevel, onNote, onClearNote, children, cla
 
   const [title] = takePart(children, Title)
   const total = criteria.reduce((sum, c) => sum + c.weight, 0)
-  const listos = criteria.filter(c => tocado(marks[c.id] ?? {})).length
+  const ready = criteria.filter(c => touched(marks[c.id] ?? {})).length
 
   return (
     <section aria-labelledby={titleId} className={cx(s.root, className)}>
       <div className={s.header}>
         <p id={titleId} className={s.title}>{title}</p>
         <span className={`${s.count} tabular`}>
-          {listos === criteria.length
+          {ready === criteria.length
             ? 'corregida'
-            : `${listos} de ${counted(criteria.length, ['aspecto', 'aspectos'])}`}
+            : `${ready} de ${counted(criteria.length, ['aspecto', 'aspectos'])}`}
         </span>
       </div>
 
@@ -112,7 +112,7 @@ function Root({ criteria, marks, by, onLevel, onNote, onClearNote, children, cla
           return (
             <span key={c.id} style={{ flexGrow: c.weight }} className={s.weight}>
               <span
-                style={{ inlineSize: `${parte(mark, c) * 100}%` }}
+                style={{ inlineSize: `${part(mark, c) * 100}%` }}
                 className={`${s.fill} ${labelFill[c.color]}`}
               />
             </span>
@@ -130,9 +130,9 @@ function Root({ criteria, marks, by, onLevel, onNote, onClearNote, children, cla
               total={total}
               level={mark.level}
               onLevel={onLevel && (level => onLevel(c.id, level))}
-              meta={nivel(mark, c)}
+              meta={level(mark, c)}
               open={open === c.id}
-              onToggle={() => setOpen(o => (o === c.id ? null : c.id))}
+              onOpenChange={next => setOpen(next ? c.id : null)}
             >
               {mark.note && (
                 <div className={s.note}>

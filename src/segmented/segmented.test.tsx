@@ -14,7 +14,7 @@ const filters = [
 describe('Segmented', () => {
   it('es elegir una de varias, no navegar entre paneles', async () => {
     const onChange = vi.fn()
-    render(<Segmented value="a" onChange={onChange} options={filters} label="Filtro" />)
+    render(<Segmented value="a" onValueChange={onChange} options={filters} label="Filtro" />)
     expect(screen.getByRole('radiogroup', { name: 'Filtro' })).toBeInTheDocument()
     expect(screen.getByRole('radio', { name: 'Todas' })).toHaveAttribute('aria-checked', 'true')
     await userEvent.click(screen.getByRole('radio', { name: 'Abiertas' }))
@@ -23,7 +23,7 @@ describe('Segmented', () => {
 
   it('las flechas mueven la elección y dan la vuelta', async () => {
     const onChange = vi.fn()
-    render(<Segmented value="a" onChange={onChange} options={filters} label="Filtro" />)
+    render(<Segmented value="a" onValueChange={onChange} options={filters} label="Filtro" />)
     screen.getByRole('radio', { name: 'Todas' }).focus()
     await userEvent.keyboard('{ArrowRight}')
     expect(onChange).toHaveBeenCalledWith('b')
@@ -33,7 +33,7 @@ describe('Segmented', () => {
   })
 
   it('Tab entra al grupo y sale: una sola parada', () => {
-    render(<Segmented value="b" onChange={() => {}} options={filters} label="Filtro" />)
+    render(<Segmented value="b" onValueChange={() => {}} options={filters} label="Filtro" />)
     expect(screen.getByRole('radio', { name: 'Abiertas' })).toHaveAttribute('tabindex', '0')
     expect(screen.getByRole('radio', { name: 'Todas' })).toHaveAttribute('tabindex', '-1')
     expect(screen.getByRole('radio', { name: 'Corregidas' })).toHaveAttribute('tabindex', '-1')
@@ -43,7 +43,7 @@ describe('Segmented', () => {
     render(
       <Segmented
         value="grilla"
-        onChange={() => {}}
+        onValueChange={() => {}}
         options={[
           { value: 'grilla', icon: 'grid_view', title: 'Grilla' },
           { value: 'lista', icon: 'view_list', title: 'Lista' },
@@ -59,26 +59,26 @@ describe('Segmented', () => {
     render(
       <Field>
         <Field.Label>Rango</Field.Label>
-        <Segmented value="a" onChange={() => {}} options={filters} />
+        <Segmented value="a" onValueChange={() => {}} options={filters} />
       </Field>,
     )
     expect(screen.getByRole('radiogroup', { name: 'Rango' })).toBeInTheDocument()
   })
 
   it.each([
-    ['sm', '2rem'],     // 32 + 2 + 2 = 36, el `sm` de la escalera de controles
-    ['md', '2.25rem'],  // 36 + 2 + 2 = 40, el `md`, así apoya con un botón al lado
+    ['sm', '2rem'],
+    ['md', '2.25rem'],
   ] as const)('el alto de afuera en %s es el de la escalera', (size, height) => {
-    render(<Segmented value="a" onChange={() => {}} options={filters.slice(0, 2)} label="Rango" size={size} />)
+    render(<Segmented value="a" onValueChange={() => {}} options={filters.slice(0, 2)} label="Rango" size={size} />)
     expect(style(screen.getByRole('radiogroup'))).toContain('padding: 0.125rem')
     expect(style(screen.getByRole('radio', { name: 'Todas' }))).toContain(`min-height: ${height}`)
   })
 
   it.each([
-    ['sm', '--radius-md'],  // la pista mide 36, el alto del `sm` de la escalera, y el pulgar queda en 8
-    ['md', '--radius-lg'],  // mide 40, el `md`, y el pulgar queda en 10, el mismo que un botón de 36
+    ['sm', '--radius-md'],
+    ['md', '--radius-lg'],
   ] as const)('en %s el pulgar lleva el radio de la pista menos su padding', (size, token) => {
-    render(<Segmented value="a" onChange={() => {}} options={filters.slice(0, 2)} label="Rango" size={size} />)
+    render(<Segmented value="a" onValueChange={() => {}} options={filters.slice(0, 2)} label="Rango" size={size} />)
     expect(style(screen.getByRole('radiogroup'))).toContain(`border-radius: var(${token})`)
     expect(style(screen.getByRole('radio', { name: 'Todas' }))).toContain(`border-radius: calc(var(${token}) - 0.125rem)`)
   })
@@ -88,7 +88,7 @@ describe('Segmented', () => {
     render(
       <Segmented
         value="a"
-        onChange={onChange}
+        onValueChange={onChange}
         options={[...filters.slice(0, 2), { value: 'c' as const, label: 'Corregidas', disabled: true }]}
         label="Filtro"
       />,

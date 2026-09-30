@@ -24,7 +24,7 @@ function Title({ children }: { children: ReactNode }) {
 }
 
 function Root({ icon, color = 'neutral', children, className }: CalloutProps) {
-  const [title, texto] = takePart(children, Title)
+  const [title, text] = takePart(children, Title)
   return (
     <aside role="note" className={cx(s.root, paper[color], className)}>
       {icon && (
@@ -34,7 +34,7 @@ function Root({ icon, color = 'neutral', children, className }: CalloutProps) {
       )}
       <div className={s.body}>
         {title}
-        <div className={s.text}>{texto}</div>
+        <div className={s.text}>{text}</div>
       </div>
     </aside>
   )

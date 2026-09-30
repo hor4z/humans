@@ -31,7 +31,7 @@
   }
 
 
-  .buttonOff {
+  .buttonPlain {
     color: var(--text-muted);
   }
 
@@ -44,7 +44,7 @@
   }
 
   @media (hover:hover) {
-    .buttonOff:hover {
+    .buttonPlain:hover {
         background-color: var(--surface-hover);
         color: var(--text);
     }

@@ -136,7 +136,7 @@ export function RubricRail({ mode }: { mode: RubricMode }) {
         <SelfAssessment
           criteria={criteria}
           value={reached}
-          onChange={(id, level) => setReached(r => ({ ...r, [id]: level }))}
+          onValueChange={setReached}
         >
           <SelfAssessment.Title>Dónde estás</SelfAssessment.Title>
         </SelfAssessment>
@@ -160,7 +160,7 @@ export function RubricRail({ mode }: { mode: RubricMode }) {
 
       <ConfirmDialog
         open={!!asking}
-        onCancel={() => setAsking(null)}
+        onOpenChange={() => setAsking(null)}
         onConfirm={() => {
           if (asking) remove(asking)
           setAsking(null)

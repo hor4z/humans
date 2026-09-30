@@ -51,7 +51,7 @@
   .input {
     width: 100%;
     min-width: 0;
-    background-color: #0000;
+    background-color: transparent;
     font-weight: var(--font-weight-medium);
     color: var(--text);
     --milo-outline-style: none;

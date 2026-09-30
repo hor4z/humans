@@ -45,7 +45,7 @@ const criteria: Criterion[] = [
 const amelia = { name: 'Amelia', assistant: true }
 const ana = { name: 'Ana Pérez', src: '/avatars/04.webp' }
 
-const devuelta: Record<string, Mark> = {
+const returned: Record<string, Mark> = {
   medicion: {
     level: 2,
     note: { by: amelia, text: 'Los cinco lugares en los tres momentos y siempre el mismo teléfono. Para el de abajo falta anotar qué pasaba alrededor.' },
@@ -101,7 +101,7 @@ export function RubricReviewStory() {
         <Panel>
           <Variant name="lo que ve quien entregó">
             <Stack width="sm">
-              <RubricReview criteria={criteria} marks={devuelta}>
+              <RubricReview criteria={criteria} marks={returned}>
                 <RubricReview.Title>Cómo te fue</RubricReview.Title>
               </RubricReview>
             </Stack>

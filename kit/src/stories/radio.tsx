@@ -27,7 +27,7 @@ export function RadioStory() {
             <Radio.Group
               label="Dos opciones"
               value={one}
-              onChange={setOne}
+              onValueChange={setOne}
               options={[{ value: 'a', label: 'La primera' }, { value: 'b', label: 'La segunda' }]}
             />
           </Variant>
@@ -35,7 +35,7 @@ export function RadioStory() {
             <Radio.Group
               label="Tres opciones"
               value={mode}
-              onChange={setMode}
+              onValueChange={setMode}
               options={[
                 { value: 'todas', label: 'Todas' },
                 { value: 'abiertas', label: 'Abiertas' },
@@ -52,11 +52,11 @@ export function RadioStory() {
       >
         <Panel>
           <Variant name="radio vs checkbox">
-            <Radio checked={withHint} onChange={() => setWithHint(true)} label="Prendido" />
-            <Radio checked={!withHint} onChange={() => setWithHint(false)} label="Apagado" />
+            <Radio checked={withHint} onCheckedChange={() => setWithHint(true)} label="Prendido" />
+            <Radio checked={!withHint} onCheckedChange={() => setWithHint(false)} label="Apagado" />
             <span className={cls.checkboxPair}>
-              <Checkbox checked={compared} onChange={setCompared} label="Checkbox prendido" />
-              <Checkbox checked={!compared} onChange={v => setCompared(!v)} label="Checkbox apagado" />
+              <Checkbox checked={compared} onCheckedChange={setCompared} label="Checkbox prendido" />
+              <Checkbox checked={!compared} onCheckedChange={v => setCompared(!v)} label="Checkbox apagado" />
             </span>
           </Variant>
         </Panel>
@@ -76,18 +76,18 @@ export function RadioStory() {
           <Variant name="con etiqueta">
             <span className={cls.looseGroup}>
               <label className={cls.yesLabel}>
-                <Radio checked={loose === 'si'} onChange={() => setLoose('si')} label="Sí, avisarme" />
+                <Radio checked={loose === 'si'} onCheckedChange={() => setLoose('si')} label="Sí, avisarme" />
                 Sí, avisarme
               </label>
               <label className={cls.noLabel}>
-                <Radio checked={loose === 'no'} onChange={() => setLoose('no')} label="No hace falta" />
+                <Radio checked={loose === 'no'} onCheckedChange={() => setLoose('no')} label="No hace falta" />
                 No hace falta
               </label>
             </span>
           </Variant>
           <Variant name="deshabilitado">
-            <Radio checked onChange={() => {}} disabled label="Prendido deshabilitado" />
-            <Radio checked={false} onChange={() => {}} disabled label="Apagado deshabilitado" />
+            <Radio checked onCheckedChange={() => {}} disabled label="Prendido deshabilitado" />
+            <Radio checked={false} onCheckedChange={() => {}} disabled label="Apagado deshabilitado" />
           </Variant>
         </Panel>
       </Section>
@@ -101,7 +101,7 @@ export function RadioStory() {
             <Radio.Group
               label="Probá las flechas"
               value={mode}
-              onChange={setMode}
+              onValueChange={setMode}
               options={[
                 { value: 'todas', label: 'Todas' },
                 { value: 'abiertas', label: 'Abiertas' },
@@ -117,7 +117,7 @@ export function RadioStory() {
 
 <Radio.Group
   value={modo}
-  onChange={setModo}
+  onValueChange={setModo}
   label="Cómo se entrega"
   options={[
     { value: 'individual', label: 'Individual' },

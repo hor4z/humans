@@ -29,9 +29,9 @@ function Root({ children, icon, size = 'md', bordered = size === 'md' }: {
   /** La caja punteada. */
   bordered?: boolean
 }) {
-  const [title, sinTitle] = takePart(children, Title)
-  const [body, sinBody] = takePart(sinTitle, Body)
-  const [action] = takePart(sinBody, Action)
+  const [title, withoutTitle] = takePart(children, Title)
+  const [body, withoutBody] = takePart(withoutTitle, Body)
+  const [action] = takePart(withoutBody, Action)
   const small = size === 'sm'
   return (
     <div

@@ -22,7 +22,7 @@ const criteria: Criterion[] = [
 
 const amelia = { name: 'Amelia', assistant: true }
 
-const corregida: Record<string, Mark> = {
+const graded: Record<string, Mark> = {
   datos: {
     level: 1,
     note: { by: amelia, text: 'Están las tres, falta estimar el error.' },
@@ -30,11 +30,11 @@ const corregida: Record<string, Mark> = {
   grafico: { level: 1 },
 }
 
-const arma = (props: Record<string, unknown> = {}) => {
+const setup = (props: Record<string, unknown> = {}) => {
   const onMark = vi.fn()
   const onNote = vi.fn()
   render(
-    <RubricReview criteria={criteria} marks={corregida} {...props}>
+    <RubricReview criteria={criteria} marks={graded} {...props}>
       <RubricReview.Title>Cómo te fue</RubricReview.Title>
     </RubricReview>,
   )
@@ -43,25 +43,25 @@ const arma = (props: Record<string, unknown> = {}) => {
 
 describe('RubricReview', () => {
   it('sin callbacks es la devolución: se lee y no se toca', () => {
-    arma()
+    setup()
     expect(screen.queryByRole('radiogroup')).not.toBeInTheDocument()
     expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
     expect(screen.getByText('Están las tres, falta estimar el error.')).toBeInTheDocument()
   })
 
   it('el nivel en el que quedó se dice en texto, no solo con el tilde', () => {
-    arma()
+    setup()
     expect(screen.getByText('Las tres, sin el error').textContent).toContain('es el nivel en el que quedó')
   })
 
   it('los renglones son excluyentes: los otros no dicen nada de más', () => {
-    arma()
+    setup()
     expect(screen.getByText('Una sola medición').textContent).not.toContain('nivel en el que quedó')
     expect(screen.getByText('Las tres, con el error').textContent).not.toContain('nivel en el que quedó')
   })
 
   it('en qué nivel quedó se ve sin abrirlo', () => {
-    arma()
+    setup()
     expect(screen.getAllByText('nivel 2').length).toBeGreaterThan(0)
   })
 
@@ -84,31 +84,31 @@ describe('RubricReview', () => {
   })
 
   it('corregida entera lo dice sin números', () => {
-    arma()
+    setup()
     expect(screen.getByText('corregida')).toBeInTheDocument()
   })
 
   it('corrigiendo, elegir un nivel devuelve el aspecto y el nivel', async () => {
     const onLevel = vi.fn()
     render(
-      <RubricReview criteria={criteria} marks={corregida} onLevel={onLevel}>
+      <RubricReview criteria={criteria} marks={graded} onLevel={onLevel}>
         <RubricReview.Title>Cómo te fue</RubricReview.Title>
       </RubricReview>,
     )
-    const grupo = screen.getByRole('radiogroup', { name: /Toma de datos/ })
-    await userEvent.click(within(grupo).getByRole('radio', { name: /Las tres, con el error/ }))
+    const group = screen.getByRole('radiogroup', { name: /Toma de datos/ })
+    await userEvent.click(within(group).getByRole('radio', { name: /Las tres, con el error/ }))
     expect(onLevel).toHaveBeenCalledWith('datos', 2)
   })
 
   it('el docente marca uno solo: son descripciones del mismo estado', () => {
     render(
-      <RubricReview criteria={criteria} marks={corregida} onLevel={vi.fn()}>
+      <RubricReview criteria={criteria} marks={graded} onLevel={vi.fn()}>
         <RubricReview.Title>Cómo te fue</RubricReview.Title>
       </RubricReview>,
     )
-    const grupo = screen.getByRole('radiogroup', { name: /Toma de datos/ })
-    const marcados = within(grupo).getAllByRole('radio').filter(r => r.getAttribute('aria-checked') === 'true')
-    expect(marcados).toHaveLength(1)
+    const group = screen.getByRole('radiogroup', { name: /Toma de datos/ })
+    const checkedIds = within(group).getAllByRole('radio').filter(r => r.getAttribute('aria-checked') === 'true')
+    expect(checkedIds).toHaveLength(1)
   })
 
   it('un comentario se borra y se escribe de nuevo: no se edita', async () => {
@@ -116,7 +116,7 @@ describe('RubricReview', () => {
     render(
       <RubricReview
         criteria={criteria}
-        marks={corregida}
+        marks={graded}
         by={amelia}
         onNote={vi.fn()}
         onClearNote={onClearNote}
@@ -134,15 +134,15 @@ describe('RubricReview', () => {
   it('el comentario se firma con quien está corrigiendo, sea persona o agente', async () => {
     const onNote = vi.fn()
     render(
-      <RubricReview criteria={criteria} marks={corregida} by={amelia} onNote={onNote}>
+      <RubricReview criteria={criteria} marks={graded} by={amelia} onNote={onNote}>
         <RubricReview.Title>Cómo te fue</RubricReview.Title>
       </RubricReview>,
     )
-    const campo = screen.getByLabelText('Comentario sobre Gráfico')
+    const field = screen.getByLabelText('Comentario sobre Gráfico')
     const enviar = screen.getAllByRole('button', { name: 'Comentar' })[0]
 
     expect(enviar).toBeDisabled()
-    await userEvent.type(campo, 'Sumá el cálculo del error')
+    await userEvent.type(field, 'Sumá el cálculo del error')
     await userEvent.click(enviar)
 
     expect(onNote).toHaveBeenCalledWith('grafico', 'Sumá el cálculo del error')
@@ -150,7 +150,7 @@ describe('RubricReview', () => {
   })
 
   it('un agente se anuncia como asistente y no como alguien del curso', () => {
-    arma()
+    setup()
     expect(screen.getByText('asistente')).toBeInTheDocument()
   })
 })

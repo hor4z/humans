@@ -178,45 +178,45 @@ describe('coherencia del sistema', () => {
   })
 
   it('ningún var() nombra una custom property que nadie declara', () => {
-    const raiz = join(import.meta.dirname, '../..')
+    const root = join(import.meta.dirname, '../..')
     const css: { name: string; text: string }[] = []
     const tsx: string[] = []
-    const recorrer = (base: string, prefijo = '') => {
+    const walkDir = (base: string, prefix = '') => {
       for (const e of readdirSync(base, { withFileTypes: true })) {
         if (e.isDirectory()) {
-          if (!['node_modules', '.git', 'dist', '.vite'].includes(e.name)) recorrer(join(base, e.name), `${prefijo}${e.name}/`)
+          if (!['node_modules', '.git', 'dist', '.vite'].includes(e.name)) walkDir(join(base, e.name), `${prefix}${e.name}/`)
         } else if (e.name.endsWith('.css')) {
-          css.push({ name: `${prefijo}${e.name}`, text: readFileSync(join(base, e.name), 'utf8') })
+          css.push({ name: `${prefix}${e.name}`, text: readFileSync(join(base, e.name), 'utf8') })
         } else if (/\.tsx?$/.test(e.name)) {
           tsx.push(readFileSync(join(base, e.name), 'utf8'))
         }
       }
     }
-    recorrer(join(raiz, 'src'))
-    recorrer(join(raiz, 'kit/src'))
+    walkDir(join(root, 'src'))
+    walkDir(join(root, 'kit/src'))
 
-    const declaradas = new Set<string>()
-    for (const f of css) for (const m of f.text.matchAll(/(--[\w-]+)\s*:/g)) declaradas.add(m[1])
-    for (const t of tsx) for (const m of t.matchAll(/['"](--[\w-]+)['"]\s*:/g)) declaradas.add(m[1])
+    const declaredProps = new Set<string>()
+    for (const f of css) for (const m of f.text.matchAll(/(--[\w-]+)\s*:/g)) declaredProps.add(m[1])
+    for (const t of tsx) for (const m of t.matchAll(/['"](--[\w-]+)['"]\s*:/g)) declaredProps.add(m[1])
 
-    const huerfanas: string[] = []
+    const orphans: string[] = []
     for (const f of css) {
       for (const m of f.text.matchAll(/var\(\s*(--[\w-]+)\s*(\)|,)/g)) {
         if (m[2] === ',') continue
-        if (declaradas.has(m[1])) continue
-        const linea = f.text.slice(0, m.index).split('\n').length
-        huerfanas.push(`${f.name}:${linea} ${m[1]}`)
+        if (declaredProps.has(m[1])) continue
+        const line = f.text.slice(0, m.index).split('\n').length
+        orphans.push(`${f.name}:${line} ${m[1]}`)
       }
     }
     expect(
-      huerfanas,
+      orphans,
       'un var() sin valor ni fallback invalida la declaración entera, sin error y sin que nadie se entere',
     ).toEqual([])
   })
 
   it('todo lo público se alcanza por su subpath', () => {
     const exports = JSON.parse(readFileSync(join(dir, '../package.json'), 'utf8')).exports as Record<string, unknown>
-    const sueltos = new Set(Object.keys(exports).filter(k => !k.includes('*')).map(k => k.replace(/^\.\//, '')))
+    const loose = new Set(Object.keys(exports).filter(k => !k.includes('*')).map(k => k.replace(/^\.\//, '')))
 
     const unreachable: string[] = []
     for (const f of sources) {
@@ -226,14 +226,14 @@ describe('coherencia del sistema', () => {
       if (!exported.length) continue
 
       const parts = f.name.split('/')
-      const quien = `${f.name} (${exported.join(', ')})`
+      const who = `${f.name} (${exported.join(', ')})`
 
-      if (parts.length === 1) { if (!sueltos.has(parts[0].replace(/\.tsx?$/, ''))) unreachable.push(quien); continue }
-      if (parts[0] === 'lib') { if (!exports['./lib/*']) unreachable.push(quien); continue }
+      if (parts.length === 1) { if (!loose.has(parts[0].replace(/\.tsx?$/, ''))) unreachable.push(who); continue }
+      if (parts[0] === 'lib') { if (!exports['./lib/*']) unreachable.push(who); continue }
       const [folder, file] = parts.slice(-2)
       const family = parts[0] === 'blocks' && parts.length === 4 ? parts[1] : undefined
-      if (parts[0] === 'blocks' && (!family || !exports[`./blocks/${family}/*`])) { unreachable.push(quien); continue }
-      if (file.replace(/\.tsx?$/, '') !== folder) unreachable.push(quien)
+      if (parts[0] === 'blocks' && (!family || !exports[`./blocks/${family}/*`])) { unreachable.push(who); continue }
+      if (file.replace(/\.tsx?$/, '') !== folder) unreachable.push(who)
     }
 
     expect(
@@ -243,18 +243,18 @@ describe('coherencia del sistema', () => {
   })
 
   it('ningún archivo ni carpeta lleva una mayúscula', () => {
-    const raiz = join(dir, '..')
-    const conMayuscula: string[] = []
-    const recorrer = (base: string, prefijo: string) => {
+    const root = join(dir, '..')
+    const withCapital: string[] = []
+    const walkDir = (base: string, prefix: string) => {
       for (const e of readdirSync(base, { withFileTypes: true })) {
-        if (/[A-Z]/.test(e.name)) conMayuscula.push(`${prefijo}${e.name}`)
-        if (e.isDirectory()) recorrer(join(base, e.name), `${prefijo}${e.name}/`)
+        if (/[A-Z]/.test(e.name)) withCapital.push(`${prefix}${e.name}`)
+        if (e.isDirectory()) walkDir(join(base, e.name), `${prefix}${e.name}/`)
       }
     }
-    recorrer(join(raiz, 'src'), 'src/')
-    recorrer(join(raiz, 'kit/src'), 'kit/src/')
+    walkDir(join(root, 'src'), 'src/')
+    walkDir(join(root, 'kit/src'), 'kit/src/')
     expect(
-      conMayuscula,
+      withCapital,
       'el nombre del archivo es el nombre del import: va en kebab aunque el export sea IconButton',
     ).toEqual([])
   })
@@ -274,15 +274,15 @@ describe('coherencia del sistema', () => {
 
   it('un bloque no declara tokens del sistema', () => {
     const offenders: string[] = []
-    const recorrer = (base: string, prefijo: string) => {
+    const walkDir = (base: string, prefix: string) => {
       for (const e of readdirSync(base, { withFileTypes: true })) {
-        if (e.isDirectory()) { recorrer(join(base, e.name), `${prefijo}${e.name}/`); continue }
+        if (e.isDirectory()) { walkDir(join(base, e.name), `${prefix}${e.name}/`); continue }
         if (!e.name.endsWith('.css')) continue
         const text = readFileSync(join(base, e.name), 'utf8')
-        for (const m of text.matchAll(/(?:^|[;{\s])(:root|html|body)\b[^{]*\{/g)) offenders.push(`${prefijo}${e.name}: ${m[1]}`)
+        for (const m of text.matchAll(/(?:^|[;{\s])(:root|html|body)\b[^{]*\{/g)) offenders.push(`${prefix}${e.name}: ${m[1]}`)
       }
     }
-    recorrer(join(dir, 'blocks'), 'blocks/')
+    walkDir(join(dir, 'blocks'), 'blocks/')
     expect(offenders, 'un bloque usa los tokens de la base: si le falta un rol, el rol es de la base').toEqual([])
   })
 
@@ -295,6 +295,26 @@ describe('coherencia del sistema', () => {
       }
     }
     expect([...new Set(offenders)]).toEqual([])
+  })
+
+  it('el código no lleva comentarios: solo el docblock de una línea', () => {
+    const offenders: string[] = []
+    const walkDir = (base: string, prefix: string) => {
+      for (const e of readdirSync(base, { withFileTypes: true })) {
+        if (e.isDirectory()) { walkDir(join(base, e.name), `${prefix}${e.name}/`); continue }
+        if (!/\.(tsx?|css)$/.test(e.name) || /\.gen\.ts$|^icons\./.test(e.name)) continue
+        const text = readFileSync(join(base, e.name), 'utf8')
+          .replace(/'(?:[^'\\\n]|\\.)*'|"(?:[^"\\\n]|\\.)*"|`(?:[^`\\]|\\.)*`/g, '""')
+          .replace(/\/(?![*/])(?:[^/\\\n[]|\\.|\[(?:[^\]\\\n]|\\.)*\])+\/[gimsuy]*/g, '""')
+        text.split('\n').forEach((line, i) => {
+          if (/(^|[^:])\/\/(?!\s*@ts-)/.test(line)) offenders.push(`${prefix}${e.name}:${i + 1}`)
+          else if (/\/\*(?!\*)/.test(line)) offenders.push(`${prefix}${e.name}:${i + 1}`)
+        })
+      }
+    }
+    walkDir(dir, 'src/')
+    walkDir(join(dir, '../kit/src'), 'kit/src/')
+    expect(offenders, 'el porqué vive en CLAUDE.md y en las notas del kit, que se leen; un comentario se despega sin que nada lo verifique').toEqual([])
   })
 
   it('cada componente tiene su test al lado', () => {

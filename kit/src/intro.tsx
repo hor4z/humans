@@ -11,8 +11,7 @@ import { Progress } from '@milo/ui/progress'
 import { Switch } from '@milo/ui/switch'
 import { TextField } from '@milo/ui/text-field'
 import { useState } from 'react'
-
-const face = (n: number) => `/avatars/${String(n).padStart(2, '0')}.webp`
+import { face } from './fixtures'
 
 const shortcuts: { id: string; icon: IconName; title: string; body: string }[] = [
   { id: 'accessibility', icon: 'accessibility', title: 'Accesibilidad', body: 'Contraste, teclado y lectores, que es lo que hay que leer antes de tocar nada.' },
@@ -89,7 +88,7 @@ export function Intro({ go }: { go: (id: string) => void }) {
         <div className={cls.showcaseGrid}>
           <Card className={cls.chartCard}>
             <BarChart
-              title="Corregidas esta semana"
+              label="Corregidas esta semana"
               height={150}
               highlight={2}
               data={[
@@ -110,7 +109,8 @@ export function Intro({ go }: { go: (id: string) => void }) {
                 <Chip color="blue">Corregida</Chip>
                 <Chip size="sm" color="warn" icon="schedule">Vence mañana</Chip>
               </div>
-              <Progress label="Corregidas" value={18} max={24} >
+              <Progress value={18} max={24}>
+                <Progress.Label>Corregidas</Progress.Label>
                 <Progress.Hint>18 de 24</Progress.Hint>
               </Progress>
             </Card>
@@ -124,7 +124,7 @@ export function Intro({ go }: { go: (id: string) => void }) {
                 ]} />
                 <span className={cls.peopleNote}>tres entregaron</span>
               </div>
-              <Switch checked={demo} onChange={setDemo} label="Avisos" />
+              <Switch checked={demo} onCheckedChange={setDemo} label="Avisos" />
             </Card>
           </Stack>
         </div>

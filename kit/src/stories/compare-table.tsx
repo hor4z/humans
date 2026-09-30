@@ -2,26 +2,26 @@ import { useState } from 'react'
 import { CompareTable } from '@milo/ui/blocks/task/compare-table'
 import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
-const frentes = [
+const fronts = [
   { id: 'producto', label: 'Producto' },
   { id: 'precio', label: 'Precio' },
   { id: 'publico', label: 'Público' },
   { id: 'venta', label: 'Forma de venta' },
 ]
 
-const competidores = [
+const competitors = [
   { id: 'mio', label: 'El tuyo' },
   { id: 'uno', label: 'Competidor 1' },
   { id: 'dos', label: 'Competidor 2' },
 ]
 
-const cargado = {
+const loaded = {
   producto: { mio: 'Tortas por encargo', uno: 'Tortas y budines', dos: 'Solo budines' },
   precio: { mio: '$4.000', uno: '$5.200', dos: '$2.800' },
 }
 
 export function CompareTableStory() {
-  const [value, setValue] = useState<Record<string, Record<string, string>>>(cargado)
+  const [value, setValue] = useState<Record<string, Record<string, string>>>(loaded)
 
   return (
     <Page
@@ -38,10 +38,10 @@ export function CompareTableStory() {
           <Variant name="completándolo" note="Cada celda es un campo de dos renglones que crece hasta cuatro: entra una frase, no un párrafo.">
             <Stack width="md">
               <CompareTable
-                rows={frentes}
-                columns={competidores}
+                rows={fronts}
+                columns={competitors}
                 value={value}
-                onChange={(f, c, t) => setValue(v => ({ ...v, [f]: { ...v[f], [c]: t } }))}
+                onValueChange={setValue}
               >
                 <CompareTable.Prompt>Contra quién competís</CompareTable.Prompt>
                 <CompareTable.Hint>Reales: con nombre, y con el precio que cobran de verdad.</CompareTable.Hint>
@@ -50,7 +50,7 @@ export function CompareTableStory() {
           </Variant>
           <Variant name="ya entregado" note="Una celda vacía lo dice: en un cuadro, el blanco no se distingue de lo que nadie miró.">
             <Stack width="md">
-              <CompareTable rows={frentes} columns={competidores} value={cargado}>
+              <CompareTable rows={fronts} columns={competitors} value={loaded}>
                 <CompareTable.Prompt>Contra quién competís</CompareTable.Prompt>
               </CompareTable>
             </Stack>
@@ -68,7 +68,7 @@ export function CompareTableStory() {
   rows={frentes}
   columns={competidores}
   value={cuadro}
-  onChange={(fila, columna, texto) => guardar(fila, columna, texto)}
+  onValueChange={(fila, columna, texto) => guardar(fila, columna, texto)}
 >
   <CompareTable.Prompt>Contra quién competís</CompareTable.Prompt>
 </CompareTable>`} />

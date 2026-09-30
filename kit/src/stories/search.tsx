@@ -4,7 +4,7 @@ import { A11y, Example, Page, Panel, Practices, Props, Section, Variant } from '
 
 export function SearchStory() {
   const [first, setFirst] = useState('')
-  const [dos, setDos] = useState('fracciones')
+  const [two, setTwo] = useState('fracciones')
   const [three, setThree] = useState('')
   const [shortcut, setShortcut] = useState('')
   const [empty, setEmpty] = useState('')
@@ -24,7 +24,7 @@ export function SearchStory() {
         <Panel>
           <Variant name="sm"><Search size="sm" value={first} onValueChange={setFirst} placeholder="Buscar una actividad" /></Variant>
           <Variant name="md"><Search size="md" value={three} onValueChange={setThree} placeholder="Buscar una actividad" /></Variant>
-          <Variant name="con texto"><Search size="md" value={dos} onValueChange={setDos} /></Variant>
+          <Variant name="con texto"><Search size="md" value={two} onValueChange={setTwo} /></Variant>
           <Variant name="con atajo"><Search size="md" value={shortcut} onValueChange={setShortcut} shortcut="/" placeholder="Buscar" /></Variant>
         </Panel>
       </Section>

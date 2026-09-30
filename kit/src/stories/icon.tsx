@@ -72,17 +72,17 @@ export function IconStory() {
       >
         <Cluster gap="lg" align="center">
           <span className={cls.searchSlot}>
-            <TextField icon="search" value={q} onChange={e => setQ(e.target.value)} placeholder="buscar por nombre o por tag…" />
+            <TextField icon="search" value={q} onValueChange={setQ} placeholder="buscar por nombre o por tag…" />
           </span>
           <Segmented
             label="Peso del glifo"
             value={weight}
-            onChange={setWeight}
+            onValueChange={setWeight}
             options={weights.map(p => ({ value: p.value, label: p.label }))}
             size="sm"
           />
           <span className={cls.sizeSlot}>
-            <Slider value={size} onChange={setSize} min={12} max={40} label="Tamaño" />
+            <Slider value={size} onValueChange={setSize} min={12} max={40} label="Tamaño" />
             <Mono>{size}</Mono>
           </span>
         </Cluster>

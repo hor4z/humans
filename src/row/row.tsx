@@ -17,8 +17,8 @@ function Root({ children }: {
   /** El `Row.Label`, el `Row.Hint` si va, y el control. */
   children?: ReactNode
 }) {
-  const [label, sinLabel] = takePart(children, Label)
-  const [hint, control] = takePart(sinLabel, Hint)
+  const [label, withoutLabel] = takePart(children, Label)
+  const [hint, control] = takePart(withoutLabel, Hint)
   const id = useId()
   const labelId = `${id}-label`
   const hintId = `${id}-hint`

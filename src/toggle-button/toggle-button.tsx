@@ -21,12 +21,12 @@ export function ToggleButton({
   children?: ReactNode
 }) {
   const c = control[size]
-  const soloIcono = !children
+  const iconOnly = !children
   return (
     <button
       type="button"
       aria-pressed={pressed}
-      aria-label={soloIcono ? label : undefined}
+      aria-label={iconOnly ? label : undefined}
       data-size={size}
       onClick={() => onPressedChange?.(!pressed)}
       className={cx(
@@ -35,7 +35,7 @@ export function ToggleButton({
         s.disabled,
         pressed ? s.on : s.off,
         c.radius,
-        soloIcono ? c.square : `${c.box} ${c.px} ${c.text} ${c.gap}`,
+        iconOnly ? c.square : `${c.box} ${c.px} ${c.text} ${c.gap}`,
         className,
       )}
       {...rest}

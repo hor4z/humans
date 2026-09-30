@@ -1,7 +1,7 @@
 import cls from './empty-state.module.css'
 import { Button } from '@milo/ui/button'
 import { EmptyState } from '@milo/ui/empty-state'
-import { FilterReset } from '@milo/ui/filter'
+import { Filter } from '@milo/ui/filter'
 import { A11y, Demo, Example, Page, Practices, Props, Section, Stack } from '../kit'
 
 export function EmptyStateStory() {
@@ -29,7 +29,7 @@ export function EmptyStateStory() {
               <EmptyState size="sm" icon="search_off">
                 <EmptyState.Title>Ninguna actividad con eso</EmptyState.Title>
                 <EmptyState.Body>Probá con otras palabras, o sacá alguno de los filtros puestos.</EmptyState.Body>
-                <EmptyState.Action><FilterReset>Limpiar los filtros</FilterReset></EmptyState.Action>
+                <EmptyState.Action><Filter.Reset>Limpiar los filtros</Filter.Reset></EmptyState.Action>
               </EmptyState>
             </div>
           </Demo>

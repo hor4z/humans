@@ -1,8 +1,7 @@
 import s from './mention.module.css'
 import { Mention } from '@milo/ui/blocks/editor/mention'
 import { A11y, Example, Note, Page, Practices, Props, Section } from '../kit'
-
-const face = (n: number) => `/avatars/${String(n).padStart(2, '0')}.webp`
+import { face } from '../fixtures'
 
 export function MentionStory() {
   return (

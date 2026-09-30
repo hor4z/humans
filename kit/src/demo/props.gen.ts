@@ -159,8 +159,8 @@ export const sitePropsByComponent: Record<string, ComponentDoc> = {
         "doc": "Cerrado no monta nada."
       },
       {
-        "name": "onClose",
-        "type": "() => void",
+        "name": "onOpenChange",
+        "type": "(open: boolean) => void",
         "required": true,
         "doc": "Al cerrar no hay navegación: seguís donde estabas."
       },

@@ -15,13 +15,13 @@ function Title({ children }: { children: ReactNode }) {
 }
 
 /** Dónde se ubica quien entrega, aspecto por aspecto, contra la rúbrica con la que lo van a mirar. Es la misma tarjeta que usa quien corrige, así que lo que el docente escribe es lo que el estudiante lee. Los niveles son excluyentes: va uno solo, porque son descripciones del mismo estado. */
-function Root({ criteria, value, onChange, defaultOpen = true, children, className }: {
+function Root({ criteria, value, onValueChange, defaultOpen = true, children, className }: {
   /** Los aspectos de la rúbrica, en su orden. */
   criteria: Criterion[]
   /** En qué nivel se ubicó cada aspecto, por id. */
   value: Record<string, number>
-  /** Recibe el aspecto y el nivel elegido. */
-  onChange: (id: string, level: number) => void
+  /** Recibe todos los niveles, con el que se acaba de elegir adentro. */
+  onValueChange: (next: Record<string, number>) => void
   /** Arranca abierta. Plegada deja a la vista el nombre, lo que falta y la barra. */
   defaultOpen?: boolean
   /** El `SelfAssessment.Title`. */
@@ -36,10 +36,10 @@ function Root({ criteria, value, onChange, defaultOpen = true, children, classNa
 
   const [title] = takePart(children, Title)
   const total = criteria.reduce((sum, c) => sum + c.weight, 0)
-  const ubicados = criteria.filter(c => value[c.id] !== undefined).length
-  const faltan = criteria.length - ubicados
+  const placed = criteria.filter(c => value[c.id] !== undefined).length
+  const missing = criteria.length - placed
 
-  const nivel = (c: Criterion) => {
+  const level = (c: Criterion) => {
     const level = value[c.id]
     if (level === undefined) return 'sin ubicar'
     return namesFor(c)?.[level] ?? `nivel ${level + 1}`
@@ -64,13 +64,13 @@ function Root({ criteria, value, onChange, defaultOpen = true, children, classNa
         </button>
         <p id={titleId} className={s.title}>{title}</p>
         <span className={`${s.count} tabular`}>
-          {faltan === 0 ? 'lista' : counted(faltan, ['aspecto', 'aspectos'])}
+          {missing === 0 ? 'lista' : counted(missing, ['aspecto', 'aspectos'])}
         </span>
       </div>
 
       <div aria-hidden className={s.progress}>
         <span
-          style={{ inlineSize: `${criteria.length === 0 ? 0 : (ubicados / criteria.length) * 100}%` }}
+          style={{ inlineSize: `${criteria.length === 0 ? 0 : (placed / criteria.length) * 100}%` }}
           className={s.fill}
         />
       </div>
@@ -84,10 +84,10 @@ function Root({ criteria, value, onChange, defaultOpen = true, children, classNa
                   criterion={c}
                   total={total}
                   level={value[c.id]}
-                  onLevel={level => onChange(c.id, level)}
-                  meta={nivel(c)}
+                  onLevel={level => onValueChange({ ...value, [c.id]: level })}
+                  meta={level(c)}
                   open={openCard === c.id}
-                  onToggle={() => setOpenCard(o => (o === c.id ? null : c.id))}
+                  onOpenChange={next => setOpenCard(next ? c.id : null)}
                 />
               </li>
             ))}

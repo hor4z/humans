@@ -34,7 +34,7 @@ export type SumCell = {
   price: string
 }
 
-const vacia: SumCell = { qty: '', price: '' }
+const empty: SumCell = { qty: '', price: '' }
 
 /** El subtotal de un renglón: sin los dos números, todavía no hay nada que sumar. */
 function subtotal(cell: SumCell): number | null {
@@ -55,14 +55,14 @@ function Hint({ children }: { children: ReactNode }) {
 
 /** Una tabla que se completa y se suma sola: un presupuesto, una lista de materiales, un costeo. El total no se escribe, y por eso no puede estar mal sumado. Con `cap`, además dice cuánto queda o de cuánto se pasaron. */
 function Root({
-  rows, value, onChange, cap, currency = '$', readOnly, children, className,
+  rows, value, onValueChange, cap, currency = '$', readOnly, children, className,
 }: {
   /** Los conceptos, en el orden en que se leen. */
   rows: SumRow[]
   /** Lo cargado hasta ahora, por id de renglón. */
   value: Record<string, SumCell>
-  /** Recibe el renglón entero, no la celda suelta. */
-  onChange?: (id: string, next: SumCell) => void
+  /** Recibe la tabla entera con el renglón nuevo adentro. */
+  onValueChange?: (next: Record<string, SumCell>) => void
   /** El tope que no se puede pasar. Sin esto la tabla suma y no opina. */
   cap?: number
   /** Lo que se antepone a cada número. */
@@ -78,14 +78,14 @@ function Root({
   const [prompt, rest] = takePart(children, Prompt)
   const [hint] = takePart(rest, Hint)
 
-  const quieto = readOnly || !onChange
-  const total = rows.reduce((acc, r) => acc + (subtotal(value[r.id] ?? vacia) ?? 0), 0)
-  const sobra = cap === undefined ? null : cap - total
+  const still = readOnly || !onValueChange
+  const total = rows.reduce((acc, r) => acc + (subtotal(value[r.id] ?? empty) ?? 0), 0)
+  const left = cap === undefined ? null : cap - total
 
-  const escribir = (r: SumRow, campo: keyof SumCell, texto: string) =>
-    onChange?.(r.id, { ...(value[r.id] ?? vacia), [campo]: texto })
+  const write = (r: SumRow, field: keyof SumCell, text: string) =>
+    onValueChange?.({ ...value, [r.id]: { ...(value[r.id] ?? empty), [field]: text } })
 
-  const plata = (n: number) => `${currency}${amount(n)}`
+  const money = (n: number) => `${currency}${amount(n)}`
 
   return (
     <div className={cx(s.root, className)}>
@@ -103,8 +103,8 @@ function Root({
         </Table.Header>
         <Table.Body>
           {rows.map(r => {
-            const celda = value[r.id] ?? vacia
-            const sub = subtotal(celda)
+            const cell = value[r.id] ?? empty
+            const sub = subtotal(cell)
             return (
               <Table.Row key={r.id}>
                 <Table.Cell><Table.Title>{r.label}</Table.Title></Table.Cell>
@@ -112,11 +112,11 @@ function Root({
                   <TextField
                     size="sm"
                     inputMode="decimal"
-                    value={celda.qty}
+                    value={cell.qty}
                     placeholder={r.qtyExample}
-                    readOnly={quieto}
+                    readOnly={still}
                     aria-label={`Cantidad de ${r.label}`}
-                    onChange={e => escribir(r, 'qty', e.target.value)}
+                    onChange={e => write(r, 'qty', e.target.value)}
                     className={s.control}
                   />
                 </Table.Cell>
@@ -124,15 +124,15 @@ function Root({
                   <TextField
                     size="sm"
                     inputMode="decimal"
-                    value={celda.price}
+                    value={cell.price}
                     placeholder={r.priceExample}
-                    readOnly={quieto}
+                    readOnly={still}
                     aria-label={`Precio de ${r.label}`}
-                    onChange={e => escribir(r, 'price', e.target.value)}
+                    onChange={e => write(r, 'price', e.target.value)}
                     className={s.control}
                   />
                 </Table.Cell>
-                <Table.Num>{sub === null ? '' : plata(sub)}</Table.Num>
+                <Table.Num>{sub === null ? '' : money(sub)}</Table.Num>
               </Table.Row>
             )
           })}
@@ -142,18 +142,18 @@ function Root({
             <Table.Cell><Table.Title>Total</Table.Title></Table.Cell>
             <Table.Cell />
             <Table.Cell />
-            <Table.Num>{plata(total)}</Table.Num>
+            <Table.Num>{money(total)}</Table.Num>
           </Table.Row>
         </Table.Foot>
       </Table>
 
-      {sobra !== null && (
-        <Alert size="sm" tone={sobra < 0 ? 'warn' : 'info'}>
-          {sobra < 0
-            ? `Te pasaste por ${plata(-sobra)}. El tope es ${plata(cap!)}.`
-            : sobra === 0
-              ? `Usaste los ${plata(cap!)} enteros.`
-              : `Te quedan ${plata(sobra)} de los ${plata(cap!)}.`}
+      {left !== null && (
+        <Alert size="sm" tone={left < 0 ? 'warn' : 'info'}>
+          {left < 0
+            ? `Te pasaste por ${money(-left)}. El tope es ${money(cap!)}.`
+            : left === 0
+              ? `Usaste los ${money(cap!)} enteros.`
+              : `Te quedan ${money(left)} de los ${money(cap!)}.`}
         </Alert>
       )}
     </div>

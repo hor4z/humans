@@ -3,8 +3,7 @@ import { Avatar } from '@milo/ui/avatar'
 import { Card } from '@milo/ui/card'
 import { BarChart } from '@milo/ui/chart'
 import { A11y, Example, Page, Practices, Props, Section } from '../kit'
-
-const face = (n: number) => `/avatars/${String(n).padStart(2, '0')}.webp`
+import { face } from '../fixtures'
 
 const week = [
   { label: 'Lunes', value: 18, total: 24, caption: 'Actividades corregidas' },
@@ -53,7 +52,7 @@ export function ChartStory() {
             <div className={cls.cardTitle}>Corregidas esta semana</div>
             <div className={cls.cardNote}>El azul es lo corregido; el gris, lo que entró ese día</div>
           </div>
-          <BarChart title="Corregidas sobre entregadas, por día" data={week} highlight={3} />
+          <BarChart label="Corregidas sobre entregadas, por día" data={week} highlight={3} />
         </Card>
       </Section>
 
@@ -62,7 +61,7 @@ export function ChartStory() {
         note="Con todas las barras llevando azul, marcar una con color no queda disponible: `highlight` le pone la etiqueta un paso más pesada, que alcanza para decir 'esta es de la que estamos hablando' sin agregar un tercer tono. Acá va sin ninguna: cuando lo que importa es la forma de la serie y no un mes, se deja afuera."
       >
         <Card className={cls.plainCard}>
-          <BarChart title="Corregidas sobre entregadas, por mes" data={months} height={160} />
+          <BarChart label="Corregidas sobre entregadas, por mes" data={months} height={160} />
         </Card>
       </Section>
 
@@ -83,7 +82,7 @@ export function ChartStory() {
   { label: 'Martes', value: 18, highlight: true },
 ]
 
-<BarChart title="Entregas por día" data={datos} />`} />
+<BarChart label="Entregas por día" data={datos} />`} />
       </Section>
 
       <Section title="Props">

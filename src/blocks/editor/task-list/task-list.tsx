@@ -30,7 +30,7 @@ export function TaskList({ items, onToggle, label, readOnly, className }: TaskLi
         <li key={t.id}>
           <label className={cx(cls.item, !readOnly && cls.editable)}>
             <span className={cls.control}>
-              <Checkbox checked={!!t.done} disabled={readOnly} onChange={v => onToggle(t.id, v)} />
+              <Checkbox checked={!!t.done} disabled={readOnly} onCheckedChange={v => onToggle(t.id, v)} />
             </span>
             <span className={cx(cls.text, t.done ? cls.doneText : cls.pendingText)}>{t.label}</span>
           </label>

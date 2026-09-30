@@ -25,7 +25,7 @@ export function ConfirmStory() {
             <Button variant="bad" iconStart={<Icon name="delete" />} onClick={() => setOpen(true)}>Borrar la actividad</Button>
             <ConfirmDialog
               open={open}
-              onCancel={() => setOpen(false)}
+              onOpenChange={() => setOpen(false)}
               onConfirm={() => {
                 setOpen(false)
                 toast({ title: 'Actividad borrada', tone: 'ok' })
@@ -49,7 +49,7 @@ export function ConfirmStory() {
             <Button variant="brand" iconStart={<Icon name="send" />} onClick={() => setPublishOpen(true)}>Publicar sin fecha</Button>
             <ConfirmDialog
               open={publishOpen}
-              onCancel={() => setPublishOpen(false)}
+              onOpenChange={() => setPublishOpen(false)}
               onConfirm={() => {
                 setPublishOpen(false)
                 toast({ title: 'Actividad publicada', body: 'Queda abierta hasta que la cierres', tone: 'ok' })
@@ -72,7 +72,7 @@ export function ConfirmStory() {
 
       <Section title="Cómo se escribe">
         <Example code={`
-<ConfirmDialog open={open} onCancel={cerrar} onConfirm={borrar} tone="bad">
+<ConfirmDialog open={open} onOpenChange={cerrar} onConfirm={borrar} tone="bad">
   <ConfirmDialog.Header>
     <ConfirmDialog.Title>¿Borrar "Fracciones equivalentes"?</ConfirmDialog.Title>
   </ConfirmDialog.Header>

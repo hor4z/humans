@@ -7,17 +7,20 @@ import { useEscape } from '../lib/esc'
 import { Portal } from '../portal/portal'
 import { useDismiss } from '../lib/dismiss'
 import { Spinner } from '../spinner/spinner'
+import { fieldSizes } from '../lib/control'
 
 /** El select es un botón con un listbox propio, no un `<select>` nativo. */
 export function Select({
-  value, onChange, options, width, leading, loading,
+  value, onValueChange, options, size = 'md', width, leading, loading,
 }: {
   /** El valor elegido, que es lo que se ve en el botón. */
   value: string
   /** Recibe el valor nuevo; sin esto el control es de solo lectura. */
-  onChange?: (v: string) => void
+  onValueChange?: (v: string) => void
   /** La lista, en el orden en que se muestra. */
   options: string[]
+  /** 36 · 40 · 44, las de los demás campos. */
+  size?: 'sm' | 'md' | 'lg'
   /** Sin esto toma el ancho del contenido. */
   width?: number
   /** Adelante del valor: un `Icon`, un `FolderIcon`, un `Avatar`, un `Spinner`. */
@@ -60,7 +63,7 @@ export function Select({
       if (e.key === 'End') { e.preventDefault(); setActive(options.length - 1) }
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault()
-        onChange?.(options[active])
+        onValueChange?.(options[active])
         setOpen(false)
         btn.current?.focus()
       }
@@ -75,7 +78,7 @@ export function Select({
     }
     document.addEventListener('keydown', onKey, true)
     return () => document.removeEventListener('keydown', onKey, true)
-  }, [open, active, options, onChange])
+  }, [open, active, options, onValueChange])
 
   useEffect(() => {
     list.current?.querySelector('[data-active="true"]')?.scrollIntoView({ block: 'nearest' })
@@ -105,7 +108,7 @@ export function Select({
           if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); setOpen(true) }
         }}
         style={{ width }}
-        className={`${s.root} field-focus`}
+        className={cx(s.root, fieldSizes[size], 'field-focus')}
       >
         <span className={s.value}>
           {leadingNode && <span className={s.leading}>{leadingNode}</span>}
@@ -135,7 +138,7 @@ export function Select({
                   aria-selected={selected}
                   data-active={i === active}
                   onMouseMove={() => setActive(i)}
-                  onClick={() => { onChange?.(o); setOpen(false); btn.current?.focus() }}
+                  onClick={() => { onValueChange?.(o); setOpen(false); btn.current?.focus() }}
                   className={cx(
                     s.option,
                     i === active ? s.active : s.idle,

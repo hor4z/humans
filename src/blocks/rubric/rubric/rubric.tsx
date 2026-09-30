@@ -76,10 +76,10 @@ function Root({ criteria, onAdd, onRemove, defaultOpen = true, children, classNa
   useOutside(!!pinned, () => setPinned(null), [rootRef])
 
 
-  const antes = useRef(form.open)
+  const before = useRef(form.open)
   useEffect(() => {
-    if (antes.current === form.open) return
-    antes.current = form.open
+    if (before.current === form.open) return
+    before.current = form.open
     if (form.open) labelRef.current?.focus()
     else addRef.current?.focus()
   }, [form.open])
@@ -184,7 +184,7 @@ function Root({ criteria, onAdd, onRemove, defaultOpen = true, children, classNa
                     criterion={c}
                     total={total}
                     open={openCard === c.id}
-                    onToggle={() => setOpenCard(o => (o === c.id ? null : c.id))}
+                    onOpenChange={next => setOpenCard(next ? c.id : null)}
                     onRemove={onRemove && (() => onRemove(c))}
                   />
                 </li>
@@ -215,7 +215,7 @@ function Root({ criteria, onAdd, onRemove, defaultOpen = true, children, classNa
                       maxLength={criterionLimits.label}
                       value={label}
                       placeholder="Trabajo en equipo"
-                      onChange={e => setLabel(e.target.value)}
+                      onValueChange={setLabel}
                       onKeyDown={e => { if (e.key === 'Escape') closeForm() }}
                     />
                   </Field>
@@ -230,7 +230,7 @@ function Root({ criteria, onAdd, onRemove, defaultOpen = true, children, classNa
                       maxLength={criterionLimits.detail}
                       value={detail}
                       placeholder="Que se repartan el trabajo y que cada uno pueda contar lo que hizo el resto"
-                      onChange={e => setDetail(e.target.value)}
+                      onValueChange={setDetail}
                       onKeyDown={e => { if (e.key === 'Escape') closeForm() }}
                     />
                   </Field>
@@ -238,7 +238,7 @@ function Root({ criteria, onAdd, onRemove, defaultOpen = true, children, classNa
                   <Field>
                     <Field.Label>Cuánto vale contra los demás</Field.Label>
                     <div className={s.weightRow}>
-                      <Slider value={weight} onChange={setWeight} min={1} max={5} className={s.weightSlider} />
+                      <Slider value={weight} onValueChange={setWeight} min={1} max={5} className={s.weightSlider} />
                       <span className={`${s.share} tabular`}>{share(weight, total + weight).percent} de la nota</span>
                     </div>
                   </Field>

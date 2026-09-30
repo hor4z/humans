@@ -21,19 +21,19 @@ export function SegmentedStory() {
       >
         <Panel>
           <Variant name="md · texto">
-            <Segmented label="Filtro" value={filter} onChange={setFilter}
+            <Segmented label="Filtro" value={filter} onValueChange={setFilter}
               options={[{ value: 'todas', label: 'Todas' }, { value: 'abiertas', label: 'Abiertas' }]} />
           </Variant>
           <Variant name="md · iconos">
-            <Segmented label="Vista" value={view} onChange={setView}
+            <Segmented label="Vista" value={view} onValueChange={setView}
               options={[{ value: 'grilla', icon: 'grid_view', title: 'Grilla' }, { value: 'lista', icon: 'layers', title: 'Lista' }]} />
           </Variant>
           <Variant name="sm">
-            <Segmented size="sm" label="Rango" value={range} onChange={setRange}
+            <Segmented size="sm" label="Rango" value={range} onValueChange={setRange}
               options={[{ value: 'semana', label: 'Semana' }, { value: 'mes', label: 'Mes' }]} />
           </Variant>
-          <Variant name="xs · sin pista">
-            <Segmented size="xs" label="Rango" value={small} onChange={setSmall}
+          <Variant name="compact · sin pista">
+            <Segmented compact label="Rango" value={small} onValueChange={setSmall}
               options={[{ value: 'semana', label: 'Semana' }, { value: 'mes', label: 'Mes', dot: true }]} />
           </Variant>
         </Panel>
@@ -44,7 +44,7 @@ export function SegmentedStory() {
 
 <Segmented
   value={vista}
-  onChange={setVista}
+  onValueChange={setVista}
   options={[{ value: 'semana', label: 'Semana' }, { value: 'mes', label: 'Mes' }]}
 />`} />
       </Section>

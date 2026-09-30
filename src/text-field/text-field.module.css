@@ -24,7 +24,7 @@
     height: 100%;
     min-width: 0;
     flex: 1;
-    background-color: #0000;
+    background-color: transparent;
     font-weight: var(--font-weight-medium);
     color: var(--text);
     --milo-outline-style: none;

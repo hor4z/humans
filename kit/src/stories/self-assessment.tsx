@@ -61,7 +61,7 @@ export function SelfAssessmentStory() {
               <SelfAssessment
                 criteria={criteria}
                 value={value}
-                onChange={(id, level) => setValue(v => ({ ...v, [id]: level }))}
+                onValueChange={setValue}
               >
                 <SelfAssessment.Title>Dónde estás</SelfAssessment.Title>
               </SelfAssessment>
@@ -86,7 +86,7 @@ export function SelfAssessmentStory() {
         <Example code={`<SelfAssessment
   criteria={aspectos}
   value={donde}
-  onChange={(id, nivel) => ubicar(id, nivel)}
+  onValueChange={(id, nivel) => ubicar(id, nivel)}
 >
   <SelfAssessment.Title>Dónde estás</SelfAssessment.Title>
 </SelfAssessment>`} />

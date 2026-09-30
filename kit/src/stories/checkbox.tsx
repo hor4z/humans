@@ -23,13 +23,13 @@ export function CheckboxStory() {
       >
         <Panel>
           <Variant name="off / on">
-            <Checkbox checked={b} onChange={setB} label="Sin marcar" />
-            <Checkbox checked={a} onChange={setA} label="Marcada" />
+            <Checkbox checked={b} onCheckedChange={setB} label="Sin marcar" />
+            <Checkbox checked={a} onCheckedChange={setA} label="Marcada" />
           </Variant>
-          <Variant name="indeterminate"><Checkbox checked={partial} indeterminate={!partial} onChange={setPartial} label="Parcial" /></Variant>
+          <Variant name="indeterminate"><Checkbox checked={partial} indeterminate={!partial} onCheckedChange={setPartial} label="Parcial" /></Variant>
           <Variant name="disabled">
-            <Checkbox checked onChange={() => {}} disabled label="Fija" />
-            <Checkbox checked={false} onChange={() => {}} disabled label="Fija" />
+            <Checkbox checked onCheckedChange={() => {}} disabled label="Fija" />
+            <Checkbox checked={false} onCheckedChange={() => {}} disabled label="Fija" />
           </Variant>
         </Panel>
       </Section>
@@ -38,7 +38,7 @@ export function CheckboxStory() {
         <Panel>
           <Variant name="con etiqueta">
             <label className={cls.singleLabel}>
-              <Checkbox checked={c} onChange={setC} />
+              <Checkbox checked={c} onCheckedChange={setC} />
               Compartir la receta con el equipo
             </label>
           </Variant>
@@ -48,7 +48,7 @@ export function CheckboxStory() {
                 <label key={x} className={cls.itemLabel}>
                   <Checkbox
                     checked={spaces.includes(x)}
-                    onChange={v => setSpaces(e => (v ? [...e, x] : e.filter(n => n !== x)))}
+                    onCheckedChange={v => setSpaces(e => (v ? [...e, x] : e.filter(n => n !== x)))}
                   />
                   {x}
                 </label>
@@ -60,7 +60,7 @@ export function CheckboxStory() {
 
       <Section title="Cómo se escribe">
         <Example code={`const [marcado, setMarcado] = useState(false)
-<Checkbox checked={marcado} onChange={setMarcado} label="Permitir entregas tarde" />`} />
+<Checkbox checked={marcado} onCheckedChange={setMarcado} label="Permitir entregas tarde" />`} />
       </Section>
 
       <Section title="Props">

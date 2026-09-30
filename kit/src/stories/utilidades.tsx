@@ -5,12 +5,12 @@ import { colorForName } from '@milo/ui/lib/colors'
 import { Table } from '@milo/ui/table'
 import { A11y, Example, Mono, Page, Practices, Section } from '../kit'
 
-const AHORA = new Date('2026-03-09T18:20:00-03:00')
-const HACE_UN_RATO = new Date('2026-03-09T18:00:00-03:00')
-const CIERRE = new Date('2026-03-09T23:59:00-03:00')
+const RIGHT_NOW = new Date('2026-03-09T18:20:00-03:00')
+const A_WHILE_AGO = new Date('2026-03-09T18:00:00-03:00')
+const CLOSING = new Date('2026-03-09T23:59:00-03:00')
 
 /** Cada fila es la llamada de verdad y su resultado de verdad: el valor sale de correr la función, no de un texto escrito al lado. */
-function Fila({ call, out }: { call: string; out: string }) {
+function RowFixture({ call, out }: { call: string; out: string }) {
   return (
     <Table.Row>
       <Table.Cell><Mono>{call}</Mono></Table.Cell>
@@ -19,7 +19,7 @@ function Fila({ call, out }: { call: string; out: string }) {
   )
 }
 
-function Tabla({ label, children }: { label: string; children: ReactNode }) {
+function TableFixture({ label, children }: { label: string; children: ReactNode }) {
   return (
     <Table label={label} minWidth={520}>
       <Table.Header>
@@ -45,59 +45,59 @@ export function UtilidadesStory() {
         title="Fecha y hora"
         note="Todas escriben en es-AR y toman la zona del contenido, no la del navegador. Sin `zone` usan la de quien mira, que es lo correcto cuando el dato es suyo."
       >
-        <Tabla label="Las funciones de fecha y hora">
-          <Fila call="clock(cierre)" out={clock(CIERRE)} />
-          <Fila call="day(cierre)" out={day(CIERRE)} />
-          <Fila call="day(cierre, { full: true })" out={day(CIERRE, { full: true })} />
-          <Fila call="dayAndTime(cierre)" out={dayAndTime(CIERRE)} />
-          <Fila call="timeAgo(hace20min)" out={timeAgo(HACE_UN_RATO, { now: AHORA })} />
-          <Fila call="duration(5430)" out={duration(5430)} />
-          <Fila call="zoneLabel('Europe/Madrid')" out={zoneLabel('Europe/Madrid', AHORA)} />
-        </Tabla>
+        <TableFixture label="Las funciones de fecha y hora">
+          <RowFixture call="clock(cierre)" out={clock(CLOSING)} />
+          <RowFixture call="day(cierre)" out={day(CLOSING)} />
+          <RowFixture call="day(cierre, { full: true })" out={day(CLOSING, { full: true })} />
+          <RowFixture call="dayAndTime(cierre)" out={dayAndTime(CLOSING)} />
+          <RowFixture call="timeAgo(hace20min)" out={timeAgo(A_WHILE_AGO, { now: RIGHT_NOW })} />
+          <RowFixture call="duration(5430)" out={duration(5430)} />
+          <RowFixture call="zoneLabel('Europe/Madrid')" out={zoneLabel('Europe/Madrid', RIGHT_NOW)} />
+        </TableFixture>
       </Section>
 
       <Section
         title="Números y valores"
         note="Separador de miles con punto y decimal con coma, que es como se escribe acá. `plural` existe porque el castellano no se resuelve sumando una `s`."
       >
-        <Tabla label="Las funciones de número">
-          <Fila call="count(1250)" out={count(1250)} />
-          <Fila call="decimals(9.84)" out={decimals(9.84)} />
-          <Fila call="share(18, 24).count" out={share(18, 24).count} />
-          <Fila call="share(18, 24).percent" out={share(18, 24).percent} />
-          <Fila call="withUnit(45, 'min')" out={withUnit(45, 'min')} />
-          <Fila call="span(3, 7, 'entregas')" out={span(3, 7, 'entregas')} />
-          <Fila call="delta(12, { percent: true })" out={delta(12, { percent: true })} />
-          <Fila call="bytes(2400000)" out={bytes(2400000)} />
-          <Fila call="plural(1, ['actividad', 'actividades'])" out={plural(1, ['actividad', 'actividades'])} />
-          <Fila call="counted(1250, ['entrega', 'entregas'])" out={counted(1250, ['entrega', 'entregas'])} />
-        </Tabla>
+        <TableFixture label="Las funciones de número">
+          <RowFixture call="count(1250)" out={count(1250)} />
+          <RowFixture call="decimals(9.84)" out={decimals(9.84)} />
+          <RowFixture call="share(18, 24).count" out={share(18, 24).count} />
+          <RowFixture call="share(18, 24).percent" out={share(18, 24).percent} />
+          <RowFixture call="withUnit(45, 'min')" out={withUnit(45, 'min')} />
+          <RowFixture call="span(3, 7, 'entregas')" out={span(3, 7, 'entregas')} />
+          <RowFixture call="delta(12, { percent: true })" out={delta(12, { percent: true })} />
+          <RowFixture call="bytes(2400000)" out={bytes(2400000)} />
+          <RowFixture call="plural(1, ['actividad', 'actividades'])" out={plural(1, ['actividad', 'actividades'])} />
+          <RowFixture call="counted(1250, ['entrega', 'entregas'])" out={counted(1250, ['entrega', 'entregas'])} />
+        </TableFixture>
       </Section>
 
       <Section
         title="Color"
         note="El color de una persona sale de su nombre, así que la misma persona tiene siempre el mismo tinte en toda la aplicación."
       >
-        <Tabla label="Las funciones de color">
-          <Fila call="colorForName('Ana Pérez')" out={colorForName('Ana Pérez')} />
-          <Fila call="colorForName('Bruno Díaz')" out={colorForName('Bruno Díaz')} />
-        </Tabla>
+        <TableFixture label="Las funciones de color">
+          <RowFixture call="colorForName('Ana Pérez')" out={colorForName('Ana Pérez')} />
+          <RowFixture call="colorForName('Bruno Díaz')" out={colorForName('Bruno Díaz')} />
+        </TableFixture>
       </Section>
 
       <Section
         title="Hooks"
         note="Los siete que el paquete trae. Cada uno entra por su propio archivo, así que tocar uno no invalida a los demás."
       >
-        <Tabla label="Los hooks">
-          <Fila call="useDisclosure()" out="{ open, onOpen, onClose, onToggle }" />
-          <Fila call="useAnnounce()" out="announce(texto, 'polite' | 'assertive')" />
-          <Fila call="useTheme()" out="{ theme, resolved, setTheme, toggle }" />
-          <Fila call="useMediaQuery(query)" out="true o false, y se entera al cambiar" />
-          <Fila call="useReducedMotion()" out="quién pidió menos movimiento" />
-          <Fila call="useClipboard()" out="{ copied, copy }" />
-          <Fila call="useDebounce(valor, ms)" out="el valor, cuando dejó de cambiar" />
-          <Fila call="useLocalStorage(clave, inicial)" out="[valor, setValor], y sincroniza entre pestañas" />
-        </Tabla>
+        <TableFixture label="Los hooks">
+          <RowFixture call="useDisclosure()" out="{ open, onOpen, onClose, onToggle }" />
+          <RowFixture call="useAnnounce()" out="announce(texto, 'polite' | 'assertive')" />
+          <RowFixture call="useTheme()" out="{ theme, resolved, setTheme, toggle }" />
+          <RowFixture call="useMediaQuery(query)" out="true o false, y se entera al cambiar" />
+          <RowFixture call="useReducedMotion()" out="quién pidió menos movimiento" />
+          <RowFixture call="useClipboard()" out="{ copied, copy }" />
+          <RowFixture call="useDebounce(valor, ms)" out="el valor, cuando dejó de cambiar" />
+          <RowFixture call="useLocalStorage(clave, inicial)" out="[valor, setValor], y sincroniza entre pestañas" />
+        </TableFixture>
       </Section>
 
       <Section title="Cómo se escribe">

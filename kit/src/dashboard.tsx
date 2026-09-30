@@ -22,11 +22,9 @@ import { SettingsModal } from './demo/settings-modal/settings-modal'
 import { useToast } from '@milo/ui/toast'
 import { Tooltip } from '@milo/ui/tooltip'
 import { useStill } from './mascots/still'
+import { face, person as p } from './fixtures'
 
 const AR = 'America/Argentina/Buenos_Aires'
-
-const face = (n: number) => `/avatars/${String(n).padStart(2, '0')}.webp`
-const p = (name: string, photo?: number) => ({ name, src: photo ? face(photo) : undefined })
 
 const week = [
   { label: 'Lun', value: 18, total: 24, caption: 'Corregidas ese día' },
@@ -119,7 +117,7 @@ export function Dashboard() {
             size="md"
             label="Rango"
             value={range}
-            onChange={setRange}
+            onValueChange={setRange}
             options={[{ value: 'semana', label: 'Semana' }, { value: 'mes', label: 'Mes' }]}
           />
           <Tooltip label="Exportar a CSV">
@@ -154,7 +152,7 @@ export function Dashboard() {
               <Chip size="md" color="ok" icon="trending_up">84%</Chip>
             </div>
             <BarChart
-              title="Corregidas sobre entregadas"
+              label="Corregidas sobre entregadas"
               data={range === 'semana' ? week : month}
               highlight={range === 'semana' ? 2 : 3}
               height={180}
@@ -197,16 +195,20 @@ export function Dashboard() {
 
             <div className={cls.progressBlock}>
               <h2 className={cls.progressTitle}>Cómo va cada espacio</h2>
-              <Progress label="Matemática · 4.º A" value={11} max={18} >
+              <Progress value={11} max={18}>
+                <Progress.Label>Matemática · 4.º A</Progress.Label>
                 <Progress.Hint>11/18</Progress.Hint>
               </Progress>
-              <Progress label="Ciencias · 5.º B" value={24} max={24} tone="ok" >
+              <Progress value={24} max={24} tone="ok">
+                <Progress.Label>Ciencias · 5.º B</Progress.Label>
                 <Progress.Hint>listo</Progress.Hint>
               </Progress>
-              <Progress label="Sociales · 5.º A" value={3} max={7} >
+              <Progress value={3} max={7}>
+                <Progress.Label>Sociales · 5.º A</Progress.Label>
                 <Progress.Hint>3/7</Progress.Hint>
               </Progress>
-              <Progress label="Lengua · 6.º" value={0} max={12} >
+              <Progress value={0} max={12}>
+                <Progress.Label>Lengua · 6.º</Progress.Label>
                 <Progress.Hint>sin entregas</Progress.Hint>
               </Progress>
             </div>
@@ -219,7 +221,7 @@ export function Dashboard() {
         </div>
       </div>
 
-      <SettingsModal open={settings} onClose={() => setSettings(false)} user={me} />
+      <SettingsModal open={settings} onOpenChange={setSettings} user={me} />
     </Stack>
   )
 }

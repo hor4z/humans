@@ -131,7 +131,7 @@
     width: 100%;
     cursor: pointer;
     appearance: none;
-    background-color: #0000;
+    background-color: transparent;
     opacity: 0;
   }
 

@@ -10,12 +10,12 @@ type Ctx = { onClose: () => void; titleId: string }
 const SheetContext = createContext<Ctx | null>(null)
 
 function Root({
-  open, onClose, children, side = 'right', width = 460, label,
+  open, onOpenChange, children, side = 'right', width = 460, label,
 }: {
   /** Cerrado no monta nada. */
   open: boolean
-  /** Lo llaman la X, el velo y Escape. */
-  onClose: () => void
+  /** Recibe `false` desde Escape, el velo y la X del header. */
+  onOpenChange: (open: boolean) => void
   children: ReactNode
   /** De qué lado entra. La derecha es de donde vienen las cosas nuevas. */
   side?: 'right' | 'left'
@@ -26,6 +26,7 @@ function Root({
 }) {
   const panel = useRef<HTMLDivElement>(null)
   const titleId = useId()
+  const onClose = () => onOpenChange(false)
   useScrollLock(open)
   useEscape(open, onClose)
   useFocusTrap(open, panel)

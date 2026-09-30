@@ -27,14 +27,14 @@ function Hint({ children }: { children: ReactNode }) {
 
 /** Una pregunta con opciones: el enunciado y las tarjetas. Con `multiple` vale marcar más de una. Elegir no dice si estuvo bien: eso lo dice `revealed`, y hasta entonces la pieza no corrige a nadie. */
 function Root({
-  options, value, onChange, multiple, correct, revealed, readOnly, children, className,
+  options, value, onValueChange, multiple, correct, revealed, readOnly, children, className,
 }: {
   /** En el orden en que se leen. */
   options: Option[]
   /** Lo marcado, siempre como array: así el call site no cambia de forma al pasar de una a varias. */
   value: string[]
   /** Recibe lo marcado después del toque, no el id que se tocó. Eligiendo una sola, volver a tocar la elegida no la apaga: es lo mismo que hace `Radio`, y una opción única que se puede dejar en blanco se destilda sin querer. */
-  onChange: (next: string[]) => void
+  onValueChange: (next: string[]) => void
   /** Más de una puede estar bien, y entonces las tarjetas son casillas y no opciones únicas. */
   multiple?: boolean
   /** Cuáles estaban bien. Sin `revealed` no se dibuja: la pieza lo guarda hasta que alguien decide mostrarlo. */
@@ -52,22 +52,22 @@ function Root({
   const [prompt, rest] = takePart(children, Prompt)
   const [hint] = takePart(rest, Hint)
 
-  const quieto = revealed || readOnly
-  const marcado = (o: Option) => value.includes(o.id)
-  const corrige = revealed && correct !== undefined
-  const acertada = (o: Option) => corrige && correct.includes(o.id)
-  const errada = (o: Option) => corrige && marcado(o) && !correct.includes(o.id)
+  const still = revealed || readOnly
+  const checked = (o: Option) => value.includes(o.id)
+  const grades = revealed && correct !== undefined
+  const right = (o: Option) => grades && correct.includes(o.id)
+  const wrong = (o: Option) => grades && checked(o) && !correct.includes(o.id)
 
   const toggle = (o: Option) => {
-    if (quieto) return
-    if (!multiple) return marcado(o) ? undefined : onChange([o.id])
-    onChange(marcado(o) ? value.filter(v => v !== o.id) : [...value, o.id])
+    if (still) return
+    if (!multiple) return checked(o) ? undefined : onValueChange([o.id])
+    onValueChange(checked(o) ? value.filter(v => v !== o.id) : [...value, o.id])
   }
 
   const roving = useRovingRadio(
     value[0] ?? options[0]?.id ?? '',
     v => toggle(options.find(o => o.id === v)!),
-    options.map(o => ({ value: o.id, disabled: quieto })),
+    options.map(o => ({ value: o.id, disabled: still })),
   )
 
   return (
@@ -86,34 +86,34 @@ function Root({
             key={o.id}
             className={cx(
               s.option,
-              !quieto && s.interactive,
-              marcado(o) && s.selected,
-              acertada(o) && s.met,
-              errada(o) && s.unmet,
+              !still && s.interactive,
+              checked(o) && s.selected,
+              right(o) && s.met,
+              wrong(o) && s.unmet,
             )}
           >
             <span className={s.control}>
               {multiple
-                ? <Checkbox checked={marcado(o)} disabled={quieto} onChange={() => toggle(o)} />
+                ? <Checkbox checked={checked(o)} disabled={still} onCheckedChange={() => toggle(o)} />
                 : (
                     <Radio
                       ref={roving.ref(o.id)}
-                      checked={marcado(o)}
-                      disabled={quieto}
+                      checked={checked(o)}
+                      disabled={still}
                       tabIndex={roving.tabIndex(o.id)}
-                      onChange={() => toggle(o)}
+                      onCheckedChange={() => toggle(o)}
                     />
                   )}
             </span>
             <span className={s.text}>{o.label}</span>
-            {(acertada(o) || errada(o)) && (
-              <span aria-hidden className={cx(s.trailing, acertada(o) ? s.metMark : s.unmetMark)}>
-                <Icon name={acertada(o) ? 'check' : 'remove'} size={14} weight={600} />
+            {(right(o) || wrong(o)) && (
+              <span aria-hidden className={cx(s.trailing, right(o) ? s.metMark : s.unmetMark)}>
+                <Icon name={right(o) ? 'check' : 'remove'} size={14} weight={600} />
               </span>
             )}
-            {corrige && (
+            {grades && (
               <span className="sr-only">
-                {acertada(o) ? ', es una de las que iban' : errada(o) ? ', esta no iba' : ''}
+                {right(o) ? ', es una de las que iban' : wrong(o) ? ', esta no iba' : ''}
               </span>
             )}
           </label>

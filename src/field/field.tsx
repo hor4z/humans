@@ -29,9 +29,9 @@ function Error({ children }: { children: ReactNode }) {
 }
 
 function Root({ required, children, className }: FieldProps) {
-  const [label, sinLabel] = takePart(children, Label)
-  const [hint, sinHint] = takePart(sinLabel, Hint)
-  const [error, control] = takePart(sinHint, Error)
+  const [label, withoutLabel] = takePart(children, Label)
+  const [hint, withoutHint] = takePart(withoutLabel, Hint)
+  const [error, control] = takePart(withoutHint, Error)
   const id = useId()
   const labelId = `${id}-label`
   const hintId = `${id}-hint`

@@ -8,17 +8,17 @@ const scales = readFileSync(join(import.meta.dirname, '../styles/tokens/scales.c
 const theme = readFileSync(join(import.meta.dirname, '../theme.css'), 'utf8')
   + readFileSync(join(import.meta.dirname, '../styles/base.css'), 'utf8')
 
-function modulos(base: string, prefix = ''): { name: string; text: string }[] {
+function moduleFiles(base: string, prefix = ''): { name: string; text: string }[] {
   return readdirSync(base, { withFileTypes: true }).flatMap(e =>
-    e.isDirectory() ? (e.name === 'node_modules' ? [] : modulos(join(base, e.name), `${prefix}${e.name}/`))
+    e.isDirectory() ? (e.name === 'node_modules' ? [] : moduleFiles(join(base, e.name), `${prefix}${e.name}/`))
     : e.name.endsWith('.module.css')
       ? [{ name: `${prefix}${e.name}`, text: readFileSync(join(base, e.name), 'utf8') }]
       : [])
 }
 
 const style = [
-  ...modulos(join(import.meta.dirname, '..')),
-  ...modulos(join(import.meta.dirname, '../../kit/src')),
+  ...moduleFiles(join(import.meta.dirname, '..')),
+  ...moduleFiles(join(import.meta.dirname, '../../kit/src')),
   { name: 'base.css', text: readFileSync(join(import.meta.dirname, '../styles/base.css'), 'utf8') },
 ]
 
@@ -80,8 +80,8 @@ describe('la escala tipográfica', () => {
   })
 
   it('ningún rol baja de 12px', () => {
-    const chicos = roles.filter(r => size(`type-${r}`) < 12)
-    expect(chicos).toEqual([])
+    const small = roles.filter(r => size(`type-${r}`) < 12)
+    expect(small).toEqual([])
   })
 
   it('la escala sube y no se repite', () => {

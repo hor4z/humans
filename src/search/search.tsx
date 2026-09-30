@@ -37,7 +37,7 @@ export function Search({
       size={size}
       icon="search"
       value={value}
-      onChange={e => onValueChange(e.target.value)}
+      onValueChange={onValueChange}
       placeholder={placeholder}
       className={cx(block ? cls.root : cls.inline, className)}
       suffix={value

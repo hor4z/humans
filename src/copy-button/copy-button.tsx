@@ -28,7 +28,7 @@ export function CopyButton({ value, label = 'Copiar', copiedLabel = 'Copiado', s
       onClick={async () => { if (await copy(value)) announce(copiedLabel) }}
       className={cx(`${s.root} touch-target`, s.motion, c.square, c.radius, className)}
     >
-      <Icon name={copied ? 'check' : 'content_copy'} size={c.icon} className={copied ? s.done : 'icon-muted'} />
+      <Icon name={copied ? 'check' : 'content_copy'} size={c.icon} weight={400} className={copied ? s.done : s.idle} />
     </button>
   )
 }

@@ -18,16 +18,31 @@ describe('la tabla de props sale del código', () => {
 
   it('cada pieza que el kit documenta existe en el paquete', () => {
     const src = join(root, 'src')
-    const declarado = new Set<string>()
+    const declaredNames = new Set<string>()
     for (const dir of [...pieces(src).map(p => p.dir), join(src, 'lib')]) {
       for (const file of readdirSync(dir)) {
         if (!/\.tsx?$/.test(file) || file.endsWith('.test.ts') || file.endsWith('.test.tsx')) continue
         const text = readFileSync(join(dir, file), 'utf8')
-        for (const m of text.matchAll(/^export (?:function|const|type) (\w+)/gm)) declarado.add(m[1])
+        for (const m of text.matchAll(/^export (?:function|const|type) (\w+)/gm)) declaredNames.add(m[1])
       }
     }
-    const outside = Object.keys(propsByComponent).filter(p => !declarado.has(p.split('.')[0]))
+    const outside = Object.keys(propsByComponent).filter(p => !declaredNames.has(p.split('.')[0]))
     expect(outside).toEqual([])
+  })
+
+  it('el handler se llama por lo que controla: value, checked, pressed, open', () => {
+    const pairs: Record<string, string> = { value: 'onValueChange', checked: 'onCheckedChange', pressed: 'onPressedChange', open: 'onOpenChange' }
+    const offenders: string[] = []
+    for (const [comp, doc] of Object.entries(propsByComponent)) {
+      const names = new Set(doc.props.map(p => p.name))
+      if (names.has('onChange')) offenders.push(`${comp}: onChange, que es el nombre del evento nativo`)
+      for (const [controlled, handler] of Object.entries(pairs)) {
+        if (!names.has(controlled)) continue
+        const others = [...names].filter(n => /^on[A-Z]\w*Change$/.test(n) && n !== handler && n !== 'onValueChange')
+        for (const o of others) offenders.push(`${comp}: ${controlled} va con ${handler}, no con ${o}`)
+      }
+    }
+    expect(offenders, 'un solo nombre por papel: el que lee la API no tiene que adivinar cuál de cuatro usa esta pieza').toEqual([])
   })
 
   it('lo que se documenta tiene tipo y obligatoriedad, no solo prosa', () => {

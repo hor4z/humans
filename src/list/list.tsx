@@ -46,9 +46,9 @@ function Item({
   /** El `List.Title`, el `List.Hint` si va y el `List.Trailing` si va. */
   children: ReactNode
 }) {
-  const [title, sinTitle] = takePart(children, Title)
-  const [hint, sinHint] = takePart(sinTitle, Hint)
-  const [trailing] = takePart(sinHint, Trailing)
+  const [title, withoutTitle] = takePart(children, Title)
+  const [hint, withoutHint] = takePart(withoutTitle, Hint)
+  const [trailing] = takePart(withoutHint, Trailing)
   const Tag = onClick ? 'button' : 'div'
   return (
     <Tag

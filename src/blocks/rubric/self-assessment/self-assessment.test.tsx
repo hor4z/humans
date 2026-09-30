@@ -20,77 +20,77 @@ const criteria: Criterion[] = [
   },
 ]
 
-const arma = (props: Record<string, unknown> = {}) => {
-  const onChange = vi.fn()
+const setup = (props: Record<string, unknown> = {}) => {
+  const onValueChange = vi.fn()
   render(
-    <SelfAssessment criteria={criteria} value={{}} onChange={onChange} {...props}>
+    <SelfAssessment criteria={criteria} value={{}} onValueChange={onValueChange} {...props}>
       <SelfAssessment.Title>Dónde estás</SelfAssessment.Title>
     </SelfAssessment>,
   )
-  return { onChange }
+  return { onValueChange }
 }
 
 describe('SelfAssessment', () => {
   it('dice qué falta y no cuánto va: lo que sirve es el pendiente', () => {
-    arma()
+    setup()
     expect(screen.getByText('2 aspectos')).toBeInTheDocument()
   })
 
   it('con todos ubicados lo dice sin números', () => {
-    arma({ value: { idea: 2, cuentas: 0 } })
+    setup({ value: { idea: 2, cuentas: 0 } })
     expect(screen.getByText('lista')).toBeInTheDocument()
   })
 
   it('el plural sale bien con uno solo', () => {
-    arma({ value: { idea: 2 } })
+    setup({ value: { idea: 2 } })
     expect(screen.getByText('1 aspecto')).toBeInTheDocument()
   })
 
   it('plegado, cada aspecto dice en cuál quedó', () => {
-    arma({ value: { idea: 2 } })
+    setup({ value: { idea: 2 } })
     expect(screen.getAllByText('Bueno').length).toBeGreaterThan(0)
     expect(screen.getByText('sin ubicar')).toBeInTheDocument()
   })
 
   it('el panel entero se pliega, como el del docente', async () => {
-    arma()
-    const cabecera = screen.getByRole('button', { name: 'Dónde estás' })
-    expect(cabecera).toHaveAttribute('aria-expanded', 'true')
-    await userEvent.click(cabecera)
-    expect(cabecera).toHaveAttribute('aria-expanded', 'false')
+    setup()
+    const header = screen.getByRole('button', { name: 'Dónde estás' })
+    expect(header).toHaveAttribute('aria-expanded', 'true')
+    await userEvent.click(header)
+    expect(header).toHaveAttribute('aria-expanded', 'false')
   })
 
   it('los niveles son un grupo de opción única, nombrado con el aspecto', () => {
-    arma()
+    setup()
     expect(screen.getByRole('radiogroup', { name: /La idea/ })).toBeInTheDocument()
   })
 
   it('elegir devuelve el aspecto y el nivel', async () => {
-    const { onChange } = arma()
-    const grupo = screen.getByRole('radiogroup', { name: /La idea/ })
-    await userEvent.click(within(grupo).getByRole('radio', { name: /Clara y posible/ }))
-    expect(onChange).toHaveBeenCalledWith('idea', 2)
+    const { onValueChange } = setup()
+    const group = screen.getByRole('radiogroup', { name: /La idea/ })
+    await userEvent.click(within(group).getByRole('radio', { name: /Clara y posible/ }))
+    expect(onValueChange).toHaveBeenCalledWith({ idea: 2 })
   })
 
   it('solo uno queda marcado: son cuatro descripciones del mismo estado', () => {
-    arma({ value: { idea: 2 } })
-    const grupo = screen.getByRole('radiogroup', { name: /La idea/ })
-    const marcados = within(grupo).getAllByRole('radio').filter(r => r.getAttribute('aria-checked') === 'true')
-    expect(marcados).toHaveLength(1)
+    setup({ value: { idea: 2 } })
+    const group = screen.getByRole('radiogroup', { name: /La idea/ })
+    const checkedIds = within(group).getAllByRole('radio').filter(r => r.getAttribute('aria-checked') === 'true')
+    expect(checkedIds).toHaveLength(1)
   })
 
   it('una sola abierta por vez: la rúbrica se lee de arriba abajo', async () => {
-    arma()
-    const cerrada = screen.getByRole('button', { name: /Las cuentas/ })
-    expect(cerrada).toHaveAttribute('aria-expanded', 'false')
-    await userEvent.click(cerrada)
-    expect(cerrada).toHaveAttribute('aria-expanded', 'true')
+    setup()
+    const closed = screen.getByRole('button', { name: /Las cuentas/ })
+    expect(closed).toHaveAttribute('aria-expanded', 'false')
+    await userEvent.click(closed)
+    expect(closed).toHaveAttribute('aria-expanded', 'true')
     expect(screen.getByRole('button', { name: /La idea/ })).toHaveAttribute('aria-expanded', 'false')
   })
 
   it('sin cuatro renglones no hay nombre de nivel que poner, así que dice cuál es', () => {
     render(
-      <SelfAssessment criteria={[{ ...criteria[0], levels: ['a', 'b', 'c'] }]} value={{ idea: 1 }} onChange={() => {}}>
+      <SelfAssessment criteria={[{ ...criteria[0], levels: ['a', 'b', 'c'] }]} value={{ idea: 1 }} onValueChange={() => {}}>
         <SelfAssessment.Title>Dónde estás</SelfAssessment.Title>
       </SelfAssessment>,
     )

@@ -252,6 +252,14 @@
     }
   }
 
+  .navIcon {
+    color: var(--icon-muted);
+  }
+
+  .navItemActive .navIcon {
+    color: inherit;
+  }
+
   .navItemIdle {
     font-weight: var(--font-weight-medium);
     color: var(--text);

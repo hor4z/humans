@@ -20,11 +20,11 @@ export function SwitchStory() {
         note="Se lee como una llave de luz y no como una casilla: va para lo que se aplica al momento, sin un botón de guardar que lo confirme."
       >
         <Panel>
-          <Variant name="on"><Switch checked={on} onChange={setOn} label="Sugerencias" /></Variant>
-          <Variant name="off"><Switch checked={off} onChange={setOff} label="Directorio" /></Variant>
+          <Variant name="on"><Switch checked={on} onCheckedChange={setOn} label="Sugerencias" /></Variant>
+          <Variant name="off"><Switch checked={off} onCheckedChange={setOff} label="Directorio" /></Variant>
           <Variant name="disabled">
-            <Switch checked onChange={() => {}} disabled label="Fijo" />
-            <Switch checked={false} onChange={() => {}} disabled label="Fijo" />
+            <Switch checked onCheckedChange={() => {}} disabled label="Fijo" />
+            <Switch checked={false} onCheckedChange={() => {}} disabled label="Fijo" />
           </Variant>
         </Panel>
       </Section>
@@ -37,12 +37,12 @@ export function SwitchStory() {
           <Row>
             <Row.Label>Avisos por mail</Row.Label>
             <Row.Hint>Cuando llega una entrega nueva</Row.Hint>
-            <Switch checked={on} onChange={setOn} label="Avisos por mail" />
+            <Switch checked={on} onCheckedChange={setOn} label="Avisos por mail" />
           </Row>
           <Row>
             <Row.Label>Entregas fuera de fecha</Row.Label>
             <Row.Hint>Después del cierre</Row.Hint>
-            <Switch checked={off} onChange={setOff} label="Entregas fuera de fecha" />
+            <Switch checked={off} onCheckedChange={setOff} label="Entregas fuera de fecha" />
           </Row>
         </div>
       </Section>
@@ -55,7 +55,7 @@ export function SwitchStory() {
 
       <Section title="Cómo se escribe">
         <Example code={`const [activo, setActivo] = useState(true)
-<Switch checked={activo} onChange={setActivo} label="Permitir entregas tarde" />`} />
+<Switch checked={activo} onCheckedChange={setActivo} label="Permitir entregas tarde" />`} />
       </Section>
 
       <Section title="Props">

@@ -3,9 +3,7 @@ import { Card } from '@milo/ui/card'
 import { Folder } from '../demo/folder/folder'
 import { Icon } from '@milo/ui/icon'
 import { A11y, Example, Footnote, Mono, Page, Practices, Props, Section, Stack } from '../kit'
-
-const face = (n: number) => `/avatars/${String(n).padStart(2, '0')}.webp`
-const p = (name: string, photo?: number) => ({ name, src: photo ? face(photo) : undefined })
+import { person as p } from '../fixtures'
 
 export function FolderStory() {
   return (

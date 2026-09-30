@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 import { Checklist } from './checklist'
 
-const arma = (props: Record<string, unknown> = {}, onClick = vi.fn()) => {
+const setup = (props: Record<string, unknown> = {}, onClick = vi.fn()) => {
   render(
     <Checklist {...props}>
       <Checklist.Title>Primeros pasos</Checklist.Title>
@@ -21,59 +21,59 @@ const arma = (props: Record<string, unknown> = {}, onClick = vi.fn()) => {
 
 describe('Checklist', () => {
   it('el contador sale de los pasos y no de una prop', () => {
-    arma()
-    const contador = screen.getByText((_, el) => el?.className.includes('count') ?? false)
-    expect(contador).toHaveTextContent('1/4')
-    expect(contador).toHaveTextContent('pasos hechos')
+    setup()
+    const counterEl = screen.getByText((_, el) => el?.className.includes('count') ?? false)
+    expect(counterEl).toHaveTextContent('1/4')
+    expect(counterEl).toHaveTextContent('pasos hechos')
   })
 
   it('el botón es la flecha sola, y toma su nombre del título de al lado', () => {
-    arma()
-    const disparador = screen.getByRole('button', { name: 'Primeros pasos' })
-    expect(disparador).not.toHaveTextContent('Primeros pasos')
-    expect(disparador).toHaveAttribute('aria-labelledby')
-    expect(document.getElementById(disparador.getAttribute('aria-labelledby')!))
+    setup()
+    const trigger = screen.getByRole('button', { name: 'Primeros pasos' })
+    expect(trigger).not.toHaveTextContent('Primeros pasos')
+    expect(trigger).toHaveAttribute('aria-labelledby')
+    expect(document.getElementById(trigger.getAttribute('aria-labelledby')!))
       .toHaveTextContent('Primeros pasos')
   })
 
   it('la barra y el contador quedan afuera del botón: si no, se leen como su nombre', () => {
-    arma()
-    const disparador = screen.getByRole('button', { name: 'Primeros pasos' })
-    expect(disparador).not.toHaveTextContent('1/4')
+    setup()
+    const trigger = screen.getByRole('button', { name: 'Primeros pasos' })
+    expect(trigger).not.toHaveTextContent('1/4')
   })
 
   it('arranca plegada: la cabecera dice lo mismo sin ocupar la pantalla', () => {
-    arma()
-    const cabecera = screen.getByRole('button', { name: 'Primeros pasos' })
-    expect(cabecera).toHaveAttribute('aria-expanded', 'false')
+    setup()
+    const header = screen.getByRole('button', { name: 'Primeros pasos' })
+    expect(header).toHaveAttribute('aria-expanded', 'false')
     expect(screen.queryByText('Creá tu primer espacio')).not.toBeInTheDocument()
   })
 
   it('se abre al tocarla y la cabecera dice a qué apunta', async () => {
-    arma()
-    const cabecera = screen.getByRole('button', { name: 'Primeros pasos' })
-    await userEvent.click(cabecera)
-    expect(cabecera).toHaveAttribute('aria-expanded', 'true')
+    setup()
+    const header = screen.getByRole('button', { name: 'Primeros pasos' })
+    await userEvent.click(header)
+    expect(header).toHaveAttribute('aria-expanded', 'true')
     expect(screen.getByText('Creá tu primer espacio')).toBeInTheDocument()
-    expect(document.getElementById(cabecera.getAttribute('aria-controls')!)).toBeInTheDocument()
+    expect(document.getElementById(header.getAttribute('aria-controls')!)).toBeInTheDocument()
   })
 
   it('el paso en curso se anuncia como el actual', async () => {
-    arma({ defaultOpen: true })
+    setup({ defaultOpen: true })
     expect(screen.getByText('Conectá tu cuenta').closest('[data-state]'))
       .toHaveAttribute('aria-current', 'step')
   })
 
   it('un paso trabado no se puede tocar, aunque le pasen onClick', async () => {
-    const { onClick } = arma({ defaultOpen: true })
-    const trabado = screen.getByText('Sumá a tus estudiantes').closest('[data-state]')!
-    expect(trabado.tagName).toBe('DIV')
-    await userEvent.click(trabado)
+    const { onClick } = setup({ defaultOpen: true })
+    const stuck = screen.getByText('Sumá a tus estudiantes').closest('[data-state]')!
+    expect(stuck.tagName).toBe('DIV')
+    await userEvent.click(stuck)
     expect(onClick).not.toHaveBeenCalled()
   })
 
   it('el paso que sí se puede tocar es un botón y responde', async () => {
-    const { onClick } = arma({ defaultOpen: true })
+    const { onClick } = setup({ defaultOpen: true })
     await userEvent.click(screen.getByRole('button', { name: /Conectá tu cuenta/ }))
     expect(onClick).toHaveBeenCalled()
   })

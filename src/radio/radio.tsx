@@ -4,12 +4,12 @@ import { cx } from '../lib/cx'
 import { useRovingRadio } from '../lib/roving'
 
 function Root({
-  checked, onChange, label, disabled, id, tabIndex, ref,
+  checked, onCheckedChange, label, disabled, id, tabIndex, ref,
 }: {
   /** Es controlado. */
   checked: boolean
-  /** Sin valor: el radio solo se prende. */
-  onChange: () => void
+  /** Un radio solo se prende, así que siempre recibe `true`. */
+  onCheckedChange: (checked: boolean) => void
   /** Va al `aria-label`. */
   label?: string
   /** Apagado no se elige ni recibe el foco. */
@@ -31,7 +31,7 @@ function Root({
       aria-label={label}
       disabled={disabled}
       tabIndex={tabIndex}
-      onClick={onChange}
+      onClick={() => onCheckedChange(true)}
       className={cx(
         s.root,
         s.motion,
@@ -51,19 +51,19 @@ function Root({
 
 /** El grupo va suelto: las opciones sobre el papel, cada una con su etiqueta al lado. */
 function Group<T extends string>({
-  value, onChange, options, label, className,
+  value, onValueChange, options, label, className,
 }: {
   /** El valor elegido: es controlado. */
   value: T
   /** Recibe el valor nuevo. */
-  onChange: (v: T) => void
+  onValueChange: (v: T) => void
   /** Las opciones, con su etiqueta. */
   options: readonly { value: T; label: string; disabled?: boolean }[]
   /** Al aria-label del grupo. */
   label?: string
   className?: string
 }) {
-  const roving = useRovingRadio(value, onChange, options)
+  const roving = useRovingRadio(value, onValueChange, options)
   return (
     <div
       role="radiogroup"
@@ -76,7 +76,7 @@ function Group<T extends string>({
           key={o.value}
           ref={roving.ref(o.value)}
           checked={o.value === value}
-          onChange={() => onChange(o.value)}
+          onCheckedChange={() => onValueChange(o.value)}
           label={o.label}
           disabled={o.disabled}
           tabIndex={roving.tabIndex(o.value)}

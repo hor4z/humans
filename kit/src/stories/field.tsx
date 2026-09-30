@@ -35,7 +35,7 @@ export function FieldStory() {
               <Field.Error>{error}</Field.Error>
               <TextField
                 value={name}
-                onChange={e => setName(e.target.value)}
+                onValueChange={setName}
                 onBlur={() => setTouched(true)}
                 placeholder="Fracciones equivalentes"
               />
@@ -58,16 +58,16 @@ export function FieldStory() {
             <Field>
               <Field.Label>Espacio</Field.Label>
               <Field.Hint>Dónde se publica</Field.Hint>
-              <Select value={space} onChange={setSpace} options={['Matemática · 4.º A', 'Lengua · 6.º']} />
+              <Select value={space} onValueChange={setSpace} options={['Matemática · 4.º A', 'Lengua · 6.º']} />
             </Field>
             <Field>
               <Field.Label>Entregas fuera de fecha</Field.Label>
               <Field.Hint>Permitir que entreguen después del cierre</Field.Hint>
-              <Switch checked={overdue} onChange={setOverdue} label="Entregas fuera de fecha" />
+              <Switch checked={overdue} onCheckedChange={setOverdue} label="Entregas fuera de fecha" />
             </Field>
             <Field>
               <Field.Label>Avisar al publicar</Field.Label>
-              <Checkbox checked={notify} onChange={setNotify} label="Avisar al publicar" />
+              <Checkbox checked={notify} onCheckedChange={setNotify} label="Avisar al publicar" />
             </Field>
           </Stack>
         </Canvas>
@@ -81,7 +81,7 @@ export function FieldStory() {
           <Frame width="sm">
             <Field required>
               <Field.Label>Espacio</Field.Label>
-              <Select value={where} onChange={setWhere} options={['Matemática · 4.º A', 'Lengua · 6.º']} />
+              <Select value={where} onValueChange={setWhere} options={['Matemática · 4.º A', 'Lengua · 6.º']} />
             </Field>
           </Frame>
         </Canvas>
@@ -118,7 +118,7 @@ export function FieldStory() {
         <Example code={`<Field>
   <Field.Label>Nombre de la actividad</Field.Label>
   <Field.Hint>Lo ven los estudiantes</Field.Hint>
-  <TextField value={nombre} onChange={e => setNombre(e.target.value)} />
+  <TextField value={nombre} onValueChange={setNombre} />
 </Field>`} />
       </Section>
 

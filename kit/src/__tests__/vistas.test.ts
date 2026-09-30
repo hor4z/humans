@@ -92,7 +92,7 @@ describe('las vistas del kit', () => {
         const [, name, attrs] = m
         if (!controlled.test(name)) continue
         if (!/\b(value|checked)=/.test(attrs)) continue
-        if (/\bon(Change|ValueChange|Input)=/.test(attrs)) continue
+        if (/\bon(ValueChange|CheckedChange|Input)=/.test(attrs)) continue
         if (/\b(loading|disabled|readOnly)\b/.test(attrs)) continue
         inert.push(`${f}: <${name} ${attrs.trim().slice(0, 40)}`)
       }
@@ -115,36 +115,36 @@ describe('las vistas del kit', () => {
   })
 
   it('una vista de Fundamentos no muestra código', () => {
-    const fundamentos = join(import.meta.dirname, '../foundations')
-    const conCodigo = readdirSync(fundamentos)
+    const foundations = join(import.meta.dirname, '../foundations')
+    const withCode = readdirSync(foundations)
       .filter((f: string) => f.endsWith('.tsx'))
       .filter((f: string) => {
-        const text = readFileSync(join(fundamentos, f), 'utf8')
+        const text = readFileSync(join(foundations, f), 'utf8')
         return text.includes('imports=') || text.includes('<Example')
       })
     expect(
-      conCodigo,
+      withCode,
       'Fundamentos es la capa de la que sale todo lo demás, no una pieza que se importa: el código va en la vista de la pieza',
     ).toEqual([])
   })
 
   it('cada vista de una pieza muestra cómo se escribe', () => {
-    const sinEjemplo = files.filter(f => !readFileSync(join(stories, f), 'utf8').includes('<Example'))
+    const withoutExample = files.filter(f => !readFileSync(join(stories, f), 'utf8').includes('<Example'))
     expect(
-      sinEjemplo,
+      withoutExample,
       'una tabla de props dice qué acepta la pieza; el ejemplo dice cómo se arma, que es lo que alguien copia',
     ).toEqual([])
   })
 
   it('cada vista de una pieza dice cómo se usa bien', () => {
-    const sinPracticas: string[] = []
+    const withoutPractices: string[] = []
     for (const f of files) {
       const text = readFileSync(join(stories, f), 'utf8')
-      if (!text.includes('<Practices>')) { sinPracticas.push(f); continue }
-      if (!text.includes('<Practices.Do>')) sinPracticas.push(`${f}: sin ningún Practices.Do`)
+      if (!text.includes('<Practices>')) { withoutPractices.push(f); continue }
+      if (!text.includes('<Practices.Do>')) withoutPractices.push(`${f}: sin ningún Practices.Do`)
     }
     expect(
-      sinPracticas,
+      withoutPractices,
       'la vista de una pieza cierra diciendo cómo se usa bien: es lo que lee quien la va a usar, humano o agente',
     ).toEqual([])
   })
@@ -175,27 +175,27 @@ describe('los guardianes ven todas las vistas', () => {
 describe('la prosa no se pega', () => {
   it('ningún texto queda pegado a un elemento inline por un corte de línea', () => {
     const inline = '(?:code|strong|em|b|i|a|span|Rich)'
-    const antes = new RegExp(`[^\\s>}{/(]\\n\\s*<${inline}[ >]`, 'g')
-    const despues = new RegExp(`</${inline}>\\n\\s*[^\\s<{}/)\\]:?]`, 'g')
+    const before = new RegExp(`[^\\s>}{/(]\\n\\s*<${inline}[ >]`, 'g')
+    const after = new RegExp(`</${inline}>\\n\\s*[^\\s<{}/)\\]:?]`, 'g')
     const dirs = ['../stories', '../foundations', '..']
-    const pegados: string[] = []
+    const stuck: string[] = []
     for (const d of dirs) {
       const base = join(import.meta.dirname, d)
       for (const f of readdirSync(base, { withFileTypes: true })) {
         if (!f.isFile() || !f.name.endsWith('.tsx')) continue
         const text = readFileSync(join(base, f.name), 'utf8')
-        for (const rx of [antes, despues]) {
+        for (const rx of [before, after]) {
           for (const m of text.matchAll(rx)) {
-            const desde = text.lastIndexOf('\n', m.index) + 1
-            if (/\breturn\s*</.test(text.slice(desde, m.index + m[0].length))) continue
+            const from = text.lastIndexOf('\n', m.index) + 1
+            if (/\breturn\s*</.test(text.slice(from, m.index + m[0].length))) continue
             const line = text.slice(0, m.index).split('\n').length
-            pegados.push(`${f.name}:${line} ${m[0].replace(/\n\s*/, ' ⏎ ')}`)
+            stuck.push(`${f.name}:${line} ${m[0].replace(/\n\s*/, ' ⏎ ')}`)
           }
         }
       }
     }
     expect(
-      pegados,
+      stuck,
       'JSX se come el espacio cuando un texto toca un elemento a través de un salto de línea: va {\' \'} en el corte',
     ).toEqual([])
   })
@@ -203,22 +203,22 @@ describe('la prosa no se pega', () => {
 
 describe('los medios que el sitio pide', () => {
   it('cada cara que se nombra existe en public/', () => {
-    const raiz = join(import.meta.dirname, '../..')
-    const hay = new Set(readdirSync(join(raiz, 'public/avatars')))
-    const pedidas = new Set<string>()
-    const recorrer = (base: string) => {
+    const root = join(import.meta.dirname, '../..')
+    const has = new Set(readdirSync(join(root, 'public/avatars')))
+    const requested = new Set<string>()
+    const walkDir = (base: string) => {
       for (const e of readdirSync(base, { withFileTypes: true })) {
-        if (e.isDirectory()) { recorrer(join(base, e.name)); continue }
+        if (e.isDirectory()) { walkDir(join(base, e.name)); continue }
         if (!/\.tsx?$/.test(e.name)) continue
         const t = readFileSync(join(base, e.name), 'utf8')
-        for (const m of t.matchAll(/avatars\/(\d+)\.webp/g)) pedidas.add(`${m[1]}.webp`)
-        for (const m of t.matchAll(/face\((\d+)\)/g)) pedidas.add(`${String(m[1]).padStart(2, '0')}.webp`)
+        for (const m of t.matchAll(/avatars\/(\d+)\.webp/g)) requested.add(`${m[1]}.webp`)
+        for (const m of t.matchAll(/face\((\d+)\)/g)) requested.add(`${String(m[1]).padStart(2, '0')}.webp`)
       }
     }
-    recorrer(join(import.meta.dirname, '..'))
-    expect(pedidas.size).toBeGreaterThan(3)
+    walkDir(join(import.meta.dirname, '..'))
+    expect(requested.size).toBeGreaterThan(3)
     expect(
-      [...pedidas].filter(f => !hay.has(f)),
+      [...requested].filter(f => !has.has(f)),
       'una cara que no existe se dibuja como un roto y ningún test de comportamiento la ve',
     ).toEqual([])
   })
@@ -292,12 +292,12 @@ describe('cómo se escribe', () => {
   it('no vuelve la raya larga ni las comillas angulares', () => {
     const root = join(import.meta.dirname, '../../..')
     const skips = new Set(['node_modules', '.git', 'dist', 'public', '.vite'])
-    const mira = /\.(tsx?|css|mjs|md|html|py|json)$/
+    const look = /\.(tsx?|css|mjs|md|html|py|json)$/
     const walk = (base: string, prefix = ''): string[] =>
       readdirSync(base, { withFileTypes: true }).flatMap(e =>
         e.isDirectory()
           ? (skips.has(e.name) ? [] : walk(join(base, e.name), `${prefix}${e.name}/`))
-          : mira.test(e.name) && e.name !== 'package-lock.json' ? [`${prefix}${e.name}`] : [])
+          : look.test(e.name) && e.name !== 'package-lock.json' ? [`${prefix}${e.name}`] : [])
 
     const offenders: string[] = []
     for (const f of walk(root)) {
@@ -354,18 +354,18 @@ describe('la tabla de props', () => {
           : /\.tsx$/.test(e.name) ? [join(base, e.name)] : [],
       )
 
-    const fantasmas: string[] = []
+    const ghosts: string[] = []
     for (const file of walk(root)) {
       const text = readFileSync(file, 'utf8')
       for (const m of text.matchAll(/<Props of=(?:"([^"]+)"|\{\[([^\]]*)\]\})/g)) {
-        const pedidos = m[1] ? [m[1]] : m[2].split(',').map(s => s.trim().replace(/^'|'$/g, ''))
-        for (const p of pedidos) {
-          if (p && !(p in propsByComponent)) fantasmas.push(`${file.split('/').pop()}: ${p}`)
+        const requested = m[1] ? [m[1]] : m[2].split(',').map(s => s.trim().replace(/^'|'$/g, ''))
+        for (const p of requested) {
+          if (p && !(p in propsByComponent)) ghosts.push(`${file.split('/').pop()}: ${p}`)
         }
       }
     }
     expect(
-      fantasmas,
+      ghosts,
       'una vista que pide una pieza que no existe dibuja una tabla vacía y nadie se entera',
     ).toEqual([])
   })

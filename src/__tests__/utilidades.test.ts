@@ -101,16 +101,16 @@ describe('el CSS del sistema se sostiene solo', () => {
     const uses = new Map<string, Set<string>>()
     for (const i of imports) {
       if (!i.module) continue
-      const vistas = uses.get(i.module.file) ?? new Set<string>()
-      for (const n of used(i.source.text, i.alias)) vistas.add(n)
-      uses.set(i.module.file, vistas)
+      const views = uses.get(i.module.file) ?? new Set<string>()
+      for (const n of used(i.source.text, i.alias)) views.add(n)
+      uses.set(i.module.file, views)
     }
 
     const dead: string[] = []
     for (const f of css) {
-      const vistas = uses.get(f.file)
-      if (!vistas) continue
-      for (const n of declared(f.text)) if (!vistas.has(n)) dead.push(`${f.name}: .${n}`)
+      const views = uses.get(f.file)
+      if (!views) continue
+      for (const n of declared(f.text)) if (!views.has(n)) dead.push(`${f.name}: .${n}`)
     }
     expect(dead).toEqual([])
   })
@@ -144,9 +144,9 @@ describe('el CSS del sistema se sostiene solo', () => {
     const orphaned: string[] = []
     for (const i of imports) {
       if (!i.module) continue
-      const hay = new Set(declared(i.module.text))
+      const has = new Set(declared(i.module.text))
       for (const n of used(i.source.text, i.alias)) {
-        if (!hay.has(n)) orphaned.push(`${i.source.name}: ${i.alias}.${n} no está en ${relative(ui, i.module.file)}`)
+        if (!has.has(n)) orphaned.push(`${i.source.name}: ${i.alias}.${n} no está en ${relative(ui, i.module.file)}`)
       }
     }
     expect(orphaned).toEqual([])
@@ -184,9 +184,9 @@ describe('el CSS del sistema se sostiene solo', () => {
     const i = bridge.indexOf(rule)
     expect(i, 'la regla del anillo de foco cambió de forma').toBeGreaterThan(0)
 
-    const antes = bridge.slice(0, i).replace(/\/\*[\s\S]*?\*\//g, '').replace(/"[^"]*"|'[^']*'/g, '')
+    const before = bridge.slice(0, i).replace(/\/\*[\s\S]*?\*\//g, '').replace(/"[^"]*"|'[^']*'/g, '')
     let depth = 0
-    for (const c of antes) {
+    for (const c of before) {
       if (c === '{') depth++
       else if (c === '}') depth--
     }

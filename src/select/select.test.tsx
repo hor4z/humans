@@ -6,7 +6,7 @@ import { Select } from './select'
 describe('Select', () => {
   it('abre, elige con el teclado y cierra con Escape', async () => {
     const onChange = vi.fn()
-    render(<Select value="Uno" onChange={onChange} options={['Uno', 'Dos', 'Tres']} />)
+    render(<Select value="Uno" onValueChange={onChange} options={['Uno', 'Dos', 'Tres']} />)
     const trigger = screen.getByRole('button', { name: /Uno/ })
 
     await userEvent.click(trigger)
@@ -29,7 +29,7 @@ describe('Select', () => {
 
   it('teclear salta a la opción que empieza así, con tildes o sin ellas', async () => {
     const onChange = vi.fn()
-    render(<Select value="Lengua" onChange={onChange} options={['Lengua', 'Matemática', 'Música', 'Ciencias']} />)
+    render(<Select value="Lengua" onValueChange={onChange} options={['Lengua', 'Matemática', 'Música', 'Ciencias']} />)
     await userEvent.click(screen.getByRole('button', { name: /Lengua/ }))
     await userEvent.keyboard('mu')
     await userEvent.keyboard('{Enter}')
@@ -37,7 +37,7 @@ describe('Select', () => {
   })
 
   it('la opción activa se anuncia con aria-activedescendant', async () => {
-    render(<Select value="Uno" onChange={() => {}} options={['Uno', 'Dos', 'Tres']} />)
+    render(<Select value="Uno" onValueChange={() => {}} options={['Uno', 'Dos', 'Tres']} />)
     const trigger = screen.getByRole('button', { name: /Uno/ })
     expect(trigger).not.toHaveAttribute('aria-activedescendant')
     await userEvent.click(trigger)
@@ -47,40 +47,40 @@ describe('Select', () => {
   })
 
   it('la flecha abajo abre la lista con el teclado', async () => {
-    render(<Select value="Uno" onChange={() => {}} options={['Uno', 'Dos']} />)
+    render(<Select value="Uno" onValueChange={() => {}} options={['Uno', 'Dos']} />)
     screen.getByRole('button', { name: /Uno/ }).focus()
     await userEvent.keyboard('{ArrowDown}')
     expect(screen.getByRole('listbox')).toBeInTheDocument()
   })
 
   it('Tab no se mete opción por opción: la lista no es una parada', async () => {
-    render(<Select value="Uno" onChange={() => {}} options={['Uno', 'Dos', 'Tres']} />)
+    render(<Select value="Uno" onValueChange={() => {}} options={['Uno', 'Dos', 'Tres']} />)
     await userEvent.click(screen.getByRole('button', { name: /Uno/ }))
     for (const o of screen.getAllByRole('option')) expect(o).toHaveAttribute('tabindex', '-1')
   })
 
   it('Home y End van a los extremos', async () => {
     const onChange = vi.fn()
-    render(<Select value="Uno" onChange={onChange} options={['Uno', 'Dos', 'Tres']} />)
+    render(<Select value="Uno" onValueChange={onChange} options={['Uno', 'Dos', 'Tres']} />)
     await userEvent.click(screen.getByRole('button', { name: /Uno/ }))
     await userEvent.keyboard('{End}{Enter}')
     expect(onChange).toHaveBeenCalledWith('Tres')
   })
 
   it('un render del padre no le mueve el cursor al teclado', async () => {
-    const { rerender } = render(<Select value="Uno" onChange={() => {}} options={['Uno', 'Dos', 'Tres']} />)
+    const { rerender } = render(<Select value="Uno" onValueChange={() => {}} options={['Uno', 'Dos', 'Tres']} />)
     const trigger = screen.getByRole('button', { name: /Uno/ })
     await userEvent.click(trigger)
     await userEvent.keyboard('{ArrowDown}')
     const before = trigger.getAttribute('aria-activedescendant')
     expect(document.getElementById(before!)).toHaveTextContent('Dos')
 
-    rerender(<Select value="Uno" onChange={() => {}} options={['Uno', 'Dos', 'Tres']} />)
+    rerender(<Select value="Uno" onValueChange={() => {}} options={['Uno', 'Dos', 'Tres']} />)
     expect(trigger.getAttribute('aria-activedescendant')).toBe(before)
   })
 
   it('el scroll de la página lo cierra: anclado al botón, si no se le despega y queda flotando', async () => {
-    render(<Select value="Uno" onChange={() => {}} options={['Uno', 'Dos', 'Tres']} />)
+    render(<Select value="Uno" onValueChange={() => {}} options={['Uno', 'Dos', 'Tres']} />)
     await userEvent.click(screen.getByRole('button', { name: /Uno/ }))
     expect(screen.getByRole('listbox')).toBeInTheDocument()
     await act(async () => { window.dispatchEvent(new Event('scroll')) })
@@ -88,7 +88,7 @@ describe('Select', () => {
   })
 
   it('el scroll de su propia lista no lo cierra', async () => {
-    render(<Select value="Uno" onChange={() => {}} options={['Uno', 'Dos', 'Tres']} />)
+    render(<Select value="Uno" onValueChange={() => {}} options={['Uno', 'Dos', 'Tres']} />)
     await userEvent.click(screen.getByRole('button', { name: /Uno/ }))
     const list = screen.getByRole('listbox')
     await act(async () => { list.dispatchEvent(new Event('scroll', { bubbles: true })) })

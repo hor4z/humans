@@ -11,7 +11,7 @@ export function ModalStory() {
   const [open, setOpen] = useState(false)
   const [narrowOpen, setNarrowOpen] = useState(false)
   const [settingsOpen, setSettingsOpen] = useState(false)
-  const [nombre, setNombre] = useState('Física · 5.º B')
+  const [name, setName] = useState('Física · 5.º B')
 
   return (
     <Page
@@ -27,7 +27,7 @@ export function ModalStory() {
         <Grid min={300}>
           <Demo label="md · 620, el de siempre">
             <Button variant="muted" onClick={() => setOpen(true)}>Abrir modal</Button>
-            <Modal open={open} onClose={() => setOpen(false)} size="md">
+            <Modal open={open} onOpenChange={() => setOpen(false)} size="md">
               <Modal.Header>
                 <Modal.Title>Un modal de 620</Modal.Title>
                 <Modal.Hint>Lo que el lector anuncia sale de ese título.</Modal.Hint>
@@ -45,7 +45,7 @@ export function ModalStory() {
 
           <Demo label="sm · 420, una pregunta o un campo">
             <Button variant="muted" onClick={() => setNarrowOpen(true)}>Renombrar</Button>
-            <Modal open={narrowOpen} onClose={() => setNarrowOpen(false)} size="sm">
+            <Modal open={narrowOpen} onOpenChange={() => setNarrowOpen(false)} size="sm">
               <Modal.Header>
                 <Modal.Title>Renombrar el espacio</Modal.Title>
               </Modal.Header>
@@ -53,7 +53,7 @@ export function ModalStory() {
                 <Field>
                   <Field.Label>Nombre</Field.Label>
                   <Field.Hint>Lo ven los 28 del curso.</Field.Hint>
-                  <TextField value={nombre} onChange={e => setNombre(e.target.value)} />
+                  <TextField value={name} onValueChange={setName} />
                 </Field>
               </Modal.Body>
               <Modal.Footer>
@@ -67,7 +67,7 @@ export function ModalStory() {
             <Button variant="muted" iconStart={<Icon name="tune" />} onClick={() => setSettingsOpen(true)}>Ajustes</Button>
             <SettingsModal
               open={settingsOpen}
-              onClose={() => setSettingsOpen(false)}
+              onOpenChange={setSettingsOpen}
               user={{
                 name: 'Ana Pérez',
                 email: 'ana.perez@ejemplo.edu',
@@ -81,7 +81,7 @@ export function ModalStory() {
 
       <Section title="Cómo se escribe">
         <Example code={`
-<Modal open={open} onClose={cerrar} size="md">
+<Modal open={open} onOpenChange={cerrar} size="md">
   <Modal.Header>
     <Modal.Title>Un modal de 620</Modal.Title>
     <Modal.Hint>La línea de apoyo, si hace falta.</Modal.Hint>

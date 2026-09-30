@@ -4,8 +4,8 @@ import { NumberAnswer } from '@milo/ui/blocks/task/number-answer'
 import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 export function NumberAnswerStory() {
-  const [valor, setValor] = useState('')
-  const [revelado, setRevelado] = useState(false)
+  const [value, setValue] = useState('')
+  const [revealed, setRevealed] = useState(false)
 
   return (
     <Page
@@ -22,18 +22,18 @@ export function NumberAnswerStory() {
           <Variant name="antes y después" note="Revelar muestra el veredicto y apaga el campo: una cuenta corregida no se vuelve a responder.">
             <Stack width="sm">
               <NumberAnswer
-                value={valor}
-                onChange={setValor}
+                value={value}
+                onValueChange={setValue}
                 unit="dB"
                 expected={72.3}
                 tolerance={0.2}
-                revealed={revelado}
+                revealed={revealed}
               >
                 <NumberAnswer.Prompt>El promedio del patio en los tres momentos</NumberAnswer.Prompt>
                 <NumberAnswer.Hint>Sumá los tres valores de la fila y dividí por tres.</NumberAnswer.Hint>
               </NumberAnswer>
-              <Button size="sm" variant="ghost" onClick={() => setRevelado(v => !v)}>
-                {revelado ? 'Volver a antes' : 'Corregir'}
+              <Button size="sm" variant="ghost" onClick={() => setRevealed(v => !v)}>
+                {revealed ? 'Volver a antes' : 'Corregir'}
               </Button>
             </Stack>
           </Variant>
@@ -55,7 +55,7 @@ export function NumberAnswerStory() {
       <Section title="Cómo se escribe">
         <Example code={`<NumberAnswer
   value={valor}
-  onChange={setValor}
+  onValueChange={setValor}
   unit="dB"
   expected={72.3}
   tolerance={0.2}

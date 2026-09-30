@@ -18,20 +18,22 @@ type SegmentedOption<T extends string> = {
 
 /** Un solo segmented para todo: el de texto ("Todas · Abiertas") y el de iconos (grilla · lista) son el mismo componente con distintas opciones. */
 export function Segmented<T extends string>({
-  value, onChange, options, size = 'md', label,
+  value, onValueChange, options, size = 'md', compact, label,
 }: {
   /** La opción elegida: es controlado. */
   value: T
   /** Recibe el valor nuevo. */
-  onChange: (v: T) => void
+  onValueChange: (v: T) => void
   /** Sin label la opción queda cuadrada, solo icono, y title pasa a obligatorio. */
   options: SegmentedOption<T>[]
-  /** Xs va con pista transparente: dentro del header de un panel, una pista gris sobre fondo gris agrega una caja que no hace falta. */
-  size?: 'xs' | 'sm' | 'md'
+  /** 36 · 40, las de los controles. */
+  size?: 'sm' | 'md'
+  /** De 28 y sin pista, para el header de un panel: una pista gris sobre fondo gris agrega una caja que no hace falta. Le gana a `size`. */
+  compact?: boolean
   /** Cómo se llama el grupo. Adentro de un `Field` lo toma de la etiqueta. */
   label?: string
 }) {
-  const roving = useRovingRadio(value, onChange, options)
+  const roving = useRovingRadio(value, onValueChange, options)
   const group = useFieldGroup()
 
   return (
@@ -42,13 +44,12 @@ export function Segmented<T extends string>({
       onKeyDown={roving.onKeyDown}
       className={cx(
         s.root,
-        size === 'xs' ? s.railXs : s.rail,
-        size === 'sm' && s.railSm,
-        size === 'md' && s.railMd,
+        compact ? s.railCompact : s.rail,
+        !compact && (size === 'sm' ? s.railSm : s.railMd),
       )}
     >
       {options.map(o => {
-        const active = o.value === value
+        const selected = o.value === value
         const iconOnly = !o.label && !!o.icon
         const option = (
           <button
@@ -56,25 +57,25 @@ export function Segmented<T extends string>({
             ref={roving.ref(o.value)}
             type="button"
             role="radio"
-            aria-checked={active}
+            aria-checked={selected}
             aria-label={iconOnly ? o.title : undefined}
             disabled={o.disabled}
             tabIndex={roving.tabIndex(o.value)}
-            onClick={() => onChange(o.value)}
+            onClick={() => onValueChange(o.value)}
             className={cx(
               s.option,
               s.optionMotion,
               s.disabled,
-              size === 'xs' ? s.optionXs : size === 'sm' ? s.optionSm : s.optionMd,
+              compact ? s.optionCompact : size === 'sm' ? s.optionSm : s.optionMd,
               iconOnly
-                ? (size === 'xs' ? s.iconOnlyXs : size === 'sm' ? s.iconOnlySm : s.iconOnlyMd)
-                : (size === 'xs' ? s.padXs : size === 'sm' ? s.padSm : s.padMd),
-              active
-                ? (size === 'xs' ? s.activeXs : s.active)
-                : s.idle,
+                ? (compact ? s.iconOnlyCompact : size === 'sm' ? s.iconOnlySm : s.iconOnlyMd)
+                : (compact ? s.padCompact : size === 'sm' ? s.padSm : s.padMd),
+              selected
+                ? (compact ? s.selectedCompact : s.selected)
+                : s.plain,
             )}
           >
-            {o.icon && <Icon name={o.icon} size={size === 'md' ? 20 : 18} />}
+            {o.icon && <Icon name={o.icon} size={!compact && size === 'md' ? 20 : 16} />}
             {o.label}
             {o.dot && <span className={s.dot} />}
           </button>

@@ -25,8 +25,6 @@
   --text-inverted: var(--shade-01);
 
   --solid: var(--shade-09);
-  /* Fuera de la rampa a propósito: `--solid` ya es su último paso, así que el
-     único lado al que el hover puede ir sin aclarar el relleno es el extremo. */
   --solid-hover: #000000;
   --on-solid: var(--shade-01);
 
@@ -37,9 +35,6 @@
   --brand-soft-strong: var(--blue-100);
   --brand-border: var(--blue-200);
 
-  /* El amarillo lleva tinta oscura y nunca blanca: no hay amarillo vivo que
-     aguante blanco encima. Por eso el relleno vive en la parte clara de la
-     escalera y `--on-yellow` es la tinta del sistema. */
   --yellow: var(--yellow-100);
   --yellow-hover: var(--yellow-200);
   --on-yellow: var(--on-label);
@@ -107,6 +102,8 @@
   --folder-top: oklch(0.886 0.118 89.6);
   --folder-sheet: var(--surface);
 
+  --spinner-arc-start: var(--blue-400);
+  --spinner-arc-end: var(--blue-600);
   --switch-on: var(--brand);
   --switch-off: var(--shade-04);
   --switch-on-inset: inset 0 1px 0.6px 0 rgb(0 45 105 / 0.35);
@@ -161,8 +158,6 @@
   --brand: var(--blue-400);
   --brand-hover: var(--blue-300);
 
-  /* En oscuro la escalera se da vuelta, así que el relleno sube al 800 para
-     que la tinta oscura siga entrando. */
   --yellow: var(--yellow-800);
   --yellow-hover: var(--yellow-700);
   --on-yellow: var(--on-label);
@@ -177,7 +172,6 @@
   --space-pink: #e074a4;
   --scrim: rgb(0 0 0 / 0.55);
   --solid: var(--shade-09);
-  /* El mismo extremo que en claro, del lado que corresponde a esta rampa. */
   --solid-hover: #ffffff;
   --grad-raised: linear-gradient(in oklab, #333333 0%, #2c2c2c 100%);
 

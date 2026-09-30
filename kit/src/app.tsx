@@ -538,7 +538,7 @@ function SideLink({ active, onClick, icon, piece, sub, expanded, children }: {
         active ? cls.navItemActive : cls.navItemIdle,
       )}
     >
-      {icon && <Icon name={icon} size={16} className={active ? undefined : 'icon-muted'} />}
+      {icon && <Icon name={icon} size={16} weight={400} className={cls.navIcon} />}
       <span className={cls.navItemLabel}>{children}</span>
       {expanded !== undefined && (
         <Icon

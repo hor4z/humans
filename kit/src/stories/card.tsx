@@ -28,7 +28,8 @@ export function CardStory() {
               <Chip size="sm" color="ok">84%</Chip>
             </Card.Header>
             <Card.Body>
-              <Progress label="Corregidas" value={18} max={24} >
+              <Progress value={18} max={24}>
+                <Progress.Label>Corregidas</Progress.Label>
                 <Progress.Hint>18 de 24</Progress.Hint>
               </Progress>
             </Card.Body>

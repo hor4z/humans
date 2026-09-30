@@ -32,8 +32,8 @@ function Root({
   onClick?: () => void
   className?: string
 }) {
-  const [label, sinLabel] = takePart(children, Label)
-  const [meta] = takePart(sinLabel, Meta)
+  const [label, withoutLabel] = takePart(children, Label)
+  const [meta] = takePart(withoutLabel, Meta)
   const Tag = onClick ? 'button' : 'div'
   return (
     <Tag

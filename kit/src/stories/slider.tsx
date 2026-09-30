@@ -23,7 +23,7 @@ export function SliderStory() {
         <Panel>
           <Variant name={`valor ${a}`}>
             <Frame width="sm">
-              <Slider value={a} onChange={setA} label="Volumen" />
+              <Slider value={a} onValueChange={setA} label="Volumen" />
             </Frame>
           </Variant>
         </Panel>
@@ -36,12 +36,12 @@ export function SliderStory() {
         <Panel>
           <Variant name="en 0">
             <Frame width="sm">
-              <Slider value={b} onChange={setB} label="En cero" />
+              <Slider value={b} onValueChange={setB} label="En cero" />
             </Frame>
           </Variant>
           <Variant name="en 100">
             <Frame width="sm">
-              <Slider value={c} onChange={setC} label="En cien" />
+              <Slider value={c} onValueChange={setC} label="En cien" />
             </Frame>
           </Variant>
         </Panel>
@@ -54,7 +54,7 @@ export function SliderStory() {
         <Panel>
           <Variant name={`${steps} de 5 · step 1, max 5`}>
             <Frame width="sm">
-              <Slider value={steps} onChange={setSteps} min={0} max={5} step={1} label="Dificultad" />
+              <Slider value={steps} onValueChange={setSteps} min={0} max={5} step={1} label="Dificultad" />
             </Frame>
           </Variant>
         </Panel>
@@ -70,7 +70,7 @@ export function SliderStory() {
         <Panel>
           <Variant name="disabled">
             <Frame width="sm">
-              <Slider value={40} onChange={() => {}} disabled label="Deshabilitado" />
+              <Slider value={40} onValueChange={() => {}} disabled label="Deshabilitado" />
             </Frame>
           </Variant>
         </Panel>
@@ -78,7 +78,7 @@ export function SliderStory() {
 
       <Section title="Cómo se escribe">
         <Example code={`const [peso, setPeso] = useState(50)
-<Slider value={peso} onChange={setPeso} min={0} max={100} step={5} label="Peso de la nota" />`} />
+<Slider value={peso} onValueChange={setPeso} min={0} max={100} step={5} label="Peso de la nota" />`} />
       </Section>
 
       <Section title="Props">

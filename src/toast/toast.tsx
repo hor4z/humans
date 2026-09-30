@@ -110,7 +110,7 @@ function ToastItem({ toast, onDismiss }: { toast: ToastRecord; onDismiss: (id: s
       <div className={cls.trailing}>
         {meta && <span className={cls.meta}>{meta}</span>}
         {action && (
-          <Button size="sm" variant="solid" onClick={() => { action.onClick?.(); close() }}>
+          <Button size="sm" variant="brand" onClick={() => { action.onClick?.(); close() }}>
             {action.label}
           </Button>
         )}

@@ -3,7 +3,7 @@ import { OpenQuestion } from '@milo/ui/blocks/task/open-question'
 import { A11y, Example, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 export function OpenQuestionStory() {
-  const [texto, setTexto] = useState('')
+  const [text, setText] = useState('')
 
   return (
     <Page
@@ -20,8 +20,8 @@ export function OpenQuestionStory() {
           <Variant name="en blanco" note="El `placeholder` es una pista de por dónde empezar, nunca la respuesta.">
             <Stack width="sm">
               <OpenQuestion
-                value={texto}
-                onChange={setTexto}
+                value={text}
+                onValueChange={setText}
                 rows={3}
                 maxLength={240}
                 placeholder="Porque ahí se junta todo el curso y además está el eco del techo"
@@ -54,7 +54,7 @@ export function OpenQuestionStory() {
       </Section>
 
       <Section title="Cómo se escribe">
-        <Example code={`<OpenQuestion value={texto} onChange={setTexto} rows={3} maxLength={240}>
+        <Example code={`<OpenQuestion value={texto} onValueChange={setTexto} rows={3} maxLength={240}>
   <OpenQuestion.Prompt>¿Por qué ese y no otro?</OpenQuestion.Prompt>
   <OpenQuestion.Hint>Dos renglones alcanzan.</OpenQuestion.Hint>
 </OpenQuestion>`} />

@@ -31,37 +31,37 @@ const sections: { id: SectionId; label: string; icon: IconName }[] = [
 ]
 
 /** Los ajustes en un modal y no en una página. */
-export function SettingsModal({ open, onClose, user }: {
+export function SettingsModal({ open, onOpenChange, user }: {
   /** Cerrado no monta nada. */
   open: boolean
   /** Al cerrar no hay navegación: seguís donde estabas. */
-  onClose: () => void
+  onOpenChange: (open: boolean) => void
   /** Quién está mirando los ajustes. */
   user: SettingsUser
 }) {
   const [section, setSection] = useState<SectionId>('general')
 
   return (
-    <Modal open={open} onClose={onClose} size="md">
+    <Modal open={open} onOpenChange={onOpenChange} size="md">
       <Modal.Header>
         <Modal.Title>Ajustes</Modal.Title>
       </Modal.Header>
       <div className={cls.root}>
         <nav className={cls.rail}>
           {sections.map(s => {
-            const active = s.id === section
+            const current = s.id === section
             return (
               <button
                 key={s.id}
                 type="button"
                 onClick={() => setSection(s.id)}
-                aria-current={active ? 'page' : undefined}
+                aria-current={current ? 'page' : undefined}
                 className={cx(
                   cls.railItem,
                   cls.railItemMotion,
-                  active
-                    ? cls.railItemActive
-                    : cls.railItemIdle,
+                  current
+                    ? cls.railItemCurrent
+                    : cls.railItemPlain,
                 )}
               >
                 <span className={cls.railGlyph}>
@@ -104,26 +104,26 @@ function GeneralSection({ user }: { user: SettingsUser }) {
         <Segmented
           size="sm"
           value={prefs.theme}
-          onChange={v => set('theme', v)}
+          onValueChange={v => set('theme', v)}
           options={[{ value: 'light', label: 'Claro' }, { value: 'dark', label: 'Oscuro' }]}
         />
       </Row>
       <Row>
         <Row.Label>Sugerir consignas mientras escribo</Row.Label>
         <Row.Hint>Aparecen abajo del cursor y se aceptan con Tab.</Row.Hint>
-        <Switch checked={prefs.suggest} onChange={v => set('suggest', v)} label="Sugerir consignas" />
+        <Switch checked={prefs.suggest} onCheckedChange={v => set('suggest', v)} label="Sugerir consignas" />
       </Row>
       <Row>
         <Row.Label>Abrir la última actividad al entrar</Row.Label>
-        <Switch checked={prefs.resume} onChange={v => set('resume', v)} label="Abrir la última actividad" />
+        <Switch checked={prefs.resume} onCheckedChange={v => set('resume', v)} label="Abrir la última actividad" />
       </Row>
       <Row>
         <Row.Label>Mostrar el método en las tarjetas</Row.Label>
-        <Switch checked={prefs.showLens} onChange={v => set('showLens', v)} label="Mostrar el método" />
+        <Switch checked={prefs.showLens} onCheckedChange={v => set('showLens', v)} label="Mostrar el método" />
       </Row>
       <Row>
         <Row.Label>Idioma</Row.Label>
-        <Select width={148} value={language} onChange={setLanguage} options={['Español (AR)', 'Español', 'Português', 'English']} />
+        <Select width={148} value={language} onValueChange={setLanguage} options={['Español (AR)', 'Español', 'Português', 'English']} />
       </Row>
     </div>
   )
@@ -146,11 +146,11 @@ function ProfileSection({ user }: { user: SettingsUser }) {
       <Row>
         <Row.Label>Dejar que otros guías vean mis recetas</Row.Label>
         <Row.Hint>Solo las que publiques, nunca los borradores.</Row.Hint>
-        <Switch checked={prefs.shareRecipes} onChange={v => set('shareRecipes', v)} label="Compartir recetas" />
+        <Switch checked={prefs.shareRecipes} onCheckedChange={v => set('shareRecipes', v)} label="Compartir recetas" />
       </Row>
       <Row>
         <Row.Label>Aparecer en el directorio de la escuela</Row.Label>
-        <Switch checked={prefs.directory} onChange={v => set('directory', v)} label="Aparecer en el directorio" />
+        <Switch checked={prefs.directory} onCheckedChange={v => set('directory', v)} label="Aparecer en el directorio" />
       </Row>
     </div>
   )
@@ -173,7 +173,7 @@ function SecuritySection() {
       <Row>
         <Row.Label>Preguntar antes de borrar una actividad</Row.Label>
         <Row.Hint>Con entregas adentro siempre pregunta; esto es para las vacías.</Row.Hint>
-        <Switch checked={prefs.confirmDelete} onChange={v => set('confirmDelete', v)} label="Preguntar antes de borrar" />
+        <Switch checked={prefs.confirmDelete} onCheckedChange={v => set('confirmDelete', v)} label="Preguntar antes de borrar" />
       </Row>
       <Row>
         <Row.Label>Registro de accesos</Row.Label>
@@ -202,25 +202,25 @@ function NoticesSection() {
     <div>
       <Row>
         <Row.Label>Cuando entra una entrega</Row.Label>
-        <Switch checked={prefs.notifySubmission} onChange={v => set('notifySubmission', v)} label="Avisar entregas" />
+        <Switch checked={prefs.notifySubmission} onCheckedChange={v => set('notifySubmission', v)} label="Avisar entregas" />
       </Row>
       <Row>
         <Row.Label>Cuando un aprendiz queda trabado</Row.Label>
         <Row.Hint>Dos intentos sin avanzar en la misma fase.</Row.Hint>
-        <Switch checked={prefs.notifyStuck} onChange={v => set('notifyStuck', v)} label="Avisar trabas" />
+        <Switch checked={prefs.notifyStuck} onCheckedChange={v => set('notifyStuck', v)} label="Avisar trabas" />
       </Row>
       <Row>
         <Row.Label>Resumen de la semana</Row.Label>
         <Row.Hint>Los domingos, con lo que pasó en cada espacio.</Row.Hint>
-        <Switch checked={prefs.notifyWeekly} onChange={v => set('notifyWeekly', v)} label="Resumen semanal" />
+        <Switch checked={prefs.notifyWeekly} onCheckedChange={v => set('notifyWeekly', v)} label="Resumen semanal" />
       </Row>
       <Row>
         <Row.Label>Novedades del producto</Row.Label>
-        <Switch checked={prefs.notifyProduct} onChange={v => set('notifyProduct', v)} label="Novedades" />
+        <Switch checked={prefs.notifyProduct} onCheckedChange={v => set('notifyProduct', v)} label="Novedades" />
       </Row>
       <Row>
         <Row.Label>Por dónde</Row.Label>
-        <Select width={148} value={channel} onChange={setChannel} options={['Correo', 'Solo en la app', 'Correo y app']} />
+        <Select width={148} value={channel} onValueChange={setChannel} options={['Correo', 'Solo en la app', 'Correo y app']} />
       </Row>
     </div>
   )

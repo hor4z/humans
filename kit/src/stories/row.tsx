@@ -26,16 +26,16 @@ export function RowStory() {
           <Row>
             <Row.Label>Sugerir mejoras</Row.Label>
             <Row.Hint>Mientras escribís una consigna</Row.Hint>
-            <Switch checked={first} onChange={setFirst} label="Sugerir mejoras" />
+            <Switch checked={first} onCheckedChange={setFirst} label="Sugerir mejoras" />
           </Row>
           <Row>
             <Row.Label>Aparecer en el directorio</Row.Label>
             <Row.Hint>Otras escuelas pueden encontrarte</Row.Hint>
-            <Switch checked={second} onChange={setSecond} label="Directorio" />
+            <Switch checked={second} onCheckedChange={setSecond} label="Directorio" />
           </Row>
           <Row>
             <Row.Label>Quién ve mis recetas</Row.Label>
-            <Select value={level} onChange={setLevel} width={180} options={['Solo yo', 'Todo el equipo', 'Cualquiera con el link']} />
+            <Select value={level} onValueChange={setLevel} width={180} options={['Solo yo', 'Todo el equipo', 'Cualquiera con el link']} />
           </Row>
         </div>
       </Section>
@@ -48,7 +48,7 @@ export function RowStory() {
           <Row>
             <Row.Label>Avisos por mail</Row.Label>
             <Row.Hint>Cuando llega una entrega</Row.Hint>
-            <Switch checked={first} onChange={setFirst} label="Avisos por mail" />
+            <Switch checked={first} onCheckedChange={setFirst} label="Avisos por mail" />
           </Row>
         </div>
       </Section>
@@ -81,7 +81,7 @@ export function RowStory() {
         <Example code={`<Row>
   <Row.Label>Sugerir consignas mientras escribo</Row.Label>
   <Row.Hint>Aparecen abajo del cursor.</Row.Hint>
-  <Switch checked={sugerir} onChange={setSugerir} />
+  <Switch checked={sugerir} onCheckedChange={setSugerir} />
 </Row>`} />
       </Section>
 

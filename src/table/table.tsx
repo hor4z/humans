@@ -11,10 +11,10 @@ function Root({ children, label, minWidth = 640, className }: {
   minWidth?: number
   className?: string
 }) {
-  const todo = Children.toArray(children)
-  const franja = todo.filter(c => isValidElement(c) && c.type === Footer)
-  const tabla = todo.filter(c => !(isValidElement(c) && c.type === Footer))
-  const { ref: scroller, scrolls, clipped } = useSideScroll<HTMLDivElement>(tabla)
+  const all = Children.toArray(children)
+  const footer = all.filter(c => isValidElement(c) && c.type === Footer)
+  const body = all.filter(c => !(isValidElement(c) && c.type === Footer))
+  const { ref: scroller, scrolls, clipped } = useSideScroll<HTMLDivElement>(body)
 
   return (
     <div className={cx(`${cls.root} bg-surface`, className)}>
@@ -26,7 +26,7 @@ function Root({ children, label, minWidth = 640, className }: {
         className={`${cls.scroller} zebra`}
       >
         <table className={cls.table} style={{ minWidth }}>
-          {tabla}
+          {body}
         </table>
       </div>
       {clipped && (
@@ -35,7 +35,7 @@ function Root({ children, label, minWidth = 640, className }: {
           className={cls.clipShadow}
         />
       )}
-      {franja}
+      {footer}
     </div>
   )
 }

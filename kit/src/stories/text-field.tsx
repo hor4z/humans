@@ -17,7 +17,7 @@ export function TextFieldStory() {
       <Section title="Variantes">
         <Cluster>
           {[
-            { label: 'solo', el: <TextField value={text} onChange={e => setText(e.target.value)} aria-label="Nombre de la actividad" /> },
+            { label: 'solo', el: <TextField value={text} onValueChange={setText} aria-label="Nombre de la actividad" /> },
             { label: 'con icono', el: <TextField icon="search" aria-label="Buscar una actividad" placeholder="Buscar una actividad…" /> },
             { label: 'con suffix', el: <TextField aria-label="Duración en minutos" placeholder="Duración" suffix={<Kbd>min</Kbd>} /> },
             { label: 'disabled', el: <TextField aria-label="Campo no editable" placeholder="No editable" disabled /> },
@@ -60,7 +60,7 @@ export function TextFieldStory() {
           <Example code={`<TextField
   icon="search"
   value={texto}
-  onChange={e => setTexto(e.target.value)}
+  onValueChange={setTexto}
   placeholder="Fracciones equivalentes"
 />`} />
         </Section>
