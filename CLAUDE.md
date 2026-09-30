@@ -159,6 +159,12 @@ Viven en `portal/`, `popover/`, `tooltip/`, `dropdown/`, `modal/`, `sheet/` y `c
 - **Se enfoca el contenedor del diálogo, no su primer control**, con `preventScroll`: enfocar el
   primero abría el panel corrido. `[data-autofocus]` para el que sí quiere un campo.
 - **`Escape` usa una pila global** y cierra el de arriba.
+- **`Modal`, `ConfirmDialog` y `Sheet` entran y salen con transiciones, no con keyframes**, y el
+  movimiento vive en `lib/dialog.module.css`. Una transición se da vuelta desde donde está: con
+  keyframes, reabrir a mitad de la salida arrancaba de cero y el velo parpadeaba. La entrada separa
+  el fundido (`--duration-normal`) del movimiento (`--duration-content` con `--ease-slide`), y la
+  salida del diálogo centrado se achica menos de lo que creció al entrar. Con
+  `prefers-reduced-motion` no se mueve y se funde.
 - **El bloqueo de scroll compensa la scrollbar** y cuenta los overlays anidados.
 - **Todo lo que se mide contra un disparador y se dibuja en un portal se cierra solo** al scrollear
   la página, con `useDismiss`. El `scroll` en captura se filtra por origen (si no, scrollear la

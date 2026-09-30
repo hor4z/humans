@@ -27,7 +27,7 @@ function Root({
 }) {
   const onCancel = () => onOpenChange(false)
   return (
-    <Dialog open={open} onClose={onCancel} role="alertdialog" centered blurred panelClass={`${cls.panel} ui-zoom bg-surface`}>
+    <Dialog open={open} onClose={onCancel} role="alertdialog" centered blurred panelClass={`${cls.panel} bg-surface`}>
       {titleId => (
         <ConfirmContext.Provider value={{ onCancel, onConfirm, tone, titleId }}>
           {children}

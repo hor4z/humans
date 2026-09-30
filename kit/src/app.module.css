@@ -182,21 +182,13 @@
   .railFoot {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     gap: 0.5rem;
     border-top-style: solid;
     border-top-width: 1px;
     border-color: var(--border);
     padding-inline: 1rem;
     padding-block: 0.75rem;
-  }
-
-  .railCount {
-    font-size: var(--type-meta);
-    line-height: var(--type-meta-lh);
-    letter-spacing: var(--type-meta-ls);
-    font-weight: var(--font-weight-medium);
-    color: var(--text-muted);
   }
 
   .topBar {
@@ -335,7 +327,7 @@
     .railCompact { width: 72px; }
     .compactNav, .railScroll { animation: railIn var(--duration-normal) var(--ease-out); }
     .main.mainCompact { margin-left: 72px; }
-    .railCompact .brandName, .railCompact .railCount { display: none; }
+    .railCompact .brandName { display: none; }
     .railCompact .railHead { align-items: center; padding-inline: var(--space-2); gap: var(--space-4); }
     .railCompact .brand { padding: 0; }
     .railCompact .railFoot { flex-direction: column; gap: var(--space-2); padding: var(--space-3) var(--space-2); }

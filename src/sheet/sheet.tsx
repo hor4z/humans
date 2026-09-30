@@ -1,5 +1,5 @@
 import s from './sheet.module.css'
-import { createContext, useContext, type ComponentPropsWithoutRef, type ReactNode } from 'react'
+import { createContext, useContext, type ComponentPropsWithoutRef, type CSSProperties, type ReactNode } from 'react'
 import { IconButton } from '../icon-button/icon-button'
 import { cx } from '../lib/cx'
 import { Dialog } from '../lib/dialog'
@@ -28,8 +28,8 @@ function Root({
       open={open}
       onClose={onClose}
       label={label}
-      panelClass={cx(`${s.panel} ui-slide bg-surface`, side === 'right' ? s.right : s.left)}
-      panelStyle={{ width, maxWidth: '100%', ['--slide-from' as string]: side === 'right' ? '12px' : '-12px' }}
+      panelClass={cx(`${s.panel} bg-surface`, side === 'right' ? s.right : s.left)}
+      panelStyle={{ width, maxWidth: '100%', '--slide-from': side === 'right' ? '100%' : '-100%' } as CSSProperties}
     >
       {titleId => (
         <SheetContext.Provider value={{ onClose, titleId }}>
