@@ -10,8 +10,8 @@
   --surface-active: var(--shade-09-a08);
   --surface-inverted: var(--shade-09);
   --popover: var(--shade-01);
-  --scrim: rgb(17 24 39 / 0.14);
-  --veil: rgb(17 24 39 / 0.4);
+  --scrim: rgb(35 34 32 / 0.14);
+  --veil: rgb(35 34 32 / 0.4);
 
   --border: var(--shade-04);
   --border-strong: var(--shade-05);
@@ -25,7 +25,7 @@
   --text-inverted: var(--shade-01);
 
   --solid: var(--shade-09);
-  --solid-hover: #030712;
+  --solid-hover: #141311;
   --on-solid: var(--shade-01);
 
   --brand: var(--blue-600);
@@ -42,14 +42,14 @@
   --yellow-border: var(--yellow-300);
   --yellow-ink: var(--yellow-800);
 
-  --on-label: #111827;
+  --on-label: #141311;
 
   --accent: var(--accent-500);
   --accent-hover: var(--accent-600);
   --accent-subtle: var(--accent-050);
   --on-accent: #ffffff;
   --on-ok: #ffffff;
-  --on-warn: #111827;
+  --on-warn: #141311;
   --brand-ink: var(--blue-700);
 
   --space-orange: #e2761b;
@@ -69,11 +69,11 @@
   --bad-subtle: var(--bad-050);
   --on-bad: #ffffff;
 
-  --relief-raised: 0 0 0 1px var(--border), 0 2px 4px -2px rgb(17 24 39 / 0.12);
-  --relief-inset: inset 0 0 0 1px var(--border-strong), inset 0 1px 2px rgb(17 24 39 / 0.04);
-  --relief-card: 0 2px 6px -3px rgb(17 24 39 / 0.08);
-  --relief-toolbar: 0 2px 6px -2px rgb(17 24 39 / 0.08), 0 8px 20px -12px rgb(17 24 39 / 0.12);
-  --relief-popover: 0 4px 12px -4px rgb(17 24 39 / 0.10), 0 20px 48px -16px rgb(17 24 39 / 0.16);
+  --relief-raised: 0 0 0 1px var(--border), 0 2px 4px -2px rgb(35 34 32 / 0.12);
+  --relief-inset: inset 0 0 0 1px var(--border-strong), inset 0 1px 2px rgb(35 34 32 / 0.04);
+  --relief-card: 0 2px 6px -3px rgb(35 34 32 / 0.08);
+  --relief-toolbar: 0 2px 6px -2px rgb(35 34 32 / 0.08), 0 8px 20px -12px rgb(35 34 32 / 0.12);
+  --relief-popover: 0 4px 12px -4px rgb(35 34 32 / 0.10), 0 20px 48px -16px rgb(35 34 32 / 0.16);
 
 
 
@@ -90,7 +90,7 @@
   --switch-on-inset: none;
   --switch-off-inset: none;
   --switch-thumb: #ffffff;
-  --switch-thumb-shadow: 0 1px 3px rgb(17 24 39 / 0.18);
+  --switch-thumb-shadow: 0 1px 3px rgb(35 34 32 / 0.18);
 
   --field-bg: var(--shade-01);
   --field-bg-hover: var(--shade-01);
