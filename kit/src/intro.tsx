@@ -25,18 +25,15 @@ export function Intro({ go }: { go: (id: string) => void }) {
     <div className={cls.intro}>
       <section className={cls.hero} aria-labelledby="intro-title">
         <div className={cls.heroContent}>
-          <span className={cls.eyebrow}><span className={cls.brandDot} /> DISEÑAR CON MILO</span>
           <h1 id="intro-title" className={cls.heroTitle}>El sistema de milo.<br /><span>Todo encaja.</span></h1>
           <p className={cls.heroLead}>Una misma manera de dar forma a cada idea. Componentes, fundamentos y ejemplos para construir con claridad.</p>
           <div className={cls.actions}>
             <Button size="sm" variant="brand" iconEnd={<Icon name="arrow_forward" />} onClick={() => go('button')}>Explorar componentes</Button>
             <Button size="sm" variant="ghost" onClick={() => go('color')}>Ver fundamentos</Button>
           </div>
-          <div className={cls.heroNote}><Icon name="deployed_code" size={16} /> Componentes reales. Código listo para usar.</div>
         </div>
 
         <div className={cls.playground}>
-          <div className={cls.previewHeader}><span>EL SISTEMA EN ACCIÓN</span><Chip size="sm" color="info" dot>Interactivo</Chip></div>
           <div className={`${cls.activity} bg-surface`}>
             <div className={cls.activityTop}>
               <span className={cls.courseIcon}><Icon name="menu_book" size={20} /></span>
@@ -56,7 +53,6 @@ export function Intro({ go }: { go: (id: string) => void }) {
               <Button size="sm" variant="brand" disabled={published || !title.trim()} iconEnd={<Icon name={published ? 'check' : 'arrow_forward'} />} onClick={() => setPublished(true)}>{published ? 'Publicada' : 'Publicar'}</Button>
             </div>
           </div>
-          <p className={cls.previewHint}>Probá los controles. Los cambios quedan en esta vista.</p>
         </div>
       </section>
 
@@ -69,7 +65,7 @@ export function Intro({ go }: { go: (id: string) => void }) {
       </section>
 
       <section className={cls.examples} aria-labelledby="intro-examples">
-        <div className={cls.sectionHeader}><div><span className={cls.eyebrow}>EN CONTEXTO</span><h2 id="intro-examples" className={cls.sectionTitle}>De las piezas a la experiencia.</h2></div><p className={cls.sectionLead}>Así se combinan los componentes en una pantalla completa.</p></div>
+        <div className={cls.sectionHeader}><div><span className={cls.eyebrow}>EN CONTEXTO</span><h2 id="intro-examples" className={cls.sectionTitle}>De las piezas a la experiencia.</h2></div></div>
         <div className={cls.exampleGrid}>
           <button type="button" className={cls.exampleCard} onClick={() => go('dashboard')}>
             <div className={cls.dashboardPreview} aria-hidden="true">

@@ -3,22 +3,18 @@
   .hero { display: grid; align-items: center; gap: var(--space-10); }
   .heroContent { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-6); }
   .eyebrow { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--text-muted); font-size: var(--type-meta); line-height: var(--type-meta-lh); letter-spacing: var(--type-meta-ls); font-weight: var(--font-weight-semibold); }
-  .brandDot { width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--brand); }
   .heroTitle { font-size: var(--type-display); line-height: var(--type-display-lh); letter-spacing: var(--type-display-ls); font-weight: var(--font-weight-bold); color: var(--text); }
   .heroTitle > span { color: var(--brand-ink); }
   .heroLead { max-width: 42ch; color: var(--text-muted); font-size: var(--type-reading); line-height: var(--type-reading-lh); letter-spacing: var(--type-reading-ls); }
   .actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
-  .heroNote { display: flex; align-items: center; gap: var(--space-2); color: var(--text-muted); font-size: var(--type-meta); line-height: var(--type-meta-lh); letter-spacing: var(--type-meta-ls); }
-  .playground { min-width: 0; display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-5); border: 1px solid var(--brand-border); border-radius: var(--radius-2xl); background: color-mix(in oklab, var(--brand-soft) 45%, var(--canvas)); }
-  .previewHeader { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); color: var(--text-muted); font-size: var(--type-meta); line-height: var(--type-meta-lh); letter-spacing: var(--type-meta-ls); font-weight: var(--font-weight-semibold); }
+  .playground { min-width: 0; display: flex; flex-direction: column; }
   .activity { display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-5); border: 1px solid var(--border); border-radius: var(--radius-xl); box-shadow: var(--relief-card); }
   .activityTop { display: flex; align-items: center; gap: var(--space-3); }
   .courseIcon { display: grid; place-items: center; flex-shrink: 0; width: 36px; height: 36px; background: var(--brand-soft); color: var(--brand-ink); border-radius: var(--radius-md); }
   .courseName, .fieldLabel { color: var(--text); font-size: var(--type-body); line-height: var(--type-body-lh); letter-spacing: var(--type-body-ls); font-weight: var(--font-weight-semibold); }
   .fieldLabel { margin-bottom: calc(-1 * var(--space-2)); }
   .status { margin-left: auto; }
-  .meta, .previewHint { color: var(--text-muted); font-size: var(--type-meta); line-height: var(--type-meta-lh); letter-spacing: var(--type-meta-ls); }
-  .previewHint { text-align: center; }
+  .meta { color: var(--text-muted); font-size: var(--type-meta); line-height: var(--type-meta-lh); letter-spacing: var(--type-meta-ls); }
   .peopleRow, .setting { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
   .setting { border-top: 1px solid var(--border); padding-top: var(--space-4); color: var(--text); font-size: var(--type-body); line-height: var(--type-body-lh); letter-spacing: var(--type-body-ls); }
   .previewActions { display: flex; justify-content: space-between; gap: var(--space-2); }
@@ -27,11 +23,10 @@
   .pathTop { display: flex; align-items: center; justify-content: space-between; color: var(--brand-ink); margin-bottom: var(--space-3); }
   .pathNumber { color: var(--text-muted); font-family: var(--font-mono); font-size: var(--type-meta); line-height: var(--type-meta-lh); letter-spacing: var(--type-meta-ls); }
   .pathTitle { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); color: var(--text); font-size: var(--type-reading); line-height: var(--type-reading-lh); letter-spacing: var(--type-reading-ls); font-weight: var(--font-weight-semibold); }
-  .pathBody, .sectionLead { color: var(--text-muted); font-size: var(--type-body); line-height: var(--type-body-lh); letter-spacing: var(--type-body-ls); }
+  .pathBody { color: var(--text-muted); font-size: var(--type-body); line-height: var(--type-body-lh); letter-spacing: var(--type-body-ls); }
   .examples { display: flex; flex-direction: column; gap: var(--space-6); }
   .sectionHeader { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--space-4); }
   .sectionTitle { margin-top: var(--space-2); color: var(--text); font-size: var(--type-title); line-height: var(--type-title-lh); letter-spacing: var(--type-title-ls); font-weight: var(--font-weight-semibold); }
-  .sectionLead { max-width: 34ch; }
   .exampleGrid { display: grid; gap: var(--space-5); }
   .exampleCard { min-width: 0; overflow: hidden; text-align: left; border: 1px solid var(--border); border-radius: var(--radius-xl); background: var(--surface); transition: border-color var(--duration-fast) var(--ease-out); }
   .dashboardPreview, .documentPreview { height: 216px; padding: var(--space-6); background: var(--surface-muted); overflow: hidden; }
@@ -53,6 +48,6 @@
   .exampleCaption > span > span { color: var(--text-muted); font-size: var(--type-body); line-height: var(--type-body-lh); letter-spacing: var(--type-body-ls); }
   @media (min-width: 48rem) { .paths { grid-template-columns: repeat(3, minmax(0, 1fr)); } .exampleGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (min-width: 80rem) { .hero { grid-template-columns: 1.05fr 1fr; } }
-  @media (max-width: 30rem) { .playground { padding: var(--space-3); } .activity { padding: var(--space-4); } .heroTitle { font-size: var(--type-heading); line-height: var(--type-heading-lh); letter-spacing: var(--type-heading-ls); } }
+  @media (max-width: 30rem) { .activity { padding: var(--space-4); } .heroTitle { font-size: var(--type-heading); line-height: var(--type-heading-lh); letter-spacing: var(--type-heading-ls); } }
   @media (hover: hover) { .pathCard:hover, .exampleCard:hover { border-color: var(--brand-border); background-color: var(--brand-soft); } }
 }
