@@ -34,7 +34,6 @@ function Root({ children, label, width, className }: {
   )
 }
 
-/** Una fila del menú. */
 /** El atajo, a la derecha, en un `Kbd`. */
 function Shortcut({ children }: { children: ReactNode }) {
   return <>{children}</>

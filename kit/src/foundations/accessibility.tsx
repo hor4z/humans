@@ -2,203 +2,94 @@ import cls from './accessibility.module.css'
 import { Button } from '@milo/ui/button'
 import { Chip } from '@milo/ui/chip'
 import { Field } from '@milo/ui/field'
-import { Icon } from '@milo/ui/icon'
-import { Kbd } from '@milo/ui/kbd'
 import { TextField } from '@milo/ui/text-field'
-import { A11y, Note, Page, Section, Stack } from '../kit'
+import { Table } from '@milo/ui/table'
+import { A11y, Page, Rich, Section } from '../kit'
+import { ContrastTable, type ContrastRow } from './color-tables'
 
 /** Las reglas del sistema, no las de cada pieza: lo de cada pieza está en su vista. */
 const rules = [
-  {
-    icon: 'contrast',
-    title: 'El contraste se mide, no se estima',
-    body: 'AA (4.5:1) para todo lo que sea texto, en los dos temas. No es una intención: hay cincuenta y un tests que leen los tokens y calculan el ratio, y fallan antes de que un tono roto llegue a una pantalla. AAA queda afuera a propósito, y abajo está la cuenta.',
-  },
-  {
-    icon: 'keyboard',
-    title: 'Todo se hace con el teclado',
-    body: 'Cada cosa accionable se alcanza con Tab, se activa con Enter o espacio y se abandona con Escape. Donde hay una lista (un menú, un select, un segmented) las flechas la recorren y Home y End van a los extremos.',
-  },
-  {
-    icon: 'visibility',
-    title: 'El foco se ve siempre, y es uno solo',
-    body: 'Un anillo azul, el mismo en todo el sistema. Es el único lugar donde el color es la señal y no el acompañante, y se defiende: los otros roles se leen, este tiene que reconocerse antes de leerse.',
-  },
-  {
-    icon: 'palette',
-    title: 'El color nunca viaja solo',
-    body: 'Cada tono de estado trae su glifo y su texto. Un aviso rojo sin la palabra "error" y sin el símbolo no dice nada a quien no distingue colores, que es una de cada doce personas con visión masculina.',
-  },
-  {
-    icon: 'zoom_in',
-    title: 'El texto se puede agrandar',
-    body: 'La escala va en rem, así que la preferencia de tamaño de fuente del navegador se respeta además del zoom. Las piezas que llevan texto en una caja chica usan alto mínimo y no alto fijo, para que crecer no corte nada.',
-  },
-  {
-    icon: 'schedule',
-    title: 'El movimiento se puede apagar',
-    body: 'Con prefers-reduced-motion todas las animaciones se van y las transiciones bajan a un milisegundo. Lo que informa por moverse no se congela: el spinner gira más lento en vez de quedarse quieto.',
-  },
+  ['Contraste', 'AA (4,5:1) para texto, en los dos temas. Los tests leen los tokens y calculan el ratio.'],
+  ['Teclado', 'Todo se alcanza con Tab, se activa con Enter o espacio y se cierra con Escape, que cierra solo lo de más arriba. Las listas se recorren con flechas, Home y End.'],
+  ['Foco', 'Un anillo azul, el mismo en todo el sistema, que se ve siempre y es uno solo.'],
+  ['Color', 'Nunca viaja solo: cada estado trae su glifo y su texto.'],
+  ['Texto', 'La escala va en rem, así que se respeta la preferencia del navegador. Las cajas chicas usan alto mínimo.'],
+  ['Movimiento', 'Con `prefers-reduced-motion` las animaciones se van; lo que informa por moverse baja de velocidad y no se congela.'],
 ] as const
+
+const targets = [
+  ['sm', 36, 'Una fila densa, con mouse.'],
+  ['md', 40, 'La acción dentro de un panel.'],
+  ['lg', 44, 'La acción principal. Llega al tamaño por defecto de Apple.'],
+] as const
+
+const exceptions: ContrastRow[] = [
+  { what: 'Naranja de aviso sobre su pista', fg: '--warn', bg: '--track', min: 3, why: 'El valor nunca lo lleva solo el color: la barra trae su rótulo y su número.' },
+  { what: 'Borde de un campo sobre el papel', fg: '--field-border', bg: '--surface', min: 3, why: 'El campo se hunde contra su superficie y trae su etiqueta. Con 3:1 cada campo sería una caja dibujada.' },
+]
 
 export function AccessibilitySection() {
   return (
     <Page
       title="Accesibilidad"
       kind="Fundamentos"
-      lead="No es una capa que se agrega al final: son las reglas que cada pieza ya cumple, y lo que se verifica con tests en vez de con buena voluntad. Esto se va a usar en educación, donde quien no puede leer la pantalla no puede hacer la tarea."
+      lead="Las reglas que cada pieza ya cumple y que se verifican con tests. Se usa en educación: quien no puede leer la pantalla no puede hacer la tarea."
     >
-      <Section title="Las seis reglas">
-        <div className={cls.specimenGrid}>
-          {rules.map(r => (
-            <div key={r.title} className={`${cls.specimen} bg-surface`}>
-              <span className={`${cls.roleBadge} inset-relief`}>
-                <Icon name={r.icon} size={18} />
-              </span>
-              <span className={cls.specimenLabel}>{r.title}</span>
-              <p className={cls.specimenBody}>{r.body}</p>
-            </div>
-          ))}
-        </div>
+      <Section title="Las reglas">
+        <Table label="Las reglas de accesibilidad del sistema" minWidth={520}>
+          <Table.Body>
+            {rules.map(([name, how]) => (
+              <Table.Row key={name}>
+                <Table.Cell><strong>{name}</strong></Table.Cell>
+                <Table.Cell><Rich text={how} /></Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table>
       </Section>
 
-      <Section
-        title="El anillo de foco"
-        note="Dos píxeles de superficie y después el azul. Los dos píxeles de papel en el medio son lo que lo deja ver también sobre un botón azul, donde un anillo pegado al borde se perdería contra el relleno. Probalo: hacé Tab acá adentro."
-      >
+      <Section title="El foco" note="Dos píxeles de papel y después el azul, para que se vea también sobre un botón azul. Hacé Tab acá adentro.">
         <div className={`${cls.ringCard} bg-surface`}>
           <Button variant="brand">Guardar</Button>
           <Button variant="brand">Publicar</Button>
           <Button variant="muted">Cancelar</Button>
-          <span className={cls.ringNote}>
-            Va con <code>:focus-visible</code> y no con <code>:focus</code>: el anillo aparece cuando
-            se navega con el teclado y no cuando se clickea, que es cuando estorba y no informa.
-          </span>
         </div>
       </Section>
 
-      <Section
-        title="El tamaño del objetivo, y dónde el sistema queda corto"
-        note="Es la regla que este sistema cumple más justo, así que va escrita en vez de escondida. WCAG 2.2 pide 24×24 como mínimo. Apple tiene dos números y no uno: 44×44 es su tamaño **por defecto** y 28×28 su mínimo, y aclara que el aire entre controles importa tanto como el tamaño."
-      >
-        <Stack>
-          {[
-            ['sm', 36, 'ok', 'Pasa WCAG con holgura y está sobre el mínimo de Apple, debajo de su default. Es para una fila densa y con mouse.'],
-            ['md', 40, 'ok', 'La acción dentro de un panel.'],
-            ['lg', 44, 'ok', 'La acción principal. Es el único paso que llega al default de Apple, y llega en escritorio también.'],
-          ].map(([size, px, tone, note]) => (
-            <div key={size as string} className={`${cls.targetRow} bg-surface`}>
-              <code className={cls.targetName}>{size}</code>
-              <span className={`${cls.targetValue} tabular`}>{px}px</span>
-              <Chip size="sm" color={tone as 'ok'}>≥ 24</Chip>
-              <span className={cls.targetNote}>{note}</span>
-            </div>
-          ))}
-        </Stack>
-        <Note title="Qué pasa en táctil">
-          Con <code>pointer: coarse</code> el <code>sm</code> y el <code>md</code> suben la caja a 44,
-          que es donde el <code>lg</code> ya está en cualquier puntero, así que en un teléfono los tres
-          pasos miden lo mismo. La clase global <code>touch-target</code> sigue puesta de cinturón: el
-          blanco de toque llega a 44 aunque la caja quedara corta. En escritorio no cambia un píxel
-          respecto de lo de arriba. Falta el resto de las piezas: el checkbox y el radio de 18,
-          el switch de 22, el tachito de un chip de 24. Varias son compactas a propósito, así que
-          subirlas es una decisión sobre cómo se siente el sistema en un teléfono, y no un arreglo.
-          Y ojo con el aire: Apple dice que la separación entre controles pesa tanto como el tamaño,
-          así que agrandar dos blancos vecinos sin mirar el gap los hace pisarse.
-        </Note>
+      <Section title="El tamaño del objetivo" note="WCAG 2.2 pide 24×24. Con `pointer: coarse` `sm` y `md` suben a 44. Falta el checkbox, el radio, el switch y la X de un chip: son compactos a propósito y subirlos es una decisión, no un arreglo.">
+        <Table label="Alturas de los controles" minWidth={420}>
+          <Table.Body>
+            {targets.map(([size, px, use]) => (
+              <Table.Row key={size}>
+                <Table.Cell><code>{size}</code></Table.Cell>
+                <Table.Cell><span className="tabular">{px}px</span></Table.Cell>
+                <Table.Cell><Chip size="sm" color="ok">≥ 24</Chip></Table.Cell>
+                <Table.Cell>{use}</Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table>
       </Section>
 
-      <Section
-        title="Lo obligatorio se dice con la palabra"
-        note="Un asterisco es una convención que no significa nada para quien no la conoce, y un lector de pantalla lo lee como 'asterisco'. Va el asterisco para quien lo reconoce y la palabra para todos los demás."
-      >
+      <Section title="Lo obligatorio se dice con la palabra" note="El asterisco va `aria-hidden` y al lado viaja un &quot;(obligatorio)&quot; solo para el lector de pantalla.">
         <div className={`${cls.requiredCard} bg-surface`}>
           <Field required>
             <Field.Label>Nombre de la actividad</Field.Label>
             <Field.Hint>Lo que van a ver los aprendices en su lista.</Field.Hint>
             <TextField placeholder="Informe del experimento" />
           </Field>
-          <p className={cls.requiredNote}>
-            El asterisco va <code>aria-hidden</code> y al lado viaja un "(obligatorio)" que solo
-            existe para el lector de pantalla. Quien ve la pantalla lee la convención que ya conoce;
-            quien la escucha oye la palabra y no "asterisco".
-          </p>
         </div>
       </Section>
 
-      <Section
-        title="Lo urgente interrumpe, lo demás espera"
-        note="Un error va como role=alert y un lector lo anuncia cortando lo que esté leyendo; todo lo demás va como role=status y espera su turno. Elegir mal es lo que hace que una confirmación de guardado le pise a alguien la frase que estaba escuchando."
-      >
-        <div className={`${cls.liveCard} bg-surface`}>
-          <div className={cls.alertRow}>
-            <Icon name="error" size={16} className={cls.alertIcon} />
-            <code className={cls.alertRole}>role="alert"</code>
-            <span className={cls.alertExample}>el error de un campo</span>
-          </div>
-          <div className={cls.statusRow}>
-            <Icon name="info" size={16} />
-            <code className={cls.statusRole}>role="status"</code>
-            <span className={cls.statusExample}>"Guardado", "3 resultados"</span>
-          </div>
-        </div>
+      <Section title="Lo que no llega a 3:1" note="Las excepciones escritas del sistema, con el contraste calculado en el tema puesto.">
+        <ContrastTable label="Pares que no llegan al umbral y por qué se aceptan" rows={exceptions} />
       </Section>
-
-      <Section
-        title="Las salidas"
-        note="Escape usa una pila global: cierra el overlay de arriba y no todos. Un menú abierto adentro de un modal se cierra solo él, y el modal queda. Sin la pila, un Escape de más te saca de la tarea entera."
-      >
-        <div className={`${cls.keyCard} bg-surface`}>
-          <Kbd>Esc</Kbd>
-          <span className={cls.escapeText}>cierra lo de más arriba</span>
-          <span className={cls.firstBullet}>·</span>
-          <Kbd>Tab</Kbd>
-          <span className={cls.trapText}>no se escapa de un diálogo abierto</span>
-          <span className={cls.secondBullet}>·</span>
-          <Kbd>/</Kbd>
-          <span className={cls.searchText}>busca, salvo que estés escribiendo</span>
-        </div>
-      </Section>
-
-      <Note title="Por qué el objetivo es AA y no AAA">
-        El gris del texto secundario da 6,94:1 sobre el fondo del tema oscuro: le faltan seis
-        centésimas para AAA. Subirlo parece gratis y no lo es: para llegar a 7:1 sobre las cuatro
-        superficies oscuras hay que aclararlo hasta un punto donde queda a 1,84:1 del texto
-        principal, y ahí deja de distinguirse el título del cuerpo. Se gana un número y se pierde la
-        jerarquía, que es lo que el gris estaba haciendo. Medido, no estimado.
-      </Note>
-
-      <Note tone="warn" title="Los dos números que no llegan, con la cuenta">
-        **El texto sugerido de un campo, en oscuro y con el mouse encima: 3,82:1.** Se mide contra
-        los cuatro fondos de campo (sobre el escritorio y adentro de una pieza de papel, cada uno
-        con y sin mouse) y llega a 4,5 en tres. Para pasar el cuarto hay que aclarar el gris hasta
-        1,02:1 del texto escrito, y ahí un campo con sugerencia se lee como un campo lleno, que es
-        lo que este paso de la rampa vino a evitar. Antes se medía contra dos de los cuatro: los
-        otros dos daban 4,24 y 3,99 y ya están corregidos.
-        {' '}
-        **El borde de un campo contra el papel: 1,75:1 en claro y 2,57 en oscuro**, contra los 3:1
-        que la WCAG pide para identificar un control. Subirlo a 3:1 convierte cada campo en una
-        caja dibujada y cambia el aire de todas las pantallas. El campo no depende solo del borde
-        (se hunde contra su superficie, tiene su propia altura y su etiqueta) pero el número es el
-        número y queda acá escrito.
-      </Note>
-
-
-      <Note tone="warn" title="Lo único que axe marca y no se corrige">
-        Con un menú abierto aparece <code>region</code>, que pide que todo el contenido esté adentro
-        de una landmark. El panel se dibuja en un portal colgado del <code>body</code>, así que no
-        lo está. Meterlo adentro de una landmark sería peor: una landmark por cada menú abierto
-        llena la lista de saltos, que es el mismo error que ya se corrigió en los bloques
-        destacados. Y moverlo adentro del contenido significa reescribir el sistema de overlays
-        para ganar una regla de buena práctica que no es de la WCAG. El panel se enfoca, se cierra
-        con Escape y se anuncia con nombre propio, que es lo que la persona necesita.
-      </Note>
 
       <A11y>
-        <A11y.Item>Cada vista de una pieza cierra con lo que esa pieza resuelve: acá están las reglas del sistema, no las de cada una.</A11y.Item>
-        <A11y.Item>Los tests de contraste corren sobre los tokens crudos en los dos temas, así que no dependen de que alguien se acuerde de mirar.</A11y.Item>
-        <A11y.Item>El sitio declara `lang="es"`, que es lo que hace que un lector de pantalla lo pronuncie en castellano y no deletree.</A11y.Item>
-        <A11y.Item>{'El riel es un `<nav>` con nombre y el item actual lleva `aria-current`, así que se puede saltear y se sabe dónde estás.'}</A11y.Item>
+        <A11y.Item>El objetivo es AA y no AAA: subir el gris secundario a 7:1 lo deja pegado al texto principal y se pierde la jerarquía.</A11y.Item>
+        <A11y.Item>Un error va como `role="alert"` y interrumpe; todo lo demás va como `role="status"` y espera su turno.</A11y.Item>
+        <A11y.Item>Un menú abierto marca `region` en axe porque su panel vive en un portal: se acepta, porque una landmark por menú llenaría la lista de saltos.</A11y.Item>
+        <A11y.Item>{'El sitio declara `lang="es"` y el riel es un `<nav>` con nombre y `aria-current`.'}</A11y.Item>
       </A11y>
     </Page>
   )

@@ -84,12 +84,6 @@
   --bad-border: #ffc7be;
   --info-border: #c0dbff;
 
-  --tint-1: #eef2ef;
-  --tint-2: #ecf1f7;
-  --tint-3: #f9efe9;
-  --tint-4: #f1eef7;
-  --tint-5: #fbf4e6;
-  --tint-6: #f9eef1;
 }
 
 [data-theme="dark"] {
@@ -178,10 +172,4 @@
   --bad-border: #652622;
   --info-border: #1d3d68;
 
-  --tint-1: #1b201d;
-  --tint-2: #191f27;
-  --tint-3: #241d19;
-  --tint-4: #1f1d26;
-  --tint-5: #221f18;
-  --tint-6: #231b1e;
 }

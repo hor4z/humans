@@ -1,81 +1,9 @@
 @layer milo.app {
-  .headGrid {
-    display: grid;
-    gap: 0.75rem;
-  }
-
-  .accentSample {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    font-weight: var(--font-weight-medium);
-    color: var(--text);
-  }
-
-  .accentDot {
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: var(--radius-full);
-    background-color: var(--accent);
-  }
-
-  .accentText {
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    font-weight: var(--font-weight-medium);
-    color: var(--text-muted);
-  }
-
-  .blueRamp {
-    margin-top: 1rem;
-    display: grid;
-    gap: 1rem;
-  }
-
-  .orangeRamp {
-    margin-top: 1rem;
-    display: grid;
-    gap: 1rem;
-  }
-
-  .neutralRamp {
-    margin-top: 1rem;
-    display: grid;
-    gap: 1.25rem;
-  }
-
-  .stateCard {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    border-radius: var(--radius-xl);
-    border-style: solid;
-    border-width: 1px;
-    border-color: var(--border);
-    padding: 1.25rem;
-  }
-
-  .stateRow {
+  .states {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 0.5rem;
-  }
-
-  .stateInkGrid {
-    margin-top: 1rem;
-    display: grid;
-    gap: 1rem;
-  }
-
-  .dataCard {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
     border-radius: var(--radius-xl);
     border-style: solid;
     border-width: 1px;
@@ -83,62 +11,20 @@
     padding: 1.25rem;
   }
 
-  .dataRamp {
-    margin-top: 1rem;
-    display: grid;
-    gap: 1rem;
-  }
-
-  .headCard {
+  .scale {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    border-radius: var(--radius-xl);
-    border-style: solid;
-    border-width: 1px;
-    border-color: var(--border);
-    padding: 1.25rem;
   }
 
-  .headSwatch {
-    height: 3rem;
-    width: 100%;
-    border-radius: var(--radius-lg);
-    border-style: solid;
-    border-width: 1px;
-    border-color: var(--border);
+  .scaleHead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.75rem;
   }
 
-  .headTitle {
-    font-size: var(--type-reading);
-    line-height: var(--type-reading-lh);
-    letter-spacing: var(--type-reading-ls);
-    font-weight: var(--font-weight-semibold);
-    color: var(--text);
-  }
-
-  .headToken {
-    font-family: var(--font-mono);
-    font-size: var(--type-meta);
-    line-height: var(--type-meta-lh);
-    letter-spacing: var(--type-meta-ls);
-    color: var(--text-muted);
-  }
-
-  .headNote {
-    font-size: var(--type-meta);
-    line-height: var(--type-meta-lh);
-    letter-spacing: var(--type-meta-ls);
-    font-weight: var(--font-weight-medium);
-    color: var(--text-muted);
-  }
-
-  .headSlot {
-    margin-top: auto;
-    padding-top: 0.25rem;
-  }
-
-  .groupTitle {
+  .scaleTitle {
     font-size: var(--type-body);
     line-height: var(--type-body-lh);
     letter-spacing: var(--type-body-ls);
@@ -146,27 +32,30 @@
     color: var(--text);
   }
 
-  .groupItems {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
+  .scaleNote {
+    font-size: var(--type-meta);
+    line-height: var(--type-meta-lh);
+    letter-spacing: var(--type-meta-ls);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-muted);
   }
 
   .familyCard {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
     gap: 0.75rem;
     border-radius: var(--radius-xl);
     border-style: solid;
     border-width: 1px;
     border-color: var(--border);
-    padding: 1.25rem;
+    padding: 1rem 1.25rem;
   }
 
   .familyMeta {
     display: flex;
     min-width: 0;
-    flex: 1;
     flex-direction: column;
     gap: 0.25rem;
   }
@@ -181,15 +70,6 @@
   }
 
   .familyUse {
-    font-size: var(--type-meta);
-    line-height: var(--type-meta-lh);
-    letter-spacing: var(--type-meta-ls);
-    font-weight: var(--font-weight-semibold);
-    color: var(--text);
-  }
-
-  .familyNote {
-    max-width: 62ch;
     font-size: var(--type-meta);
     line-height: var(--type-meta-lh);
     letter-spacing: var(--type-meta-ls);
@@ -211,73 +91,5 @@
     border-style: solid;
     border-width: 1px;
     border-color: var(--border);
-  }
-
-  @media (min-width:64rem) {
-    .headGrid {
-        grid-template-columns: repeat(3,minmax(0,1fr));
-    }
-  }
-
-  @media (min-width:40rem) {
-    .blueRamp {
-        grid-template-columns: repeat(2,minmax(0,1fr));
-    }
-  }
-
-  @media (min-width:64rem) {
-    .blueRamp {
-        grid-template-columns: repeat(3,minmax(0,1fr));
-    }
-  }
-
-  @media (min-width:40rem) {
-    .orangeRamp {
-        grid-template-columns: repeat(2,minmax(0,1fr));
-    }
-  }
-
-  @media (min-width:64rem) {
-    .orangeRamp {
-        grid-template-columns: repeat(3,minmax(0,1fr));
-    }
-  }
-
-  @media (min-width:64rem) {
-    .neutralRamp {
-        grid-template-columns: repeat(3,minmax(0,1fr));
-    }
-  }
-
-  @media (min-width:40rem) {
-    .stateInkGrid {
-        grid-template-columns: repeat(2,minmax(0,1fr));
-    }
-  }
-
-  @media (min-width:64rem) {
-    .stateInkGrid {
-        grid-template-columns: repeat(3,minmax(0,1fr));
-    }
-  }
-
-  @media (min-width:40rem) {
-    .dataRamp {
-        grid-template-columns: repeat(2,minmax(0,1fr));
-    }
-  }
-
-  @media (min-width:64rem) {
-    .dataRamp {
-        grid-template-columns: repeat(3,minmax(0,1fr));
-    }
-  }
-
-  @media (min-width:64rem) {
-    .familyCard {
-        flex-direction: row;
-        align-items: flex-start;
-        gap: 1.5rem;
-    }
   }
 }
