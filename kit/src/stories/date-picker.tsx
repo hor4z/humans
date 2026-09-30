@@ -25,7 +25,8 @@ export function DatePickerStory() {
         title="En un campo"
         note="El `Field` de alrededor le pone el nombre y la ayuda, como a cualquier otro control del sistema."
       >
-        <Demo code={`<Field.Set legend="Cuándo">
+        <Demo code={`<Field.Set>
+  <Field.Legend>Cuándo</Field.Legend>
   <Field>
     <Field.Label>Abre</Field.Label>
     <Field.Hint>Desde cuándo se puede entregar</Field.Hint>
@@ -38,7 +39,8 @@ export function DatePickerStory() {
   </Field>
 </Field.Set>`}>
           <Stack gap="xl" width="md">
-            <Field.Set legend="Cuándo">
+            <Field.Set>
+              <Field.Legend>Cuándo</Field.Legend>
               <Field>
                 <Field.Label>Abre</Field.Label>
                 <Field.Hint>Desde cuándo se puede entregar</Field.Hint>

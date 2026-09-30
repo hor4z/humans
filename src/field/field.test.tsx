@@ -48,7 +48,8 @@ describe('Field', () => {
 describe('Field.Set', () => {
   it('agrupa campos bajo un nombre', () => {
     render(
-      <Field.Set legend="Quién puede ver">
+      <Field.Set>
+        <Field.Legend>Quién puede ver</Field.Legend>
         <Field><Field.Label>Espacio</Field.Label><TextField /></Field>
       </Field.Set>,
     )

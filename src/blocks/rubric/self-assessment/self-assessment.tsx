@@ -83,8 +83,8 @@ function Root({ criteria, value, onValueChange, defaultOpen = true, children, cl
                 <CriterionCard
                   criterion={c}
                   total={total}
-                  level={value[c.id]}
-                  onLevel={level => onValueChange({ ...value, [c.id]: level })}
+                  value={value[c.id]}
+                  onValueChange={level => onValueChange({ ...value, [c.id]: level })}
                   meta={level(c)}
                   open={openCard === c.id}
                   onOpenChange={next => setOpenCard(next ? c.id : null)}

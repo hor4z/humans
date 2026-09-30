@@ -11,7 +11,6 @@ const initial: Task[] = [
 
 export function TaskListStory() {
   const [tasks, setTasks] = useState(initial)
-  const toggleTask = (id: string, done: boolean) => setTasks(t => t.map(x => (x.id === id ? { ...x, done } : x)))
 
   return (
     <Page
@@ -21,17 +20,17 @@ export function TaskListStory() {
       lead="Cosas para hacer que se marcan al hacerlas: los pasos de una entrega, lo que falta de una actividad, el checklist de un experimento."
     >
       <Section title="La pieza" note="Marcá y desmarcá: lo hecho se apaga y se tacha, que son dos avisos y no uno.">
-        <Demo width="lg" fill code={`<TaskList items={tasks} onToggle={toggleTask} label="Pasos del experimento" />`}>
-          <TaskList items={tasks} onToggle={toggleTask} label="Pasos del experimento" />
+        <Demo width="lg" fill code={`<TaskList value={tasks} onValueChange={setTasks} label="Pasos del experimento" />`}>
+          <TaskList value={tasks} onValueChange={setTasks} label="Pasos del experimento" />
         </Demo>
       </Section>
 
       <Section
         title="Solo de lectura"
-        note="La consigna que escribió otro, o una entrega ya cerrada. Se lee igual y no se toca."
+        note="Sin `onValueChange`, o con `readOnly`: la consigna de otro, una entrega ya cerrada."
       >
-        <Demo width="lg" fill code={`<TaskList items={initial} onToggle={toggleTask} label="Pasos, ya cerrados" readOnly />`}>
-          <TaskList items={initial} onToggle={() => {}} label="Pasos, ya cerrados" readOnly />
+        <Demo width="lg" fill code={`<TaskList value={steps} label="Pasos, ya cerrados" />`}>
+          <TaskList value={initial} label="Pasos, ya cerrados" />
         </Demo>
       </Section>
 

@@ -85,27 +85,21 @@ export function RadioStory() {
 
       <Section
         title="Con etiqueta al lado"
-        note="El caso para el que existe el radio y no el Segmented: cada opción con su propio texto."
+        note="El caso para el que existe el radio y no el `Segmented`: cada opción con su propio texto. El grupo lo dibuja al lado y le da el teclado."
       >
         <Panel>
-          <Variant name="con etiqueta" code={`<label>
-  <Radio checked={loose === 'si'} onCheckedChange={() => setLoose('si')} label="Sí, avisarme" />
-  Sí, avisarme
-</label>
-<label>
-  <Radio checked={loose === 'no'} onCheckedChange={() => setLoose('no')} label="No hace falta" />
-  No hace falta
-</label>`}>
-            <span className={cls.looseGroup}>
-              <label className={cls.yesLabel}>
-                <Radio checked={loose === 'si'} onCheckedChange={() => setLoose('si')} label="Sí, avisarme" />
-                Sí, avisarme
-              </label>
-              <label className={cls.noLabel}>
-                <Radio checked={loose === 'no'} onCheckedChange={() => setLoose('no')} label="No hace falta" />
-                No hace falta
-              </label>
-            </span>
+          <Variant name="con etiqueta" code={`<Radio.Group
+  label="Avisos"
+  value={loose}
+  onValueChange={setLoose}
+  options={[{ value: 'si', label: 'Sí, avisarme' }, { value: 'no', label: 'No hace falta' }]}
+/>`}>
+            <Radio.Group
+              label="Avisos"
+              value={loose}
+              onValueChange={setLoose}
+              options={[{ value: 'si', label: 'Sí, avisarme' }, { value: 'no', label: 'No hace falta' }]}
+            />
           </Variant>
           <Variant name="deshabilitado" code={`<Radio checked onCheckedChange={select} disabled label="Prendido deshabilitado" />
 <Radio checked={false} onCheckedChange={select} disabled label="Apagado deshabilitado" />`}>

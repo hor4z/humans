@@ -1202,13 +1202,13 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Sin esto el aspecto no se puede sacar."
       },
       {
-        "name": "level",
+        "name": "value",
         "type": "number",
         "required": false,
         "doc": "En qué nivel quedó: el índice del renglón elegido. Los renglones son excluyentes, así que es uno y no una lista."
       },
       {
-        "name": "onLevel",
+        "name": "onValueChange",
         "type": "(level: number) => void",
         "required": false,
         "doc": "Sin esto los renglones se leen y no se eligen."
@@ -1546,16 +1546,19 @@ export const propsByComponent: Record<string, ComponentDoc> = {
     "doc": "Lo que está mal. Reemplaza al hint y marca el control."
   },
   "Field.Set": {
-    "props": [
-      {
-        "name": "legend",
-        "type": "string",
-        "required": false,
-        "doc": "Cómo se llama el grupo. Un lector lo anuncia al entrar."
-      }
-    ],
+    "props": [],
     "html": "fieldset",
     "doc": "Varios campos, uno debajo del otro, con el aire del sistema."
+  },
+  "Field.Legend": {
+    "props": [
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": true
+      }
+    ],
+    "doc": "Cómo se llama un `Field.Set`. Un lector lo anuncia al entrar."
   },
   "Figure": {
     "props": [
@@ -2814,7 +2817,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Los aspectos de la rúbrica, en su orden."
       },
       {
-        "name": "marks",
+        "name": "value",
         "type": "Record<string, Mark>",
         "required": true,
         "doc": "Lo corregido hasta ahora, por id de aspecto."
@@ -2823,25 +2826,13 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "name": "by",
         "type": "Reviewer",
         "required": false,
-        "doc": "Quién está corrigiendo ahora: firma lo que escriba."
+        "doc": "Quién está corrigiendo ahora: firma lo que escriba. Sin esto se eligen niveles pero no se comenta."
       },
       {
-        "name": "onLevel",
-        "type": "(id: string, level: number) => void",
+        "name": "onValueChange",
+        "type": "(next: Record<string, Mark>) => void",
         "required": false,
-        "doc": "Sin esto los renglones se leen y no se eligen."
-      },
-      {
-        "name": "onNote",
-        "type": "(id: string, text: string) => void",
-        "required": false,
-        "doc": "Sin esto no se puede comentar."
-      },
-      {
-        "name": "onClearNote",
-        "type": "(id: string) => void",
-        "required": false,
-        "doc": "Sin esto un comentario no se puede borrar."
+        "doc": "Recibe todo lo corregido, con el nivel o el comentario nuevo adentro. Sin esto se lee y no se toca."
       },
       {
         "name": "children",
@@ -2855,7 +2846,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "required": false
       }
     ],
-    "doc": "Cómo le fue a un trabajo contra su rúbrica: qué cumplió de cada aspecto y qué le dijeron. Sin los callbacks es la devolución que lee quien entregó; con ellos, la pantalla donde se corrige."
+    "doc": "Cómo le fue a un trabajo contra su rúbrica: qué cumplió de cada aspecto y qué le dijeron. Sin `onValueChange` es la devolución que lee quien entregó; con él, la pantalla donde se corrige."
   },
   "RubricReview.Title": {
     "props": [
@@ -3835,16 +3826,16 @@ export const propsByComponent: Record<string, ComponentDoc> = {
   "TaskList": {
     "props": [
       {
-        "name": "items",
+        "name": "value",
         "type": "Task[]",
         "required": true,
-        "doc": "En el orden en que van."
+        "doc": "Las tareas, en el orden en que van."
       },
       {
-        "name": "onToggle",
-        "type": "(id: string, done: boolean) => void",
-        "required": true,
-        "doc": "Recibe el id y si quedó hecha."
+        "name": "onValueChange",
+        "type": "(next: Task[]) => void",
+        "required": false,
+        "doc": "Recibe la lista entera, con la tarea recién marcada adentro. Sin esto se lee y no se toca."
       },
       {
         "name": "label",

@@ -35,7 +35,8 @@ export function SheetStory() {
 <Sheet open={open} onOpenChange={setOpen}>
   <Sheet.Header><Sheet.Title>Nueva actividad</Sheet.Title></Sheet.Header>
   <Sheet.Body>
-    <Field.Set legend="Lo básico">
+    <Field.Set>
+      <Field.Legend>Lo básico</Field.Legend>
       <Field required>
         <Field.Label>Nombre</Field.Label>
         <TextField placeholder="Fracciones equivalentes" />
@@ -65,7 +66,8 @@ export function SheetStory() {
           <Sheet open={open} onOpenChange={setOpen}>
             <Sheet.Header><Sheet.Title>Nueva actividad</Sheet.Title></Sheet.Header>
             <Sheet.Body>
-              <Field.Set legend="Lo básico">
+              <Field.Set>
+                <Field.Legend>Lo básico</Field.Legend>
                 <Field required>
                   <Field.Label>Nombre</Field.Label>
                   <TextField placeholder="Fracciones equivalentes" />

@@ -38,7 +38,8 @@ describe('la tabla de props sale del código', () => {
       if (names.has('onChange')) offenders.push(`${comp}: onChange, que es el nombre del evento nativo`)
       for (const [controlled, handler] of Object.entries(pairs)) {
         if (!names.has(controlled)) continue
-        const others = [...names].filter(n => /^on[A-Z]\w*Change$/.test(n) && n !== handler && n !== 'onValueChange')
+        const allowed = new Set(Object.entries(pairs).filter(([c]) => names.has(c)).map(([, h]) => h))
+        const others = [...names].filter(n => /^on[A-Z]\w*Change$/.test(n) && !allowed.has(n))
         for (const o of others) offenders.push(`${comp}: ${controlled} va con ${handler}, no con ${o}`)
       }
     }

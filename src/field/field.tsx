@@ -59,18 +59,21 @@ function Root({ required, children, className }: FieldProps) {
   )
 }
 
+/** Cómo se llama un `Field.Set`. Un lector lo anuncia al entrar. */
+function Legend({ children }: { children: ReactNode }) {
+  return <>{children}</>
+}
+
 /** Varios campos, uno debajo del otro, con el aire del sistema. */
-function Set({ legend, className, children, ...props }: ComponentPropsWithoutRef<'fieldset'> & {
-  /** Cómo se llama el grupo. Un lector lo anuncia al entrar. */
-  legend?: string
-}) {
+function Set({ className, children, ...props }: ComponentPropsWithoutRef<'fieldset'>) {
+  const [legend, fields] = takePart(children, Legend)
   return (
     <fieldset className={cx(s.set, className)} {...props}>
-      {legend && <legend className={s.setLegend}>{legend}</legend>}
-      {children}
+      {legend.length > 0 && <legend className={s.setLegend}>{legend}</legend>}
+      {fields}
     </fieldset>
   )
 }
 
 /** Une etiqueta, ayuda, error y control: los tres textos quedan atados al control. */
-export const Field = Object.assign(Root, { Label, Hint, Error, Set })
+export const Field = Object.assign(Root, { Label, Hint, Error, Set, Legend })

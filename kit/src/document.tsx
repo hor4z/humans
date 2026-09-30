@@ -140,9 +140,6 @@ export function DocumentStory() {
   const precioNum = parseNumber(precio)
   const margenNum = parseNumber(margen)
 
-  const toggleTask = (id: string, done: boolean) =>
-    setTasks(ts => ts.map(t => (t.id === id ? { ...t, done } : t)))
-
   return (
     <article className={cls.doc}>
       <div className={cls.docBar}>
@@ -335,7 +332,7 @@ export function DocumentStory() {
             Armá una publicación para la red que quieras. No alcanza con poner "comprá mi producto":
             tenés que convencer a alguien de que lo necesita.
           </p>
-          <TaskList items={tasks} onToggle={toggleTask} label="Lo que la publicación tiene que tener" />
+          <TaskList value={tasks} onValueChange={setTasks} label="Lo que la publicación tiene que tener" />
 
           <Divider />
 

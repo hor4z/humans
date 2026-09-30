@@ -68,20 +68,16 @@ function Signature({ by }: { by: Reviewer }) {
   )
 }
 
-/** Cómo le fue a un trabajo contra su rúbrica: qué cumplió de cada aspecto y qué le dijeron. Sin los callbacks es la devolución que lee quien entregó; con ellos, la pantalla donde se corrige. */
-function Root({ criteria, marks, by, onLevel, onNote, onClearNote, children, className }: {
+/** Cómo le fue a un trabajo contra su rúbrica: qué cumplió de cada aspecto y qué le dijeron. Sin `onValueChange` es la devolución que lee quien entregó; con él, la pantalla donde se corrige. */
+function Root({ criteria, value, by, onValueChange, children, className }: {
   /** Los aspectos de la rúbrica, en su orden. */
   criteria: Criterion[]
   /** Lo corregido hasta ahora, por id de aspecto. */
-  marks: Record<string, Mark>
-  /** Quién está corrigiendo ahora: firma lo que escriba. */
+  value: Record<string, Mark>
+  /** Quién está corrigiendo ahora: firma lo que escriba. Sin esto se eligen niveles pero no se comenta. */
   by?: Reviewer
-  /** Sin esto los renglones se leen y no se eligen. */
-  onLevel?: (id: string, level: number) => void
-  /** Sin esto no se puede comentar. */
-  onNote?: (id: string, text: string) => void
-  /** Sin esto un comentario no se puede borrar. */
-  onClearNote?: (id: string) => void
+  /** Recibe todo lo corregido, con el nivel o el comentario nuevo adentro. Sin esto se lee y no se toca. */
+  onValueChange?: (next: Record<string, Mark>) => void
   /** El `RubricReview.Title`. */
   children: ReactNode
   className?: string
@@ -92,6 +88,8 @@ function Root({ criteria, marks, by, onLevel, onNote, onClearNote, children, cla
   const titleId = `${id}-title`
 
   const [title] = takePart(children, Title)
+  const marks = value
+  const change = (cid: string, mark: Mark) => onValueChange?.({ ...value, [cid]: mark })
   const total = criteria.reduce((sum, c) => sum + c.weight, 0)
   const ready = criteria.filter(c => touched(marks[c.id] ?? {})).length
 
@@ -128,8 +126,8 @@ function Root({ criteria, marks, by, onLevel, onNote, onClearNote, children, cla
               key={c.id}
               criterion={c}
               total={total}
-              level={mark.level}
-              onLevel={onLevel && (level => onLevel(c.id, level))}
+              value={mark.level}
+              onValueChange={onValueChange && (level => change(c.id, { ...mark, level }))}
               meta={level(mark, c)}
               open={open === c.id}
               onOpenChange={next => setOpen(next ? c.id : null)}
@@ -138,14 +136,14 @@ function Root({ criteria, marks, by, onLevel, onNote, onClearNote, children, cla
                 <div className={s.note}>
                   <div className={s.noteTop}>
                     <Signature by={mark.note.by} />
-                    {onClearNote && (
+                    {onValueChange && (
                       <Tooltip label="Borrar el comentario">
                         <IconButton
                           icon="delete"
                           label={`Borrar el comentario de ${c.label}`}
                           size="sm"
                           variant="ghost"
-                          onClick={() => onClearNote(c.id)}
+                          onClick={() => change(c.id, { level: mark.level })}
                           className={s.noteRemove}
                         />
                       </Tooltip>
@@ -155,7 +153,7 @@ function Root({ criteria, marks, by, onLevel, onNote, onClearNote, children, cla
                 </div>
               )}
 
-              {onNote && by && !mark.note && (
+              {onValueChange && by && !mark.note && (
                 <div className={s.write}>
                   <Textarea
                     value={draft[c.id] ?? ''}
@@ -170,7 +168,7 @@ function Root({ criteria, marks, by, onLevel, onNote, onClearNote, children, cla
                       variant="brand"
                       disabled={!(draft[c.id] ?? '').trim()}
                       onClick={() => {
-                        onNote(c.id, (draft[c.id] ?? '').trim())
+                        change(c.id, { ...mark, note: { by, text: (draft[c.id] ?? '').trim() } })
                         setDraft(d => ({ ...d, [c.id]: '' }))
                       }}
                     >

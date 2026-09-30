@@ -77,7 +77,7 @@ describe('CriterionCard', () => {
 
   it('leyendo una devolución, la marca va solo en el nivel que quedó', () => {
     const { container } = render(
-      <CriterionCard criterion={criterion} total={12} level={1} open onOpenChange={() => {}} />,
+      <CriterionCard criterion={criterion} total={12} value={1} open onOpenChange={() => {}} />,
     )
     expect(container.querySelectorAll('[class*=pick]')).toHaveLength(1)
     expect(container.querySelectorAll('[class*=bullet]')).toHaveLength(criterion.levels.length - 1)

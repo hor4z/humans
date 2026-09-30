@@ -40,7 +40,7 @@ export function namesFor(criterion: Criterion): string[] | undefined {
 }
 
 /** Un aspecto adentro de una rúbrica: la marca, el nombre y, plegados, sus renglones. Cerrado ocupa una fila, así que una rúbrica de ocho aspectos mide lo mismo que una de dos. */
-export function CriterionCard({ criterion, total, open, onOpenChange, onRemove, level, onLevel, meta, children, className }: {
+export function CriterionCard({ criterion, total, open, onOpenChange, onRemove, value, onValueChange, meta, children, className }: {
   /** Lo que la tarjeta muestra. */
   criterion: Criterion
   /** La suma de los pesos de la rúbrica: con eso la tarjeta dice cuánto vale este aspecto. */
@@ -52,9 +52,9 @@ export function CriterionCard({ criterion, total, open, onOpenChange, onRemove, 
   /** Sin esto el aspecto no se puede sacar. */
   onRemove?: () => void
   /** En qué nivel quedó: el índice del renglón elegido. Los renglones son excluyentes, así que es uno y no una lista. */
-  level?: number
+  value?: number
   /** Sin esto los renglones se leen y no se eligen. */
-  onLevel?: (level: number) => void
+  onValueChange?: (level: number) => void
   /** A la derecha del nombre, y se ve también plegada: en qué anda este aspecto. */
   meta?: ReactNode
   /** Debajo de los renglones: lo que se dijo sobre este aspecto. */
@@ -67,9 +67,9 @@ export function CriterionCard({ criterion, total, open, onOpenChange, onRemove, 
   const names = namesFor(criterion)
 
   const roving = useRovingRadio(
-    String(level ?? 0),
-    v => onLevel?.(Number(v)),
-    criterion.levels.map((_, i) => ({ value: String(i), disabled: !onLevel })),
+    String(value ?? 0),
+    v => onValueChange?.(Number(v)),
+    criterion.levels.map((_, i) => ({ value: String(i), disabled: !onValueChange })),
   )
 
   return (
@@ -116,16 +116,16 @@ export function CriterionCard({ criterion, total, open, onOpenChange, onRemove, 
           <Card.Body className={s.levels}>
             {criterion.detail && <p className={s.hint}>{criterion.detail}</p>}
             <ul
-              role={onLevel ? 'radiogroup' : undefined}
-              aria-labelledby={onLevel ? titleId : undefined}
-              onKeyDown={onLevel ? roving.onKeyDown : undefined}
+              role={onValueChange ? 'radiogroup' : undefined}
+              aria-labelledby={onValueChange ? titleId : undefined}
+              onKeyDown={onValueChange ? roving.onKeyDown : undefined}
               className={s.ladder}
             >
               {criterion.levels.map((text, i) => {
-                const chosen = i === level
+                const chosen = i === value
                 const body = (
                   <>
-                    {onLevel || chosen
+                    {onValueChange || chosen
                       ? (
                           <span aria-hidden className={cx(s.pick, chosen && s.met)}>
                             {chosen && <Icon name="check" size={12} weight={600} />}
@@ -140,15 +140,15 @@ export function CriterionCard({ criterion, total, open, onOpenChange, onRemove, 
                         </>
                       )}
                       {text}
-                      {!onLevel && chosen && (
+                      {!onValueChange && chosen && (
                         <span className="sr-only">, es el nivel en el que quedó</span>
                       )}
                     </span>
                   </>
                 )
                 return (
-                  <li key={text} role={onLevel ? 'none' : undefined} className={s.step}>
-                    {onLevel
+                  <li key={text} role={onValueChange ? 'none' : undefined} className={s.step}>
+                    {onValueChange
                       ? (
                           <button
                             ref={roving.ref(String(i))}
@@ -156,7 +156,7 @@ export function CriterionCard({ criterion, total, open, onOpenChange, onRemove, 
                             role="radio"
                             aria-checked={chosen}
                             tabIndex={roving.tabIndex(String(i))}
-                            onClick={() => onLevel(i)}
+                            onClick={() => onValueChange(i)}
                             className={s.option}
                           >
                             {body}

@@ -64,9 +64,6 @@ export function RubricReviewStory() {
   const [marks, setMarks] = useState<Record<string, Mark>>({
     medicion: { level: 2 },
   })
-  const setLevel = (id: string, level: number) => setMarks(m => ({ ...m, [id]: { ...m[id], level } }))
-  const setNote = (id: string, text: string) => setMarks(m => ({ ...m, [id]: { ...m[id], note: { by: ana, text } } }))
-  const clearNote = (id: string) => setMarks(m => ({ ...m, [id]: { ...m[id], note: undefined } }))
 
   return (
     <Page
@@ -85,11 +82,9 @@ export function RubricReviewStory() {
             note="Elegí un nivel en El gráfico y mirá cómo se llena su tramo. Al elegir otro, el anterior se apaga."
             code={`<RubricReview
   criteria={criteria}
-  marks={marks}
+  value={marks}
   by={ana}
-  onLevel={setLevel}
-  onNote={setNote}
-  onClearNote={clearNote}
+  onValueChange={setMarks}
 >
   <RubricReview.Title>Entrega</RubricReview.Title>
 </RubricReview>`}
@@ -97,11 +92,9 @@ export function RubricReviewStory() {
             <Stack width="sm">
               <RubricReview
                 criteria={criteria}
-                marks={marks}
+                value={marks}
                 by={ana}
-                onLevel={setLevel}
-                onNote={setNote}
-                onClearNote={clearNote}
+                onValueChange={setMarks}
               >
                 <RubricReview.Title>Entrega</RubricReview.Title>
               </RubricReview>
@@ -112,17 +105,17 @@ export function RubricReviewStory() {
 
       <Section
         title="La devolución"
-        note="Sin los callbacks, la misma pieza es lo que abre quien entregó: en qué renglón quedó cada aspecto y qué le dijeron."
+        note="Sin `onValueChange`, la misma pieza es lo que abre quien entregó: en qué renglón quedó cada aspecto y qué le dijeron."
       >
         <Panel>
           <Variant
             name="lo que ve quien entregó"
-            code={`<RubricReview criteria={criteria} marks={returned}>
+            code={`<RubricReview criteria={criteria} value={returned}>
   <RubricReview.Title>Cómo te fue</RubricReview.Title>
 </RubricReview>`}
           >
             <Stack width="sm">
-              <RubricReview criteria={criteria} marks={returned}>
+              <RubricReview criteria={criteria} value={returned}>
                 <RubricReview.Title>Cómo te fue</RubricReview.Title>
               </RubricReview>
             </Stack>

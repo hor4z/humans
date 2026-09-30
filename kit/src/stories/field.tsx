@@ -122,7 +122,8 @@ export function FieldStory() {
         title="Field.Set"
         note="Agrupa los campos que van juntos bajo un título que el lector anuncia al entrar. En un formulario de tres campos sobra; en uno de doce lo hace legible."
       >
-        <Demo code={`<Field.Set legend="Lo básico">
+        <Demo code={`<Field.Set>
+  <Field.Legend>Lo básico</Field.Legend>
   <Field required>
     <Field.Label>Nombre</Field.Label>
     <TextField placeholder="Fracciones equivalentes" />
@@ -134,7 +135,8 @@ export function FieldStory() {
   </Field>
 </Field.Set>`}>
           <Frame width="md">
-            <Field.Set legend="Lo básico">
+            <Field.Set>
+              <Field.Legend>Lo básico</Field.Legend>
               <Field required>
                 <Field.Label>Nombre</Field.Label>
                 <TextField placeholder="Fracciones equivalentes" />
