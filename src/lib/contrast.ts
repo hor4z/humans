@@ -25,7 +25,7 @@ function luminance([r, g, b]: Rgba) {
 }
 
 /** El contraste WCAG de `fg` sobre `bg`, de 1 a 21. Un color con alfa se compone antes de medir: `bg` sobre `paper` y `fg` sobre el resultado. Sin `paper`, lo translúcido cae sobre blanco. Con un color que no se puede leer devuelve `undefined`. */
-export function contrast(fg: string, bg: string, paper = '#ffffff'): number | undefined {
+export function contrast(fg: string, bg: string, paper = 'rgb(255 255 255)'): number | undefined {
   const [f, b, p] = [parseColor(fg), parseColor(bg), parseColor(paper)]
   if (!f || !b || !p) return undefined
   const back = over(b, over(p, [255, 255, 255, 1]))
