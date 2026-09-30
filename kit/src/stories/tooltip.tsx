@@ -2,16 +2,29 @@ import cls from './tooltip.module.css'
 import { Button } from '@milo/ui/button'
 import { IconButton } from '@milo/ui/icon-button'
 import { Tooltip } from '@milo/ui/tooltip'
-import { A11y, Cluster, Demo, Grid, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Cluster, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function TooltipStory() {
   return (
     <Page
       title="Tooltip"
-      lead="La etiqueta que dice qué hace un control que no lo dice solo. No es un Popover chico: se abre solo (hover o foco de teclado), no recibe el mouse (o taparía justo el botón que explica) y no lleva nada interactivo adentro. Si tiene un link o un botón, es un Popover."
       kind="Avisos"
       imports="import { Tooltip } from '@milo/ui/tooltip'"
+      lead="La etiqueta que dice qué hace un control que no lo dice solo. Se abre sola, con el mouse o con el foco de teclado, y no recibe el puntero: taparía justo el botón que explica."
     >
+      <Hero>
+        <Cluster gap="xs" align="center">
+          <Tooltip label="Buscar"><IconButton icon="search" label="Buscar" /></Tooltip>
+          <Tooltip label="Compartir"><IconButton icon="share" label="Compartir" /></Tooltip>
+          <Tooltip label="Se publica para los siete espacios"><Button variant="brand">Publicar</Button></Tooltip>
+        </Cluster>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Control" required>El hijo, que se envuelve tal cual: un icono suelto, un botón, un valor truncado.</Anatomy.Part>
+        <Anatomy.Part name="Etiqueta" required>`label`: una burbuja que se envuelve a 240 y no lleva nada interactivo adentro.</Anatomy.Part>
+      </Anatomy>
+
       <Section
         title="El retraso se comparte"
         note="El primero tarda medio segundo y el de al lado abre al instante: pasá el mouse por la fila."
@@ -34,39 +47,16 @@ export function TooltipStory() {
       </Section>
 
       <Section
-        title="Con el teclado"
-        note="Tabulá hasta el botón: el tooltip aparece igual, y Escape lo cierra."
-      >
-        <Grid>
-          <Demo label="en un botón con texto" code={`<Tooltip label="Se publica para los siete espacios">
-  <Button variant="brand">Publicar</Button>
-</Tooltip>`}>
-            <Tooltip label="Se publica para los siete espacios">
-              <Button variant="brand">Publicar</Button>
-            </Tooltip>
-          </Demo>
-          <Demo label="texto largo · se envuelve a 240" code={`<Tooltip label="Una actividad archivada sale de la lista pero no se borra: queda en 'Archivadas' y se puede restaurar.">
-  <IconButton icon="inventory_2" label="Archivar" variant="muted" />
-</Tooltip>`}>
-            <Tooltip label="Una actividad archivada sale de la lista pero no se borra: queda en 'Archivadas' y se puede restaurar.">
-              <IconButton icon="inventory_2" label="Archivar" variant="muted" />
-            </Tooltip>
-          </Demo>
-          <Demo label="abajo" code={`<Tooltip side="bottom" label="Va abajo si entra">
-  <IconButton icon="keyboard_arrow_down" label="Abajo" variant="muted" />
-</Tooltip>`}>
-            <Tooltip side="bottom" label="Va abajo si entra">
-              <IconButton icon="keyboard_arrow_down" label="Abajo" variant="muted" />
-            </Tooltip>
-          </Demo>
-        </Grid>
-      </Section>
-
-      <Section
-        title="Se da vuelta y no se sale"
+        title="Texto largo, abajo y contra el borde"
         note="Contra el borde de arriba se va abajo, y contra el costado se pega a 8 del canto en vez de salirse."
       >
-        <Demo fill code={`<Tooltip label="Pegado al borde izquierdo de la ventana">
+        <Demo fill code={`<Tooltip label="Una actividad archivada sale de la lista pero no se borra: queda en 'Archivadas' y se puede restaurar.">
+  <IconButton icon="inventory_2" label="Archivar" variant="muted" />
+</Tooltip>
+<Tooltip side="bottom" label="Va abajo si entra">
+  <IconButton icon="keyboard_arrow_down" label="Abajo" variant="muted" />
+</Tooltip>
+<Tooltip label="Pegado al borde izquierdo de la ventana">
   <IconButton icon="chevron_left" label="Izquierda" variant="muted" />
 </Tooltip>
 <Tooltip label="Pegado al borde derecho de la ventana">
@@ -75,6 +65,12 @@ export function TooltipStory() {
           <div className={cls.edgeRow}>
             <Tooltip label="Pegado al borde izquierdo de la ventana">
               <IconButton icon="chevron_left" label="Izquierda" variant="muted" />
+            </Tooltip>
+            <Tooltip label="Una actividad archivada sale de la lista pero no se borra: queda en 'Archivadas' y se puede restaurar.">
+              <IconButton icon="inventory_2" label="Archivar" variant="muted" />
+            </Tooltip>
+            <Tooltip side="bottom" label="Va abajo si entra">
+              <IconButton icon="keyboard_arrow_down" label="Abajo" variant="muted" />
             </Tooltip>
             <Tooltip label="Pegado al borde derecho de la ventana">
               <IconButton icon="chevron_right" label="Derecha" variant="muted" />

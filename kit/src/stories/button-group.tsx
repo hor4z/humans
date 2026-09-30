@@ -1,6 +1,6 @@
 import { ButtonGroup } from '@milo/ui/button-group'
 import { IconButton } from '@milo/ui/icon-button'
-import { A11y, Page, Panel, Practices, Props, Section, Variant } from '../kit'
+import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function ButtonGroupStory() {
   return (
@@ -10,35 +10,46 @@ export function ButtonGroupStory() {
       imports="import { ButtonGroup } from '@milo/ui/button-group'"
       lead="Dos o tres acciones que son la misma cosa, pegadas y con el canto solo en los extremos. Dice que van juntas sin escribirlo."
     >
-      <Section
-        title="Cuándo va"
-        note="Acciones que se ejecutan: anterior y siguiente, deshacer y rehacer, subir y bajar."
-      >
+      <Hero>
+        <ButtonGroup label="Paginación">
+          <IconButton size="sm" variant="muted" icon="chevron_left" label="Anterior" onClick={() => {}} />
+          <IconButton size="sm" variant="muted" icon="chevron_right" label="Siguiente" onClick={() => {}} />
+        </ButtonGroup>
+        <ButtonGroup label="Historial">
+          <IconButton size="sm" variant="muted" icon="undo" label="Deshacer" onClick={() => {}} />
+          <IconButton size="sm" variant="muted" icon="redo" label="Rehacer" onClick={() => {}} />
+        </ButtonGroup>
+        <ButtonGroup label="Mover la fila" vertical>
+          <IconButton size="sm" variant="muted" icon="arrow_upward" label="Subir" onClick={() => {}} />
+          <IconButton size="sm" variant="muted" icon="arrow_downward" label="Bajar" onClick={() => {}} />
+        </ButtonGroup>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Botones" required>Los hijos: dos a cuatro `Button` o `IconButton`, pegados, con el canto solo en los extremos.</Anatomy.Part>
+        <Anatomy.Part name="Nombre del grupo" required>`label`: no se ve, es lo que anuncia un lector para saber que los botones van juntos.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Cuándo va">
         <Panel>
-          <Variant name="anterior y siguiente" note="Los dos sentidos de recorrer algo." code={`<ButtonGroup label="Paginación">
+          <Variant
+            name="en fila"
+            note="Acciones que se ejecutan una detrás de otra: anterior y siguiente, deshacer y rehacer, el transporte de un audio con cuatro acciones y ninguna elegida."
+            code={`<ButtonGroup label="Paginación">
   <IconButton size="sm" variant="muted" icon="chevron_left" label="Anterior" onClick={previous} />
   <IconButton size="sm" variant="muted" icon="chevron_right" label="Siguiente" onClick={next} />
-</ButtonGroup>`}>
-            <ButtonGroup label="Paginación">
-              <IconButton size="sm" variant="muted" icon="chevron_left" label="Anterior" onClick={() => {}} />
-              <IconButton size="sm" variant="muted" icon="chevron_right" label="Siguiente" onClick={() => {}} />
-            </ButtonGroup>
-          </Variant>
-          <Variant name="deshacer y rehacer" note="En la barra de un editor, donde uno se usa detrás del otro." code={`<ButtonGroup label="Historial">
-  <IconButton size="sm" variant="muted" icon="undo" label="Deshacer" onClick={undo} />
-  <IconButton size="sm" variant="muted" icon="redo" label="Rehacer" onClick={redo} />
-</ButtonGroup>`}>
-            <ButtonGroup label="Historial">
-              <IconButton size="sm" variant="muted" icon="undo" label="Deshacer" onClick={() => {}} />
-              <IconButton size="sm" variant="muted" icon="redo" label="Rehacer" onClick={() => {}} />
-            </ButtonGroup>
-          </Variant>
-          <Variant name="tres o cuatro" note="El transporte de un audio: cuatro acciones, ninguna elegida." code={`<ButtonGroup label="Reproducción">
+</ButtonGroup>
+<ButtonGroup label="Reproducción">
   <IconButton size="sm" variant="muted" icon="skip_previous" label="Anterior" onClick={previous} />
   <IconButton size="sm" variant="muted" icon="play_arrow" label="Reproducir" onClick={play} />
   <IconButton size="sm" variant="muted" icon="stop" label="Detener" onClick={stop} />
   <IconButton size="sm" variant="muted" icon="skip_next" label="Siguiente" onClick={next} />
-</ButtonGroup>`}>
+</ButtonGroup>`}
+          >
+            <ButtonGroup label="Paginación">
+              <IconButton size="sm" variant="muted" icon="chevron_left" label="Anterior" onClick={() => {}} />
+              <IconButton size="sm" variant="muted" icon="chevron_right" label="Siguiente" onClick={() => {}} />
+            </ButtonGroup>
             <ButtonGroup label="Reproducción">
               <IconButton size="sm" variant="muted" icon="skip_previous" label="Anterior" onClick={() => {}} />
               <IconButton size="sm" variant="muted" icon="play_arrow" label="Reproducir" onClick={() => {}} />
@@ -46,15 +57,14 @@ export function ButtonGroupStory() {
               <IconButton size="sm" variant="muted" icon="skip_next" label="Siguiente" onClick={() => {}} />
             </ButtonGroup>
           </Variant>
-        </Panel>
-      </Section>
-
-      <Section title="Apilado" note="Cuando el par de acciones es de verdad arriba y abajo: mover una fila en una lista, subir o bajar una prioridad. También cuando la columna es angosta y de a dos no entran.">
-        <Panel>
-          <Variant name="subir y bajar" note="Al lado de la fila que se mueve." code={`<ButtonGroup label="Mover la fila" vertical>
+          <Variant
+            name="apilado"
+            note="Cuando el par es de verdad arriba y abajo, como mover una fila en una lista, o cuando la columna es angosta y de a dos no entran."
+            code={`<ButtonGroup label="Mover la fila" vertical>
   <IconButton size="sm" variant="muted" icon="arrow_upward" label="Subir" onClick={moveUp} />
   <IconButton size="sm" variant="muted" icon="arrow_downward" label="Bajar" onClick={moveDown} />
-</ButtonGroup>`}>
+</ButtonGroup>`}
+          >
             <ButtonGroup label="Mover la fila" vertical>
               <IconButton size="sm" variant="muted" icon="arrow_upward" label="Subir" onClick={() => {}} />
               <IconButton size="sm" variant="muted" icon="arrow_downward" label="Bajar" onClick={() => {}} />

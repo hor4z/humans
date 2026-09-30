@@ -1,7 +1,7 @@
 import s from './toolbar.module.css'
 import { useState } from 'react'
 import { Toolbar } from '@milo/ui/blocks/editor/toolbar'
-import { A11y, Demo, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function ToolbarStory() {
   const [format, setFormat] = useState({ bold: true, italic: false, underline: false })
@@ -14,8 +14,23 @@ export function ToolbarStory() {
       imports="import { Toolbar } from '@milo/ui/blocks/editor/toolbar'"
       lead="La barra que aparece sobre el texto seleccionado. Una sola parada de tabulación, y adentro se mueve con flechas."
     >
-      <Section title="La pieza">
-        <Demo className={s.sunken} code={`<Toolbar label="Formato del texto">
+      <Hero>
+        <Toolbar label="Formato del texto">
+          <Toolbar.Button icon="format_bold" label="Negrita" pressed={format.bold} onPressedChange={() => toggle('bold')} />
+          <Toolbar.Button icon="format_italic" label="Cursiva" pressed={format.italic} onPressedChange={() => toggle('italic')} />
+          <Toolbar.Separator />
+          <Toolbar.Button icon="link" label="Enlace" />
+        </Toolbar>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Barra" required>`Toolbar`: el contenedor con su `label`, una sola parada de tabulación.</Anatomy.Part>
+        <Anatomy.Part name="Botón" required>`Toolbar.Button`: un glifo con su `label`. Con `pressed` es un interruptor; sin él, una acción.</Anatomy.Part>
+        <Anatomy.Part name="Separador">`Toolbar.Separator`: agrupa los botones que van juntos.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Ejemplos">
+        <Demo label="Completo" className={s.sunken} code={`<Toolbar label="Formato del texto">
   <Toolbar.Button icon="format_bold" label="Negrita" pressed={format.bold} onPressedChange={() => toggle('bold')} />
   <Toolbar.Button icon="format_italic" label="Cursiva" pressed={format.italic} onPressedChange={() => toggle('italic')} />
   <Toolbar.Button icon="format_underlined" label="Subrayado" pressed={format.underline} onPressedChange={() => toggle('underline')} />
@@ -38,21 +53,6 @@ export function ToolbarStory() {
             <Toolbar.Separator />
             <Toolbar.Button icon="link" label="Enlace" />
             <Toolbar.Button icon="delete" label="Borrar el bloque" disabled />
-          </Toolbar>
-        </Demo>
-      </Section>
-
-      <Section
-        title="Interruptor o acción"
-        note="La diferencia se anuncia: 'negrita, activado' contra 'duplicar, botón'."
-      >
-        <Demo className={s.sunken} code={`<Toolbar label="Dos clases de botón">
-  <Toolbar.Button icon="format_bold" label="Negrita" pressed={format.bold} onPressedChange={() => toggle('bold')} />
-  <Toolbar.Button icon="content_copy" label="Duplicar" onClick={duplicate} />
-</Toolbar>`}>
-          <Toolbar label="Dos clases de botón">
-            <Toolbar.Button icon="format_bold" label="Negrita" pressed={format.bold} onPressedChange={() => toggle('bold')} />
-            <Toolbar.Button icon="content_copy" label="Duplicar" />
           </Toolbar>
         </Demo>
       </Section>

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Alert } from '@milo/ui/alert'
 import { Button } from '@milo/ui/button'
 import { Icon } from '@milo/ui/icon'
-import { A11y, Demo, Frame, Note, Page, Practices, Props, Section, Stack } from '../kit'
+import { A11y, Anatomy, Demo, Frame, Hero, Page, Practices, Props, Section, Stack } from '../kit'
 
 export function AlertStory() {
   const [dismissed, setDismissed] = useState<string[]>([])
@@ -14,8 +14,31 @@ export function AlertStory() {
       title="Alert"
       kind="Avisos"
       imports="import { Alert } from '@milo/ui/alert'"
-      lead="El aviso que se queda en la página y forma parte de lo que estás mirando: algo está roto, algo falta, algo está por vencer. Si el aviso tiene que seguir ahí cuando la persona vuelva a mirar, es un Alert y no un `Toast`."
+      lead="El aviso que se queda en la página y forma parte de lo que estás mirando: algo está roto, algo falta, algo está por vencer."
     >
+      <Hero>
+        <Stack width="lg">
+          <Alert tone="info">
+            <Alert.Title>La corrección automática está en prueba</Alert.Title>
+            <Alert.Body>Podés desactivarla desde Ajustes mientras la probamos.</Alert.Body>
+          </Alert>
+          <Alert tone="warn">
+            <Alert.Title>Tres entregas vencen mañana</Alert.Title>
+            <Alert.Actions>
+              <Button size="sm" variant="muted">Ver las entregas</Button>
+            </Alert.Actions>
+          </Alert>
+        </Stack>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Glifo">{'Uno por tono, que se puede cambiar con `icon` o sacar con `icon={null}`. Un color de estado sin forma ni texto no dice nada a quien no distingue colores.'}</Anatomy.Part>
+        <Anatomy.Part name="Título" required>`Alert.Title`: lo que se entiende de un vistazo.</Anatomy.Part>
+        <Anatomy.Part name="Cuerpo">`Alert.Body`: lo que hay que explicar.</Anatomy.Part>
+        <Anatomy.Part name="Acciones">`Alert.Actions`: lo que se puede hacer al respecto.</Anatomy.Part>
+        <Anatomy.Part name="Cerrar">Con `onDismiss`, una X para sacarlo.</Anatomy.Part>
+      </Anatomy>
+
       <Section
         title="Los cuatro tonos"
         note="Cada tono trae su glifo: un color de estado sin forma ni texto no dice nada a quien no distingue colores."
@@ -72,82 +95,27 @@ export function AlertStory() {
       </Section>
 
       <Section
-        title="Se arma con partes"
-        note="El título, para lo que se entiende de un vistazo; el cuerpo, para lo que hay que explicar; las acciones, para lo que se puede hacer al respecto."
+        title="El glifo"
+        note="`icon` lo cambia cuando el aviso es de algo concreto (una fecha, un archivo); `null` lo saca adentro de algo que ya tiene su propio icono."
       >
-        <Stack>
-          <Demo label="solo título" code={`<Alert tone="ok"><Alert.Title>Listo</Alert.Title></Alert>`}>
-            <Frame width="lg">
-              <Alert tone="ok"><Alert.Title>Listo</Alert.Title></Alert>
-            </Frame>
-          </Demo>
-          <Demo label="título y cuerpo" code={`<Alert tone="info">
-  <Alert.Title>Quedó en borrador</Alert.Title>
-  <Alert.Body>Nadie lo ve hasta que lo publiques.</Alert.Body>
-</Alert>`}>
-              <Frame width="lg">
-                <Alert tone="info">
-                  <Alert.Title>Quedó en borrador</Alert.Title>
-                  <Alert.Body>Nadie lo ve hasta que lo publiques.</Alert.Body>
-                </Alert>
-              </Frame>
-            </Demo>
-            <Demo label="con salida y con X" code={`<Alert tone="warn" onDismiss={dismiss}>
-  <Alert.Title>Quedaste sin lugar</Alert.Title>
-  <Alert.Body>El próximo archivo que subas no va a entrar.</Alert.Body>
-  <Alert.Actions>
-    <Button size="sm" variant="muted">Liberar espacio</Button>
-  </Alert.Actions>
-</Alert>`}>
-              {showing('amarillo')
-                ? (
-                  <Frame width="lg">
-                    <Alert tone="warn" onDismiss={() => dismiss('amarillo')}>
-                      <Alert.Title>Quedaste sin lugar</Alert.Title>
-                      <Alert.Body>El próximo archivo que subas no va a entrar.</Alert.Body>
-                      <Alert.Actions>
-                        <Button size="sm" variant="muted">Liberar espacio</Button>
-                      </Alert.Actions>
-                    </Alert>
-                  </Frame>
-                )
-                : <Button size="sm" variant="muted" iconStart={<Icon name="undo" />} onClick={() => setDismissed(c => c.filter(x => x !== 'amarillo'))}>Mostrarlo de nuevo</Button>}
-            </Demo>
-          </Stack>
-      </Section>
-
-      <Section
-          title="El glifo se puede cambiar, o sacar"
-          note="`icon` lo cambia cuando el aviso es de algo concreto (una fecha, un archivo, una persona); `null` lo saca adentro de algo que ya tiene su propio icono."
-      >
-          <Stack>
-            <Demo label="glifo propio" code={`<Alert tone="info" icon="schedule">
+        <Demo fill code={`<Alert tone="info" icon="schedule">
   <Alert.Title>Cierra el viernes a las 23:59</Alert.Title>
-</Alert>`}>
-              <Frame width="lg">
-                <Alert tone="info" icon="schedule">
-                  <Alert.Title>Cierra el viernes a las 23:59</Alert.Title>
-                </Alert>
-              </Frame>
-            </Demo>
-            <Demo label="sin glifo" code={`<Alert tone="info" icon={null}>
+</Alert>
+<Alert tone="info" icon={null}>
   <Alert.Title>Cuatro entregas nuevas desde ayer</Alert.Title>
 </Alert>`}>
-              <Frame width="lg">
-                <Alert tone="info" icon={null}>
-                  <Alert.Title>Cuatro entregas nuevas desde ayer</Alert.Title>
-                </Alert>
-              </Frame>
-            </Demo>
-          </Stack>
+          <Frame width="lg">
+            <Stack>
+              <Alert tone="info" icon="schedule">
+                <Alert.Title>Cierra el viernes a las 23:59</Alert.Title>
+              </Alert>
+              <Alert tone="info" icon={null}>
+                <Alert.Title>Cuatro entregas nuevas desde ayer</Alert.Title>
+              </Alert>
+            </Stack>
+          </Frame>
+        </Demo>
       </Section>
-
-      <Note title="Alert o Toast">
-          Si el aviso es consecuencia de algo que la persona acaba de hacer y no necesita respuesta, va
-          un [Toast](#toast). Si describe el estado
-          de la pantalla, va acá: el toast se va solo a los cinco segundos, y un error importante que
-          desaparece solo es un error que nadie leyó.
-      </Note>
 
       <Section title="Props">
           <Props of="Alert" />
@@ -156,6 +124,7 @@ export function AlertStory() {
       <Section title="Cómo se usa bien">
           <Practices>
             <Practices.Do>Va fijo en la pantalla, donde pasó la cosa.</Practices.Do>
+            <Practices.Dont>No lo uses para acusar recibo de lo que la persona acaba de hacer: eso es un [Toast](#toast), que se va solo. Un error importante que desaparece solo es un error que nadie leyó.</Practices.Dont>
             <Practices.Do>Dale una salida en `Alert.Actions`: un aviso sin nada para tocar deja al lector solo con el problema.</Practices.Do>
             <Practices.Do>Adentro de un panel denso va en `size="sm"`.</Practices.Do>
             <Practices.Dont>Solo `tone="bad"` lleva `role="alert"`: algo que está fijo no tiene que interrumpir cada vez que se monta.</Practices.Dont>

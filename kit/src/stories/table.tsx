@@ -13,7 +13,7 @@ import { timeAgo } from '@milo/ui/lib/time'
 import { Pagination } from '@milo/ui/pagination'
 import { Search } from '@milo/ui/search'
 import { Table } from '@milo/ui/table'
-import { A11y, Demo, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 import { person as p } from '../fixtures'
 
 const NOW = new Date('2026-03-09T15:00:00-03:00')
@@ -130,8 +130,43 @@ export function TableStory() {
       title="Table"
       kind="Datos"
       imports="import { Table } from '@milo/ui/table'"
-      lead="Piezas que se arman, no un componente que recibe `columns` y `rows`. Una tabla de datos y una de personas con un grupo de avatares y un menú al final no comparten nada más que la grilla, y una API de columnas termina con un `render` por columna: el mismo JSX, pero metido en un objeto y sin poder leerlo de arriba abajo."
+      lead="Piezas que se arman, no un componente que recibe `columns` y `rows`: una tabla de datos y una de personas comparten la grilla y nada más, y una API de columnas termina con un `render` por columna."
     >
+      <Hero>
+        <Table label="Actividades del espacio" minWidth={640}>
+          <Table.Header>
+            <Table.Row>
+              <Table.Head>Actividad</Table.Head>
+              <Table.Head>Estudiantes</Table.Head>
+              <Table.Head>Estado</Table.Head>
+              <Table.Head align="right">Entregas</Table.Head>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {spaces.slice(0, 3).map(a => (
+              <Table.Row key={a.name}>
+                <Table.Cell>
+                  <Table.Title>{a.name}</Table.Title>
+                  <Table.Hint>{a.space}</Table.Hint>
+                </Table.Cell>
+                <Table.Cell><Avatar.Group people={a.students} /></Table.Cell>
+                <Table.Cell><Chip color={tone[a.status as keyof typeof tone]}>{a.status}</Chip></Table.Cell>
+                <Table.Num>{a.total || '-'}</Table.Num>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Encabezado" required>`Table.Header` con una `Table.Row` de `Table.Head`; `align="right"` para las columnas de números.</Anatomy.Part>
+        <Anatomy.Part name="Cuerpo" required>`Table.Body` con una `Table.Row` por fila. Con `onClick` la fila entera se toca.</Anatomy.Part>
+        <Anatomy.Part name="Celda">`Table.Cell`, con `Table.Title` y `Table.Hint` para el nombre y su línea de apoyo. `Table.Num` es la de números, alineada a la derecha.</Anatomy.Part>
+        <Anatomy.Part name="Fila de totales">{'`Table.Foot`: el `<tfoot>` con la suma de lo que hay a la vista.'}</Anatomy.Part>
+        <Anatomy.Part name="Vacío">`Table.Empty` ocupa la fila entera cuando no hay resultados.</Anatomy.Part>
+        <Anatomy.Part name="Franja de abajo">`Table.Footer`: la paginación, adentro del marco y fuera del scroll.</Anatomy.Part>
+      </Anatomy>
+
       <Section
         title="La tabla entera"
         note="Una tabla de trabajo lleva tres cosas más que la grilla: el filtro, el total y la paginación."

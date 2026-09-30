@@ -1,7 +1,7 @@
 import cls from './checkbox.module.css'
 import { useState } from 'react'
 import { Checkbox } from '@milo/ui/checkbox'
-import { A11y, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
+import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 export function CheckboxStory() {
   const [spaces, setSpaces] = useState<string[]>(['Ciencias'])
@@ -15,39 +15,39 @@ export function CheckboxStory() {
       title="Checkbox"
       kind="Formularios"
       imports="import { Checkbox } from '@milo/ui/checkbox'"
-      lead="Caja de 18, la medida del pulgar del switch, con el radio `xs`: sobre un cuadrado tan chico, el escalón siguiente deja cuatro píxeles de lado recto por lado y la casilla se lee redonda, que es la forma de la opción única."
+      lead="Una casilla para marcar o no marcar una opción, sola o dentro de una lista donde se marcan varias. Lleva el radio `xs`: con el escalón siguiente la caja se lee redonda, que es la forma de la opción única."
     >
-      <Section
-        title="Estados"
-        note="Apagada es una caja vacía con su línea, del color del campo que la rodea. Prendida pasa al azul con el tilde en blanco."
-      >
+      <Hero>
+        <Checkbox checked={unchecked} onCheckedChange={setUnchecked} label="Sin marcar" />
+        <Checkbox checked={checked} onCheckedChange={setChecked} label="Marcada" />
+        <Checkbox checked={partial} indeterminate={!partial} onCheckedChange={setPartial} label="Parcial" />
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Caja" required>El cuadrado de 18. Apagada es una caja vacía con su línea, del color del campo que la rodea.</Anatomy.Part>
+        <Anatomy.Part name="Marca">El tilde en blanco sobre el azul cuando está marcada, o la raya cuando es `indeterminate`.</Anatomy.Part>
+        <Anatomy.Part name="Etiqueta">{'El texto que la nombra, con `label` o envolviendo la casilla en un `<label>`.'}</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Ejemplos">
         <Panel>
-          <Variant name="off / on" code={`<Checkbox checked={unchecked} onCheckedChange={setUnchecked} label="Sin marcar" />
-<Checkbox checked={checked} onCheckedChange={setChecked} label="Marcada" />`}>
-            <Checkbox checked={unchecked} onCheckedChange={setUnchecked} label="Sin marcar" />
-            <Checkbox checked={checked} onCheckedChange={setChecked} label="Marcada" />
-          </Variant>
-          <Variant name="indeterminate" code={`<Checkbox checked={partial} indeterminate={!partial} onCheckedChange={setPartial} label="Parcial" />`}><Checkbox checked={partial} indeterminate={!partial} onCheckedChange={setPartial} label="Parcial" /></Variant>
-          <Variant name="disabled" code={`<Checkbox checked onCheckedChange={setChecked} disabled label="Fija" />
-<Checkbox checked={false} onCheckedChange={setChecked} disabled label="Fija" />`}>
+          <Variant
+            name="Deshabilitadas"
+            note="Apagadas, no se tocan ni reciben el foco."
+            code={`<Checkbox checked onCheckedChange={setChecked} disabled label="Fija" />
+<Checkbox checked={false} onCheckedChange={setChecked} disabled label="Fija" />`}
+          >
             <Checkbox checked onCheckedChange={() => {}} disabled label="Fija" />
             <Checkbox checked={false} onCheckedChange={() => {}} disabled label="Fija" />
           </Variant>
-        </Panel>
-      </Section>
-
-      <Section title="En una fila" note="Envolvé la casilla en un `<label>`: así el texto también es zona de click, que es la mitad del área útil.">
-        <Panel>
-          <Variant name="con etiqueta" code={`<label>
+          <Variant
+            name="En una fila"
+            note="Envolvé la casilla en un `<label>`: así el texto también es zona de click, que es la mitad del área útil."
+            code={`<label>
   <Checkbox checked={shared} onCheckedChange={setShared} />
   Compartir la receta con el equipo
-</label>`}>
-            <label className={cls.singleLabel}>
-              <Checkbox checked={shared} onCheckedChange={setShared} />
-              Compartir la receta con el equipo
-            </label>
-          </Variant>
-          <Variant name="lista" code={`{['Geografía', 'Ciencias', 'Matemática'].map(space => (
+</label>
+{['Geografía', 'Ciencias', 'Matemática'].map(space => (
   <label key={space}>
     <Checkbox
       checked={spaces.includes(space)}
@@ -55,7 +55,12 @@ export function CheckboxStory() {
     />
     {space}
   </label>
-))}`}>
+))}`}
+          >
+            <label className={cls.singleLabel}>
+              <Checkbox checked={shared} onCheckedChange={setShared} />
+              Compartir la receta con el equipo
+            </label>
             <Stack gap="sm">
               {['Geografía', 'Ciencias', 'Matemática'].map(space => (
                 <label key={space} className={cls.itemLabel}>

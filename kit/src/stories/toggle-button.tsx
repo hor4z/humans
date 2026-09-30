@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { ToggleButton } from '@milo/ui/toggle-button'
-import { A11y, Page, Panel, Practices, Props, Section, Variant } from '../kit'
+import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function ToggleButtonStory() {
   const [bold, setBold] = useState(true)
@@ -14,39 +14,48 @@ export function ToggleButtonStory() {
       imports="import { ToggleButton } from '@milo/ui/toggle-button'"
       lead="Un botón que queda hundido. Dice en qué estado está algo, no que algo pasó: la negrita del editor, el filtro que está puesto, la vista que se está mirando."
     >
-      <Section
-        title="Cuándo va"
-        note="Un estado que se prende y se apaga y se aplica al momento. Para elegir uno entre varios va `Segmented`."
-      >
+      <Hero>
+        <ToggleButton size="sm" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
+        <ToggleButton size="sm" pressed={italic} onPressedChange={setItalic} icon="format_italic" label="Cursiva" />
+        <ToggleButton size="sm" pressed={onlyUngraded} onPressedChange={setOnlyUngraded} icon="filter_alt">
+          Solo sin corregir
+        </ToggleButton>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Icono">`icon`: el glifo, antes del texto o solo.</Anatomy.Part>
+        <Anatomy.Part name="Etiqueta">El texto, como hijo. Si falta, `label` pasa a ser el nombre accesible y es obligatorio.</Anatomy.Part>
+        <Anatomy.Part name="Estado hundido">Con `pressed` el fondo se llena; el estado lo guarda quien lo usa.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Cuándo va">
         <Panel>
-          <Variant name="solo el glifo" note="En una barra de formato, que es donde más se usa." code={`<ToggleButton size="sm" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
-<ToggleButton size="sm" pressed={italic} onPressedChange={setItalic} icon="format_italic" label="Cursiva" />`}>
+          <Variant
+            name="solo el glifo · con texto"
+            note="El glifo solo es el de una barra de formato; con texto, un filtro que se prende y se apaga: hay un estado, no una opción entre varias."
+            code={`<ToggleButton size="sm" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
+<ToggleButton size="sm" pressed={italic} onPressedChange={setItalic} icon="format_italic" label="Cursiva" />
+<ToggleButton size="sm" pressed={onlyUngraded} onPressedChange={setOnlyUngraded} icon="filter_alt">
+  Solo sin corregir
+</ToggleButton>`}
+          >
             <ToggleButton size="sm" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
             <ToggleButton size="sm" pressed={italic} onPressedChange={setItalic} icon="format_italic" label="Cursiva" />
-          </Variant>
-          <Variant name="con texto" note="Un filtro que se prende y se apaga: hay un estado, no una opción entre varias." code={`<ToggleButton size="sm" pressed={onlyUngraded} onPressedChange={setOnlyUngraded} icon="filter_alt">
-  Solo sin corregir
-</ToggleButton>`}>
             <ToggleButton size="sm" pressed={onlyUngraded} onPressedChange={setOnlyUngraded} icon="filter_alt">
               Solo sin corregir
             </ToggleButton>
           </Variant>
-        </Panel>
-      </Section>
-
-      <Section
-        title="Los tres tamaños"
-        note="36 · 40 · 44, los del `Button`. `sm` en una barra, `md` suelto en una pantalla, `lg` donde se toca con el dedo."
-      >
-        <Panel>
-          <Variant name="sm · md · lg" code={`<ToggleButton size="sm" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
+          <Variant
+            name="sm · 36 · md · 40 · lg · 44 · apagado"
+            note="Los tres tamaños del `Button`: `sm` en una barra, `md` suelto, `lg` donde se toca con el dedo. Apagado no responde y se ve que no responde."
+            code={`<ToggleButton size="sm" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
 <ToggleButton size="md" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
-<ToggleButton size="lg" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />`}>
+<ToggleButton size="lg" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
+<ToggleButton size="sm" pressed={false} disabled icon="format_bold" label="Negrita" />`}
+          >
             <ToggleButton size="sm" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
             <ToggleButton size="md" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
             <ToggleButton size="lg" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
-          </Variant>
-          <Variant name="apagado" note="No responde y se ve que no responde." code={`<ToggleButton size="sm" pressed={false} disabled icon="format_bold" label="Negrita" />`}>
             <ToggleButton size="sm" pressed={false} disabled icon="format_bold" label="Negrita" />
           </Variant>
         </Panel>

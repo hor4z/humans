@@ -1,5 +1,5 @@
 import { Accordion } from '@milo/ui/accordion'
-import { A11y, Demo, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function AccordionStory() {
   return (
@@ -9,11 +9,32 @@ export function AccordionStory() {
       imports="import { Accordion } from '@milo/ui/accordion'"
       lead="Filas que se leen de a una y que la mayoría no va a abrir: las preguntas frecuentes, los detalles de una configuración, lo que está de más en la pantalla pero tiene que estar en algún lado."
     >
-      <Section
-        title="Cómo se arma"
-        note="El chevron gira, que es lo único que hace falta para saber si una fila está abierta."
-      >
-        <Demo fill code={`<Accordion>
+      <Hero>
+        <Accordion>
+          <Accordion.Item defaultOpen>
+            <Accordion.Summary>¿Qué pasa si publico sin fecha de cierre?</Accordion.Summary>
+            <Accordion.Body>La actividad queda abierta hasta que la cierres a mano. Los estudiantes pueden seguir entregando.</Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item>
+            <Accordion.Summary>¿Puedo corregir después de cerrar?</Accordion.Summary>
+            <Accordion.Body>Sí. Cerrar solo impide entregas nuevas.</Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item>
+            <Accordion.Summary>¿Se avisa a los estudiantes?</Accordion.Summary>
+            <Accordion.Body>Al publicar, sí. Al cerrar, no: la fecha ya estaba a la vista desde el principio.</Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Fila" required>`Accordion.Item`: una pregunta con su respuesta, que se abre y se cierra sola.</Anatomy.Part>
+        <Anatomy.Part name="Resumen" required>`Accordion.Summary`: el texto que se toca.</Anatomy.Part>
+        <Anatomy.Part name="Chevron">Gira al abrir, que es lo único que hace falta para saber si una fila está abierta.</Anatomy.Part>
+        <Anatomy.Part name="Cuerpo" required>`Accordion.Body`: lo que aparece al abrir la fila.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Ejemplos">
+        <Demo fill label="Cómo se arma" code={`<Accordion>
   <Accordion.Item defaultOpen>
     <Accordion.Summary>¿Qué pasa si publico sin fecha de cierre?</Accordion.Summary>
     <Accordion.Body>La actividad queda abierta hasta que la cierres a mano. Los estudiantes pueden seguir entregando.</Accordion.Body>
@@ -21,10 +42,6 @@ export function AccordionStory() {
   <Accordion.Item>
     <Accordion.Summary>¿Puedo corregir después de cerrar?</Accordion.Summary>
     <Accordion.Body>Sí. Cerrar solo impide entregas nuevas.</Accordion.Body>
-  </Accordion.Item>
-  <Accordion.Item>
-    <Accordion.Summary>¿Se avisa a los estudiantes?</Accordion.Summary>
-    <Accordion.Body>Al publicar, sí. Al cerrar, no: la fecha ya estaba a la vista desde el principio.</Accordion.Body>
   </Accordion.Item>
 </Accordion>`}>
           <Accordion>
@@ -36,19 +53,9 @@ export function AccordionStory() {
               <Accordion.Summary>¿Puedo corregir después de cerrar?</Accordion.Summary>
               <Accordion.Body>Sí. Cerrar solo impide entregas nuevas.</Accordion.Body>
             </Accordion.Item>
-            <Accordion.Item>
-              <Accordion.Summary>¿Se avisa a los estudiantes?</Accordion.Summary>
-              <Accordion.Body>Al publicar, sí. Al cerrar, no: la fecha ya estaba a la vista desde el principio.</Accordion.Body>
-            </Accordion.Item>
           </Accordion>
         </Demo>
-      </Section>
-
-      <Section
-        title="Varias abiertas a la vez"
-        note="Ninguna fila cierra a las otras: cada `<details>` es independiente."
-      >
-        <Demo fill code={`<Accordion>
+        <Demo fill label="Varias abiertas a la vez: ninguna cierra a las otras" code={`<Accordion>
   <Accordion.Item defaultOpen>
     <Accordion.Summary>Quién ve la actividad</Accordion.Summary>
     <Accordion.Body>Los espacios en los que la publiques, y nadie más. Cambiarlo después no avisa de nuevo.</Accordion.Body>

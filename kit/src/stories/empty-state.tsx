@@ -2,7 +2,7 @@ import cls from './empty-state.module.css'
 import { Button } from '@milo/ui/button'
 import { EmptyState } from '@milo/ui/empty-state'
 import { Filter } from '@milo/ui/filter'
-import { A11y, Demo, Page, Practices, Props, Section, Stack } from '../kit'
+import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section, Stack } from '../kit'
 
 export function EmptyStateStory() {
   return (
@@ -10,29 +10,41 @@ export function EmptyStateStory() {
       title="EmptyState"
       kind="Avisos"
       imports="import { EmptyState } from '@milo/ui/empty-state'"
-      lead="Lo que se ve cuando no hay nada, siempre con una salida: un vacío que no dice qué hacer es una pantalla rota con buena redacción. El icono va adentro de un hueco y en gris: suelto y grande se ve como una imagen que no cargó, que es justo lo que uno teme."
+      lead="Lo que se ve cuando no hay nada, siempre con una salida: un vacío que no dice qué hacer es una pantalla rota con buena redacción."
     >
-      <Section
-        title="Los dos tamaños"
-        note="`md` es el de una pantalla vacía; `sm`, el de una búsqueda sin resultados adentro de una pieza, que con el aire del grande empujaría la paginación media pantalla para abajo."
-      >
-        <Stack gap="lg">
-          <Demo label="md · una pantalla" code={`<EmptyState icon="inbox">
+      <Hero>
+        <EmptyState icon="inbox">
+          <EmptyState.Title>Todavía no llegó ninguna entrega</EmptyState.Title>
+          <EmptyState.Body>Cuando alguien entregue una actividad de este espacio, la vas a ver acá con su estado.</EmptyState.Body>
+          <EmptyState.Action><Button variant="brand">Crear una actividad</Button></EmptyState.Action>
+        </EmptyState>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Icono">`icon`, adentro de un hueco y en gris: suelto y grande se ve como una imagen que no cargó.</Anatomy.Part>
+        <Anatomy.Part name="Título" required>`EmptyState.Title`: qué falta.</Anatomy.Part>
+        <Anatomy.Part name="Cuerpo">`EmptyState.Body`: qué se puede hacer.</Anatomy.Part>
+        <Anatomy.Part name="Acción">`EmptyState.Action`: la salida, un botón.</Anatomy.Part>
+        <Anatomy.Part name="Caja punteada">El marco del `md`. Adentro de algo que ya tiene marco no va, y `sm` la apaga sola.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Tamaños y marco">
+        <Demo label="md y sm: una pantalla, y una búsqueda sin resultados adentro de una pieza" code={`<EmptyState icon="inbox">
   <EmptyState.Title>Todavía no llegó ninguna entrega</EmptyState.Title>
   <EmptyState.Body>Cuando alguien entregue una actividad de este espacio, la vas a ver acá con su estado.</EmptyState.Body>
   <EmptyState.Action><Button variant="brand">Crear una actividad</Button></EmptyState.Action>
+</EmptyState>
+<EmptyState size="sm" icon="search_off">
+  <EmptyState.Title>Ninguna actividad con eso</EmptyState.Title>
+  <EmptyState.Body>Probá con otras palabras, o sacá alguno de los filtros puestos.</EmptyState.Body>
+  <EmptyState.Action><Filter.Reset onClick={clearFilters}>Limpiar los filtros</Filter.Reset></EmptyState.Action>
 </EmptyState>`}>
+          <Stack gap="lg">
             <EmptyState icon="inbox">
               <EmptyState.Title>Todavía no llegó ninguna entrega</EmptyState.Title>
               <EmptyState.Body>Cuando alguien entregue una actividad de este espacio, la vas a ver acá con su estado.</EmptyState.Body>
               <EmptyState.Action><Button variant="brand">Crear una actividad</Button></EmptyState.Action>
             </EmptyState>
-          </Demo>
-          <Demo label="sm · adentro de una pieza" code={`<EmptyState size="sm" icon="search_off">
-  <EmptyState.Title>Ninguna actividad con eso</EmptyState.Title>
-  <EmptyState.Body>Probá con otras palabras, o sacá alguno de los filtros puestos.</EmptyState.Body>
-  <EmptyState.Action><Filter.Reset onClick={clearFilters}>Limpiar los filtros</Filter.Reset></EmptyState.Action>
-</EmptyState>`}>
             <div className={`${cls.insetBox} bg-surface`}>
               <EmptyState size="sm" icon="search_off">
                 <EmptyState.Title>Ninguna actividad con eso</EmptyState.Title>
@@ -40,52 +52,31 @@ export function EmptyStateStory() {
                 <EmptyState.Action><Filter.Reset onClick={() => {}}>Limpiar los filtros</Filter.Reset></EmptyState.Action>
               </EmptyState>
             </div>
-          </Demo>
-        </Stack>
-      </Section>
+          </Stack>
+        </Demo>
 
-      <Section
-        title="La caja punteada"
-        note="Adentro de algo que ya tiene marco, no va: por eso `sm` la apaga sola."
-      >
-        <Stack gap="lg">
-          <Demo label="bordered · el default de md" code={`<EmptyState icon="folder_open">
+        <Demo label="Sin caja, adentro de una tarjeta, y sin icono" code={`<EmptyState bordered={false} icon="folder_open">
   <EmptyState.Title>Este espacio está vacío</EmptyState.Title>
   <EmptyState.Body>Todavía no hay actividades acá.</EmptyState.Body>
+</EmptyState>
+<EmptyState>
+  <EmptyState.Title>Acá no hay nada</EmptyState.Title>
+  <EmptyState.Body>La dirección existe pero no lleva a ninguna pantalla.</EmptyState.Body>
+  <EmptyState.Action><Button variant="muted">Volver</Button></EmptyState.Action>
 </EmptyState>`}>
-            <EmptyState icon="folder_open">
-              <EmptyState.Title>Este espacio está vacío</EmptyState.Title>
-              <EmptyState.Body>Todavía no hay actividades acá.</EmptyState.Body>
-            </EmptyState>
-          </Demo>
-          <Demo label="sin caja, adentro de una tarjeta" code={`<EmptyState bordered={false} icon="folder_open">
-  <EmptyState.Title>Este espacio está vacío</EmptyState.Title>
-  <EmptyState.Body>Todavía no hay actividades acá.</EmptyState.Body>
-</EmptyState>`}>
+          <Stack gap="lg">
             <div className={`${cls.raisedBox} bg-surface`}>
               <EmptyState bordered={false} icon="folder_open">
                 <EmptyState.Title>Este espacio está vacío</EmptyState.Title>
                 <EmptyState.Body>Todavía no hay actividades acá.</EmptyState.Body>
               </EmptyState>
             </div>
-          </Demo>
-        </Stack>
-      </Section>
-
-      <Section
-        title="Sin icono"
-        note="Funciona, pero con icono se reconoce de qué tipo de vacío se trata antes de leerlo."
-      >
-        <Demo label="solo texto" code={`<EmptyState>
-  <EmptyState.Title>Acá no hay nada</EmptyState.Title>
-  <EmptyState.Body>La dirección existe pero no lleva a ninguna pantalla.</EmptyState.Body>
-  <EmptyState.Action><Button variant="muted">Volver</Button></EmptyState.Action>
-</EmptyState>`}>
-          <EmptyState>
-            <EmptyState.Title>Acá no hay nada</EmptyState.Title>
-            <EmptyState.Body>La dirección existe pero no lleva a ninguna pantalla.</EmptyState.Body>
-            <EmptyState.Action><Button variant="muted">Volver</Button></EmptyState.Action>
-          </EmptyState>
+            <EmptyState>
+              <EmptyState.Title>Acá no hay nada</EmptyState.Title>
+              <EmptyState.Body>La dirección existe pero no lleva a ninguna pantalla.</EmptyState.Body>
+              <EmptyState.Action><Button variant="muted">Volver</Button></EmptyState.Action>
+            </EmptyState>
+          </Stack>
         </Demo>
       </Section>
 

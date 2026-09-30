@@ -2,7 +2,7 @@ import cls from './reorder.module.css'
 import { useState } from 'react'
 import { Icon, type IconName } from '@milo/ui/icon'
 import { Reorder, type ReorderItem } from '@milo/ui/reorder'
-import { A11y, Demo, Frame, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Demo, Frame, Hero, Page, Practices, Props, Section } from '../kit'
 
 type Block = ReorderItem & { icon: IconName; meta: string }
 
@@ -22,13 +22,30 @@ export function ReorderStory() {
       title="Reorder"
       kind="Navegación"
       imports="import { Reorder } from '@milo/ui/reorder'"
-      lead="Una lista que cambia de orden: los bloques de una consigna, las etapas de una entrega. Se arrastra con el dedo o el mouse, y se mueve con el teclado: las dos cosas, no una."
+      lead="Una lista que cambia de orden: los bloques de una consigna, las etapas de una entrega. Se arrastra con el dedo o el mouse, y se mueve con el teclado."
     >
-      <Section
-        title="Los bloques de una consigna"
-        note="Agarrá una manija y arrastrá, o tabulá hasta una y usá las flechas: es la misma operación. Lo que se agarra deja su hueco gris abajo, que es donde va a caer."
-      >
-        <Demo code={`<Reorder items={blocks} onReorder={setBlocks} label="Bloques de la consigna">
+      <Hero>
+        <Frame width="lg">
+          <Reorder items={blocks} onReorder={setBlocks} label="Bloques de la consigna">
+            {block => (
+              <div className={cls.blockRow}>
+                <Icon name={block.icon} size={18} className={`${cls.blockIcon} icon-muted`} />
+                <span className={cls.blockLabel}>{block.label}</span>
+                <span className={cls.blockMeta}>{block.meta}</span>
+              </div>
+            )}
+          </Reorder>
+        </Frame>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Fila" required>Cada elemento de la lista, con lo que devuelve `children` a la derecha de la manija.</Anatomy.Part>
+        <Anatomy.Part name="Manija" required>El botón que se agarra con el dedo o el mouse y se mueve con las flechas. Lleva nombre y posición.</Anatomy.Part>
+        <Anatomy.Part name="Hueco">Lo que se agarra deja su hueco gris abajo, que es donde va a caer.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Ejemplos">
+        <Demo label="Los bloques de una consigna" code={`<Reorder items={blocks} onReorder={setBlocks} label="Bloques de la consigna">
   {block => (
     <div>
       <Icon name={block.icon} size={18} className="icon-muted" />
@@ -57,7 +74,7 @@ export function ReorderStory() {
 
       <Section title="Cómo se usa bien">
         <Practices>
-          <Practices.Do>El teclado es la pieza y el arrastre la comodidad: las flechas mueven la fila.</Practices.Do>
+          <Practices.Do>Agarrá una manija y arrastrá, o tabulá hasta una y usá las flechas: es la misma operación. El teclado es la pieza y el arrastre la comodidad.</Practices.Do>
         </Practices>
       </Section>
 

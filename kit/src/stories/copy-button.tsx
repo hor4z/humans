@@ -1,6 +1,6 @@
 import { CopyButton } from '@milo/ui/copy-button'
 import { TextField } from '@milo/ui/text-field'
-import { A11y, Page, Panel, Practices, Props, Section, Variant } from '../kit'
+import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function CopyButtonStory() {
   return (
@@ -9,26 +9,41 @@ export function CopyButtonStory() {
       kind="Acciones"
       imports="import { CopyButton } from '@milo/ui/copy-button'
 import { TextField } from '@milo/ui/text-field'"
-      lead="Copiar un texto al portapapeles, con el tilde que avisa que salió bien."
+      lead="Copiar un texto al portapapeles. Va pegado a lo que copia, y si el navegador no deja copiar, el botón no dice que copió."
     >
-      <Section
-        title="La pieza"
-        note="Va pegado a lo que copia. Si el navegador no deja copiar, el botón no dice que copió."
-      >
+      <Hero>
+        <CopyButton value="npm install @milo/ui" />
+        <TextField
+          readOnly
+          value="https://milo.escuela/act/fracciones-equivalentes"
+          aria-label="Enlace para compartir"
+          suffix={<CopyButton size="sm" value="https://milo.escuela/act/fracciones-equivalentes" label="Copiar el enlace" />}
+        />
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Icono" required>El de copiar, que pasa a un tilde cuando el texto ya está en el portapapeles.</Anatomy.Part>
+        <Anatomy.Part name="Nombre">`label` y `copiedLabel`: no se ven, son el nombre accesible antes y después de copiar.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="La pieza">
         <Panel>
-          <Variant name="sm · md · lg" note="`sm` adentro de un campo o de una fila, `md` suelto." code={`<CopyButton size="sm" value="npm install @milo/ui" />
+          <Variant
+            name="sm · md · lg y adentro de un campo"
+            note="`sm` va adentro de un campo o de una fila y `md` suelto. El caso más común es un enlace para compartir, que se lee y se copia sin seleccionarlo a mano."
+            code={`<CopyButton size="sm" value="npm install @milo/ui" />
 <CopyButton value="npm install @milo/ui" />
-<CopyButton size="lg" value="npm install @milo/ui" />`}>
-            <CopyButton size="sm" value="npm install @milo/ui" />
-            <CopyButton value="npm install @milo/ui" />
-            <CopyButton size="lg" value="npm install @milo/ui" />
-          </Variant>
-          <Variant name="adentro del campo" note="El caso más común: un enlace para compartir, que se lee y se copia sin seleccionarlo a mano." code={`<TextField
+<CopyButton size="lg" value="npm install @milo/ui" />
+<TextField
   readOnly
   value="https://milo.escuela/act/fracciones-equivalentes"
   aria-label="Enlace para compartir"
   suffix={<CopyButton size="sm" value="https://milo.escuela/act/fracciones-equivalentes" label="Copiar el enlace" />}
-/>`}>
+/>`}
+          >
+            <CopyButton size="sm" value="npm install @milo/ui" />
+            <CopyButton value="npm install @milo/ui" />
+            <CopyButton size="lg" value="npm install @milo/ui" />
             <TextField
               readOnly
               value="https://milo.escuela/act/fracciones-equivalentes"

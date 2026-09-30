@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { CompareTable } from '@milo/ui/blocks/task/compare-table'
-import { A11y, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
+import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const fronts = [
   { id: 'producto', label: 'Producto' },
@@ -30,14 +30,27 @@ export function CompareTableStory() {
       imports="import { CompareTable } from '@milo/ui/blocks/task/compare-table'"
       lead="Un cuadro comparativo que se completa: dos o tres cosas en las columnas, en qué se las mira en los renglones. La grilla es de quien arma la consigna y las celdas son de quien la resuelve."
     >
-      <Section
-        title="Cómo se arma"
-        note="Las columnas y los renglones entran como dato, así que dos entregas del mismo curso se pueden leer una al lado de la otra."
-      >
+      <Hero>
+        <Stack width="md">
+          <CompareTable rows={fronts} columns={competitors} value={value} onValueChange={setValue}>
+            <CompareTable.Prompt>Contra quién competís</CompareTable.Prompt>
+            <CompareTable.Hint>Reales: con nombre, y con el precio que cobran de verdad.</CompareTable.Hint>
+          </CompareTable>
+        </Stack>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Enunciado" required>`CompareTable.Prompt`: qué se compara.</Anatomy.Part>
+        <Anatomy.Part name="Aclaración">`CompareTable.Hint`: cómo completar el cuadro.</Anatomy.Part>
+        <Anatomy.Part name="Columnas" required>`columns`: dos o tres cosas que se comparan, en la fila de encabezados.</Anatomy.Part>
+        <Anatomy.Part name="Renglones" required>`rows`: en qué se las mira, como encabezado de la primera columna.</Anatomy.Part>
+        <Anatomy.Part name="Celda">Un campo por cruce, que crece hasta tres renglones. Sin completar, en lectura, dice que falta.</Anatomy.Part>
+      </Anatomy>
+      <Section title="Completándolo y ya entregado">
         <Panel>
           <Variant
             name="completándolo"
-            note="Cada celda es un campo de un renglón que crece hasta tres: entra una frase, no un párrafo."
+            note="Las columnas y los renglones entran como dato, así que dos entregas del mismo curso se pueden leer una al lado de la otra. Cada celda entra en una frase, no en un párrafo."
             code={`<CompareTable rows={fronts} columns={competitors} value={value} onValueChange={setValue}>
   <CompareTable.Prompt>Contra quién competís</CompareTable.Prompt>
   <CompareTable.Hint>Reales: con nombre, y con el precio que cobran de verdad.</CompareTable.Hint>

@@ -1,16 +1,16 @@
 import { useState } from 'react'
 import { useDebounce } from '@milo/ui/lib/use-debounce'
 import { Search } from '@milo/ui/search'
-import { A11y, Demo, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
+import { A11y, Anatomy, Demo, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const activities = ['Fracciones equivalentes', 'Fracciones en la recta', 'El texto instructivo', 'Ángulos y triángulos', 'Proporcionalidad directa']
 
 export function SearchStory() {
+  const [heroEmpty, setHeroEmpty] = useState('')
+  const [heroFilled, setHeroFilled] = useState('fracciones')
   const [first, setFirst] = useState('')
-  const [two, setTwo] = useState('fracciones')
   const [three, setThree] = useState('')
   const [large, setLarge] = useState('')
-  const [shortcut, setShortcut] = useState('')
   const [empty, setEmpty] = useState('')
   const [filled, setFilled] = useState('6.º B')
   const [query, setQuery] = useState('')
@@ -24,45 +24,36 @@ export function SearchStory() {
       lead="Un campo con la lupa y una cruz que aparece cuando hay algo escrito. Es un `TextField` por dentro y no un campo aparte: se dibuja igual que los otros y hereda su inversión contra el fondo."
       imports="import { Search } from '@milo/ui/search'"
     >
-      <Section
-        title="Las tres alturas"
-        note="`sm` en la barra de una tabla, `md` en la de una pantalla, `lg` cuando el buscador **es** la pantalla."
-      >
+      <Hero>
+        <Search size="md" value={heroEmpty} onValueChange={setHeroEmpty} shortcut="/" placeholder="Buscar una actividad" />
+        <Search size="md" value={heroFilled} onValueChange={setHeroFilled} shortcut="/" placeholder="Buscar una actividad" />
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Lupa">El icono de la izquierda, que dice qué es el campo.</Anatomy.Part>
+        <Anatomy.Part name="Campo" required>El texto que se escribe, con su `placeholder`.</Anatomy.Part>
+        <Anatomy.Part name="Atajo">`shortcut`: la tecla que recuerda cómo llegar, cuando el campo está vacío.</Anatomy.Part>
+        <Anatomy.Part name="Cruz">Aparece con algo escrito, en el mismo lugar del atajo, y vacía el campo.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Alturas, atajo y lista">
         <Panel>
-          <Variant name="sm" code={`<Search size="sm" value={first} onValueChange={setFirst} placeholder="Buscar una actividad" />`}>
+          <Variant
+            name="sm · md · lg"
+            note="`sm` en la barra de una tabla, `md` en la de una pantalla, `lg` cuando el buscador **es** la pantalla. Escribí en el de atajo y borrá el de la cruz para ver cómo cambian de lugar."
+            code={`<Search size="sm" value={first} onValueChange={setFirst} placeholder="Buscar una actividad" />
+<Search size="md" value={three} onValueChange={setThree} placeholder="Buscar una actividad" />
+<Search size="lg" value={large} onValueChange={setLarge} placeholder="Buscar una actividad" />
+<Search size="md" value={empty} onValueChange={setEmpty} shortcut="/" placeholder="Buscar" />
+<Search size="md" value={filled} onValueChange={setFilled} shortcut="/" placeholder="Buscar" />`}
+          >
             <Search size="sm" value={first} onValueChange={setFirst} placeholder="Buscar una actividad" />
-          </Variant>
-          <Variant name="md" code={`<Search size="md" value={three} onValueChange={setThree} placeholder="Buscar una actividad" />`}>
             <Search size="md" value={three} onValueChange={setThree} placeholder="Buscar una actividad" />
-          </Variant>
-          <Variant name="lg" code={`<Search size="lg" value={large} onValueChange={setLarge} placeholder="Buscar una actividad" />`}>
             <Search size="lg" value={large} onValueChange={setLarge} placeholder="Buscar una actividad" />
+            <Search size="md" value={empty} onValueChange={setEmpty} shortcut="/" placeholder="Buscar" />
+            <Search size="md" value={filled} onValueChange={setFilled} shortcut="/" placeholder="Buscar" />
           </Variant>
-          <Variant name="con texto" code={`<Search placeholder="Buscar una actividad" size="md" value={two} onValueChange={setTwo} />`}>
-            <Search placeholder="Buscar una actividad" size="md" value={two} onValueChange={setTwo} />
-          </Variant>
-          <Variant name="con atajo" code={`<Search size="md" value={shortcut} onValueChange={setShortcut} shortcut="/" placeholder="Buscar" />`}>
-            <Search size="md" value={shortcut} onValueChange={setShortcut} shortcut="/" placeholder="Buscar" />
-          </Variant>
-        </Panel>
-      </Section>
-
-      <Section
-        title="El atajo y la cruz ocupan el mismo lugar"
-        note="Vacío hace falta saber cómo llegar; con algo escrito, cómo salir. Nunca los dos a la vez. Escribí en el primero y borrá el segundo."
-      >
-        <Panel>
-          <Variant name="vacío · el atajo" code={`<Search placeholder="Buscar una actividad" value={empty} onValueChange={setEmpty} shortcut="/" />`}>
-            <Search placeholder="Buscar una actividad" value={empty} onValueChange={setEmpty} shortcut="/" />
-          </Variant>
-          <Variant name="con texto · la cruz" code={`<Search placeholder="Buscar una actividad" value={filled} onValueChange={setFilled} shortcut="/" />`}>
-            <Search placeholder="Buscar una actividad" value={filled} onValueChange={setFilled} shortcut="/" />
-          </Variant>
-        </Panel>
-      </Section>
-
-      <Section title="Contra una lista">
-        <Demo label="Filtra recién cuando dejás de escribir" width="md" code={`const [query, setQuery] = useState('')
+          <Demo label="Contra una lista: filtra recién cuando dejás de escribir" width="md" code={`const [query, setQuery] = useState('')
 const searched = useDebounce(query, 250)
 const results = activities.filter(a => a.toLowerCase().includes(searched.trim().toLowerCase()))
 
@@ -70,13 +61,14 @@ const results = activities.filter(a => a.toLowerCase().includes(searched.trim().
 <ul>
   {results.map(a => <li key={a}>{a}</li>)}
 </ul>`}>
-          <Stack gap="md">
-            <Search value={query} onValueChange={setQuery} placeholder="Buscar una actividad" />
-            <ul>
-              {results.map(a => <li key={a}>{a}</li>)}
-            </ul>
-          </Stack>
-        </Demo>
+            <Stack gap="md">
+              <Search value={query} onValueChange={setQuery} placeholder="Buscar una actividad" />
+              <ul>
+                {results.map(a => <li key={a}>{a}</li>)}
+              </ul>
+            </Stack>
+          </Demo>
+        </Panel>
       </Section>
 
       <Section title="Props">
@@ -85,6 +77,7 @@ const results = activities.filter(a => a.toLowerCase().includes(searched.trim().
 
       <Section title="Cómo se usa bien">
         <Practices>
+          <Practices.Do>El atajo y la cruz ocupan el mismo lugar: vacío hace falta saber cómo llegar, y con algo escrito, cómo salir. Nunca los dos a la vez.</Practices.Do>
           <Practices.Do>Es controlado: el texto lo guarda quien lo usa, y `onValueChange` recibe vacío al limpiar.</Practices.Do>
           <Practices.Do>Para filtrar contra datos, pasá el valor por `useDebounce` antes de buscar.</Practices.Do>
           <Practices.Dont>`shortcut` es un recordatorio, no la tecla: el atajo lo escucha quien lo pone.</Practices.Dont>

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Avatar } from '@milo/ui/avatar'
 import { Icon } from '@milo/ui/icon'
 import { Select } from '@milo/ui/select'
-import { A11y, Cluster, Demo, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function SelectStory() {
   const [level, setLevel] = useState('6.º grado')
@@ -23,47 +23,77 @@ export function SelectStory() {
       title="Select"
       kind="Formularios"
       imports="import { Select } from '@milo/ui/select'"
-      lead="Es un botón con un listbox propio, no un `<select>` nativo. `appearance: none` te saca la flecha, pero la lista desplegada la sigue dibujando el sistema operativo, así que en Linux aparece un control de GTK en medio de la interfaz: el campo se ve 'sin estilo' por más que la caja esté bien."
+      lead="Elegir un valor de una lista corta. Es un botón con un listbox propio y el teclado a mano, no un `<select>` nativo."
     >
-      <Section
-        title="Variantes"
-        note="Probalo con el teclado: abrí el de las materias y escribí 'ci'."
-      >
-        <Cluster align="start">
-          <Demo label="width 160" code={`<Select value={level} onValueChange={setLevel} width={160} options={['4.º grado', '5.º grado', '6.º grado', '7.º grado']} />`}>
-            <Select value={level} onValueChange={setLevel} width={160} options={['4.º grado', '5.º grado', '6.º grado', '7.º grado']} />
-          </Demo>
-          <Demo label="al ancho del contenido" code={`<Select value={subject} onValueChange={setSubject} options={['Matemática', 'Lengua', 'Ciencias', 'Geografía', 'Convivencia']} />`}>
-            <Select value={subject} onValueChange={setSubject} options={['Matemática', 'Lengua', 'Ciencias', 'Geografía', 'Convivencia']} />
-          </Demo>
-          <Demo width="sm" label="valor largo · se trunca" code={`<Select
+      <Hero>
+        <Select value={level} onValueChange={setLevel} width={160} options={['4.º grado', '5.º grado', '6.º grado', '7.º grado']} />
+        <Select
+          value={withIcon}
+          onValueChange={setWithIcon}
+          width={180}
+          leading={<Icon name="calculate" size={16} />}
+          options={['Matemática', 'Lengua', 'Ciencias']}
+        />
+        <Select value="Cargando espacios…" width={200} loading options={[]} />
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Botón" required>Lo que se ve cerrado: el valor elegido, truncado si no entra.</Anatomy.Part>
+        <Anatomy.Part name="Adelante del valor">`leading`: un glifo, una carpeta o un avatar, que es de quien lo usa.</Anatomy.Part>
+        <Anatomy.Part name="Chevron">La flecha de la derecha, que dice que hay una lista.</Anatomy.Part>
+        <Anatomy.Part name="Lista" required>El panel con las `options`, anclado al botón.</Anatomy.Part>
+        <Anatomy.Part name="Tilde">Marca la opción elegida adentro de la lista.</Anatomy.Part>
+        <Anatomy.Part name="Spinner">Con `loading` reemplaza al `leading`, si no hay uno propio.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Variantes">
+        <Panel>
+          <Variant
+            name="ancho fijo, al contenido y valor largo"
+            note="Probalo con el teclado: abrí el de las materias y escribí 'ci'. Sin `width` toma el ancho del contenido, y un valor más largo que el ancho se trunca."
+            code={`<Select value={level} onValueChange={setLevel} width={160} options={['4.º grado', '5.º grado', '6.º grado', '7.º grado']} />
+<Select value={subject} onValueChange={setSubject} options={['Matemática', 'Lengua', 'Ciencias', 'Geografía', 'Convivencia']} />
+<Select
   value={long}
   onValueChange={setLong}
   width={280}
   options={['Solo yo', 'Todo el equipo', 'Cualquiera con el link puede ver y comentar']}
-/>`}>
+/>`}
+          >
+            <Select value={level} onValueChange={setLevel} width={160} options={['4.º grado', '5.º grado', '6.º grado', '7.º grado']} />
+            <Select value={subject} onValueChange={setSubject} options={['Matemática', 'Lengua', 'Ciencias', 'Geografía', 'Convivencia']} />
             <Select
               value={long}
               onValueChange={setLong}
               width={280}
               options={['Solo yo', 'Todo el equipo', 'Cualquiera con el link puede ver y comentar']}
             />
-          </Demo>
-        </Cluster>
-      </Section>
-
-      <Section
-        title="Adelante del valor"
-        note="`leading` es un nodo y no un `IconName`, al revés que el `icon` del TextField: lo que va adelante del valor es de quien lo usa."
-      >
-        <Cluster align="start">
-          <Demo label="un glifo" code={`<Select
+          </Variant>
+          <Variant
+            name="con un glifo, una carpeta y un avatar"
+            note="`leading` es un nodo y no un `IconName`, al revés que el `icon` del `TextField`: lo que va adelante del valor es de quien lo usa."
+            code={`<Select
   value={withIcon}
   onValueChange={setWithIcon}
   width={180}
   leading={<Icon name="calculate" size={16} />}
   options={['Matemática', 'Lengua', 'Ciencias']}
-/>`}>
+/>
+<Select
+  value={space}
+  onValueChange={setSpace}
+  width={200}
+  leading={<Icon.Folder color="blue" size={16} />}
+  options={['Matemática · 4.º A', 'Lengua · 6.º', 'Ciencias · 5.º B']}
+/>
+<Select
+  value={teacher}
+  onValueChange={setTeacher}
+  width={190}
+  leading={<Avatar name="Melina Rivero" size={20} />}
+  options={['Melina Rivero', 'Juan Pérez', 'Ana Gómez']}
+/>`}
+          >
             <Select
               value={withIcon}
               onValueChange={setWithIcon}
@@ -71,14 +101,6 @@ export function SelectStory() {
               leading={<Icon name="calculate" size={16} />}
               options={['Matemática', 'Lengua', 'Ciencias']}
             />
-          </Demo>
-          <Demo label="una carpeta de color" code={`<Select
-  value={space}
-  onValueChange={setSpace}
-  width={200}
-  leading={<Icon.Folder color="blue" size={16} />}
-  options={['Matemática · 4.º A', 'Lengua · 6.º', 'Ciencias · 5.º B']}
-/>`}>
             <Select
               value={space}
               onValueChange={setSpace}
@@ -86,14 +108,6 @@ export function SelectStory() {
               leading={<Icon.Folder color="blue" size={16} />}
               options={['Matemática · 4.º A', 'Lengua · 6.º', 'Ciencias · 5.º B']}
             />
-          </Demo>
-          <Demo label="un avatar" code={`<Select
-  value={teacher}
-  onValueChange={setTeacher}
-  width={190}
-  leading={<Avatar name="Melina Rivero" size={20} />}
-  options={['Melina Rivero', 'Juan Pérez', 'Ana Gómez']}
-/>`}>
             <Select
               value={teacher}
               onValueChange={setTeacher}
@@ -101,25 +115,27 @@ export function SelectStory() {
               leading={<Avatar name="Melina Rivero" size={20} />}
               options={['Melina Rivero', 'Juan Pérez', 'Ana Gómez']}
             />
-          </Demo>
-        </Cluster>
-      </Section>
-
-      <Section
-        title="Mientras los datos no están"
-        note="Va `loading` y no un spinner por `leading`: con el spinner suelto el control sigue abriendo una lista vieja. No recibe promesas: el estado lo pasa quien carga."
-      >
-        <Cluster align="start">
-          <Demo label="loading · el spinner es el default" code={`<Select value="Cargando espacios…" width={200} loading options={[]} />`}>
-            <Select value="Cargando espacios…" width={200} loading options={[]} />
-          </Demo>
-          <Demo label="loading con leading propio" code={`<Select
+          </Variant>
+          <Variant
+            name="mientras los datos no están"
+            note="El del medio alterna cada 2 segundos entre cargando y con datos."
+            code={`<Select value="Cargando espacios…" width={200} loading options={[]} />
+<Select
   value="Matemática"
   width={180}
   loading
   leading={<Icon name="calculate" size={16} className="icon-muted" />}
   options={['Matemática', 'Lengua']}
-/>`}>
+/>
+<Select
+  value={loading ? 'Buscando espacios…' : space}
+  onValueChange={setSpace}
+  width={200}
+  loading={loading}
+  options={['Matemática · 4.º A', 'Lengua · 6.º', 'Ciencias · 5.º B']}
+/>`}
+          >
+            <Select value="Cargando espacios…" width={200} loading options={[]} />
             <Select
               value="Matemática"
               width={180}
@@ -127,14 +143,6 @@ export function SelectStory() {
               leading={<Icon name="calculate" size={16} className="icon-muted" />}
               options={['Matemática', 'Lengua']}
             />
-          </Demo>
-          <Demo label="en vivo · alterna cada 2s" code={`<Select
-  value={loading ? 'Buscando espacios…' : space}
-  onValueChange={setSpace}
-  width={200}
-  loading={loading}
-  options={['Matemática · 4.º A', 'Lengua · 6.º', 'Ciencias · 5.º B']}
-/>`}>
             <Select
               value={loading ? 'Buscando espacios…' : space}
               onValueChange={setSpace}
@@ -142,8 +150,8 @@ export function SelectStory() {
               loading={loading}
               options={['Matemática · 4.º A', 'Lengua · 6.º', 'Ciencias · 5.º B']}
             />
-          </Demo>
-        </Cluster>
+          </Variant>
+        </Panel>
       </Section>
 
       <Section title="Props">
@@ -153,6 +161,8 @@ export function SelectStory() {
       <Section title="Cómo se usa bien">
         <Practices>
           <Practices.Do>{'Es un botón con listbox propio y no un `<select>` nativo: la lista del sistema operativo no se puede estilar.'}</Practices.Do>
+          <Practices.Do>Mientras los datos no están va `loading`: no recibe promesas, el estado lo pasa quien carga.</Practices.Do>
+          <Practices.Dont>No pongas un spinner por `leading` para simular la carga: el control sigue abriendo una lista vieja.</Practices.Dont>
           <Practices.Dont>Para más de una decena de opciones va un buscador, no una lista larga.</Practices.Dont>
         </Practices>
       </Section>

@@ -3,7 +3,7 @@ import { IconButton } from '@milo/ui/icon-button'
 import { Button } from '@milo/ui/button'
 import { Indicator } from '@milo/ui/indicator'
 import { Tooltip } from '@milo/ui/tooltip'
-import { A11y, Page, Panel, Practices, Props, Section, Variant } from '../kit'
+import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function IconButtonStory() {
   return (
@@ -12,92 +12,104 @@ export function IconButtonStory() {
       kind="Acciones"
       imports="import { IconButton } from '@milo/ui/icon-button'
 import { Indicator } from '@milo/ui/indicator'"
-      lead="Cuadrado del alto de su paso, y los pasos son los del `Button`: un icono al lado de un botón en la misma fila apoya en la misma línea sin que nadie lo calcule. El radio es 10 y no el 12 del Button: sobre un cuadrado chico, esos dos píxeles se comen tanto lado plano que la pieza se lee redonda."
+      lead="Un botón que es solo un glifo, cuadrado del alto de su paso: al lado de un `Button` del mismo `size` apoya en la misma línea sin que nadie lo calcule. El radio es 10 y no el 12 del `Button`, porque sobre un cuadrado chico esos dos píxeles lo hacen leerse redondo."
     >
-      <Section
-        title="Los tres tamaños"
-        note="`sm` en una barra o adentro de una fila, `md` suelto, `lg` donde se toca con el dedo."
-      >
+      <Hero>
+        <IconButton icon="tune" label="Ajustes" />
+        <IconButton icon="edit" label="Editar" variant="muted" />
+        <IconButton icon="check" label="Aceptar" variant="solid" />
+        <IconButton icon="add" label="Nueva actividad" variant="brand" />
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Icono" required>`icon`: el glifo, que es todo lo que se ve.</Anatomy.Part>
+        <Anatomy.Part name="Nombre">`label`: no se ve, es el nombre accesible del botón.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Tamaños y variantes">
         <Panel>
-          <Variant name="sm · md · lg" code={`<IconButton icon="tune" label="Ajustes" size="sm" variant="muted" />
+          <Variant
+            name="sm · md · lg"
+            note="`sm` en una barra o adentro de una fila, `md` suelto, `lg` donde se toca con el dedo. Al lado de un `Button` va con el mismo `size`."
+            code={`<IconButton icon="tune" label="Ajustes" size="sm" variant="muted" />
 <IconButton icon="tune" label="Ajustes" size="md" variant="muted" />
-<IconButton icon="tune" label="Ajustes" size="lg" variant="muted" />`}>
+<IconButton icon="tune" label="Ajustes" size="lg" variant="muted" />
+<Button size="md" variant="muted">Exportar</Button>
+<IconButton icon="tune" label="Ajustes" size="md" variant="muted" />`}
+          >
             <IconButton icon="tune" label="Ajustes" size="sm" variant="muted" />
             <IconButton icon="tune" label="Ajustes" size="md" variant="muted" />
             <IconButton icon="tune" label="Ajustes" size="lg" variant="muted" />
-          </Variant>
-          <Variant name="al lado de su botón" note="Mismo `size`, misma línea." code={`<Button size="md" variant="muted">Exportar</Button>
-<IconButton icon="tune" label="Ajustes" size="md" variant="muted" />`}>
             <Button size="md" variant="muted">Exportar</Button>
             <IconButton icon="tune" label="Ajustes" size="md" variant="muted" />
           </Variant>
-        </Panel>
-      </Section>
-
-      <Section title="Variantes" note="`ghost` en una barra, `muted` cuando tiene que encontrarse solo, `brand` para la acción que manda.">
-        <Panel>
-          <Variant name="ghost" code={`<IconButton icon="tune" label="Ajustes" />
-<IconButton icon="tune" label="Ajustes" size="sm" />`}>
+          <Variant
+            name="ghost · muted · solid · brand"
+            note="`ghost` en una barra, `muted` cuando tiene que encontrarse solo, `brand` para la acción que manda."
+            code={`<IconButton icon="tune" label="Ajustes" />
+<IconButton icon="edit" label="Editar" variant="muted" />
+<IconButton icon="check" label="Aceptar" variant="solid" />
+<IconButton icon="add" label="Nueva actividad" variant="brand" />`}
+          >
             <IconButton icon="tune" label="Ajustes" />
-            <IconButton icon="tune" label="Ajustes" size="sm" />
-          </Variant>
-          <Variant name="muted" code={`<IconButton icon="edit" label="Editar" variant="muted" />
-<IconButton icon="edit" label="Editar" variant="muted" size="sm" />`}>
             <IconButton icon="edit" label="Editar" variant="muted" />
-            <IconButton icon="edit" label="Editar" variant="muted" size="sm" />
-          </Variant>
-          <Variant name="solid" code={`<IconButton icon="check" label="Aceptar" variant="solid" />`}>
             <IconButton icon="check" label="Aceptar" variant="solid" />
-          </Variant>
-          <Variant name="brand" code={`<IconButton icon="add" label="Nueva actividad" variant="brand" />`}>
             <IconButton icon="add" label="Nueva actividad" variant="brand" />
           </Variant>
         </Panel>
       </Section>
 
-      <Section
-        title="Estados"
-        note="`active` es para el botón cuyo panel está abierto, o el filtro que está puesto."
-      >
+      <Section title="Estados">
         <Panel>
-          <Variant name="active" note="El panel de filtros está abierto." code={`<IconButton icon="filter_alt" label="Filtrar" active />`}>
+          <Variant
+            name="active · disabled"
+            note="`active` es para el botón cuyo panel está abierto, o el filtro que está puesto. Apagado no responde y se ve que no responde."
+            code={`<IconButton icon="filter_alt" label="Filtrar" active />
+<IconButton icon="delete" label="Eliminar" disabled />`}
+          >
             <IconButton icon="filter_alt" label="Filtrar" active />
-          </Variant>
-          <Variant name="disabled" note="No responde y se ve que no responde." code={`<IconButton icon="delete" label="Eliminar" disabled />`}>
             <IconButton icon="delete" label="Eliminar" disabled />
           </Variant>
         </Panel>
       </Section>
 
-      <Section
-        title="Dónde aparece de verdad"
-        note="Casi nunca va suelto: va en una fila, en una cabecera o en una barra."
-      >
+      <Section title="Dónde aparece de verdad" note="Casi nunca va suelto: va en una fila, en una cabecera o en una barra.">
         <Panel>
-          <Variant name="la acción de una fila" note="`ghost` y `sm`: la fila ya tiene su marco." code={`<IconButton icon="more_horiz" label="Más opciones de Fracciones equivalentes" size="sm" />`}>
+          <Variant
+            name="la acción de una fila"
+            note="`ghost` y `sm`: la fila ya tiene su marco."
+            code={`<IconButton icon="more_horiz" label="Más opciones de Fracciones equivalentes" size="sm" />`}
+          >
             <span className={cls.rowSample}>
               <span className={cls.rowText}>Fracciones equivalentes</span>
               <IconButton icon="more_horiz" label="Más opciones de Fracciones equivalentes" size="sm" />
             </span>
           </Variant>
-          <Variant name="con su ayuda a la vista" note="La etiqueta visible la pone `Tooltip`." code={`<Tooltip label="Exportar a CSV">
+          <Variant
+            name="con ayuda y con una marca"
+            note="La etiqueta visible la pone `Tooltip` y el puntito lo pone `Indicator`: este botón no tiene una prop para ninguno de los dos."
+            code={`<Tooltip label="Exportar a CSV">
   <IconButton icon="download" label="Exportar" variant="muted" onClick={exportCsv} />
-</Tooltip>`}>
+</Tooltip>
+<Indicator dot label="Hay avisos sin leer" inset={6}>
+  <IconButton icon="notifications" label="Novedades" variant="muted" />
+</Indicator>`}
+          >
             <Tooltip label="Exportar a CSV">
               <IconButton icon="download" label="Exportar" variant="muted" />
             </Tooltip>
-          </Variant>
-          <Variant name="con una marca encima" note="El puntito lo pone `Indicator`. Este botón no tiene una prop para eso." code={`<Indicator dot label="Hay avisos sin leer" inset={6}>
-  <IconButton icon="notifications" label="Novedades" variant="muted" />
-</Indicator>`}>
             <Indicator dot label="Hay avisos sin leer" inset={6}>
               <IconButton icon="notifications" label="Novedades" variant="muted" />
             </Indicator>
           </Variant>
-          <Variant name="uno al lado del otro" note="En una barra van sin caja y separados por el aire. Si tienen que leerse como un grupo, va `ButtonGroup`." code={`<IconButton icon="undo" label="Deshacer" size="sm" />
+          <Variant
+            name="uno al lado del otro"
+            note="En una barra van sin caja y separados por el aire. Si tienen que leerse como un grupo, va `ButtonGroup`."
+            code={`<IconButton icon="undo" label="Deshacer" size="sm" />
 <IconButton icon="redo" label="Rehacer" size="sm" />
 <IconButton icon="content_copy" label="Duplicar" size="sm" />
-<IconButton icon="delete" label="Eliminar" size="sm" />`}>
+<IconButton icon="delete" label="Eliminar" size="sm" />`}
+          >
             <IconButton icon="undo" label="Deshacer" size="sm" />
             <IconButton icon="redo" label="Rehacer" size="sm" />
             <IconButton icon="content_copy" label="Duplicar" size="sm" />
@@ -123,7 +135,7 @@ import { Indicator } from '@milo/ui/indicator'"
           <A11y.Item>El `label` es obligatorio y se convierte en el nombre accesible: un icono solo no dice nada.</A11y.Item>
           <A11y.Item>No lleva `title` nativo, que era una segunda caja del sistema operativo diciendo lo mismo.</A11y.Item>
           <A11y.Item>Para la ayuda visual se envuelve en `Tooltip`, que aparece también con el teclado.</A11y.Item>
-                  </A11y>
+        </A11y>
       </Section>
     </Page>
   )

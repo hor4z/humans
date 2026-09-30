@@ -9,7 +9,7 @@ import { Segmented } from '@milo/ui/segmented'
 import { Slider } from '@milo/ui/slider'
 import { TextField } from '@milo/ui/text-field'
 import { iconTags } from '@milo/ui/icons.meta'
-import { A11y, Cluster, Demo, Footnote, Mono, Page, Panel, Practices, Props, Section, Variant } from '../kit'
+import { A11y, Anatomy, Cluster, Demo, Footnote, Hero, Mono, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 const sizes = [
   { px: 12, role: 'un badge, la cruz de un chip' },
@@ -49,25 +49,21 @@ export function IconStory() {
       title="Icon"
       kind="Fundamentos"
       imports="import { Icon } from '@milo/ui/icon'"
-      lead="Material Symbols Rounded, subseteado a lo que usamos y servido desde el repo. Peso 300 de base, y peso y relleno son ejes reales de la fuente, no variantes generadas."
+      lead="Material Symbols Rounded, subseteado a lo que usamos y servido desde el repo. Peso 300 de base."
     >
-      <Section
-        title="El eje"
-        note="El peso va de 100 a 700 y es continuo, porque el set es una fuente variable. El relleno está clavado en 0: todos de contorno."
-      >
-        <Panel>
-          <Variant name="wght 100…700" code={`{[100, 200, 300, 400, 500, 600, 700].map(weight => (
-  <Icon key={weight} name="notifications" size={28} weight={weight} />
-))}`}>
-            {([100, 200, 300, 400, 500, 600, 700] as IconWeight[]).map(w => (
-              <span key={w} className={cls.weightSample}>
-                <Icon name="notifications" size={28} weight={w} />
-                <Mono>{w}</Mono>
-              </span>
-            ))}
-          </Variant>
-        </Panel>
-      </Section>
+      <Hero>
+        <Icon name="search" size={28} />
+        <Icon name="calendar_month" size={28} />
+        <Icon name="notifications" size={28} />
+        <Icon name="favorite" size={28} />
+        <Icon name="search" size={28} className="icon-muted" />
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Glifo" required>El símbolo de la fuente, elegido con `name` del manifiesto. Peso y relleno son ejes reales de la fuente: el peso va de 100 a 700 y es continuo, el relleno está clavado en 0.</Anatomy.Part>
+        <Anatomy.Part name="Caja">El cuadrado de `size` px, 20 si nadie lo manda. El gris se hereda del ancestro con `icon-muted`.</Anatomy.Part>
+        <Anatomy.Part name="Carpeta">`Icon.Folder`: la carpeta de color de un espacio, que se reconoce de reojo en una lista de siete.</Anatomy.Part>
+      </Anatomy>
 
       <Section
         title={`El set · ${iconNames.length} iconos`}
@@ -135,55 +131,59 @@ export function IconStory() {
         </Footnote>
       </Section>
 
-      <Section
-        title="Los tamaños"
-        note="Siete pasos, todos pares: con una fuente, un tamaño impar cae en media grilla de píxeles y el glifo se ve borroso."
-      >
+      <Section title="Peso, tamaño y gris">
         <Panel>
-          {sizes.map(e => (
-            <Variant key={e.px} name={`${e.px}`} code={`<Icon name="calendar_month" size={${e.px}} />`}>
-              <Icon name="calendar_month" size={e.px} />
-              <span className={cls.sizeRole}>{e.role}</span>
-            </Variant>
-          ))}
-        </Panel>
-      </Section>
-
-      <Section
-        title="El gris no es una prop"
-        note="El gris se hereda de un ancestro y el call site no tiene cómo saberlo: por eso es la utilidad `icon-muted`, que pone el color y sube el peso juntos."
-      >
-        <Panel>
-          <Variant name="en tinta" code={`<Icon name="search" size={20} />`}>
+          <Variant
+            name="Peso"
+            note="El eje va de 100 a 700."
+            code={`{[100, 200, 300, 400, 500, 600, 700].map(weight => (
+  <Icon key={weight} name="notifications" size={28} weight={weight} />
+))}`}
+          >
+            {([100, 200, 300, 400, 500, 600, 700] as IconWeight[]).map(w => (
+              <span key={w} className={cls.weightSample}>
+                <Icon name="notifications" size={28} weight={w} />
+                <Mono>{w}</Mono>
+              </span>
+            ))}
+          </Variant>
+          <Variant
+            name="Tamaño"
+            note="Siete pasos, todos pares: con una fuente, un tamaño impar cae en media grilla de píxeles y el glifo se ve borroso."
+            code={`{[12, 14, 16, 18, 20, 22, 24].map(px => (
+  <Icon key={px} name="calendar_month" size={px} />
+))}`}
+          >
+            {sizes.map(e => (
+              <span key={e.px} className={cls.weightSample}>
+                <Icon name="calendar_month" size={e.px} />
+                <Mono>{e.px}</Mono>
+              </span>
+            ))}
+          </Variant>
+          <Variant
+            name="Gris"
+            note="En tinta queda en peso 300. Con `icon-muted` el peso sube a 400 solo, sin prop. Un gris sin la utilidad queda en 300 y se apaga."
+            code={`<Icon name="search" size={20} />
+<Icon name="search" size={20} className="icon-muted" />
+<Icon name="search" size={20} className={styles.gray} />`}
+          >
             <Icon name="search" size={20} />
-            <span className={cls.defaultNote}>peso 300</span>
-          </Variant>
-          <Variant name="icon-muted" code={`<Icon name="search" size={20} className="icon-muted" />`}>
             <Icon name="search" size={20} className="icon-muted" />
-            <span className={cls.mutedNote}>el peso sube a 400 solo, sin prop</span>
-          </Variant>
-          <Variant name="el error" code={`<Icon name="search" size={20} className={styles.gray} />`}>
             <Icon name="search" size={20} className={cls.plainGrayIcon} />
-            <span className={cls.plainGrayNote}>gris sin la utilidad: queda en 300 y se apaga</span>
           </Variant>
         </Panel>
       </Section>
 
-      <Section
-        title="Cómo se agrega uno"
-        note="Hay más de tres mil novecientos en el catálogo y el set trae los que usamos. Agregar uno es un comando, no dibujar un path. El catálogo está versionado, así que buscar funciona sin internet."
-      >
-        <Panel>
-          <Variant name="buscar" code={`npm run icons -- search notification`}>
-            <span className={cls.sizeRole}>en el catálogo entero, por nombre o por tag</span>
-          </Variant>
-          <Variant name="agregar" code={`npm run icons -- add rocket_launch`}>
-            <span className={cls.sizeRole}>antes de bajar nada pregunta si el nombre existe, si ya lo tenemos y si hay uno en el set con los mismos tags; <Mono>--yes</Mono> saltea la tercera</span>
-          </Variant>
-          <Variant name="auditar" code={`npm run icons -- check`}>
-            <span className={cls.sizeRole}>los usados que faltan, y los que están y no usa nadie</span>
-          </Variant>
-        </Panel>
+      <Section title="Cómo se agrega uno">
+        <Demo
+          label="Un comando, no un path"
+          code={`npm run icons -- search notification
+npm run icons -- add rocket_launch
+npm run icons -- check`}
+        >
+          <Mono>npm run icons -- add rocket_launch</Mono>
+        </Demo>
       </Section>
 
       <Section title="Props">
@@ -193,8 +193,8 @@ export function IconStory() {
       <Section title="Cómo se usa bien">
         <Practices>
           <Practices.Do>El gris se hereda del ancestro con `icon-muted`, no se pasa por prop.</Practices.Do>
-          <Practices.Do>El tamaño sale de la escala: 12, 14, 16, 18, 20, 22 o 24.</Practices.Do>
-          <Practices.Dont>El set crece solo por `npm run icons -- add`: no dibujes un path a mano.</Practices.Dont>
+          <Practices.Do>El tamaño sale de la escala: 12 un badge o la cruz de un chip, 14 la marca de un Select, 16 adentro de un control chico, 18 adentro de un botón mediano, 20 la interfaz (el default), 22 una marca de lista, 24 adentro de un control de 44.</Practices.Do>
+          <Practices.Dont>El set crece solo por `npm run icons -- add`: no dibujes un path a mano. Antes de bajar nada pregunta si el nombre existe, si ya lo tenemos y si hay uno con los mismos tags; `--yes` saltea la tercera. `search` busca en el catálogo entero, que está versionado y funciona sin internet, y `check` lista los usados que faltan y los que no usa nadie.</Practices.Dont>
         </Practices>
       </Section>
 

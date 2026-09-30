@@ -8,7 +8,7 @@ import { Switch } from '@milo/ui/switch'
 import { TextField } from '@milo/ui/text-field'
 import { Textarea } from '@milo/ui/textarea'
 import { useToast } from '@milo/ui/toast'
-import { A11y, Demo, Note, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Demo, Hero, Page, Panel, Practices, Props, Section } from '../kit'
 
 export function SheetStory() {
   const [late, setLate] = useState(true)
@@ -26,11 +26,23 @@ export function SheetStory() {
       imports="import { Sheet } from '@milo/ui/sheet'"
       lead="El panel que entra de costado, para un formulario largo que no justifica cambiar de pantalla. Lo de atrás se queda donde estaba y al cerrar seguís en el mismo lugar, con el scroll donde lo dejaste."
     >
-      <Section
-        title="Un formulario entero"
-        note="Cabecera, cuerpo y pie: el cuerpo scrollea y el pie con las acciones no, así que guardar queda siempre a la vista."
-      >
-        <Demo code={`<Button variant="brand" onClick={() => setOpen(true)}>Nueva actividad</Button>
+      <Hero>
+        <Button variant="brand" onClick={() => setOpen(true)}>Nueva actividad</Button>
+        <Button variant="muted" iconStart={<Icon name="filter_list" />} onClick={() => setLeftOpen(true)}>Filtros</Button>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Panel" required>`Sheet`: la caja que entra de un costado, con `side` y `width`.</Anatomy.Part>
+        <Anatomy.Part name="Velo">El fondo atenuado: un clic afuera cierra el panel.</Anatomy.Part>
+        <Anatomy.Part name="Cabecera" required>`Sheet.Header`: no se mueve, y trae la X para cerrar.</Anatomy.Part>
+        <Anatomy.Part name="Título" required>`Sheet.Title`: el nombre que anuncia el lector.</Anatomy.Part>
+        <Anatomy.Part name="Cuerpo">`Sheet.Body`: la parte que scrollea cuando el contenido no entra.</Anatomy.Part>
+        <Anatomy.Part name="Pie">`Sheet.Footer`: las acciones, que no scrollean y quedan siempre a la vista.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Un formulario y un filtro">
+        <Panel>
+        <Demo label="Un formulario entero: guardar queda siempre a la vista" code={`<Button variant="brand" onClick={() => setOpen(true)}>Nueva actividad</Button>
 
 <Sheet open={open} onOpenChange={setOpen}>
   <Sheet.Header><Sheet.Title>Nueva actividad</Sheet.Title></Sheet.Header>
@@ -102,13 +114,7 @@ export function SheetStory() {
             </Sheet.Footer>
           </Sheet>
         </Demo>
-      </Section>
-
-      <Section
-        title="De qué lado entra"
-        note="El izquierdo es para lo que acompaña a la navegación (un filtro, un índice) y no para un formulario: entrar por donde está el menú se lee como que el menú creció."
-      >
-        <Demo code={`<Button variant="muted" iconStart={<Icon name="filter_list" />} onClick={() => setLeftOpen(true)}>Filtros</Button>
+        <Demo label="Del lado izquierdo, para lo que acompaña a la navegación" code={`<Button variant="muted" iconStart={<Icon name="filter_list" />} onClick={() => setLeftOpen(true)}>Filtros</Button>
 
 <Sheet open={leftOpen} onOpenChange={setLeftOpen} side="left" width={360}>
   <Sheet.Header><Sheet.Title>Filtros</Sheet.Title></Sheet.Header>
@@ -150,14 +156,8 @@ export function SheetStory() {
             </Sheet.Footer>
           </Sheet>
         </Demo>
+        </Panel>
       </Section>
-
-      <Note title="Sheet o Modal">
-        El [Modal](#modal) interrumpe y pide una
-        decisión corta: confirmá, elegí, mirá esto. El panel lateral es para trabajar un rato: un
-        formulario de seis campos en un modal centrado tapa la pantalla y no deja ver aquello sobre
-        lo que estás escribiendo.
-      </Note>
 
       <Section title="Props">
         <Props of="Sheet" />
@@ -166,7 +166,8 @@ export function SheetStory() {
       <Section title="Cómo se usa bien">
         <Practices>
           <Practices.Do>El nombre sale de `Sheet.Title`. `label` queda para el panel sin título a la vista.</Practices.Do>
-          <Practices.Do>Va para un formulario largo: un modal centrado de seis campos tapa lo que estás mirando.</Practices.Do>
+          <Practices.Do>Va para trabajar un rato: un `Modal` interrumpe y pide una decisión corta, y uno centrado con un formulario de seis campos tapa aquello sobre lo que estás escribiendo.</Practices.Do>
+          <Practices.Do>`side="left"` es para lo que acompaña a la navegación, un filtro o un índice, y no para un formulario: entrar por donde está el menú se lee como que el menú creció.</Practices.Do>
           <Practices.Dont>No lo anides adentro de un modal: son dos capas que compiten por el mismo Escape.</Practices.Dont>
         </Practices>
       </Section>

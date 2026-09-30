@@ -1,7 +1,7 @@
 import { Button } from '@milo/ui/button'
 import { Icon } from '@milo/ui/icon'
 import { useToast } from '@milo/ui/toast'
-import { A11y, Cluster, Demo, Note, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Cluster, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function ToastStory() {
   const { toast } = useToast()
@@ -11,13 +11,33 @@ export function ToastStory() {
       title="Toast"
       kind="Avisos"
       imports="import { ToastProvider, useToast } from '@milo/ui/toast'"
-      lead="El acuse de recibo de algo que la persona acaba de hacer. Va abajo a la derecha, se apila hasta tres y se va solo. No pide respuesta y no interrumpe: si hace falta que alguien conteste, eso es un `Modal`, y si tiene que seguir ahí después, es un `Alert`."
+      lead="El acuse de recibo de algo que la persona acaba de hacer. Va abajo a la derecha y se va solo: no pide respuesta y no interrumpe. El `ToastProvider` va una sola vez arriba de todo, y `toast()` sale de `useToast()` en cualquier lado del árbol."
     >
-      <Section
-        title="Probalo"
-        note="El `ToastProvider` va una sola vez arriba de todo, y `toast()` sale de `useToast()` en cualquier lado del árbol."
-      >
-        <Demo label="los cinco casos" code={`const { toast } = useToast()
+      <Hero>
+        <Cluster gap="sm">
+          <Button variant="brand" onClick={() => toast({ title: 'Actividad publicada', body: 'La ven los siete espacios', tone: 'ok' })}>
+            Publicar
+          </Button>
+          <Button variant="muted" onClick={() => toast({ title: 'Se guardó el borrador' })}>
+            Guardar
+          </Button>
+          <Button variant="muted" onClick={() => toast({ title: 'No se pudo subir el archivo', body: 'Pesa más de 20 MB', tone: 'bad' })}>
+            Error
+          </Button>
+        </Cluster>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Título" required>`title`: lo que pasó, en una línea.</Anatomy.Part>
+        <Anatomy.Part name="Cuerpo">`body`: el detalle, si hace falta.</Anatomy.Part>
+        <Anatomy.Part name="Hora">`meta`: cuándo pasó, a la derecha del título.</Anatomy.Part>
+        <Anatomy.Part name="Acción">`action`: un botón, casi siempre para deshacer.</Anatomy.Part>
+        <Anatomy.Part name="Cerrar">Una X que lo saca antes de que se vaya solo.</Anatomy.Part>
+        <Anatomy.Part name="Pila">Se apilan hasta tres: el cuarto empuja al más viejo, y el reloj se pausa mientras el mouse está encima.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Probalo">
+        <Demo label="los casos, y cinco seguidos para ver la pila" code={`const { toast } = useToast()
 
 <Button variant="brand" onClick={() => toast({ title: 'Actividad publicada', body: 'La ven los siete espacios', tone: 'ok' })}>
   Publicar
@@ -33,6 +53,15 @@ export function ToastStory() {
 </Button>
 <Button variant="muted" onClick={() => toast({ title: 'Resumen de la semana', body: 'El lunes ya está listo.', meta: 'recién' })}>
   Con hora
+</Button>
+<Button
+  variant="muted"
+  onClick={() => {
+    const names = ['Fracciones', 'El sistema solar', 'Cuento policial', 'Mapa de América', 'Ecosistemas']
+    names.forEach((n, i) => setTimeout(() => toast({ title: \`Se corrigió "\${n}"\`, tone: 'ok' }), i * 260))
+  }}
+>
+  Cinco de una
 </Button>`}>
           <Cluster gap="sm">
             <Button variant="brand" onClick={() => toast({ title: 'Actividad publicada', body: 'La ven los siete espacios', tone: 'ok' })}>
@@ -49,6 +78,15 @@ export function ToastStory() {
             </Button>
             <Button variant="muted" onClick={() => toast({ title: 'Resumen de la semana', body: 'El lunes ya está listo.', meta: 'recién' })}>
               Con hora
+            </Button>
+            <Button
+              variant="muted"
+              onClick={() => {
+                const names = ['Fracciones', 'El sistema solar', 'Cuento policial', 'Mapa de América', 'Ecosistemas']
+                names.forEach((n, i) => setTimeout(() => toast({ title: `Se corrigió "${n}"`, tone: 'ok' }), i * 260))
+              }}
+            >
+              Cinco de una
             </Button>
           </Cluster>
         </Demo>
@@ -83,37 +121,6 @@ export function ToastStory() {
         </Demo>
       </Section>
 
-      <Section
-        title="Se apila hasta tres"
-        note="El cuarto empuja al más viejo, y el reloj se pausa mientras el mouse está encima."
-      >
-        <Demo label="tirá cinco seguidos" code={`<Button
-  variant="muted"
-  onClick={() => {
-    const names = ['Fracciones', 'El sistema solar', 'Cuento policial', 'Mapa de América', 'Ecosistemas']
-    names.forEach((n, i) => setTimeout(() => toast({ title: \`Se corrigió "\${n}"\`, tone: 'ok' }), i * 260))
-  }}
->
-  Cinco de una
-</Button>`}>
-          <Button
-            variant="muted"
-            onClick={() => {
-              const names = ['Fracciones', 'El sistema solar', 'Cuento policial', 'Mapa de América', 'Ecosistemas']
-              names.forEach((n, i) => setTimeout(() => toast({ title: `Se corrigió "${n}"`, tone: 'ok' }), i * 260))
-            }}
-          >
-            Cinco de una
-          </Button>
-        </Demo>
-      </Section>
-
-      <Note title="Toast o Alert">
-        El toast pasa por encima y se va; el [Alert](#alert) se
-        queda en la página. La prueba es simple: si la persona se fue a hacer otra cosa y vuelve
-        dentro de un minuto, ¿tiene que seguir viendo el aviso? Si sí, no es un toast.
-      </Note>
-
       <Section title="Props">
         <Props of={['ToastOptions', 'ToastProvider']} />
       </Section>
@@ -122,6 +129,7 @@ export function ToastStory() {
         <Practices>
           <Practices.Do>Es para lo que pasó y no necesita respuesta: aparece, se lee y se va.</Practices.Do>
           <Practices.Do>Lo que se puede revertir va con `action` de deshacer y no con una confirmación antes: preguntar cuesta un click siempre, deshacer solo cuando alguien se equivocó.</Practices.Do>
+          <Practices.Dont>Si la persona tiene que seguir viendo el aviso cuando vuelva dentro de un minuto, no es un toast: es un [Alert](#alert), que se queda en la página.</Practices.Dont>
           <Practices.Dont>Con `duration: 0` poné una salida: sin X y sin acción, no hay forma de cerrarlo.</Practices.Dont>
         </Practices>
       </Section>

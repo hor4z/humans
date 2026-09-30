@@ -2,7 +2,7 @@ import cls from './nav.module.css'
 import { useState } from 'react'
 import { Icon } from '@milo/ui/icon'
 import { Nav } from '@milo/ui/nav'
-import { A11y, Demo, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function NavStory() {
   const [active, setActive] = useState('explorar')
@@ -14,11 +14,27 @@ export function NavStory() {
       imports="import { Nav } from '@milo/ui/nav'"
       lead="El riel de una app y sus items. `Nav.Item` es un botón; para el link de un router van `Nav.itemClass` y `Nav.Body`, que son las mismas dos mitades por separado."
     >
-      <Section
-        title="El item"
-        note="El activo se marca con la barra de la izquierda y el azul suave. En un riel de doce items, un activo en gris hay que buscarlo."
-      >
-        <Demo code={`<Nav label="Principal">
+      <Hero>
+        <div className={cls.itemRail}>
+          <Nav label="Principal" className={cls.itemList}>
+            <Nav.Item icon="explore" current={active === 'explorar'} onClick={() => setActive('explorar')}>Explorar</Nav.Item>
+            <Nav.Item icon="layers" badge="84" current={active === 'recursos'} onClick={() => setActive('recursos')}>Recursos</Nav.Item>
+            <Nav.Item icon="favorite" current={active === 'guardadas'} onClick={() => setActive('guardadas')}>Guardadas</Nav.Item>
+          </Nav>
+        </div>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Riel" required>{'`Nav`: un `<nav>` con su nombre, y los items uno debajo del otro.'}</Anatomy.Part>
+        <Anatomy.Part name="Item" required>`Nav.Item`: un botón por destino. El activo se marca con la barra de la izquierda.</Anatomy.Part>
+        <Anatomy.Part name="Icono">El glifo del set con `icon`, o uno propio con `glyph`, como la carpeta de color de un espacio.</Anatomy.Part>
+        <Anatomy.Part name="Etiqueta" required>El texto del item, que se esconde al contraer el riel.</Anatomy.Part>
+        <Anatomy.Part name="Contador">El `badge`: hundido como un `Kbd`, porque un contador no es accionable.</Anatomy.Part>
+        <Anatomy.Part name="Subitem">`Nav.SubItem`: debajo de su padre, con la sangría de la columna del texto para que las etiquetas queden alineadas.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Ejemplos">
+        <Demo label="Completo: items, encabezado y espacios" code={`<Nav label="Principal">
   <Nav.Item icon="explore" current={active === 'explorar'} onClick={() => setActive('explorar')}>Explorar</Nav.Item>
   <Nav.Item icon="layers" badge="84" current={active === 'recursos'} onClick={() => setActive('recursos')}>Recursos</Nav.Item>
   <Nav.Item icon="favorite" current={active === 'guardadas'} onClick={() => setActive('guardadas')}>Guardadas</Nav.Item>
@@ -63,13 +79,15 @@ export function NavStory() {
             </Nav>
           </div>
         </Demo>
-      </Section>
-
-      <Section title="Subitems" note="Sangría de 48: la columna del texto del padre, para que las etiquetas queden alineadas entre sí.">
-        <Demo code={`<Nav label="Explorar">
+        <Demo label="Subitems y contraído" code={`<Nav label="Explorar">
   <Nav.Item icon="explore" current>Explorar</Nav.Item>
   <Nav.SubItem current>Recetas</Nav.SubItem>
   <Nav.SubItem>Publicadas</Nav.SubItem>
+</Nav>
+
+<Nav label="Contraído">
+  <Nav.Item icon="explore" current collapsed>Explorar</Nav.Item>
+  <Nav.Item icon="layers" collapsed>Recursos</Nav.Item>
 </Nav>`}>
           <div className={cls.subitemRail}>
             <Nav label="Explorar" className={cls.subitemList}>
@@ -78,14 +96,6 @@ export function NavStory() {
               <Nav.SubItem>Publicadas</Nav.SubItem>
             </Nav>
           </div>
-        </Demo>
-      </Section>
-
-      <Section title="Contraído" note="A 72 de ancho el item se centra y pierde etiqueta y badge; el `title` pasa a ser lo único que dice qué es.">
-        <Demo code={`<Nav label="Contraído">
-  <Nav.Item icon="explore" current collapsed>Explorar</Nav.Item>
-  <Nav.Item icon="layers" collapsed>Recursos</Nav.Item>
-</Nav>`}>
           <div className={cls.collapsedRail}>
             <Nav label="Contraído" className={cls.collapsedList}>
               <Nav.Item icon="explore" current collapsed>Explorar</Nav.Item>
@@ -93,10 +103,7 @@ export function NavStory() {
             </Nav>
           </div>
         </Demo>
-      </Section>
-
-      <Section title="Con el link de un router" note="Para un `NavLink` o un `<a>`, `Nav.itemClass` le pone las clases del item y `Nav.Body` dibuja lo de adentro.">
-        <Demo code={`<Nav label="Con links">
+        <Demo label="Con el link de un router" code={`<Nav label="Con links">
   <a href="#nav" className={Nav.itemClass({ current: true })} aria-current="page">
     <Nav.Body icon="explore">Explorar</Nav.Body>
   </a>
@@ -123,7 +130,9 @@ export function NavStory() {
 
       <Section title="Cómo se usa bien">
         <Practices>
-          <Practices.Do>El activo se marca con la barra de 2px: sin fondo y sin borde.</Practices.Do>
+          <Practices.Do>El activo se marca con la barra de 2px: sin fondo y sin borde. En un riel de doce items, un activo en gris hay que buscarlo.</Practices.Do>
+          <Practices.Do>Contraído, a 72 de ancho, el item se centra y pierde etiqueta y contador: el `title` pasa a ser lo único que dice qué es.</Practices.Do>
+          <Practices.Do>{'Para un `NavLink` o un `<a>`, `Nav.itemClass` le pone las clases del item y `Nav.Body` dibuja lo de adentro.'}</Practices.Do>
           <Practices.Dont>No alternes la clase del icono entre estados: cambia el peso de la fuente y el glifo se mueve adentro de su caja.</Practices.Dont>
         </Practices>
       </Section>

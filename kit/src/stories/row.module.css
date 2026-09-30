@@ -1,23 +1,5 @@
 @layer milo.app {
-  .settingsList {
-    max-width: 520px;
-    overflow: hidden;
-    border-radius: var(--radius-xl);
-    border-style: solid;
-    border-width: 1px;
-    border-color: var(--border);
-  }
-
-  .labelFocusList {
-    max-width: 520px;
-    overflow: hidden;
-    border-radius: var(--radius-xl);
-    border-style: solid;
-    border-width: 1px;
-    border-color: var(--border);
-  }
-
-  .rightSideList {
+  .list {
     max-width: 520px;
     overflow: hidden;
     border-radius: var(--radius-xl);

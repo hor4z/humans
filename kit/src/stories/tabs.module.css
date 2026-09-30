@@ -6,44 +6,4 @@
     font-weight: var(--font-weight-medium);
     color: var(--text-muted);
   }
-
-  .rubricText {
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    font-weight: var(--font-weight-medium);
-    color: var(--text-muted);
-  }
-
-  .accessText {
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    font-weight: var(--font-weight-medium);
-    color: var(--text-muted);
-  }
-
-  .weekText {
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    font-weight: var(--font-weight-medium);
-    color: var(--text-muted);
-  }
-
-  .monthText {
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    font-weight: var(--font-weight-medium);
-    color: var(--text-muted);
-  }
-
-  .allText {
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    font-weight: var(--font-weight-medium);
-    color: var(--text-muted);
-  }
 }

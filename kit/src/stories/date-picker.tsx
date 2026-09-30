@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { DatePicker } from '@milo/ui/date-picker'
 import { Field } from '@milo/ui/field'
-import { A11y, Demo, Note, Page, Practices, Props, Section, Stack } from '../kit'
+import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section, Stack } from '../kit'
 
 const today = () => {
   const d = new Date()
@@ -19,13 +19,22 @@ export function DatePickerStory() {
       title="DatePicker"
       kind="Formularios"
       imports="import { DatePicker } from '@milo/ui/date-picker'"
-      lead="Un campo que abre un mes. El valor es el texto `AAAA-MM-DD` y no un `Date`: una fecha de entrega no tiene hora ni zona, y un `Date` arrastra las dos."
+      lead="Un campo que abre un mes para elegir un día. El valor es el texto `AAAA-MM-DD` y no un `Date`: una fecha de entrega no tiene hora ni zona, y un `Date` arrastra las dos."
     >
-      <Section
-        title="En un campo"
-        note="El `Field` de alrededor le pone el nombre y la ayuda, como a cualquier otro control del sistema."
-      >
-        <Demo code={`<Field.Set>
+      <Hero>
+        <DatePicker value={loose} onValueChange={setLoose} label="Fecha del examen" width={260} />
+        <DatePicker value={bounded} onValueChange={setBounded} min={today()} label="Nueva entrega" placeholder="No se puede antes de hoy" width={260} />
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Campo" required>Muestra la fecha en palabras, o el `placeholder` mientras no hay una. Al tocarlo abre el mes.</Anatomy.Part>
+        <Anatomy.Part name="Icono">El calendario al final del campo: dice que se abre y no que se escribe.</Anatomy.Part>
+        <Anatomy.Part name="Cabecera del mes">El mes y el año, con las flechas para cambiar de mes.</Anatomy.Part>
+        <Anatomy.Part name="Días">La grilla del mes, con la semana desde el lunes. Hoy lleva un punto, lo elegido va en relleno y lo que queda afuera de `min` y `max` se apaga.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Ejemplos">
+        <Demo label="En un campo" code={`<Field.Set>
   <Field.Legend>Cuándo</Field.Legend>
   <Field>
     <Field.Label>Abre</Field.Label>
@@ -54,22 +63,8 @@ export function DatePickerStory() {
             </Field.Set>
           </Stack>
         </Demo>
-      </Section>
-
-      <Section
-        title="Suelto"
-        note="Sin `Field` alrededor hay que nombrarlo con `label`. El campo dice la fecha en palabras: 03/09/2026 quiere decir dos cosas distintas según de dónde sea quien lo lee."
-      >
-        <Demo code={`<DatePicker value={loose} onValueChange={setLoose} label="Fecha del examen" width={260} />`}>
-          <DatePicker value={loose} onValueChange={setLoose} label="Fecha del examen" width={260} />
-        </Demo>
-      </Section>
-
-      <Section
-        title="Acotado"
-        note="`min` y `max` apagan lo que queda afuera en vez de esconderlo: un día apagado dice que existe y que no se puede elegir."
-      >
-        <Demo code={`<DatePicker
+        <Demo label="Suelto y acotado" code={`<DatePicker value={loose} onValueChange={setLoose} label="Fecha del examen" width={260} />
+<DatePicker
   value={bounded}
   onValueChange={setBounded}
   min={today()}
@@ -77,14 +72,10 @@ export function DatePickerStory() {
   placeholder="No se puede antes de hoy"
   width={260}
 />`}>
+          <DatePicker value={loose} onValueChange={setLoose} label="Fecha del examen" width={260} />
           <DatePicker value={bounded} onValueChange={setBounded} min={today()} label="Nueva entrega" placeholder="No se puede antes de hoy" width={260} />
         </Demo>
       </Section>
-
-      <Note title="La semana empieza el lunes">
-        Y no sale de la configuración del navegador: una grilla que a veces arranca el domingo se lee
-        mal justo cuando hay que contar días.
-      </Note>
 
       <Section title="Props">
         <Props of="DatePicker" />
@@ -92,7 +83,9 @@ export function DatePickerStory() {
 
       <Section title="Cómo se usa bien">
         <Practices>
-          <Practices.Do>`min` y `max` acotan: para un vencimiento, `min` es hoy.</Practices.Do>
+          <Practices.Do>`min` y `max` acotan, y apagan lo que queda afuera en vez de esconderlo: un día apagado dice que existe y que no se puede elegir. Para un vencimiento, `min` es hoy.</Practices.Do>
+          <Practices.Do>Sin `Field` alrededor, nombralo con `label`. El campo dice la fecha en palabras porque 03/09/2026 quiere decir dos cosas distintas según de dónde sea quien lo lee.</Practices.Do>
+          <Practices.Do>La semana empieza el lunes y no sale de la configuración del navegador: una grilla que a veces arranca el domingo se lee mal justo cuando hay que contar días.</Practices.Do>
         </Practices>
       </Section>
 

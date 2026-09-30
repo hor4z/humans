@@ -1,6 +1,6 @@
 import s from './callout.module.css'
 import { Callout } from '@milo/ui/blocks/editor/callout'
-import { A11y, Demo, Frame, Note, Page, Practices, Props, Section, Stack } from '../kit'
+import { A11y, Anatomy, Demo, Hero, Page, Panel, Practices, Props, Section, Stack } from '../kit'
 
 export function CalloutStory() {
   return (
@@ -10,8 +10,29 @@ export function CalloutStory() {
       imports="import { Callout } from '@milo/ui/blocks/editor/callout'"
       lead="Un bloque de contenido que pide detenerse: una aclaración, una pista, algo para recordar. Lo escribe quien arma el material, no el sistema."
     >
-      <Section title="La pieza">
-        <Demo code={`<Callout icon="lightbulb" color="blue">
+      <Hero>
+        <Stack width="xl">
+          <Callout icon="lightbulb" color="blue">
+            <Callout.Title>Para acordarse</Callout.Title>
+            La velocidad límite no depende de la masa: depende de la forma y del aire.
+          </Callout>
+          <Callout icon="science" color="green">
+            <Callout.Title>Probalo</Callout.Title>
+            Soltá una hoja abierta y la misma hoja hecha un bollo. Cronometrá las dos.
+          </Callout>
+        </Stack>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Superficie" required>El papel teñido con el color de la familia de categorías, sin borde.</Anatomy.Part>
+        <Anatomy.Part name="Glifo">`icon`: decorativo, en la tinta del color.</Anatomy.Part>
+        <Anatomy.Part name="Título">`Callout.Title`: lo que el bloque es, en una palabra o dos.</Anatomy.Part>
+        <Anatomy.Part name="Contenido" required>El texto, en tamaño de lectura. Puede entrar solo en una línea, sin título ni glifo.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Ejemplos">
+        <Panel>
+        <Demo label="Con título y glifo, y sin ninguno" code={`<Callout icon="lightbulb" color="blue">
   <Callout.Title>Para acordarse</Callout.Title>
   La velocidad límite no depende de la masa: depende de la forma y del aire.
 </Callout>
@@ -22,7 +43,8 @@ export function CalloutStory() {
 <Callout icon="visibility" color="orange">
   <Callout.Title>Ojo con esto</Callout.Title>
   Dos figuras con el mismo perímetro pueden tener áreas muy distintas.
-</Callout>`}>
+</Callout>
+<Callout>Todo lo que sigue supone que el rozamiento es despreciable.</Callout>`}>
           <Stack width="xl">
             <Callout icon="lightbulb" color="blue">
               <Callout.Title>Para acordarse</Callout.Title>
@@ -36,23 +58,11 @@ export function CalloutStory() {
               <Callout.Title>Ojo con esto</Callout.Title>
               Dos figuras con el mismo perímetro pueden tener áreas muy distintas.
             </Callout>
+            <Callout>Todo lo que sigue supone que el rozamiento es despreciable.</Callout>
           </Stack>
         </Demo>
-      </Section>
 
-      <Section title="Sin título y sin glifo" note="Cuando lo que hay que decir entra en una línea.">
-        <Demo code={`<Callout>Todo lo que sigue supone que el rozamiento es despreciable.</Callout>`}>
-          <Frame width="xl">
-            <Callout>Todo lo que sigue supone que el rozamiento es despreciable.</Callout>
-          </Frame>
-        </Demo>
-      </Section>
-
-      <Section
-        title="Los colores"
-        note="Son para distinguir un bloque de otro cuando hay varios en una página, no para decir si algo está bien o mal."
-      >
-        <Demo code={`<Callout color="neutral" icon="label">neutral</Callout>
+        <Demo label="Los colores" code={`<Callout color="neutral" icon="label">neutral</Callout>
 <Callout color="blue" icon="label">blue</Callout>
 <Callout color="green" icon="label">green</Callout>
 <Callout color="teal" icon="label">teal</Callout>
@@ -65,13 +75,8 @@ export function CalloutStory() {
             ))}
           </div>
         </Demo>
+        </Panel>
       </Section>
-
-      <Note title="Callout o Alert">
-        El `Alert` lo pone el sistema cuando pasa algo: se guardó, falló, falta algo. El `Callout` es
-        parte de lo que se está leyendo y sigue ahí aunque nadie haga nada. Por eso no usa los tonos
-        de estado: un bloque de contenido en rojo diría "error" sin que haya ninguno.
-      </Note>
 
       <Section title="Props">
         <Props of="Callout" />
@@ -80,7 +85,8 @@ export function CalloutStory() {
       <Section title="Cómo se usa bien">
         <Practices>
           <Practices.Do>El color sale de la familia de categorías, no de los tonos de estado: un bloque de contenido no avisa de nada.</Practices.Do>
-          <Practices.Dont>No lo uses para un error: eso es un `Alert`.</Practices.Dont>
+          <Practices.Do>Los colores distinguen un bloque de otro cuando hay varios en una página, no dicen si algo está bien o mal.</Practices.Do>
+          <Practices.Dont>No lo uses para un error ni para algo que pasa: eso es un [Alert](#alert). El `Callout` es parte de lo que se lee y sigue ahí aunque nadie haga nada; por eso no usa los tonos de estado, un bloque en rojo diría "error" sin que haya ninguno.</Practices.Dont>
         </Practices>
       </Section>
 

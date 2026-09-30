@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { RubricReview, type Criterion, type Mark } from '@milo/ui/blocks/rubric/rubric-review'
-import { A11y, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
+import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const criteria: Criterion[] = [
   {
@@ -72,14 +72,26 @@ export function RubricReviewStory() {
       imports="import { RubricReview } from '@milo/ui/blocks/rubric/rubric-review'"
       lead="Cómo le fue a un trabajo contra su rúbrica: qué cumplió de cada aspecto y qué le dijeron. La misma pieza sirve para corregir y para leer la devolución, porque es la misma información vista desde los dos lados."
     >
-      <Section
-        title="Corrigiendo"
-        note="Se marca un renglón por aspecto: son descripciones del mismo estado y solo una es cierta. La barra se llena hasta el nivel elegido, sin nota ni puntaje."
-      >
+      <Hero>
+        <Stack width="sm">
+          <RubricReview criteria={criteria} value={returned}>
+            <RubricReview.Title>Cómo te fue</RubricReview.Title>
+          </RubricReview>
+        </Stack>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Cabecera" required>`RubricReview.Title` con el botón que pliega el panel.</Anatomy.Part>
+        <Anatomy.Part name="Barra">Cada tramo es un aspecto y se llena hasta el nivel elegido, sin nota ni puntaje.</Anatomy.Part>
+        <Anatomy.Part name="Aspecto">Una tarjeta por aspecto, con "sin corregir" al lado del nombre mientras no se tocó.</Anatomy.Part>
+        <Anatomy.Part name="Renglones">Los niveles del aspecto. Corrigiendo se elige uno solo; leyendo, queda marcado el que se eligió.</Anatomy.Part>
+        <Anatomy.Part name="Comentario">Al lado del aspecto, con la firma de quien lo escribió: una persona o el asistente.</Anatomy.Part>
+      </Anatomy>
+      <Section title="Corrigiendo y la devolución">
         <Panel>
           <Variant
             name="a medio corregir"
-            note="Elegí un nivel en El gráfico y mirá cómo se llena su tramo. Al elegir otro, el anterior se apaga."
+            note="Se marca un renglón por aspecto: son descripciones del mismo estado y solo una es cierta. Elegí un nivel en El gráfico y mirá cómo se llena su tramo."
             code={`<RubricReview
   criteria={criteria}
   value={marks}
@@ -100,16 +112,9 @@ export function RubricReviewStory() {
               </RubricReview>
             </Stack>
           </Variant>
-        </Panel>
-      </Section>
-
-      <Section
-        title="La devolución"
-        note="Sin `onValueChange`, la misma pieza es lo que abre quien entregó: en qué renglón quedó cada aspecto y qué le dijeron."
-      >
-        <Panel>
           <Variant
             name="lo que ve quien entregó"
+            note="Sin `onValueChange` es la devolución: en qué renglón quedó cada aspecto y qué le dijeron."
             code={`<RubricReview criteria={criteria} value={returned}>
   <RubricReview.Title>Cómo te fue</RubricReview.Title>
 </RubricReview>`}
@@ -121,10 +126,6 @@ export function RubricReviewStory() {
             </Stack>
           </Variant>
         </Panel>
-        <Note>
-          Un comentario lo puede escribir una persona o un agente, y los dos pueden comentar el
-          mismo aspecto: cambia la firma y nada más.
-        </Note>
       </Section>
 
       <Section title="Props">
@@ -133,6 +134,7 @@ export function RubricReviewStory() {
 
       <Section title="Cómo se usa bien">
         <Practices>
+          <Practices.Do>Dejá que comenten una persona o un agente sobre el mismo aspecto: cambia la firma y nada más.</Practices.Do>
           <Practices.Do>Comentá al lado del aspecto que lo motiva: un comentario general al final se lee como un veredicto y no como una ayuda.</Practices.Do>
           <Practices.Do>Dejá el aspecto sin tocar mientras no se corrigió: "sin corregir" al lado del nombre es lo que le dice a quien corrige dónde quedó.</Practices.Do>
           <Practices.Do>Firmá siempre lo que escribe un agente: quien lee tiene derecho a saber si eso lo miró una persona.</Practices.Do>

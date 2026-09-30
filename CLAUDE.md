@@ -187,12 +187,23 @@ sostienen. Si una decisión no está en ninguna vista, todavía no se tomó.
 Una vista de Fundamentos existe si hay un token, una pieza o un test que la sostenga; si no, es
 prosa, y la prosa se despega en silencio.
 
-**Cada vista de pieza sigue la misma plantilla**: la portada con su `import`, las demos, Props,
-"Cómo se usa bien" y Accesibilidad, en ese orden. **Cada `Demo` y cada `Variant` lleva el código que
-la dibuja**, debajo: es lo que permite revisar la API mirando, y si la pieza se ve bien pero su
-código no, la pieza está mal. Cada hecho se dice en un solo lugar: la API en el docblock, la
-decisión en "Cómo se usa bien", el comportamiento en Accesibilidad. Una `note` de sección dice qué
-hacer en dos líneas. Hay tests para la plantilla.
+**Cada vista de pieza va en tres solapas**, como la referencia de Astryx: **Resumen**,
+**Propiedades** y **Accesibilidad**. `Page` las arma solo a partir de las secciones que la vista
+declara:
+
+- **Resumen**: el `<Hero>` (el ejemplo grande, sin código), el uso (el `lead` y el `import`), la
+  `<Anatomy>` (una fila por parte, ranura o estado que agrega un elemento), las buenas prácticas
+  (la sección "Cómo se usa bien", como tabla de Sí y No) y los ejemplos, que son todo lo demás.
+- **Propiedades**: la sección `Props`, que sale de los tipos.
+- **Accesibilidad**: la sección `Accesibilidad`.
+
+**Cada `Demo` y cada `Variant` es una tarjeta con su código**: la pieza arriba y, debajo, solapas
+de Descripción y Código. El código sigue pegado a lo que se ve porque es lo que permite revisar la
+API mirando: si la pieza se ve bien pero su código no, la pieza está mal. **Máximo seis tarjetas
+por vista**: lo que muestra una sola pieza chica se junta con sus hermanas en una tarjeta. Cada
+hecho se dice en un solo lugar: la API en el docblock, la decisión en "Cómo se usa bien", el
+comportamiento en Accesibilidad. Una página sin `Props` es de Fundamentos y va de corrido. Hay
+tests para la plantilla.
 
 La referencia externa son las Human Interface Guidelines de Apple, salvo lo que es de una app nativa.
 Brainwave 2 (UI8) fue la referencia de arranque y **no está licenciado acá**: se tomaron medidas y

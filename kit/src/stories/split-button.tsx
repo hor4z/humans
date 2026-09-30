@@ -1,5 +1,5 @@
 import { SplitButton } from '@milo/ui/split-button'
-import { A11y, Page, Panel, Practices, Props, Section, Variant } from '../kit'
+import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function SplitButtonStory() {
   return (
@@ -7,39 +7,57 @@ export function SplitButtonStory() {
       title="SplitButton"
       kind="Acciones"
       imports="import { SplitButton } from '@milo/ui/split-button'"
-      lead="La acción que se hace casi siempre, y al lado las que casi nunca. Es lo que evita una fila de cinco botones donde cuatro no se tocan nunca."
+      lead="La acción que se hace casi siempre, y al lado las que casi nunca. El que manda queda a un clic y el resto a dos: evita una fila de cinco botones donde cuatro no se tocan nunca."
     >
-      <Section
-        title="La pieza"
-        note="El que manda queda a un clic y el resto a dos. Va cuando hay una acción que se hace casi siempre: publicar, exportar, guardar."
-      >
+      <Hero>
+        <SplitButton size="sm">
+          <SplitButton.Action onClick={() => {}}>Publicar</SplitButton.Action>
+          <SplitButton.Item icon="draft" onSelect={() => {}}>Guardar como borrador</SplitButton.Item>
+          <SplitButton.Item icon="schedule" onSelect={() => {}}>Programar</SplitButton.Item>
+        </SplitButton>
+        <SplitButton size="sm" variant="muted">
+          <SplitButton.Action onClick={() => {}}>Exportar</SplitButton.Action>
+          <SplitButton.Item onSelect={() => {}}>Como PDF</SplitButton.Item>
+          <SplitButton.Item onSelect={() => {}}>Como planilla</SplitButton.Item>
+        </SplitButton>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Acción principal" required>`SplitButton.Action`: la mitad ancha, la que se toca directo.</Anatomy.Part>
+        <Anatomy.Part name="Flecha">La mitad angosta: abre el menú y tiene su propio nombre, "Más opciones de" seguido de la acción.</Anatomy.Part>
+        <Anatomy.Part name="Opciones" required>`SplitButton.Item`: las que casi nunca, adentro del menú que abre la flecha.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Variantes">
         <Panel>
-          <Variant name="brand" note="**La acción que manda** de una pantalla, con sus variantes al lado." code={`<SplitButton size="sm">
+          <Variant
+            name="brand · muted · disabled"
+            note="`brand` es la acción que manda de una pantalla; `muted`, lo secundario: exportar, descargar, compartir. Las dos mitades se apagan juntas."
+            code={`<SplitButton size="sm">
   <SplitButton.Action onClick={publish}>Publicar</SplitButton.Action>
   <SplitButton.Item icon="draft" onSelect={saveDraft}>Guardar como borrador</SplitButton.Item>
   <SplitButton.Item icon="schedule" onSelect={schedule}>Programar</SplitButton.Item>
-</SplitButton>`}>
+</SplitButton>
+<SplitButton size="sm" variant="muted">
+  <SplitButton.Action onClick={exportAll}>Exportar</SplitButton.Action>
+  <SplitButton.Item onSelect={exportPdf}>Como PDF</SplitButton.Item>
+  <SplitButton.Item onSelect={exportSheet}>Como planilla</SplitButton.Item>
+</SplitButton>
+<SplitButton size="sm" variant="muted" disabled>
+  <SplitButton.Action onClick={publish}>Publicar</SplitButton.Action>
+  <SplitButton.Item icon="draft" onSelect={saveDraft}>Guardar como borrador</SplitButton.Item>
+</SplitButton>`}
+          >
             <SplitButton size="sm">
               <SplitButton.Action onClick={() => {}}>Publicar</SplitButton.Action>
               <SplitButton.Item icon="draft" onSelect={() => {}}>Guardar como borrador</SplitButton.Item>
               <SplitButton.Item icon="schedule" onSelect={() => {}}>Programar</SplitButton.Item>
             </SplitButton>
-          </Variant>
-          <Variant name="muted" note="Lo secundario: exportar, descargar, compartir." code={`<SplitButton size="sm" variant="muted">
-  <SplitButton.Action onClick={exportAll}>Exportar</SplitButton.Action>
-  <SplitButton.Item onSelect={exportPdf}>Como PDF</SplitButton.Item>
-  <SplitButton.Item onSelect={exportSheet}>Como planilla</SplitButton.Item>
-</SplitButton>`}>
             <SplitButton size="sm" variant="muted">
               <SplitButton.Action onClick={() => {}}>Exportar</SplitButton.Action>
               <SplitButton.Item onSelect={() => {}}>Como PDF</SplitButton.Item>
               <SplitButton.Item onSelect={() => {}}>Como planilla</SplitButton.Item>
             </SplitButton>
-          </Variant>
-          <Variant name="apagado" note="Las dos mitades se apagan juntas." code={`<SplitButton size="sm" variant="muted" disabled>
-  <SplitButton.Action onClick={publish}>Publicar</SplitButton.Action>
-  <SplitButton.Item icon="draft" onSelect={saveDraft}>Guardar como borrador</SplitButton.Item>
-</SplitButton>`}>
             <SplitButton size="sm" variant="muted" disabled>
               <SplitButton.Action onClick={() => {}}>Publicar</SplitButton.Action>
               <SplitButton.Item icon="draft" onSelect={() => {}}>Guardar como borrador</SplitButton.Item>

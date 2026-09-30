@@ -129,7 +129,9 @@ export function Page({ title, lead, imports, kind, children }: PageProps) {
   const a11y = parts.find(c => isSection(c, 'Accesibilidad'))
   const practices = parts.find(c => isSection(c, 'Cómo se usa bien'))
   const claimed: ReactNode[] = [hero, anatomy, propsSection, a11y, practices]
-  const examples = parts.filter(c => !claimed.includes(c))
+  const examples = parts
+    .filter(c => !claimed.includes(c))
+    .flatMap(c => (isSection(c, 'Ejemplos') ? Children.toArray((c as Titled).props.children) : [c]))
   const inner = (section: ReactNode) => (section as Titled).props
 
   return (

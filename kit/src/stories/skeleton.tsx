@@ -4,7 +4,7 @@ import { Card } from '@milo/ui/card'
 import { Icon } from '@milo/ui/icon'
 import { Skeleton } from '@milo/ui/skeleton'
 import { useEffect, useRef, useState } from 'react'
-import { A11y, Cluster, Demo, Note, Page, Practices, Props, Section, Stack } from '../kit'
+import { A11y, Anatomy, Cluster, Demo, Hero, Page, Practices, Props, Section, Stack } from '../kit'
 
 function Swap() {
   const [loading, setLoading] = useState(false)
@@ -52,11 +52,36 @@ export function SkeletonStory() {
 import { Skeleton } from '@milo/ui/skeleton'"
       lead="El hueco que ocupa algo que todavía no llegó. Tiene que medir lo mismo que el contenido real, o al llegar los datos la pantalla salta y se pierde lo que se estaba leyendo."
     >
-      <Section
-        title="Una fila de lista"
-        note="Copia la forma, no el contenido. La segunda barra va más corta: si las dos miden igual, el bloque se lee como un párrafo y no como una fila."
-      >
-        <Demo label="mientras carga" code={`{[0, 1, 2].map(i => (
+      <Hero>
+        <Cluster gap="lg" align="start">
+          <Stack gap="lg" width="md">
+            {[0, 1, 2].map(i => (
+              <div key={i} className={cls.row}>
+                <Skeleton className={cls.avatarBone} />
+                <div className={cls.rowLines}>
+                  <Skeleton className={cls.rowTitleBone} />
+                  <Skeleton className={cls.rowMetaBone} />
+                </div>
+              </div>
+            ))}
+          </Stack>
+          <Card className={cls.longCard}>
+            <Skeleton className={cls.longCoverBone} />
+            <div className={cls.longBody}>
+              <Skeleton className={cls.longTitleBone} />
+              <Skeleton className={cls.longMetaBone} />
+            </div>
+          </Card>
+        </Cluster>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Hueco" required>Un rectángulo apagado al que quien lo usa le da las medidas del contenido real, con `className`.</Anatomy.Part>
+        <Anatomy.Part name="Pulso">Una animación suave que dice que algo está por llegar.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Copiar la forma">
+        <Demo label="Una fila de lista" code={`{[0, 1, 2].map(i => (
   <div key={i} className={s.row}>
     <Skeleton className={s.avatarBone} />
     <div className={s.rowLines}>
@@ -77,13 +102,8 @@ import { Skeleton } from '@milo/ui/skeleton'"
             ))}
           </Stack>
         </Demo>
-      </Section>
 
-      <Section
-        title="Una tarjeta"
-        note="El tamaño lo pone quien lo usa, con las mismas medidas que va a tener el contenido."
-      >
-        <Demo code={`<Card className={s.longCard}>
+        <Demo label="Una tarjeta, larga y corta" code={`<Card className={s.longCard}>
   <Skeleton className={s.longCoverBone} />
   <div className={s.longBody}>
     <Skeleton className={s.longTitleBone} />
@@ -120,13 +140,6 @@ import { Skeleton } from '@milo/ui/skeleton'"
         <Swap />
       </Section>
 
-      <Note title="El esqueleto no es un spinner">
-        Un [Spinner](#spinner) dice "esperá"; un
-        esqueleto dice "va a haber tres filas, así de anchas". Cuando se sabe la forma de lo que
-        viene, el esqueleto evita el salto. Cuando no se sabe (una búsqueda que puede traer cero o
-        cien) el spinner es más honesto.
-      </Note>
-
       <Section title="Props">
         <Props of="Skeleton" />
       </Section>
@@ -134,6 +147,8 @@ import { Skeleton } from '@milo/ui/skeleton'"
       <Section title="Cómo se usa bien">
         <Practices>
           <Practices.Do>Ocupa el lugar exacto de lo que viene, así que cuando llega no se mueve nada.</Practices.Do>
+          <Practices.Do>En una fila, la segunda barra va más corta: si las dos miden igual, el bloque se lee como un párrafo y no como una fila.</Practices.Do>
+          <Practices.Dont>Si no se sabe la forma de lo que viene (una búsqueda que puede traer cero o cien) no va un esqueleto: va un [Spinner](#spinner), que dice "esperá" sin prometer tres filas.</Practices.Dont>
           <Practices.Dont>Para una espera de menos de un segundo no va nada: el parpadeo molesta más que la espera.</Practices.Dont>
         </Practices>
       </Section>

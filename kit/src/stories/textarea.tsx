@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { Textarea } from '@milo/ui/textarea'
-import { A11y, Cluster, Demo, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 export function TextareaStory() {
-  const [short, setShort] = useState('')
+  const [heroText, setHeroText] = useState('')
   const [withCap, setWithCap] = useState(
     'Este campo crece hasta seis filas y después scrollea.\nBorrá líneas y mirá cómo se achica: el alto vuelve, que es la mitad que se olvida.',
   )
@@ -18,84 +18,91 @@ export function TextareaStory() {
       title="Textarea"
       kind="Formularios"
       imports="import { Textarea } from '@milo/ui/textarea'"
-      lead="El campo de varias líneas: el TextField estirado. La misma caja, el mismo borde y la misma marca de foco, porque dos campos que no se parecen se leen como dos sistemas. Lo único que cambia adentro es el interlineado: el 16 fijo aprieta cuando hay varios renglones."
+      lead="El campo de varias líneas: el `TextField` estirado. La misma caja, el mismo borde y la misma marca de foco, porque dos campos que no se parecen se leen como dos sistemas. Lo único que cambia adentro es el interlineado, porque el 16 fijo aprieta cuando hay varios renglones."
     >
-      <Section
-        title="Crece con lo que escribís"
-        note="Un alto fijo queda corto para escribir o largo y vacío. Escribí y borrá en los dos: crecer es la mitad fácil, lo que se olvida es volver."
-      >
-        <Cluster align="start">
-          <Demo width="sm" fill label="rows 3 · maxRows 6" code={`<Textarea
+      <Hero>
+        <Stack gap="md" width="sm">
+          <Textarea
+            aria-label="Consigna de la actividad"
+            value={heroText}
+            onValueChange={setHeroText}
+            placeholder="Escribí la consigna de la actividad…"
+            rows={3}
+            maxRows={8}
+          />
+          <Textarea
+            aria-label="Devolución para el estudiante"
+            value={feedback}
+            onValueChange={setFeedback}
+            counter
+            maxLength={400}
+            rows={3}
+          />
+        </Stack>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Caja" required>El fondo y el borde, iguales a los de `TextField`, que crecen con lo que escribís.</Anatomy.Part>
+        <Anatomy.Part name="Texto" required>El `textarea` de adentro, con su `placeholder` cuando está vacío.</Anatomy.Part>
+        <Anatomy.Part name="Contador">Con `counter`: en gris mientras sobra lugar, y una frase cerca del techo o abajo del mínimo.</Anatomy.Part>
+        <Anatomy.Part name="Tirador">Con `resize="vertical"`, la esquina que se arrastra para cambiar el alto.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Alto, cuenta y estados">
+        <Panel>
+          <Variant
+            name="crece con lo que escribís"
+            note="Un alto fijo queda corto para escribir o largo y vacío. Escribí y borrá en los dos: crecer es la mitad fácil, lo que se olvida es volver."
+            code={`<Textarea
   aria-label="Consigna, con techo de seis filas"
   value={withCap}
   onValueChange={setWithCap}
   rows={3}
   maxRows={6}
-/>`}>
-            <Textarea
-              aria-label="Consigna, con techo de seis filas"
-              value={withCap}
-              onValueChange={setWithCap}
-              rows={3}
-              maxRows={6}
-            />
-          </Demo>
-          <Demo width="sm" fill label="sin techo" code={`<Textarea
+/>
+<Textarea
   aria-label="Consigna, sin techo"
   value={noCap}
   onValueChange={setNoCap}
   rows={2}
-/>`}>
-            <Textarea
-              aria-label="Consigna, sin techo"
-              value={noCap}
-              onValueChange={setNoCap}
-              rows={2}
-            />
-          </Demo>
-        </Cluster>
-      </Section>
-
-      <Section
-        title="La cuenta, y por qué no es solo un número"
-        note="Mientras sobra lugar cuenta en gris; en el último diez por ciento dice cuánto queda, y abajo del mínimo cuánto falta: **un contador informa, una frase orienta**."
-      >
-        <Cluster align="start">
-          <Demo width="sm" fill label="mientras sobra lugar" code={`<Textarea
+/>`}
+          >
+            <Stack gap="md" width="sm">
+              <Textarea
+                aria-label="Consigna, con techo de seis filas"
+                value={withCap}
+                onValueChange={setWithCap}
+                rows={3}
+                maxRows={6}
+              />
+              <Textarea
+                aria-label="Consigna, sin techo"
+                value={noCap}
+                onValueChange={setNoCap}
+                rows={2}
+              />
+            </Stack>
+          </Variant>
+          <Variant
+            name="la cuenta: mientras sobra, cerca del techo y abajo del mínimo"
+            note="Cuenta en gris mientras sobra lugar; en el último diez por ciento dice cuánto queda, y abajo del mínimo cuánto falta: **un contador informa, una frase orienta**."
+            code={`<Textarea
   aria-label="Devolución para el estudiante"
   value={feedback}
   onValueChange={setFeedback}
   counter
   maxLength={400}
   rows={3}
-/>`}>
-            <Textarea
-              aria-label="Devolución para el estudiante"
-              value={feedback}
-              onValueChange={setFeedback}
-              counter
-              maxLength={400}
-              rows={3}
-            />
-          </Demo>
-          <Demo width="sm" fill label="cerca del techo" code={`<Textarea
+/>
+<Textarea
   aria-label="Devolución con techo corto"
   value={near}
   onValueChange={setNear}
   counter
   maxLength={60}
   rows={3}
-/>`}>
-            <Textarea
-              aria-label="Devolución con techo corto"
-              value={near}
-              onValueChange={setNear}
-              counter
-              maxLength={60}
-              rows={3}
-            />
-          </Demo>
-          <Demo width="sm" fill label="todavía no llega al mínimo" code={`<Textarea
+/>
+<Textarea
   aria-label="Devolución con mínimo"
   value={belowMin}
   onValueChange={setBelowMin}
@@ -103,73 +110,62 @@ export function TextareaStory() {
   minLength={20}
   maxLength={400}
   rows={3}
-/>`}>
-            <Textarea
-              aria-label="Devolución con mínimo"
-              value={belowMin}
-              onValueChange={setBelowMin}
-              counter
-              minLength={20}
-              maxLength={400}
-              rows={3}
-            />
-          </Demo>
-        </Cluster>
-      </Section>
-
-      <Section
-        title="Vacío y deshabilitado"
-        note="El placeholder va en el mismo gris que el del TextField, y el deshabilitado usa la misma opacidad: son el mismo campo."
-      >
-        <Cluster align="start">
-          <Demo width="sm" fill label="con placeholder" code={`<Textarea
-  aria-label="Consigna de la actividad"
-  value={short}
-  onValueChange={setShort}
-  placeholder="Escribí la consigna de la actividad…"
-  rows={3}
-  maxRows={8}
-/>`}>
-            <Textarea
-              aria-label="Consigna de la actividad"
-              value={short}
-              onValueChange={setShort}
-              placeholder="Escribí la consigna de la actividad…"
-              rows={3}
-              maxRows={8}
-            />
-          </Demo>
-          <Demo width="sm" fill label="disabled" code={`<Textarea aria-label="Consigna no editable" value="No editable" disabled rows={3} />`}>
-            <Textarea aria-label="Consigna no editable" value="No editable" disabled rows={3} />
-          </Demo>
-        </Cluster>
-      </Section>
-
-      <Section
-        title="Quién decide el alto"
-        note="Tres modos excluyentes: lo decide el contenido, quien arrastra o nadie. Con el tirador y el crecimiento a la vez, la tecla siguiente pisa el alto que arrastraste."
-      >
-        <Cluster align="start">
-          <Demo width="xs" fill label="auto · el default" code={`<Textarea aria-label="Consigna, alto automático" value={mode} onValueChange={setMode} rows={2} maxRows={6} />`}>
-            <Textarea aria-label="Consigna, alto automático" value={mode} onValueChange={setMode} rows={2} maxRows={6} />
-          </Demo>
-          <Demo width="xs" fill label="vertical · el tirador nativo" code={`<Textarea aria-label="Consigna, alto arrastrable" defaultValue="Arrastrá la esquina." rows={2} resize="vertical" />`}>
-            <Textarea aria-label="Consigna, alto arrastrable" defaultValue="Arrastrá la esquina." rows={2} resize="vertical" />
-          </Demo>
-          <Demo width="xs" fill label="none · fijo, y scrollea" code={`<Textarea
+/>`}
+          >
+            <Stack gap="md" width="sm">
+              <Textarea
+                aria-label="Devolución para el estudiante"
+                value={feedback}
+                onValueChange={setFeedback}
+                counter
+                maxLength={400}
+                rows={3}
+              />
+              <Textarea
+                aria-label="Devolución con techo corto"
+                value={near}
+                onValueChange={setNear}
+                counter
+                maxLength={60}
+                rows={3}
+              />
+              <Textarea
+                aria-label="Devolución con mínimo"
+                value={belowMin}
+                onValueChange={setBelowMin}
+                counter
+                minLength={20}
+                maxLength={400}
+                rows={3}
+              />
+            </Stack>
+          </Variant>
+          <Variant
+            name="quién decide el alto: auto, vertical y none"
+            note="Tres modos excluyentes: lo decide el contenido, quien arrastra o nadie. Con el tirador y el crecimiento a la vez, la tecla siguiente pisa el alto que arrastraste. El deshabilitado usa la misma opacidad que el de `TextField`."
+            code={`<Textarea aria-label="Consigna, alto automático" value={mode} onValueChange={setMode} rows={2} maxRows={6} />
+<Textarea aria-label="Consigna, alto arrastrable" defaultValue="Arrastrá la esquina." rows={2} resize="vertical" />
+<Textarea
   aria-label="Consigna, alto fijo"
   defaultValue={'Alto fijo de dos filas.\\nLo que sobra scrollea y el campo no se mueve.'}
   rows={2}
   resize="none"
-/>`}>
-            <Textarea
-              aria-label="Consigna, alto fijo"
-              defaultValue={'Alto fijo de dos filas.\nLo que sobra scrollea y el campo no se mueve.'}
-              rows={2}
-              resize="none"
-            />
-          </Demo>
-        </Cluster>
+/>
+<Textarea aria-label="Consigna no editable" value="No editable" disabled rows={3} />`}
+          >
+            <Stack gap="md" width="sm">
+              <Textarea aria-label="Consigna, alto automático" value={mode} onValueChange={setMode} rows={2} maxRows={6} />
+              <Textarea aria-label="Consigna, alto arrastrable" defaultValue="Arrastrá la esquina." rows={2} resize="vertical" />
+              <Textarea
+                aria-label="Consigna, alto fijo"
+                defaultValue={'Alto fijo de dos filas.\nLo que sobra scrollea y el campo no se mueve.'}
+                rows={2}
+                resize="none"
+              />
+              <Textarea aria-label="Consigna no editable" value="No editable" disabled rows={3} />
+            </Stack>
+          </Variant>
+        </Panel>
       </Section>
 
       <Section title="Props">

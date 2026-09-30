@@ -4,7 +4,7 @@ import { Button } from '@milo/ui/button'
 import { CommandMenu, type CommandGroup, type CommandItem } from '@milo/ui/blocks/editor/command-menu'
 import { Kbd } from '@milo/ui/kbd'
 import { Popover } from '@milo/ui/popover'
-import { A11y, Cluster, Demo, Frame, Note, Page, Practices, Props, Section, Stack } from '../kit'
+import { A11y, Anatomy, Cluster, Demo, Frame, Hero, Page, Panel, Practices, Props, Section, Stack } from '../kit'
 
 const blocks: CommandGroup[] = [
   {
@@ -49,29 +49,28 @@ export function CommandMenuStory() {
       imports="import { CommandMenu } from '@milo/ui/blocks/editor/command-menu'"
       lead="La lista de comandos: se escribe, se filtra y se elige con las flechas. Es el menú que abre la barra en un editor, y la paleta de atajos de una app."
     >
-      <Section
-        title="La pieza"
-        note="Probá las flechas, Home y End, y escribí 'foto' para ver que Imagen aparece sin que la palabra esté en su nombre."
-      >
-        <Demo code={`const [picked, setPicked] = useState<CommandItem | null>(null)
+      <Hero>
+        <Stack align="start">
+          <Frame width="md">
+            <CommandMenu groups={blocks} onSelect={setPicked} />
+          </Frame>
+          <p className={cls.pickedNote}>
+            {picked ? <>Elegiste <strong className={cls.emphasis}>{picked.label}</strong>.</> : 'Elegí uno para ver qué devuelve.'}
+          </p>
+        </Stack>
+      </Hero>
 
-<CommandMenu groups={blocks} onSelect={setPicked} />`}>
-          <Stack align="start">
-            <Frame width="md">
-              <CommandMenu groups={blocks} onSelect={setPicked} />
-            </Frame>
-            <p className={cls.pickedNote}>
-              {picked ? <>Elegiste <strong className={cls.emphasis}>{picked.label}</strong>.</> : 'Elegí uno para ver qué devuelve.'}
-            </p>
-          </Stack>
-        </Demo>
-      </Section>
+      <Anatomy>
+        <Anatomy.Part name="Buscador">{'El campo donde se escribe; filtra por nombre y por `keywords`, así que "foto" encuentra Imagen. Con `search={false}` se va y la lista filtra por `query`.'}</Anatomy.Part>
+        <Anatomy.Part name="Grupo">Un encabezado y sus items; si se queda sin resultados, se va con todo.</Anatomy.Part>
+        <Anatomy.Part name="Item" required>Un comando: `label`, con `icon`, `hint` y `shortcut` opcionales. Con `disabled` se saltea.</Anatomy.Part>
+        <Anatomy.Part name="Atajo">`shortcut`: la tecla que hace lo mismo, a la derecha.</Anatomy.Part>
+        <Anatomy.Part name="Vacío">Cuando no queda nada se dice con palabras.</Anatomy.Part>
+      </Anatomy>
 
-      <Section
-        title="Sin buscador"
-        note="Para cuando lo que se escribe ya está afuera: en un editor, el texto va detrás de la barra y el menú solo filtra."
-      >
-        <Demo code={`<CommandMenu groups={blocks} onSelect={setPicked} search={false} query="lis" />`}>
+      <Section title="Ejemplos">
+        <Panel>
+        <Demo label="Sin buscador: lo que se escribe ya está afuera" code={`<CommandMenu groups={blocks} onSelect={setPicked} search={false} query="lis" />`}>
           <Cluster gap="xl" align="start">
             <div className={`${cls.queryStrip} bg-surface`}>
               <span className={cls.queryLead}>Escribí</span>
@@ -84,13 +83,8 @@ export function CommandMenuStory() {
             </Frame>
           </Cluster>
         </Demo>
-      </Section>
 
-      <Section
-        title="Anclado a su disparador"
-        note="Es lo que hace la barra en un editor: el menú cuelga de donde se escribió el '/', y lo ancla un `Popover`."
-      >
-        <Demo code={`<Popover
+        <Demo label="Anclado a su disparador con un `Popover`" code={`<Popover
   align="start"
   width={380}
   trigger={props => <Button {...props} variant="muted">Insertar un bloque</Button>}
@@ -122,19 +116,8 @@ export function CommandMenuStory() {
             <span className={cls.anchoredNote}>Abrí, escribí, movete con las flechas y elegí con Enter.</span>
           </Cluster>
         </Demo>
+        </Panel>
       </Section>
-
-      <Note icon="lightbulb" title="Qué de esta lista ya existe">
-        Los bloques que llevan una pieza propia son `Título`, `Cita`, `Bloque destacado`, `Lista de
-        tareas`, `Imagen`, `Tabla` y `Gráfico`. `Lista`, `Lista numerada` y `Separador`
-        no la necesitan: son HTML con los estilos del sistema.
-      </Note>
-
-      <Note title="Esto no abre nada">
-        La pieza es la lista y nada más: no se posiciona ni se cierra sola, el cierre lo decide
-        quien la usa, como en el ejemplo de arriba. Adentro de un `Modal` la misma lista es la
-        paleta de atajos de la app, sin cambiarle una línea.
-      </Note>
 
       <Section title="Props">
         <Props of={['CommandMenu', 'CommandGroup', 'CommandItem']} />
@@ -142,6 +125,7 @@ export function CommandMenuStory() {
 
       <Section title="Cómo se usa bien">
         <Practices>
+          <Practices.Do>La pieza es la lista y nada más: no se posiciona ni se cierra sola, el cierre lo decide quien la usa. Adentro de un `Modal` es la paleta de atajos de la app.</Practices.Do>
           <Practices.Do>El `id` de cada item es lo que se anuncia y lo que vuelve al elegir: tiene que ser único en toda la lista.</Practices.Do>
         </Practices>
       </Section>

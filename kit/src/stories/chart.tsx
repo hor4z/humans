@@ -2,7 +2,7 @@ import cls from './chart.module.css'
 import { Avatar } from '@milo/ui/avatar'
 import { Card } from '@milo/ui/card'
 import { BarChart } from '@milo/ui/chart'
-import { A11y, Demo, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 import { face } from '../fixtures'
 
 const week = [
@@ -41,8 +41,21 @@ export function ChartStory() {
       title="BarChart"
       kind="Datos"
       imports="import { BarChart } from '@milo/ui/chart'"
-      lead="Cada barra son dos cosas: el gris es el total y el azul es lo hecho. No son dos series compitiendo, es una parte adentro de su todo, y por eso el azul va dentro del gris: apoyados uno al lado del otro habría que compararlos a ojo, y metido adentro, lo que falta es el gris que sobra arriba."
+      lead="Cada barra son dos cosas: el gris es el total y el azul es lo hecho, una parte adentro de su todo. Apoyados uno al lado del otro habría que compararlos a ojo; metido adentro, lo que falta es el gris que sobra arriba."
     >
+      <Hero>
+        <Card className={cls.plainCard}>
+          <BarChart label="Corregidas sobre entregadas, por mes" data={months} height={160} />
+        </Card>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Barra" required>El total en gris y, adentro, lo hecho en azul (`total` y `value` de cada dato).</Anatomy.Part>
+        <Anatomy.Part name="Etiqueta" required>El `label` del dato, debajo de la barra.</Anatomy.Part>
+        <Anatomy.Part name="Barra destacada">Con `highlight` una barra lleva la etiqueta más pesada, sin agregar un tercer tono.</Anatomy.Part>
+        <Anatomy.Part name="Tooltip">Aparece con el mouse y con el foco: `caption` dice qué se mide y `detail` suma lo que haga falta.</Anatomy.Part>
+      </Anatomy>
+
       <Section
         title="Vivo"
         note="Pasá el mouse por las barras, y después tabulá hasta ellas: el tooltip aparece igual con el teclado. El jueves lleva `detail`."
@@ -82,23 +95,6 @@ export function ChartStory() {
         </Demo>
       </Section>
 
-      <Section
-        title="Sin destacada"
-        note="Cuando lo que importa es la forma de la serie y no un mes, `highlight` se deja afuera."
-      >
-        <Demo fill code={`const months = [
-  { label: 'Ene', value: 31, total: 42 }, { label: 'Feb', value: 49, total: 58 },
-  { label: 'Mar', value: 24, total: 51 }, { label: 'Abr', value: 64, total: 64 },
-  { label: 'May', value: 12, total: 47 }, { label: 'Jun', value: 40, total: 73 },
-]
-
-<BarChart label="Corregidas sobre entregadas, por mes" data={months} height={160} />`}>
-          <Card className={cls.plainCard}>
-            <BarChart label="Corregidas sobre entregadas, por mes" data={months} height={160} />
-          </Card>
-        </Demo>
-      </Section>
-
       <Section title="Props">
         <Props of={['BarChart', 'BarDatum']} />
       </Section>
@@ -106,7 +102,7 @@ export function ChartStory() {
       <Section title="Cómo se usa bien">
         <Practices>
           <Practices.Do>Abajo del gráfico va la tabla con los mismos datos: no todo el mundo lee una barra.</Practices.Do>
-          <Practices.Do>`highlight` marca la barra de la que habla la pantalla con la etiqueta más pesada, sin agregar un tercer tono.</Practices.Do>
+          <Practices.Do>`highlight` marca la barra de la que habla la pantalla. Cuando lo que importa es la forma de la serie y no un mes, se deja afuera.</Practices.Do>
           <Practices.Dont>Si son más de dos series o hay que comparar valores exactos, va una tabla y no un gráfico.</Practices.Dont>
           <Practices.Dont>No le pidas eje Y ni grilla: con cinco barras y el tooltip, una grilla es tinta que no es dato.</Practices.Dont>
           <Practices.Dont>Dos medidas de escalas distintas son dos gráficos, no uno con dos ejes.</Practices.Dont>

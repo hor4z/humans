@@ -1,7 +1,7 @@
 import s from './column-picker.module.css'
 import { useState } from 'react'
 import { ColumnPicker } from '@milo/ui/column-picker'
-import { A11y, Page, Panel, Practices, Props, Section, Variant } from '../kit'
+import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 const columns = [
   { id: 'actividad', label: 'Actividad', locked: true },
@@ -18,12 +18,22 @@ export function ColumnPickerStory() {
     <Page
       title="ColumnPicker"
       kind="Datos"
-      lead="Qué columnas de una tabla se ven. Vivía adentro de `filter/` y no tenía vista propia: una pieza que no se puede encontrar es una pieza que alguien vuelve a escribir a mano."
       imports="import { ColumnPicker } from '@milo/ui/column-picker'"
+      lead="Qué columnas de una tabla se ven. Es una pieza propia y no un cajón de `Filter`: una pieza que no se puede encontrar es una pieza que alguien vuelve a escribir a mano."
     >
+      <Hero>
+        <ColumnPicker columns={columns} value={value} onValueChange={setValue} />
+        <span className={s.pickedList}>{value.join(' · ')}</span>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Botón" required>Abre el panel de columnas.</Anatomy.Part>
+        <Anatomy.Part name="Opción">Un `checkbox` por columna, con su etiqueta.</Anatomy.Part>
+        <Anatomy.Part name="Columna bloqueada">La que va `locked`: se ve tildada y no se puede sacar.</Anatomy.Part>
+      </Anatomy>
+
       <Section title="Cómo se usa">
-        <Panel>
-          <Variant name="columnas" code={`const [value, setValue] = useState(['actividad', 'estudiantes', 'estado'])
+        <Demo label="Tildá y destildá: abajo queda lo elegido" code={`const [value, setValue] = useState(['actividad', 'estudiantes', 'estado'])
 
 <ColumnPicker
   columns={[
@@ -35,13 +45,11 @@ export function ColumnPickerStory() {
   ]}
   value={value}
   onValueChange={setValue}
-/>`}>
-            <ColumnPicker columns={columns} value={value} onValueChange={setValue} />
-          </Variant>
-          <Variant name="lo elegido" code={`{value.join(' · ')}`}>
-            <span className={s.pickedList}>{value.join(' · ')}</span>
-          </Variant>
-        </Panel>
+/>
+<span>{value.join(' · ')}</span>`}>
+          <ColumnPicker columns={columns} value={value} onValueChange={setValue} />
+          <span className={s.pickedList}>{value.join(' · ')}</span>
+        </Demo>
       </Section>
 
       <Section title="Props">

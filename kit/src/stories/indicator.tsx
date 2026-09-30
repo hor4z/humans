@@ -1,112 +1,71 @@
 import { Icon } from '@milo/ui/icon'
 import { IconButton } from '@milo/ui/icon-button'
 import { Indicator } from '@milo/ui/indicator'
-import { A11y, Demo, Page, Panel, Practices, Props, Section, Variant } from '../kit'
+import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function IndicatorStory() {
   return (
     <Page
       title="Indicator"
       kind="Datos"
-      lead="Una marca chica pegada a la esquina de otra cosa. No es una pieza en sí: envuelve a la que sí lo es (un botón, un avatar, una carpeta) y le agrega un punto, un contador o un glifo sin cambiarla."
+      lead="Una marca chica pegada a la esquina de otra cosa. Envuelve a la que sí es una pieza (un botón, un avatar, una carpeta) y le agrega un punto, un contador o un glifo sin cambiarla."
       imports="import { Indicator } from '@milo/ui/indicator'"
     >
-      <Section
-        title="Tres formas de marcar"
-        note="El punto dice 'hay algo', el contador dice cuánto y el glifo dice qué pasó."
-      >
-        <Panel>
-          <Variant name="punto" code={`<Indicator dot label="Hay avisos sin leer">
-  <IconButton icon="notifications" label="Avisos" size="lg" />
-</Indicator>`}>
-            <Indicator dot label="Hay avisos sin leer">
-              <IconButton icon="notifications" label="Avisos" size="lg" />
-            </Indicator>
-          </Variant>
-          <Variant name="contador" code={`<Indicator count={3} label="3 avisos sin leer">
-  <IconButton icon="inbox" label="Entregas" size="lg" />
-</Indicator>
-<Indicator count={148} label="148 sin leer">
-  <IconButton icon="mail" label="Mensajes" size="lg" />
-</Indicator>`}>
-            <Indicator count={3} label="3 avisos sin leer">
-              <IconButton icon="inbox" label="Entregas" size="lg" />
-            </Indicator>
-            <Indicator count={148} label="148 sin leer">
-              <IconButton icon="mail" label="Mensajes" size="lg" />
-            </Indicator>
-          </Variant>
-          <Variant name="glifo" code={`<Indicator icon="check" tone="ok" label="Corregida">
-  <IconButton icon="inbox" label="Entregas" size="lg" />
-</Indicator>
-<Indicator icon="lock" tone="neutral" label="Cerrado">
-  <IconButton icon="folder" label="Espacio" size="lg" />
-</Indicator>`}>
-            <Indicator icon="check" tone="ok" label="Corregida">
-              <IconButton icon="inbox" label="Entregas" size="lg" />
-            </Indicator>
-            <Indicator icon="lock" tone="neutral" label="Cerrado">
-              <IconButton icon="folder" label="Espacio" size="lg" />
-            </Indicator>
-          </Variant>
-        </Panel>
-      </Section>
+      <Hero>
+        <Indicator dot label="Hay avisos sin leer">
+          <IconButton icon="notifications" label="Avisos" size="lg" />
+        </Indicator>
+        <Indicator count={3} label="3 avisos sin leer">
+          <IconButton icon="inbox" label="Entregas" size="lg" />
+        </Indicator>
+        <Indicator icon="check" tone="ok" label="Corregida">
+          <IconButton icon="folder" label="Espacio" size="lg" />
+        </Indicator>
+      </Hero>
 
-      <Section
-        title="Los tonos"
-        note="El acento es el default y dice 'mirá esto'. Los otros cuatro significan lo mismo que en un `Alert` o en un `Chip`."
-      >
+      <Anatomy>
+        <Anatomy.Part name="Contenido" required>Lo que se marca: un icono, un botón, un avatar. Sigue siendo lo que se toca.</Anatomy.Part>
+        <Anatomy.Part name="Punto">`dot`: dice "hay algo".</Anatomy.Part>
+        <Anatomy.Part name="Contador">`count`: dice cuánto. En 0 no dibuja nada y arriba de 99 dice `99+`.</Anatomy.Part>
+        <Anatomy.Part name="Glifo">`icon`: dice qué pasó, con un check, un candado o una alerta.</Anatomy.Part>
+        <Anatomy.Part name="Anillo">`ring`: separa la marca de lo que tiene atrás, del color de ese fondo.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Tonos y posición">
         <Panel>
-          <Variant name="tonos" code={`<Indicator dot tone="accent" label="accent">
-  <IconButton icon="notifications" label="Avisos accent" size="lg" />
-</Indicator>
-<Indicator dot tone="ok" label="ok">
-  <IconButton icon="notifications" label="Avisos ok" size="lg" />
-</Indicator>
-<Indicator dot tone="warn" label="warn">
-  <IconButton icon="notifications" label="Avisos warn" size="lg" />
-</Indicator>
-<Indicator dot tone="bad" label="bad">
-  <IconButton icon="notifications" label="Avisos bad" size="lg" />
-</Indicator>
-<Indicator dot tone="neutral" label="neutral">
-  <IconButton icon="notifications" label="Avisos neutral" size="lg" />
-</Indicator>`}>
+          <Variant
+            name="tonos"
+            note="El acento es el default y dice 'mirá esto'. Los otros cuatro significan lo mismo que en un `Alert` o en un `Chip`."
+            code={`{(['accent', 'ok', 'warn', 'bad', 'neutral'] as const).map(t => (
+  <Indicator key={t} dot tone={t} label={t}>
+    <IconButton icon="notifications" label={\`Avisos \${t}\`} size="lg" />
+  </Indicator>
+))}`}
+          >
             {(['accent', 'ok', 'warn', 'bad', 'neutral'] as const).map(t => (
               <Indicator key={t} dot tone={t} label={t}>
                 <IconButton icon="notifications" label={`Avisos ${t}`} size="lg" />
               </Indicator>
             ))}
           </Variant>
-        </Panel>
-      </Section>
-
-      <Section
-        title="Un glifo suelto"
-        note="Sin botón alrededor, la marca se apoya en la esquina del glifo y no hace falta correrla."
-      >
-        <Panel>
-          <Variant name="sin botón" code={`<Indicator dot tone="warn" inset={0} label="Vence mañana">
+          <Variant
+            name="inset"
+            note="El default es el de un `IconButton` `lg`. Sobre uno `md` va en 6; sobre un glifo suelto, en 0."
+            code={`<Indicator dot label="Hay avisos sin leer" inset={6}>
+  <IconButton icon="notifications" label="Novedades" />
+</Indicator>
+<Indicator dot tone="warn" inset={0} label="Vence mañana">
   <Icon name="calendar_month" size={24} />
-</Indicator>`}>
+</Indicator>`}
+          >
+            <Indicator dot label="Hay avisos sin leer" inset={6}>
+              <IconButton icon="notifications" label="Novedades" />
+            </Indicator>
             <Indicator dot tone="warn" inset={0} label="Vence mañana">
               <Icon name="calendar_month" size={24} />
             </Indicator>
           </Variant>
         </Panel>
-      </Section>
-
-      <Section
-        title="Sobre un botón md"
-        note="El default de `inset` es el de un `IconButton` `lg`; sobre uno `md` va en 6."
-      >
-        <Demo code={`<Indicator dot label="Hay avisos sin leer" inset={6}>
-  <IconButton icon="notifications" label="Novedades" />
-</Indicator>`}>
-          <Indicator dot label="Hay avisos sin leer" inset={6}>
-            <IconButton icon="notifications" label="Novedades" />
-          </Indicator>
-        </Demo>
       </Section>
 
       <Section title="Props">

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Rubric, type Criterion, type CriterionDraft } from '@milo/ui/blocks/rubric/rubric'
 import { labelColors } from '@milo/ui/lib/colors'
-import { A11y, Note, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
+import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const base: Criterion[] = [
   {
@@ -59,10 +59,22 @@ export function RubricStory() {
       imports="import { Rubric } from '@milo/ui/blocks/rubric/rubric'"
       lead="Con qué se mira un trabajo: los aspectos, cuánto vale cada uno y qué se ve en cada renglón. La escribe quien corrige y la lee quien entrega, así que dice lo mismo de los dos lados."
     >
-      <Section
-        title="Cómo se arma"
-        note="Los aspectos entran como dato, porque son una lista que alguien guarda y ordena. Lo único que va como hijo es el nombre."
-      >
+      <Hero>
+        <Stack width="sm">
+          <Rubric criteria={criteria} onAdd={addCriterion} onRemove={removeCriterion}>
+            <Rubric.Title>Qué vamos a mirar</Rubric.Title>
+          </Rubric>
+        </Stack>
+      </Hero>
+
+      <Anatomy>
+        <Anatomy.Part name="Cabecera" required>`Rubric.Title` con el botón que pliega el panel. Los aspectos entran como dato en `criteria`.</Anatomy.Part>
+        <Anatomy.Part name="Barra de pesos">Cada tramo es un aspecto y su ancho es lo que vale contra los demás. Mide el peso y no lo logrado.</Anatomy.Part>
+        <Anatomy.Part name="Aspecto">Una tarjeta plegable por aspecto, con la marca de su color, su nombre, su porcentaje y sus renglones.</Anatomy.Part>
+        <Anatomy.Part name="Alta">Con `onAdd`: el formulario para sumar un aspecto, con su nombre, su peso y sus renglones.</Anatomy.Part>
+        <Anatomy.Part name="Tacho">Con `onRemove`: saca el aspecto y sus renglones escritos.</Anatomy.Part>
+      </Anatomy>
+      <Section title="Editable y de solo lectura">
         <Panel>
           <Variant
             name="editable"
@@ -95,11 +107,6 @@ export function RubricStory() {
             </Stack>
           </Variant>
         </Panel>
-        <Note>
-          La barra mide el peso y no lo logrado: cada tramo es un aspecto y su ancho es lo que vale
-          contra los demás. Los renglones se cumplen o no, así que van escritos adentro del aspecto.
-          El color ata cada tramo con su tarjeta.
-        </Note>
       </Section>
 
       <Section title="Props">
@@ -108,6 +115,7 @@ export function RubricStory() {
 
       <Section title="Cómo se usa bien">
         <Practices>
+          <Practices.Do>Poné cada renglón adentro de su aspecto y el color para atar el tramo con su tarjeta: los renglones se cumplen o no, así que no van sueltos en la barra.</Practices.Do>
           <Practices.Do>Escribí los descriptores como evidencia, en frase sin verbo: "siempre con el mismo teléfono" dice qué hacer, "muy bien" no.</Practices.Do>
           <Practices.Do>Acordate de que cada descriptor se lee dos veces: acá lo tilda quien corrige, y en la devolución lo lee quien entregó como lo que le falta.</Practices.Do>
           <Practices.Do>El porcentaje sale de los pesos, así que sumá siempre 100 sin escribirlo: cambiá un peso y los demás se acomodan solos.</Practices.Do>

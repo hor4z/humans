@@ -1,6 +1,6 @@
 import cls from './link.module.css'
 import { Link } from '@milo/ui/link'
-import { A11y, Demo, Note, Page, Practices, Props, Section } from '../kit'
+import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function LinkStory() {
   return (
@@ -8,45 +8,33 @@ export function LinkStory() {
       title="Link"
       kind="Superficies"
       imports="import { Link } from '@milo/ui/link'"
-      lead="Azul **y** subrayado, las dos cosas. El color solo no alcanza (hay quien no lo distingue) y el subrayado solo dejaba al enlace confundido con el texto en negrita de al lado. Con las dos señales, un enlace se reconoce sin leerlo y sin depender de ver el tono."
+      lead="El enlace de un párrafo: va a algún lado. Fuera de un párrafo (una fila, una barra) va un `Button` con `variant=&quot;ghost&quot;`, que tiene el alto de un control."
     >
-      <Section
-        title="Adentro de un párrafo"
-        note="Es el caso para el que existe la pieza. Fuera de un párrafo (una fila, una barra) va un `Button` con `variant=&quot;ghost&quot;`, que tiene el alto de un control."
-      >
-        <Demo code={`<p>
-  Las entregas se cierran en la fecha que elijas. Podés cambiarla desde{' '}
-  <Link href="#link">los ajustes de la actividad</Link> mientras siga abierta.
-</p>`}>
-          <p className={cls.paragraphText}>
-            Las entregas se cierran en la fecha que elijas. Podés cambiarla desde{' '}
-            <Link href="#link">los ajustes de la actividad</Link> mientras siga abierta.
-          </p>
-        </Demo>
-      </Section>
+      <Hero>
+        <p className={cls.paragraphText}>
+          Las entregas se cierran en la fecha que elijas. Podés cambiarla desde{' '}
+          <Link href="#link">los ajustes de la actividad</Link> mientras siga abierta.
+        </p>
+      </Hero>
 
-      <Section
-        title="El de afuera avisa"
-        note="Abrir una pestaña sin avisar rompe el botón de volver, que es el control que más se usa del navegador."
-      >
-        <Demo code={`<Link href="https://m3.material.io/styles/icons" external>Material Symbols</Link>
+      <Anatomy>
+        <Anatomy.Part name="Texto" required>Azul y subrayado, las dos señales. Dice a dónde lleva.</Anatomy.Part>
+        <Anatomy.Part name="Glifo de externo">Con `external` suma un icono al final y abre en otra pestaña.</Anatomy.Part>
+      </Anatomy>
+
+      <Section title="Ejemplos">
+        <Demo label="El de afuera avisa" code={`<Link href="https://m3.material.io/styles/icons" external>Material Symbols</Link>
 <p>
   El set sale de <Link href="https://fonts.google.com/icons" external>Google Fonts</Link>, subseteado
   a los 160 que usamos.
 </p>`} className={cls.vertical}>
           <Link href="https://m3.material.io/styles/icons" external>Material Symbols</Link>
-          <p className={cls.externalText}>
+          <p className={cls.paragraphText}>
             El set sale de <Link href="https://fonts.google.com/icons" external>Google Fonts</Link>, subseteado
             a los 160 que usamos.
           </p>
         </Demo>
       </Section>
-
-      <Note title="Link o Button">
-        El link va a algún lado; el botón hace algo. Un link que borra no da la opción de abrirlo en
-        otra pestaña sin borrar, y un botón que navega no se puede copiar ni guardar. Cuando hay una
-        URL de verdad, va link.
-      </Note>
 
       <Section title="Props">
         <Props of="Link" />
@@ -55,6 +43,8 @@ export function LinkStory() {
       <Section title="Cómo se usa bien">
         <Practices>
           <Practices.Do>Si navega, es un `Link`: se puede abrir en otra pestaña y copiar la dirección.</Practices.Do>
+          <Practices.Do>Con una URL de verdad, link: un link que borra no se puede abrir en otra pestaña sin borrar, y un botón que navega no se puede copiar ni guardar.</Practices.Do>
+          <Practices.Do>Marcá el de afuera con `external`: abrir una pestaña sin avisar rompe el botón de volver, el control que más se usa del navegador.</Practices.Do>
           <Practices.Dont>Si dispara una acción, es un `Button` aunque parezca un link.</Practices.Dont>
         </Practices>
       </Section>

@@ -105,6 +105,28 @@ describe('las vistas del kit', () => {
     ).toEqual([])
   })
 
+  it('cada vista de una pieza abre con un Hero y una Anatomía, y no pasa de seis tarjetas', () => {
+    const offenders: string[] = []
+    for (const f of files) {
+      if (f === 'utilidades.tsx') continue
+      const text = readFileSync(join(stories, f), 'utf8')
+      const hero = text.indexOf('<Hero>')
+      const anatomy = text.indexOf('<Anatomy>')
+      const firstSection = text.indexOf('<Section')
+      if (hero < 0) offenders.push(`${f}: sin Hero`)
+      if (anatomy < 0) offenders.push(`${f}: sin Anatomía`)
+      if (anatomy >= 0 && !text.includes('<Anatomy.Part')) offenders.push(`${f}: una Anatomía sin ninguna parte`)
+      if (hero >= 0 && anatomy >= 0 && hero > anatomy) offenders.push(`${f}: la Anatomía va después del Hero`)
+      if (firstSection >= 0 && anatomy > firstSection) offenders.push(`${f}: el Hero y la Anatomía van antes de los ejemplos`)
+      const cards = (text.match(/<(Demo|Variant)\b/g) ?? []).length
+      if (cards > 6) offenders.push(`${f}: ${cards} tarjetas`)
+    }
+    expect(
+      offenders,
+      'el Resumen abre con el ejemplo grande y la anatomía, y una vista con más de seis tarjetas es una lista: lo que muestra una sola pieza chica se junta con sus hermanas',
+    ).toEqual([])
+  })
+
   it('cada vista de una pieza dice cómo se usa bien', () => {
     const withoutPractices: string[] = []
     for (const f of files) {
