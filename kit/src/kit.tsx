@@ -514,10 +514,10 @@ export function Mono({ children }: { children: ReactNode }) {
 /** La tabla de props. Las filas salen del código: tipo, default y descripción los escribe la pieza en su docblock y los extrae `scripts/props.mjs`. */
 export function Props({ of }: { of: string | readonly string[] }) {
   const pedidos = typeof of === 'string' ? [of] : of
-  const names = pedidos.flatMap(pieza => [
+  const names = [...new Set(pedidos.flatMap(pieza => [
     pieza,
     ...Object.keys(propsByComponent).filter(k => k.startsWith(`${pieza}.`)),
-  ])
+  ]))]
   return (
     <Stack gap="lg">
       {names.map(pieza => {
