@@ -1,7 +1,8 @@
 import s from './kit.module.css'
-import { Children, useEffect, useState, type ReactNode } from 'react'
+import { Children, createContext, isValidElement, useContext, useEffect, useState, type ReactElement, type ReactNode } from 'react'
 import { Chip } from '@milo/ui/chip'
 import { CopyButton } from '@milo/ui/copy-button'
+import { Tabs } from '@milo/ui/tabs'
 import { useClipboard } from '@milo/ui/lib/use-clipboard'
 import type { LabelColor } from '@milo/ui/lib/colors'
 import { toneIcon, toneInk, toneSurface, type Tone } from '@milo/ui/lib/tone'
@@ -88,22 +89,139 @@ const kindColor: Record<string, LabelColor> = {
   'Del sitio': 'teal',
 }
 
-/** La cabecera de una pieza y el cuerpo de su página. */
+const InPiece = createContext(false)
+const SectionLevel = createContext<'h2' | 'h3'>('h2')
+
+type Titled = ReactElement<{ title?: string; note?: string; children?: ReactNode }>
+
+const isPart = (node: ReactNode, part: unknown): node is ReactElement<{ children?: ReactNode }> =>
+  isValidElement(node) && node.type === part
+
+const isSection = (node: ReactNode, title: string): node is Titled =>
+  isValidElement(node) && node.type === Section && (node.props as { title?: string }).title === title
+
+/** La cabecera de una pieza y el cuerpo de su página. Una pieza va en tres solapas: Resumen (el uso, la anatomía, las buenas prácticas y los ejemplos), Propiedades y Accesibilidad. Una página sin `Props` es de Fundamentos y va de corrido. */
 export function Page({ title, lead, imports, kind, children }: PageProps) {
+  const parts = Children.toArray(children)
+  const propsSection = parts.find(c => isSection(c, 'Props'))
+  const header = (
+    <div className={s.pageTitleRow}>
+      <h1 className={s.pageTitle}>{title}</h1>
+      {kind && <Chip size="sm" color={kindColor[kind] ?? 'blue'}>{kind}</Chip>}
+    </div>
+  )
+
+  if (!propsSection) {
+    return (
+      <article className={s.page}>
+        <header className={s.pageHeader}>
+          {header}
+          <p className={s.pageLead}><Rich text={lead} /></p>
+          {imports && <Code>{imports}</Code>}
+        </header>
+        {children}
+      </article>
+    )
+  }
+
+  const hero = parts.find(c => isPart(c, Hero))
+  const anatomy = parts.find(c => isPart(c, Anatomy))
+  const a11y = parts.find(c => isSection(c, 'Accesibilidad'))
+  const practices = parts.find(c => isSection(c, 'Cómo se usa bien'))
+  const claimed: ReactNode[] = [hero, anatomy, propsSection, a11y, practices]
+  const examples = parts.filter(c => !claimed.includes(c))
+  const inner = (section: ReactNode) => (section as Titled).props
+
   return (
     <article className={s.page}>
-      <header className={s.pageHeader}>
-        <div className={s.pageTitleRow}>
-          <h1 className={s.pageTitle}>{title}</h1>
-          {kind && <Chip size="sm" color={kindColor[kind] ?? 'blue'}>{kind}</Chip>}
-        </div>
-        <p className={s.pageLead}><Rich text={lead} /></p>
-        {imports && <Code>{imports}</Code>}
-      </header>
-      {children}
+      <header className={s.pageHeaderPiece}>{header}</header>
+      <InPiece.Provider value>
+        <Tabs defaultValue="overview">
+          <Tabs.List label={`Secciones de ${title}`}>
+            <Tabs.Tab value="overview">Resumen</Tabs.Tab>
+            <Tabs.Tab value="props">Propiedades</Tabs.Tab>
+            {a11y && <Tabs.Tab value="a11y">Accesibilidad</Tabs.Tab>}
+          </Tabs.List>
+
+          <Tabs.Panel value="overview" keepMounted className={s.overview}>
+            {hero}
+            <section className={s.section}>
+              <h2 className={s.sectionTitle}>Uso</h2>
+              <p className={s.pageLead}><Rich text={lead} /></p>
+              {imports && <Code>{imports}</Code>}
+            </section>
+            {anatomy && (
+              <section className={s.section}>
+                <h2 className={s.sectionTitle}>Anatomía</h2>
+                {anatomy}
+              </section>
+            )}
+            {practices && (
+              <section className={s.section}>
+                <h2 className={s.sectionTitle}>Buenas prácticas</h2>
+                {inner(practices).children}
+              </section>
+            )}
+            {examples.length > 0 && (
+              <section className={s.section}>
+                <h2 className={s.sectionTitle}>Ejemplos</h2>
+                <SectionLevel.Provider value="h3">{examples}</SectionLevel.Provider>
+              </section>
+            )}
+          </Tabs.Panel>
+
+          <Tabs.Panel value="props" keepMounted className={s.overview}>
+            <section className={s.section}>
+              <h2 className={s.sectionTitle}>Propiedades</h2>
+              {inner(propsSection).children}
+            </section>
+          </Tabs.Panel>
+
+          {a11y && (
+            <Tabs.Panel value="a11y" keepMounted className={s.overview}>
+              <section className={s.section}>
+                <h2 className={s.sectionTitle}>Accesibilidad</h2>
+                {inner(a11y).children}
+              </section>
+            </Tabs.Panel>
+          )}
+        </Tabs>
+      </InPiece.Provider>
     </article>
   )
 }
+
+/** El ejemplo que abre el Resumen: lo esencial de la pieza en un lienzo grande. Sin código, porque los ejemplos de más abajo lo llevan. */
+export function Hero({ children }: { children: ReactNode }) {
+  return <div className={s.hero}>{children}</div>
+}
+
+/** Las partes de la pieza, una por fila. */
+function AnatomyRoot({ children }: { children: ReactNode }) {
+  return (
+    <table className={s.guide}>
+      <thead>
+        <tr><th scope="col" className={s.guideHeadName}>Elemento</th><th scope="col">Descripción</th></tr>
+      </thead>
+      <tbody>{children}</tbody>
+    </table>
+  )
+}
+
+/** Una parte de la pieza. `required` es la que no puede faltar. */
+function AnatomyPart({ name, required, children }: { name: string; required?: boolean; children: ReactNode }) {
+  return (
+    <tr>
+      <th scope="row" className={s.guideName}>{name}</th>
+      <td>
+        {required && <strong className={s.inlineStrong}>Obligatorio: </strong>}
+        {Children.map(children, c => (typeof c === 'string' ? <Rich text={c} /> : c))}
+      </td>
+    </tr>
+  )
+}
+
+export const Anatomy = Object.assign(AnatomyRoot, { Part: AnatomyPart })
 
 /** Una línea de código que se puede copiar. */
 export function Code({ children }: { children: string }) {
@@ -188,10 +306,11 @@ export function Example({ code, className }: { code: string; className?: string 
 
 /** Un bloque con título, una explicación y lo que se muestra. */
 export function Section({ title, note, children }: { title: string; note?: string; children?: ReactNode }) {
+  const Heading = useContext(SectionLevel)
   return (
     <section className={s.section}>
       <Stack gap="sm">
-        <h2 className={s.sectionTitle}><Rich text={title} /></h2>
+        <Heading className={Heading === 'h2' ? s.sectionTitle : s.sectionSubtitle}><Rich text={title} /></Heading>
         {note && <p className={s.sectionNote}><Rich text={note} /></p>}
       </Stack>
       {children}
@@ -282,29 +401,60 @@ export function Footnote({ children }: { children: ReactNode }) {
   )
 }
 
-/** Un ejemplo: la pieza en su lienzo, la etiqueta y el código que la arma. */
-export function Demo({ label, code, width, fill, children, className }: {
-  label?: string
+type ExampleCardProps = {
+  title?: string
+  /** Qué es y cuándo va. Sin esto la tarjeta muestra solo el código. */
+  description?: string
   /** El código que dibuja lo de adentro, con los mismos props y el mismo contenido. */
   code: string
-  /** Le pone tope de ancho a la caja, de la misma escala que `Frame`. */
   width?: keyof typeof frameWidths
-  /** La pieza de adentro ocupa el ancho del lienzo, para un campo que si no se mide por su contenido. */
   fill?: boolean
-  children: ReactNode
+  mono?: boolean
   className?: string
-}) {
+  children: ReactNode
+}
+
+/** Un ejemplo: la pieza en su lienzo y, debajo, su descripción y el código que la dibuja en dos solapas. */
+function ExampleCard({ title, description, code, width, fill, mono, className, children }: ExampleCardProps) {
   return (
-    <div className={cx(s.demo, width && s.frame, width && frameWidths[width])}>
-      <Canvas className={cx(s.demoCanvas, fill && s.demoFill, className)}>{children}</Canvas>
-      {label && <div className={s.demoCaption}><Rich text={label} /></div>}
-      <Example code={code} />
-    </div>
+    <figure className={s.example}>
+      {title && (
+        <figcaption className={cx(s.exampleTitle, mono && s.exampleTitleMono)}>
+          <Rich text={title} />
+        </figcaption>
+      )}
+      <Canvas className={cx(s.demoCanvas, fill && s.demoFill, className)}>
+        {width ? <Frame width={width}>{children}</Frame> : children}
+      </Canvas>
+      {description ? (
+        <Tabs defaultValue="description" className={s.exampleTabs}>
+          <Tabs.List label={`Detalle de ${title ?? 'el ejemplo'}`}>
+            <Tabs.Tab value="description">Descripción</Tabs.Tab>
+            <Tabs.Tab value="code">Código</Tabs.Tab>
+          </Tabs.List>
+          <Tabs.Panel value="description" keepMounted className={s.exampleDescription}>
+            <p><Rich text={description} /></p>
+          </Tabs.Panel>
+          <Tabs.Panel value="code" keepMounted className={s.exampleCode}>
+            <Example code={code} />
+          </Tabs.Panel>
+        </Tabs>
+      ) : (
+        <Example code={code} className={s.exampleCodeOnly} />
+      )}
+    </figure>
   )
 }
 
+/** Un ejemplo con su código. */
+export function Demo({ label, code, width, fill, children, className }: Omit<ExampleCardProps, 'title' | 'description' | 'mono'> & {
+  label?: string
+}) {
+  return <ExampleCard title={label} code={code} width={width} fill={fill} className={className}>{children}</ExampleCard>
+}
+
 /** Varios ejemplos en grilla: se acomodan solos, o en la cantidad de columnas que le pidas. */
-export function Grid({ children, min = 220, cols }: {
+export function Grid({ children, min = 320, cols }: {
   children: ReactNode
   /** El ancho mínimo de cada columna, cuando la cantidad la decide el espacio. */
   min?: number
@@ -321,23 +471,16 @@ export function Grid({ children, min = 220, cols }: {
   )
 }
 
-/** Una fila de variantes con su nombre al costado y su código abajo. */
+/** Una variante con su nombre, lo que significa y el código que la dibuja. */
 export function Variant({ name, note, code, children }: {
   name: string
-  /** El código que dibuja la fila, con los mismos props y el mismo contenido. */
-  code: string
-  /** Qué significa esta variante, al lado de la pieza. Sin esto la fila solo muestra cómo se ve, no cuándo va. */
+  /** Qué significa esta variante y cuándo va. */
   note?: string
+  /** El código que dibuja lo de adentro, con los mismos props y el mismo contenido. */
+  code: string
   children: ReactNode
 }) {
-  return (
-    <div className={s.variant}>
-      <code className={s.variantName}>{name}</code>
-      <div className={s.variantItems}>{children}</div>
-      {note && <p className={s.variantNote}><Rich text={note} /></p>}
-      <Example code={code} className={s.variantCode} />
-    </div>
-  )
+  return <ExampleCard title={name} description={note} code={code} mono>{children}</ExampleCard>
 }
 
 /** Una fila de Fundamentos: como `Variant`, pero sin código, porque lo que muestra es una regla y no una pieza. */
@@ -358,7 +501,8 @@ export function Specimen({ name, note, children }: {
 
 /** El contenedor de una lista de variantes. */
 export function Panel({ children }: { children: ReactNode }) {
-  return <Canvas className={s.panelCanvas}>{children}</Canvas>
+  const inPiece = useContext(InPiece)
+  return inPiece ? <div className={s.exampleList}>{children}</div> : <Canvas className={s.panelCanvas}>{children}</Canvas>
 }
 
 export function Mono({ children }: { children: ReactNode }) {
@@ -478,30 +622,37 @@ function A11yItem({ children }: { children: ReactNode }) {
 export const A11y = Object.assign(A11yRoot, { Item: A11yItem })
 
 function PracticesRoot({ children }: { children: ReactNode }) {
-  return <div className={s.practices}>{children}</div>
+  return (
+    <table className={s.guide}>
+      <thead>
+        <tr><th scope="col" className={s.guideHeadName}>Guía</th><th scope="col">Práctica</th></tr>
+      </thead>
+      <tbody>{children}</tbody>
+    </table>
+  )
 }
 
 /** Lo que conviene hacer. Una línea, concreta, con la pieza adentro. */
 function Do({ children }: { children: ReactNode }) {
   return (
-    <p className={s.practiceDo}>
-      <Icon name="check_circle" size={16} className={s.practiceDoIcon} />
-      <span>{Children.map(children, c => (typeof c === 'string' ? <Rich text={c} /> : c))}</span>
-    </p>
+    <tr>
+      <td className={s.guideName}><Chip size="sm" color="ok" icon="check">Sí</Chip></td>
+      <td>{Children.map(children, c => (typeof c === 'string' ? <Rich text={c} /> : c))}</td>
+    </tr>
   )
 }
 
 /** Lo que no, y por qué. Sin el porqué es una orden y no una guía. */
 function Dont({ children }: { children: ReactNode }) {
   return (
-    <p className={s.practiceDont}>
-      <Icon name="cancel" size={16} className={s.practiceDontIcon} />
-      <span>{Children.map(children, c => (typeof c === 'string' ? <Rich text={c} /> : c))}</span>
-    </p>
+    <tr>
+      <td className={s.guideName}><Chip size="sm" color="bad" icon="close">No</Chip></td>
+      <td>{Children.map(children, c => (typeof c === 'string' ? <Rich text={c} /> : c))}</td>
+    </tr>
   )
 }
 
-/** Cómo se usa bien esta pieza, en dos columnas. Es también lo que un agente necesita para no equivocarse con ella. */
+/** Cómo se usa bien esta pieza, con el porqué. Es también lo que un agente necesita para no equivocarse con ella. */
 export const Practices = Object.assign(PracticesRoot, { Do, Dont })
 
 export function Swatch({ token, note }: { token: string; note?: string }) {

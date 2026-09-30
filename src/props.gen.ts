@@ -3818,6 +3818,12 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "type": "string",
         "required": true,
         "doc": "El mismo valor que su solapa."
+      },
+      {
+        "name": "keepMounted",
+        "type": "boolean",
+        "required": false,
+        "doc": "Cerrado sigue montado y oculto, así conserva su estado: un formulario a medio llenar, un video."
       }
     ],
     "html": "div",

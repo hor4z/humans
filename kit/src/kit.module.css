@@ -30,6 +30,12 @@
     padding-bottom: 2rem;
   }
 
+  .pageHeaderPiece {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
   .pageTitleRow {
     display: flex;
     flex-wrap: wrap;
@@ -128,30 +134,14 @@
     padding: 1.5rem;
   }
 
-  .demo {
-    display: flex;
-    min-width: 0;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
   .demoCanvas {
     display: flex;
-    min-height: 72px;
+    min-height: 5.5rem;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
-    padding-block: 1rem;
-  }
-
-  .demoCaption {
-    padding-inline: 0.125rem;
-    font-size: var(--type-meta);
-    line-height: var(--type-meta-lh);
-    letter-spacing: var(--type-meta-ls);
-    font-weight: var(--font-weight-medium);
-    color: var(--text-muted);
+    padding-block: 1.5rem;
   }
 
   .demoFill {
@@ -198,11 +188,6 @@
     align-items: center;
     justify-content: flex-start;
     gap: 0.75rem;
-  }
-
-  .variantCode {
-    flex-basis: 100%;
-    padding-block: 0.5rem;
   }
 
   .variantNote {
@@ -554,33 +539,6 @@
     color: var(--text-muted);
   }
 
-  .practices {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .practiceDo,
-  .practiceDont {
-    display: flex;
-    gap: 0.5rem;
-    max-width: 70ch;
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    font-weight: var(--font-weight-medium);
-    color: var(--text-muted);
-  }
-  .practiceDoIcon {
-    margin-top: 1px;
-    flex-shrink: 0;
-    color: var(--ok);
-  }
-  .practiceDontIcon {
-    margin-top: 1px;
-    flex-shrink: 0;
-    color: var(--bad);
-  }
-
   .a11yList {
     display: flex;
     flex-direction: column;
@@ -840,5 +798,133 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 0.75rem;
+  }
+
+  .sectionSubtitle {
+    font-size: var(--type-body);
+    line-height: var(--type-body-lh);
+    letter-spacing: var(--type-body-ls);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text);
+  }
+
+  .overview {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .hero {
+    display: flex;
+    min-height: 16rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    border-radius: var(--radius-xl);
+    background-color: var(--surface-muted);
+    padding: 2rem;
+  }
+
+  .guide {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border-radius: var(--radius-xl);
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--border);
+    background-color: var(--surface);
+    text-align: left;
+    font-size: var(--type-body);
+    line-height: var(--type-body-lh);
+    letter-spacing: var(--type-body-ls);
+    color: var(--text-muted);
+
+    & th,
+    & td {
+      border-top-style: solid;
+      border-top-width: 1px;
+      border-color: var(--border);
+      padding: 0.75rem 1rem;
+      vertical-align: top;
+    }
+
+    & thead th {
+      border-top-width: 0;
+      font-size: var(--type-meta);
+      line-height: var(--type-meta-lh);
+      letter-spacing: var(--type-meta-ls);
+      font-weight: var(--font-weight-semibold);
+      color: var(--text-muted);
+    }
+  }
+
+  .guideHeadName {
+    width: 9rem;
+  }
+
+  .guideName {
+    font-weight: var(--font-weight-medium);
+    color: var(--text);
+  }
+
+  .exampleList {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .example {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 0;
+  }
+
+  .exampleTitle {
+    font-size: var(--type-body);
+    line-height: var(--type-body-lh);
+    letter-spacing: var(--type-body-ls);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text);
+  }
+
+  .exampleTitleMono {
+    font-family: var(--font-mono);
+    font-size: var(--type-meta);
+    line-height: var(--type-meta-lh);
+    letter-spacing: var(--type-meta-ls);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-muted);
+  }
+
+  .exampleTabs {
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background-color: var(--surface-muted);
+    padding-inline: 1rem;
+  }
+
+  .exampleDescription {
+    padding-block: 0.75rem;
+    max-width: 72ch;
+    font-size: var(--type-body);
+    line-height: var(--type-body-lh);
+    letter-spacing: var(--type-body-ls);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-muted);
+  }
+
+  .exampleCode {
+    padding-block: 0.75rem;
+  }
+
+  .exampleCodeOnly {
+    border-radius: var(--radius-lg);
   }
 }
