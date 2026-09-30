@@ -478,7 +478,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Pinta la raya y manda aria-checked=\"mixed\"."
       }
     ],
-    "doc": "La caja de 18, la misma medida del pulgar del switch, así una fila con los dos no tiene dos tamaños de \"marca\"."
+    "doc": "La caja de 18, la misma medida del pulgar del switch, así una fila con los dos no tiene dos tamaños de \"marca\". Se toca en 24, que es el mínimo de WCAG 2.2, sin mover el renglón."
   },
   "Checklist": {
     "props": [
@@ -3239,7 +3239,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "Para atarlo a una etiqueta de afuera. Adentro de un `Field` lo toma solo."
       }
     ],
-    "doc": "El switch: pista de 40×22 con 2 de padding, así que el pulgar es de 18 y viaja 18 exactos."
+    "doc": "El switch: pista de 40×24 con 3 de padding, así que el pulgar es de 18 y viaja 16. Mide 24 de alto porque es el mínimo de WCAG 2.2 para lo que se toca."
   },
   "Table": {
     "props": [

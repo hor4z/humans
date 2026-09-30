@@ -1,6 +1,6 @@
 import s from './slider.module.css'
 import { useState, type CSSProperties } from 'react'
-import { useField } from '../lib/field-ctx'
+import { useControlId, useField } from '../lib/field-ctx'
 import { cx } from '../lib/cx'
 
 /** Un valor en un rango. */
@@ -27,6 +27,7 @@ export function Slider({
   className?: string
 }) {
   const field = useField()
+  const inputId = useControlId(id)
   const t = max === min ? 0 : Math.min(1, Math.max(0, (value - min) / (max - min)))
   const thumbAt = 'calc(var(--t) * (100% - 24px) + 12px)'
   const fillTo = 'calc(var(--t) * (100% - 24px) + 24px)'
@@ -45,7 +46,7 @@ export function Slider({
       <input
         type="range"
         {...field}
-        id={id ?? field.id}
+        id={inputId}
         aria-label={field.id ? undefined : label}
         min={min} max={max} step={step} value={value}
         disabled={disabled}

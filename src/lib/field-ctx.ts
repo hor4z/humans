@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useId } from 'react'
 
 /** Lo que una superficie de campo le cuenta al control que lleva adentro. */
 export type FieldState = { id: string; labelId: string; describedBy?: string; invalid: boolean }
@@ -15,6 +15,13 @@ export function useFieldGroup() {
     'aria-describedby': ctx.describedBy,
     'aria-invalid': ctx.invalid || undefined,
   }
+}
+
+/** El id de un control: el que le pasan, el del `Field` que lo tiene adentro o uno propio. Un campo sin `id` ni `name` es un aviso en DevTools y no se puede atar a una etiqueta. */
+export function useControlId(own?: string) {
+  const ctx = useContext(FieldCtx)
+  const auto = useId()
+  return own ?? ctx?.id ?? auto
 }
 
 /** Lo que un control necesita para quedar bien atado a su etiqueta. */

@@ -71,7 +71,7 @@ export function SelfAssessmentStory() {
             name="a medio ubicar"
             note="El mismo marco y el mismo `CriterionCard` que el panel del docente, con los mismos `Criterion`: acá no se corrige, se dice dónde estoy. Elegí un nivel en otro aspecto: el de arriba se cierra y el tramo de la barra se llena."
             code={`<SelfAssessment criteria={criteria} value={value} onValueChange={setValue}>
-  <SelfAssessment.Title>Dónde estás</SelfAssessment.Title>
+  <SelfAssessment.Title>Dónde estás, a medio ubicar</SelfAssessment.Title>
 </SelfAssessment>`}
           >
             <Stack width="sm">
@@ -80,7 +80,7 @@ export function SelfAssessmentStory() {
                 value={value}
                 onValueChange={setValue}
               >
-                <SelfAssessment.Title>Dónde estás</SelfAssessment.Title>
+                <SelfAssessment.Title>Dónde estás, a medio ubicar</SelfAssessment.Title>
               </SelfAssessment>
             </Stack>
           </Variant>

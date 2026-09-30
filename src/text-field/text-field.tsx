@@ -1,6 +1,6 @@
 import s from './text-field.module.css'
 import type { InputHTMLAttributes, ReactNode, Ref } from 'react'
-import { useField } from '../lib/field-ctx'
+import { useControlId, useField } from '../lib/field-ctx'
 import { Icon, type IconName } from '../icon/icon'
 import { fieldSizes } from '../lib/control'
 import { cx } from '../lib/cx'
@@ -24,6 +24,7 @@ type TextFieldProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> & {
 export function TextField({ icon, suffix, size = 'md', className, ref, inputRef, onChange, onValueChange, ...rest }: TextFieldProps) {
   const iconSize = size === 'sm' ? 16 : size === 'md' ? 18 : 20
   const field = useField()
+  const id = useControlId(rest.id)
   return (
     <div
       ref={ref}
@@ -47,6 +48,7 @@ export function TextField({ icon, suffix, size = 'md', className, ref, inputRef,
         )}
         {...field}
         {...rest}
+        id={id}
         onChange={e => { onChange?.(e); onValueChange?.(e.target.value) }}
       />
       {suffix}

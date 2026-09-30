@@ -116,12 +116,12 @@ export function RubricReviewStory() {
             name="lo que ve quien entregó"
             note="Sin `onValueChange` es la devolución: en qué renglón quedó cada aspecto y qué le dijeron."
             code={`<RubricReview criteria={criteria} value={returned}>
-  <RubricReview.Title>Cómo te fue</RubricReview.Title>
+  <RubricReview.Title>Cómo te fue, la devolución</RubricReview.Title>
 </RubricReview>`}
           >
             <Stack width="sm">
               <RubricReview criteria={criteria} value={returned}>
-                <RubricReview.Title>Cómo te fue</RubricReview.Title>
+                <RubricReview.Title>Cómo te fue, la devolución</RubricReview.Title>
               </RubricReview>
             </Stack>
           </Variant>

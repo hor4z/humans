@@ -16,6 +16,9 @@
 
   .trigger {
     display: inline-flex;
+    min-width: 24px;
+    min-height: 24px;
+    margin: -2px;
     flex-shrink: 0;
     align-items: center;
     justify-content: center;

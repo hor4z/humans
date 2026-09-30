@@ -1,5 +1,5 @@
 import cls from './audio-player.module.css'
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { useEffect, useId, useRef, useState, type ReactNode } from 'react'
 import { IconButton } from '../../../icon-button/icon-button'
 import { Spinner } from '../../../spinner/spinner'
 import { control } from '../../../lib/control'
@@ -63,6 +63,7 @@ function Actions({ children }: { children: ReactNode }) {
 }
 
 function Root({ src, title, peaks, children, size = 'md', className }: AudioPlayerProps) {
+  const seekId = useId()
   const [actions] = takePart(children, Actions)
   const audio = useRef<HTMLAudioElement>(null)
   const [status, setStatus] = useState<Status>('loading')
@@ -180,6 +181,7 @@ function Root({ src, title, peaks, children, size = 'md', className }: AudioPlay
             <span className={cx(cls.timeline, waveHeight[size])}>
               {peaks?.length ? <Wave peaks={peaks} progress={progress} /> : <BareTrack progress={progress} />}
               <input
+                id={seekId}
                 type="range"
                 min={0}
                 max={ready ? dur : 0}

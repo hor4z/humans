@@ -2,12 +2,12 @@
   .root {
     position: relative;
     display: inline-flex;
-    height: 22px;
+    height: 24px;
     width: 2.5rem;
     flex-shrink: 0;
     align-items: center;
     border-radius: var(--radius-full);
-    padding: 0.125rem;
+    padding: 3px;
   }
 
   .motion {
@@ -36,7 +36,7 @@
   }
 
   .thumbOn {
-    translate: 18px 0;
+    translate: 16px 0;
   }
 
   .thumbOff {

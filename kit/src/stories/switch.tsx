@@ -21,7 +21,7 @@ export function SwitchStory() {
       </Hero>
 
       <Anatomy>
-        <Anatomy.Part name="Pista" required>La píldora de 40×22. Prendida va en el azul de marca, el mismo que el checkbox marcado.</Anatomy.Part>
+        <Anatomy.Part name="Pista" required>La píldora de 40×24. Prendida va en el azul de marca, el mismo que el checkbox marcado.</Anatomy.Part>
         <Anatomy.Part name="Pulgar" required>El círculo de 18 que corre adentro de la pista y viaja 18 exactos.</Anatomy.Part>
         <Anatomy.Part name="Etiqueta">Un switch suelto no dice qué prende: la pone `label` o la `Row` o el `Field` de alrededor.</Anatomy.Part>
       </Anatomy>

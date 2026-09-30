@@ -1,9 +1,19 @@
 @layer milo.components {
   .root {
     display: inline-flex;
+    width: 24px;
+    height: 24px;
+    margin: -3px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+  }
+
+  .control {
+    display: inline-flex;
     width: 18px;
     height: 18px;
-    flex-shrink: 0;
     align-items: center;
     justify-content: center;
     border-radius: var(--radius-xs);
