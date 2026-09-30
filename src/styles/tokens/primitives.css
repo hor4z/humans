@@ -1,9 +1,9 @@
 :root {
   --shade-01: #ffffff;  
-  --shade-02: #f1f2f4;  
-  --shade-03: #e9eaec;
-  --shade-04: #dee0e2;
-  --shade-05: #cfd1d4;
+  --shade-02: #ecf3fc;  
+  --shade-03: #e3ebf6;
+  --shade-04: #d8e1ed;
+  --shade-05: #c8d2df;
   --shade-06: #5e6269;  
   --shade-07: #454950;
   --shade-08: #33373d;
@@ -19,7 +19,7 @@
 
   --light-a33: rgb(255 255 255 / 0.33);
   --light-a27: rgb(255 255 255 / 0.27);
-  --edge: #c5c7ca;
+  --edge: #bec8d5;
   --icon-muted: #454950;
 
   --blue-050: #e7f7ff;
@@ -87,11 +87,11 @@
 }
 
 [data-theme="dark"] {
-  --shade-01: #1d1e20;  
-  --shade-02: #131415;  
-  --shade-03: #27292b;
-  --shade-04: #343538;
-  --shade-05: #46484b;
+  --shade-01: #1a1e25;  
+  --shade-02: #111419;  
+  --shade-03: #242931;
+  --shade-04: #2f353e;
+  --shade-05: #414853;
   --shade-06: #9a9fa6;
   --shade-07: #bfc4cc;
   --shade-08: #dbe0e8;
@@ -107,7 +107,7 @@
 
   --light-a33: rgb(255 255 255 / 0.07);
   --light-a27: rgb(255 255 255 / 0.05);
-  --edge: #4f5052;
+  --edge: #49505b;
   --icon-muted: #bfc4cc;
 
   --blue-050: #062148;

@@ -57,7 +57,7 @@ export function ColorSection() {
     <Page
       title="Color"
       kind="Fundamentos"
-      lead="Un primario, un acento y una rampa casi neutra. Todo lo demás es una familia acotada que contesta una pregunta distinta. El color de una persona sale de su nombre con `colorForName`, en [Utilidades](#utilidades)."
+      lead="Un primario, un acento y una rampa de grises con el tono del azul. Todo lo demás es una familia acotada que contesta una pregunta distinta. El color de una persona sale de su nombre con `colorForName`, en [Utilidades](#utilidades)."
     >
       <Section title="Cuál va" note="La pregunta no es qué color queda bien: es qué está diciendo esto.">
         <Table label="Qué rol usar según qué se quiere decir" minWidth={560}>

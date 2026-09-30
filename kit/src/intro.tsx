@@ -15,7 +15,7 @@ import { face } from './fixtures'
 
 const shortcuts: { id: string; icon: IconName; title: string; body: string }[] = [
   { id: 'accessibility', icon: 'accessibility', title: 'Accesibilidad', body: 'Contraste, teclado y lectores, que es lo que hay que leer antes de tocar nada.' },
-  { id: 'color', icon: 'palette', title: 'Color', body: 'Una rampa casi neutra y cuatro familias acotadas.' },
+  { id: 'color', icon: 'palette', title: 'Color', body: 'Una rampa de grises con el tono del azul y cuatro familias acotadas.' },
   { id: 'dashboard', icon: 'dashboard', title: 'Dashboard', body: 'Las piezas de la app, juntas en una pantalla real.' },
   { id: 'documento', icon: 'description', title: 'Documento', body: 'Los bloques, juntos en una consigna de verdad.' },
 ]

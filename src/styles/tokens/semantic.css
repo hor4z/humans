@@ -10,8 +10,8 @@
   --surface-active: var(--shade-09-a08);
   --surface-inverted: var(--shade-09);
   --popover: var(--shade-01);
-  --scrim: rgb(18 18 18 / 0.14);
-  --veil: rgb(58 58 58 / 0.4);
+  --scrim: rgb(14 20 32 / 0.14);
+  --veil: rgb(48 58 78 / 0.4);
 
   --border: var(--shade-04);
   --border-strong: var(--shade-05);
@@ -90,7 +90,7 @@
     0 38px 38px 0 rgb(0 0 0 / 0.06),
     0 86px 52px 0 rgb(0 0 0 / 0.04);
 
-  --grad-raised: linear-gradient(in oklab, #e5e5e5 0%, #e2e2e2 100%);
+  --grad-raised: linear-gradient(in oklab, #e3e7ee 0%, #dfe3ea 100%);
 
 
   --grad-mark: linear-gradient(to bottom, rgb(255 255 255 / 0.20), rgb(255 255 255 / 0) 60%);
@@ -173,7 +173,7 @@
   --scrim: rgb(0 0 0 / 0.55);
   --solid: var(--shade-09);
   --solid-hover: #ffffff;
-  --grad-raised: linear-gradient(in oklab, #333333 0%, #2c2c2c 100%);
+  --grad-raised: linear-gradient(in oklab, #31353c 0%, #2a2e35 100%);
 
   --grad-mark: linear-gradient(to bottom, color-mix(in oklab, currentColor 10%, transparent), transparent 60%);
   --relief-mark:
