@@ -190,7 +190,7 @@ export const propsByComponent: Record<string, ComponentDoc> = ${JSON.stringify(m
 
 const siteBody = `/* Generado por scripts/props.mjs: no se edita a mano. */
 
-import type { ComponentDoc } from '@milo/ui/props'
+import type { ComponentDoc } from '@humans/ui/props'
 
 export const sitePropsByComponent: Record<string, ComponentDoc> = ${JSON.stringify(site, null, 2)}
 `

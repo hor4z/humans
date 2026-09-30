@@ -1,4 +1,4 @@
-@layer milo.components {
+@layer humans.components {
   .variantBrand {
     --spinner-bg: var(--brand);
     background-color: var(--brand);

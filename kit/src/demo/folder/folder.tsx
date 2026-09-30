@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode } from 'react'
-import { Avatar } from '@milo/ui/avatar'
-import { cx } from '@milo/ui/lib/cx'
-import { takePart } from '@milo/ui/lib/parts'
+import { Avatar } from '@humans/ui/avatar'
+import { cx } from '@humans/ui/lib/cx'
+import { takePart } from '@humans/ui/lib/parts'
 
 /** El nombre, debajo. */
 function Label({ children }: { children: ReactNode }) {

@@ -8,13 +8,13 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: [
-      { find: /^@milo\/ui\/icons\.meta$/, replacement: `${src}/icons.meta.ts` },
-      { find: /^@milo\/ui\/icons$/, replacement: `${src}/icons.gen.ts` },
-      { find: /^@milo\/ui\/props$/, replacement: `${src}/props.gen.ts` },
-      { find: /^@milo\/ui\/theme\.css$/, replacement: `${src}/theme.css` },
-      { find: /^@milo\/ui\/lib\/(.+)$/, replacement: `${src}/lib/$1` },
-      { find: /^@milo\/ui\/blocks\/([^/]+)\/([^/]+)$/, replacement: `${src}/blocks/$1/$2/$2` },
-      { find: /^@milo\/ui\/([^/]+)$/, replacement: `${src}/$1/$1` },
+      { find: /^@humans\/ui\/icons\.meta$/, replacement: `${src}/icons.meta.ts` },
+      { find: /^@humans\/ui\/icons$/, replacement: `${src}/icons.gen.ts` },
+      { find: /^@humans\/ui\/props$/, replacement: `${src}/props.gen.ts` },
+      { find: /^@humans\/ui\/theme\.css$/, replacement: `${src}/theme.css` },
+      { find: /^@humans\/ui\/lib\/(.+)$/, replacement: `${src}/lib/$1` },
+      { find: /^@humans\/ui\/blocks\/([^/]+)\/([^/]+)$/, replacement: `${src}/blocks/$1/$2/$2` },
+      { find: /^@humans\/ui\/([^/]+)$/, replacement: `${src}/$1/$1` },
     ],
   },
   test: {

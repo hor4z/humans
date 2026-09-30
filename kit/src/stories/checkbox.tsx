@@ -1,6 +1,6 @@
 import cls from './checkbox.module.css'
 import { useState } from 'react'
-import { Checkbox } from '@milo/ui/checkbox'
+import { Checkbox } from '@humans/ui/checkbox'
 import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 export function CheckboxStory() {
@@ -14,7 +14,7 @@ export function CheckboxStory() {
     <Page
       title="Checkbox"
       kind="Formularios"
-      imports="import { Checkbox } from '@milo/ui/checkbox'"
+      imports="import { Checkbox } from '@humans/ui/checkbox'"
       lead="Permite activar una opción independiente o seleccionar varias opciones de una lista."
     >
       <Hero>

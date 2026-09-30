@@ -1,4 +1,4 @@
-@layer milo.app {
+@layer humans.app {
   .inlineCode {
     border-radius: var(--radius-sm);
     background-color: var(--surface-muted);

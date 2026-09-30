@@ -1,7 +1,7 @@
 import cls from './reorder.module.css'
 import { useState } from 'react'
-import { Icon, type IconName } from '@milo/ui/icon'
-import { Reorder, type ReorderItem } from '@milo/ui/reorder'
+import { Icon, type IconName } from '@humans/ui/icon'
+import { Reorder, type ReorderItem } from '@humans/ui/reorder'
 import { A11y, Anatomy, Demo, Frame, Hero, Page, Practices, Props, Section } from '../kit'
 
 type Block = ReorderItem & { icon: IconName; meta: string }
@@ -21,7 +21,7 @@ export function ReorderStory() {
     <Page
       title="Reorder"
       kind="Navegación"
-      imports="import { Reorder } from '@milo/ui/reorder'"
+      imports="import { Reorder } from '@humans/ui/reorder'"
       lead="Permite cambiar el orden de una lista con el puntero o el teclado."
     >
       <Hero>

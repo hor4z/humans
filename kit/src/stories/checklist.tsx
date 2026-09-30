@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Checklist } from '@milo/ui/blocks/editor/checklist'
+import { Checklist } from '@humans/ui/blocks/editor/checklist'
 import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 export function ChecklistStory() {
@@ -11,7 +11,7 @@ export function ChecklistStory() {
     <Page
       title="Checklist"
       kind="Editor"
-      imports="import { Checklist } from '@milo/ui/blocks/editor/checklist'"
+      imports="import { Checklist } from '@humans/ui/blocks/editor/checklist'"
       lead="Presenta una secuencia de tareas con su progreso y detalles expandibles."
     >
       <Hero>

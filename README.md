@@ -1,8 +1,8 @@
-# milo · design system
+# humans · design system
 
-El sistema de interfaz de **milo**: la identidad en tokens, las piezas que la usan y el sitio
-donde se ve todo funcionando. No es una lámina de estilos: cada pieza de acá es el componente
-real, con su teclado, sus estados y sus tests.
+El sistema de interfaz de **humans**, pensado para los humanos del futuro: la identidad en tokens,
+las piezas que la usan y el sitio donde se ve todo funcionando. No es una lámina de estilos: cada
+pieza de acá es el componente real, con su teclado, sus estados y sus tests.
 
 El UI kit (las 63 piezas) es **una parte** del sistema, no el sistema. Acá adentro no vive
 producto: este repo es del design system y de nada más.
@@ -18,11 +18,11 @@ npm run props      # regenera la tabla de props desde los tipos
 
 ## Cómo se usa desde otro proyecto
 
-El repo **es** el paquete, se llama `@milo/ui` y no está en npm: es privado y se instala
+El repo **es** el paquete, se llama `@humans/ui` y no está en npm: es privado y se instala
 desde GitHub, siempre clavado a un tag.
 
 ```sh
-npm install "@milo/ui@git+ssh://git@github.com/hor4z/milo.git#v0.1.0"
+npm install "@humans/ui@git+ssh://git@github.com/hor4z/humans.git#v0.1.0"
 ```
 
 En `package.json` del consumidor queda así, y hace falta acceso de lectura al repo (una clave
@@ -31,7 +31,7 @@ SSH en la máquina, o un token en CI: nunca escrito adentro del repo):
 ```json
 {
   "dependencies": {
-    "@milo/ui": "git+ssh://git@github.com/hor4z/milo.git#v0.1.0"
+    "@humans/ui": "git+ssh://git@github.com/hor4z/humans.git#v0.1.0"
   }
 }
 ```
@@ -42,15 +42,15 @@ SSH en la máquina, o un token en CI: nunca escrito adentro del repo):
 Después, en el arranque de la app, **el CSS primero y en este orden**:
 
 ```ts
-import '@milo/ui/theme.css'   // las capas, los tokens, el reset y las globales
-import '@milo/ui/style.css'   // el CSS de las piezas
-import { Button, Card } from '@milo/ui'
+import '@humans/ui/theme.css'   // las capas, los tokens, el reset y las globales
+import '@humans/ui/style.css'   // el CSS de las piezas
+import { Button, Card } from '@humans/ui'
 ```
 
 `theme.css` va antes que cualquier otro estilo de la app, porque declara el orden de las capas
 y una capa vale por dónde se la declara. Y hay dos subpaths más, que usa el sitio de
-documentación y casi nadie más: `@milo/ui/props` (la tabla de props generada) y
-`@milo/ui/icons.meta` (los tags del catálogo de iconos).
+documentación y casi nadie más: `@humans/ui/props` (la tabla de props generada) y
+`@humans/ui/icons.meta` (los tags del catálogo de iconos).
 
 Para publicar una versión: `npm version <patch|minor|major>` y `git push --follow-tags`. El tag
 es el contrato; una rama no lo es.
@@ -70,7 +70,7 @@ kit/               el sitio: los fundamentos y una vista por pieza
 ```
 
 Un solo `package.json`, en la raíz. El sitio no es otro paquete: es una carpeta que Vite
-compila aparte y que importa `@milo/ui` por alias, así que **consume exactamente lo mismo que
+compila aparte y que importa `@humans/ui` por alias, así que **consume exactamente lo mismo que
 un consumidor de afuera** y sigue siendo una prueba de verdad y no una demo. Todo entra por
 `src/index.ts`, y hay un test que falla si alguien exporta algo de un archivo sin sacarlo por
 esa puerta.

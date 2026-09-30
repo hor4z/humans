@@ -1,6 +1,6 @@
 import cls from './spinner.module.css'
-import { Button } from '@milo/ui/button'
-import { Spinner } from '@milo/ui/spinner'
+import { Button } from '@humans/ui/button'
+import { Spinner } from '@humans/ui/spinner'
 import { A11y, Anatomy, Demo, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function SpinnerStory() {
@@ -8,7 +8,7 @@ export function SpinnerStory() {
     <Page
       title="Spinner"
       kind="Avisos"
-      imports="import { Spinner } from '@milo/ui/spinner'"
+      imports="import { Spinner } from '@humans/ui/spinner'"
       lead="Indica que una operación está en curso cuando su progreso no se puede medir."
     >
       <Hero>

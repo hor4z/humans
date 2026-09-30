@@ -1,7 +1,7 @@
-import { Button } from '@milo/ui/button'
-import { Dropdown } from '@milo/ui/dropdown'
-import { Icon } from '@milo/ui/icon'
-import { IconButton } from '@milo/ui/icon-button'
+import { Button } from '@humans/ui/button'
+import { Dropdown } from '@humans/ui/dropdown'
+import { Icon } from '@humans/ui/icon'
+import { IconButton } from '@humans/ui/icon-button'
 import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function DropdownStory() {
@@ -10,7 +10,7 @@ export function DropdownStory() {
       title="Dropdown"
       lead="Abre un menú de acciones a partir de una lista de opciones."
       kind="Acciones"
-      imports="import { Dropdown } from '@milo/ui/dropdown'"
+      imports="import { Dropdown } from '@humans/ui/dropdown'"
     >
       <Hero>
         <Dropdown

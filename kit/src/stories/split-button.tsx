@@ -1,5 +1,5 @@
-import { useToast } from '@milo/ui/toast'
-import { SplitButton } from '@milo/ui/split-button'
+import { useToast } from '@humans/ui/toast'
+import { SplitButton } from '@humans/ui/split-button'
 import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function SplitButtonStory() {
@@ -8,7 +8,7 @@ export function SplitButtonStory() {
     <Page
       title="SplitButton"
       kind="Acciones"
-      imports="import { SplitButton } from '@milo/ui/split-button'"
+      imports="import { SplitButton } from '@humans/ui/split-button'"
       lead="Combina una acción principal con un menú de acciones relacionadas."
     >
       <Hero>

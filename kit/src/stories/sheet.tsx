@@ -1,13 +1,13 @@
 import { useState } from 'react'
-import { Button } from '@milo/ui/button'
-import { Field } from '@milo/ui/field'
-import { Icon } from '@milo/ui/icon'
-import { Select } from '@milo/ui/select'
-import { Sheet } from '@milo/ui/sheet'
-import { Switch } from '@milo/ui/switch'
-import { TextField } from '@milo/ui/text-field'
-import { Textarea } from '@milo/ui/textarea'
-import { useToast } from '@milo/ui/toast'
+import { Button } from '@humans/ui/button'
+import { Field } from '@humans/ui/field'
+import { Icon } from '@humans/ui/icon'
+import { Select } from '@humans/ui/select'
+import { Sheet } from '@humans/ui/sheet'
+import { Switch } from '@humans/ui/switch'
+import { TextField } from '@humans/ui/text-field'
+import { Textarea } from '@humans/ui/textarea'
+import { useToast } from '@humans/ui/toast'
 import { A11y, Anatomy, Demo, Hero, Page, Panel, Practices, Props, Section } from '../kit'
 
 export function SheetStory() {
@@ -23,7 +23,7 @@ export function SheetStory() {
     <Page
       title="Sheet"
       kind="Formularios"
-      imports="import { Sheet } from '@milo/ui/sheet'"
+      imports="import { Sheet } from '@humans/ui/sheet'"
       lead="Abre un panel lateral para consultar detalles o completar una tarea sin perder el contexto."
     >
       <Hero>

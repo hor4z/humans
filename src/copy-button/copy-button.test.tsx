@@ -17,7 +17,7 @@ describe('CopyButton', () => {
     Object.assign(navigator, { clipboard: { writeText: vi.fn().mockResolvedValue(undefined) } })
     render(<CopyButton value="x" />)
     await userEvent.click(screen.getByRole('button'))
-    await waitFor(() => expect(document.getElementById('milo-live')?.textContent).toBe('Copiado'))
+    await waitFor(() => expect(document.getElementById('humans-live')?.textContent).toBe('Copiado'))
   })
 
   it('si el navegador no deja copiar, no dice que copió', async () => {

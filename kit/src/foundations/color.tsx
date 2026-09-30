@@ -1,6 +1,6 @@
 import cls from './color.module.css'
-import { Chip } from '@milo/ui/chip'
-import { Table } from '@milo/ui/table'
+import { Chip } from '@humans/ui/chip'
+import { Table } from '@humans/ui/table'
 import { Page, Ramp, Rich, Section, Stack } from '../kit'
 import { ContrastTable, RoleTable, type ContrastRow, type RoleRow } from './color-tables'
 

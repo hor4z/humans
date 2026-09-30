@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { TaskList, type Task } from '@milo/ui/blocks/editor/task-list'
+import { TaskList, type Task } from '@humans/ui/blocks/editor/task-list'
 import { A11y, Anatomy, Demo, Grid, Hero, Page, Practices, Props, Section, Stack } from '../kit'
 
 const initial: Task[] = [
@@ -16,7 +16,7 @@ export function TaskListStory() {
     <Page
       title="TaskList"
       kind="Editor"
-      imports="import { TaskList } from '@milo/ui/blocks/editor/task-list'"
+      imports="import { TaskList } from '@humans/ui/blocks/editor/task-list'"
       lead="Organiza tareas que se pueden marcar como completadas."
     >
       <Hero>

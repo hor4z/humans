@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 import type { ComponentType } from 'react'
-import { ToastProvider } from '@milo/ui/toast'
+import { ToastProvider } from '@humans/ui/toast'
 
 const modules = import.meta.glob('../{stories,foundations}/*.tsx', { eager: true }) as
   Record<string, Record<string, unknown>>

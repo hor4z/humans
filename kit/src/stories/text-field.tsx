@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { IconButton } from '@milo/ui/icon-button'
-import { Kbd } from '@milo/ui/kbd'
-import { TextField } from '@milo/ui/text-field'
+import { IconButton } from '@humans/ui/icon-button'
+import { Kbd } from '@humans/ui/kbd'
+import { TextField } from '@humans/ui/text-field'
 import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 export function TextFieldStory() {
@@ -12,7 +12,7 @@ export function TextFieldStory() {
     <Page
       title="TextField"
       kind="Formularios"
-      imports="import { TextField } from '@milo/ui/text-field'"
+      imports="import { TextField } from '@humans/ui/text-field'"
       lead="Recoge texto en una línea, con iconos o contenido complementario opcional."
     >
       <Hero>

@@ -1,5 +1,5 @@
-import { CopyButton } from '@milo/ui/copy-button'
-import { TextField } from '@milo/ui/text-field'
+import { CopyButton } from '@humans/ui/copy-button'
+import { TextField } from '@humans/ui/text-field'
 import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function CopyButtonStory() {
@@ -7,17 +7,17 @@ export function CopyButtonStory() {
     <Page
       title="CopyButton"
       kind="Acciones"
-      imports="import { CopyButton } from '@milo/ui/copy-button'
-import { TextField } from '@milo/ui/text-field'"
+      imports="import { CopyButton } from '@humans/ui/copy-button'
+import { TextField } from '@humans/ui/text-field'"
       lead="Copia texto al portapapeles y comunica si la operación se completó."
     >
       <Hero>
-        <CopyButton value="npm install @milo/ui" />
+        <CopyButton value="npm install @humans/ui" />
         <TextField
           readOnly
-          value="https://milo.escuela/act/fracciones-equivalentes"
+          value="https://humans.escuela/act/fracciones-equivalentes"
           aria-label="Enlace para compartir"
-          suffix={<CopyButton size="sm" value="https://milo.escuela/act/fracciones-equivalentes" label="Copiar el enlace" />}
+          suffix={<CopyButton size="sm" value="https://humans.escuela/act/fracciones-equivalentes" label="Copiar el enlace" />}
         />
       </Hero>
 
@@ -31,24 +31,24 @@ import { TextField } from '@milo/ui/text-field'"
           <Variant
             name="sm · md · lg y adentro de un campo"
             note="`sm` va adentro de un campo o de una fila y `md` suelto. El caso más común es un enlace para compartir, que se lee y se copia sin seleccionarlo a mano."
-            code={`<CopyButton size="sm" value="npm install @milo/ui" />
-<CopyButton value="npm install @milo/ui" />
-<CopyButton size="lg" value="npm install @milo/ui" />
+            code={`<CopyButton size="sm" value="npm install @humans/ui" />
+<CopyButton value="npm install @humans/ui" />
+<CopyButton size="lg" value="npm install @humans/ui" />
 <TextField
   readOnly
-  value="https://milo.escuela/act/fracciones-equivalentes"
+  value="https://humans.escuela/act/fracciones-equivalentes"
   aria-label="Enlace para compartir"
-  suffix={<CopyButton size="sm" value="https://milo.escuela/act/fracciones-equivalentes" label="Copiar el enlace" />}
+  suffix={<CopyButton size="sm" value="https://humans.escuela/act/fracciones-equivalentes" label="Copiar el enlace" />}
 />`}
           >
-            <CopyButton size="sm" value="npm install @milo/ui" />
-            <CopyButton value="npm install @milo/ui" />
-            <CopyButton size="lg" value="npm install @milo/ui" />
+            <CopyButton size="sm" value="npm install @humans/ui" />
+            <CopyButton value="npm install @humans/ui" />
+            <CopyButton size="lg" value="npm install @humans/ui" />
             <TextField
               readOnly
-              value="https://milo.escuela/act/fracciones-equivalentes"
+              value="https://humans.escuela/act/fracciones-equivalentes"
               aria-label="Enlace para compartir"
-              suffix={<CopyButton size="sm" value="https://milo.escuela/act/fracciones-equivalentes" label="Copiar el enlace" />}
+              suffix={<CopyButton size="sm" value="https://humans.escuela/act/fracciones-equivalentes" label="Copiar el enlace" />}
             />
           </Variant>
         </Panel>

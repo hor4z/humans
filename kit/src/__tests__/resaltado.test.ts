@@ -91,10 +91,10 @@ describe('highlight', () => {
   })
 
   it('las palabras clave, las llamadas y los tipos', () => {
-    const code = "import { timeAgo } from '@milo/ui/lib/time'\nconst week = [1, 2] as const"
+    const code = "import { timeAgo } from '@humans/ui/lib/time'\nconst week = [1, 2] as const"
     expect(kindOf(code, 'import')).toBe('keyword')
     expect(kindOf(code, 'from')).toBe('keyword')
-    expect(kindOf(code, "'@milo/ui/lib/time'")).toBe('string')
+    expect(kindOf(code, "'@humans/ui/lib/time'")).toBe('string')
     expect(kindOf(code, 'week')).toBe('plain')
     expect(kindOf(code, 'as')).toBe('keyword')
     expect(kindOf('const toast = useToast()', 'useToast')).toBe('fn')

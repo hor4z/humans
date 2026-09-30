@@ -1,5 +1,5 @@
 import s from './mention.module.css'
-import { Mention } from '@milo/ui/blocks/editor/mention'
+import { Mention } from '@humans/ui/blocks/editor/mention'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 import { face } from '../fixtures'
 
@@ -8,7 +8,7 @@ export function MentionStory() {
     <Page
       title="Mention"
       kind="Editor"
-      imports="import { Mention } from '@milo/ui/blocks/editor/mention'"
+      imports="import { Mention } from '@humans/ui/blocks/editor/mention'"
       lead="Identifica a una persona o un recurso dentro de un texto."
     >
       <Hero>

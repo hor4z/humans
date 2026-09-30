@@ -1,4 +1,4 @@
-@layer milo.app {
+@layer humans.app {
   .itemRail {
     width: 220px;
     border-radius: var(--radius-xl);

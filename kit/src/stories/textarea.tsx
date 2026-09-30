@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Textarea } from '@milo/ui/textarea'
+import { Textarea } from '@humans/ui/textarea'
 import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 export function TextareaStory() {
@@ -17,7 +17,7 @@ export function TextareaStory() {
     <Page
       title="Textarea"
       kind="Formularios"
-      imports="import { Textarea } from '@milo/ui/textarea'"
+      imports="import { Textarea } from '@humans/ui/textarea'"
       lead="Recoge texto de varias líneas, con límites y contador opcionales."
     >
       <Hero>

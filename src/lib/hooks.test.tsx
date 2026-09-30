@@ -96,11 +96,11 @@ describe('useAnnounce', () => {
     }
     render(<TwoFixture />)
     await userEvent.click(screen.getByRole('button', { name: 'uno' }))
-    await waitFor(() => expect(document.getElementById('milo-live')!.textContent).toBe('primero'))
+    await waitFor(() => expect(document.getElementById('humans-live')!.textContent).toBe('primero'))
     await userEvent.click(screen.getByRole('button', { name: 'dos' }))
-    await waitFor(() => expect(document.getElementById('milo-live')!.textContent).toBe('segundo'))
-    expect(document.querySelectorAll('#milo-live')).toHaveLength(1)
-    expect(document.getElementById('milo-live')!.getAttribute('aria-live')).toBe('assertive')
+    await waitFor(() => expect(document.getElementById('humans-live')!.textContent).toBe('segundo'))
+    expect(document.querySelectorAll('#humans-live')).toHaveLength(1)
+    expect(document.getElementById('humans-live')!.getAttribute('aria-live')).toBe('assertive')
   })
 })
 

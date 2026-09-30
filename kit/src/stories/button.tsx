@@ -1,5 +1,5 @@
-import { Button } from '@milo/ui/button'
-import { Icon } from '@milo/ui/icon'
+import { Button } from '@humans/ui/button'
+import { Icon } from '@humans/ui/icon'
 import { useEffect, useRef, useState } from 'react'
 import { A11y, Anatomy, Demo, Grid, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
@@ -35,7 +35,7 @@ export function ButtonStory() {
     <Page
       title="Button"
       kind="Acciones"
-      imports="import { Button } from '@milo/ui/button'"
+      imports="import { Button } from '@humans/ui/button'"
       lead="Ejecuta una acción. La variante define su jerarquía: principal, secundaria, discreta o destructiva."
     >
       <Hero>

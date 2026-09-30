@@ -1,4 +1,4 @@
-@layer milo.components {
+@layer humans.components {
   .counterCalm {
     color: var(--text-muted);
   }
@@ -54,7 +54,7 @@
     background-color: transparent;
     font-weight: var(--font-weight-medium);
     color: var(--text);
-    --milo-outline-style: none;
+    --humans-outline-style: none;
     outline-style: none;
   }
 

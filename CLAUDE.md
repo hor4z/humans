@@ -1,11 +1,12 @@
-# milo · design system
+# humans · design system
 
-La identidad de milo en tokens, las piezas que la usan y el sitio donde se ve todo funcionando.
+Un design system pensado para los humanos del futuro: la identidad en tokens, las piezas que la
+usan y el sitio donde se ve todo funcionando.
 Cada pieza es el componente real, con su teclado, sus estados y sus tests. **El repo es del design
 system y de nada más**: el producto se arma aparte, consumiendo el paquete.
 
 Lo que se decide acá se porta a `~/melu/packages/ui`, que es otro repo y todavía se llama `melu`.
-Este es `milo` (`hor4z/milo`). Lo que falta está en `ROADMAP.md`.
+Este es `humans` (`hor4z/humans`). Lo que falta está en `ROADMAP.md`.
 
 ```sh
 npm install
@@ -42,10 +43,10 @@ comando.
 ## Las dos capas
 
 - **La base** (`src/<pieza>`) es lo primitivo: botones, campos, overlays, avisos, superficies,
-  tabla, gráfico. Se importa `@milo/ui/button`.
+  tabla, gráfico. Se importa `@humans/ui/button`.
 - **Los bloques** (`src/blocks/<familia>/<pieza>`) son lo complementario: piezas armadas con la
   base que ponen al sistema en su uso real. Las familias son `editor`, `task` (la consigna),
-  `rubric` y `media`. Se importa `@milo/ui/blocks/editor/quote`.
+  `rubric` y `media`. Se importa `@humans/ui/blocks/editor/quote`.
 - **La base nunca importa un bloque, y un bloque no escribe en `:root`.** Sus custom properties
   (`--band`, `--icon-size`) son locales a su clase. Si la base necesita algo de un bloque, eso no era
   un bloque; si a un bloque le falta un rol, el rol es de la base. Hay dos tests.
@@ -254,7 +255,7 @@ internet, y sus tags están en inglés.
 No está en npm: se instala desde GitHub, clavado a un tag.
 
 ```sh
-npm install "@milo/ui@git+ssh://git@github.com/hor4z/milo.git#v0.1.0"
+npm install "@humans/ui@git+ssh://git@github.com/hor4z/humans.git#v0.1.0"
 ```
 
 - El consumidor necesita acceso de lectura: una clave SSH, o un token por variable de entorno en
@@ -267,15 +268,15 @@ npm install "@milo/ui@git+ssh://git@github.com/hor4z/milo.git#v0.1.0"
   `git push --follow-tags`.
 - El `exports` resuelve `./lib/*`, `./*` y una entrada por familia de bloques, que escribe
   `npm run paths` porque un patrón con estrella no puede repetir la familia en la ruta.
-- El CSS va antes que cualquier estilo de la app y en este orden: `@milo/ui/theme.css` (las capas,
-  los tokens y las globales, servido sin compilar) y `@milo/ui/style.css` (las piezas, del build).
+- El CSS va antes que cualquier estilo de la app y en este orden: `@humans/ui/theme.css` (las capas,
+  los tokens y las globales, servido sin compilar) y `@humans/ui/style.css` (las piezas, del build).
   Van juntos o no va ninguno.
 - React 19 y `react-dom` 19 son peer dependencies.
 
 ## El sitio
 
 `kit/` es una carpeta con su propio `vite.config.ts`, no un paquete. **Consume las piezas como
-cualquier app de afuera**: los alias resuelven `@milo/ui/<pieza>` a `src/`, y una ruta relativa
+cualquier app de afuera**: los alias resuelven `@humans/ui/<pieza>` a `src/`, y una ruta relativa
 hacia `src/` desde `kit/` es un bug. El riel se parte en Sistema y Bloques, con el dashboard y el
 documento al final como la prueba de que las piezas juntas funcionan. Los nombres del riel van en
 castellano y el nombre técnico queda como sinónimo de búsqueda.

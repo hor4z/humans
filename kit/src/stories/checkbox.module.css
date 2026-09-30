@@ -1,4 +1,4 @@
-@layer milo.app {
+@layer humans.app {
   .singleLabel {
     display: flex;
     align-items: center;

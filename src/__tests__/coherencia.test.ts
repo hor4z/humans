@@ -181,7 +181,7 @@ describe('coherencia del sistema', () => {
   it('la base no importa un bloque', () => {
     const offenders = sources
       .filter(f => !f.name.startsWith('blocks/'))
-      .filter(f => /from '[^']*\/blocks\/|from '@milo\/ui\/blocks\//.test(f.text))
+      .filter(f => /from '[^']*\/blocks\/|from '@humans\/ui\/blocks\//.test(f.text))
       .map(f => f.name)
     expect(offenders, 'un bloque se arma con la base; si la base lo necesita, no es un bloque').toEqual([])
   })

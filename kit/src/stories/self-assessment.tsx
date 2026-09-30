@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { SelfAssessment, type Criterion } from '@milo/ui/blocks/rubric/self-assessment'
+import { SelfAssessment, type Criterion } from '@humans/ui/blocks/rubric/self-assessment'
 import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const criteria: Criterion[] = [
@@ -48,7 +48,7 @@ export function SelfAssessmentStory() {
     <Page
       title="SelfAssessment"
       kind="Rúbrica"
-      imports="import { SelfAssessment } from '@milo/ui/blocks/rubric/self-assessment'"
+      imports="import { SelfAssessment } from '@humans/ui/blocks/rubric/self-assessment'"
       lead="Permite revisar el propio trabajo contra los criterios de una rúbrica."
     >
       <Hero>

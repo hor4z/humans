@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Button } from '@milo/ui/button'
-import { NumberAnswer } from '@milo/ui/blocks/task/number-answer'
+import { Button } from '@humans/ui/button'
+import { NumberAnswer } from '@humans/ui/blocks/task/number-answer'
 import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 export function NumberAnswerStory() {
@@ -12,7 +12,7 @@ export function NumberAnswerStory() {
     <Page
       title="NumberAnswer"
       kind="Consigna"
-      imports="import { NumberAnswer } from '@milo/ui/blocks/task/number-answer'"
+      imports="import { NumberAnswer } from '@humans/ui/blocks/task/number-answer'"
       lead="Recoge una respuesta numérica y permite evaluar un margen de tolerancia."
     >
       <Hero>

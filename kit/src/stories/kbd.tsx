@@ -1,5 +1,5 @@
 import cls from './kbd.module.css'
-import { Kbd } from '@milo/ui/kbd'
+import { Kbd } from '@humans/ui/kbd'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function KbdStory() {
@@ -7,7 +7,7 @@ export function KbdStory() {
     <Page
       title="Kbd"
       kind="Superficies"
-      imports="import { Kbd } from '@milo/ui/kbd'"
+      imports="import { Kbd } from '@humans/ui/kbd'"
       lead="Representa una tecla o una combinación de teclas dentro de una instrucción."
     >
       <Hero>

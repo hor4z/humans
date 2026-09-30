@@ -1,6 +1,6 @@
 import cls from './popover.module.css'
-import { Button } from '@milo/ui/button'
-import { Popover } from '@milo/ui/popover'
+import { Button } from '@humans/ui/button'
+import { Popover } from '@humans/ui/popover'
 import { A11y, Anatomy, Demo, Hero, Page, Panel, Practices, Props, Section } from '../kit'
 
 export function PopoverStory() {
@@ -9,7 +9,7 @@ export function PopoverStory() {
       title="Popover"
       lead="Muestra contenido contextual junto a su disparador, sin cambiar de página."
       kind="Superficies"
-      imports="import { Popover } from '@milo/ui/popover'"
+      imports="import { Popover } from '@humans/ui/popover'"
     >
       <Hero>
         <Popover

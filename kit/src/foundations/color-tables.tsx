@@ -1,7 +1,7 @@
 import cls from './color-tables.module.css'
-import { Chip } from '@milo/ui/chip'
-import { contrast } from '@milo/ui/lib/contrast'
-import { Table } from '@milo/ui/table'
+import { Chip } from '@humans/ui/chip'
+import { contrast } from '@humans/ui/lib/contrast'
+import { Table } from '@humans/ui/table'
 import { Rich, useTokens } from '../kit'
 
 export type ContrastRow = {

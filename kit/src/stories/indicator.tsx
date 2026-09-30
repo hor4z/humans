@@ -1,6 +1,6 @@
-import { Icon } from '@milo/ui/icon'
-import { IconButton } from '@milo/ui/icon-button'
-import { Indicator } from '@milo/ui/indicator'
+import { Icon } from '@humans/ui/icon'
+import { IconButton } from '@humans/ui/icon-button'
+import { Indicator } from '@humans/ui/indicator'
 import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function IndicatorStory() {
@@ -9,7 +9,7 @@ export function IndicatorStory() {
       title="Indicator"
       kind="Datos"
       lead="Añade un punto, un contador o un icono de estado a otro elemento."
-      imports="import { Indicator } from '@milo/ui/indicator'"
+      imports="import { Indicator } from '@humans/ui/indicator'"
     >
       <Hero>
         <Indicator dot label="Hay avisos sin leer">

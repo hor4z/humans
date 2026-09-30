@@ -1,7 +1,7 @@
 import cls from './tooltip.module.css'
-import { Button } from '@milo/ui/button'
-import { IconButton } from '@milo/ui/icon-button'
-import { Tooltip } from '@milo/ui/tooltip'
+import { Button } from '@humans/ui/button'
+import { IconButton } from '@humans/ui/icon-button'
+import { Tooltip } from '@humans/ui/tooltip'
 import { A11y, Anatomy, Cluster, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function TooltipStory() {
@@ -9,7 +9,7 @@ export function TooltipStory() {
     <Page
       title="Tooltip"
       kind="Avisos"
-      imports="import { Tooltip } from '@milo/ui/tooltip'"
+      imports="import { Tooltip } from '@humans/ui/tooltip'"
       lead="Explica un control al pasar el puntero o enfocarlo con el teclado. No contiene acciones."
     >
       <Hero>

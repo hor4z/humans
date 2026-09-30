@@ -1,6 +1,6 @@
-import { Icon, type IconName } from '@milo/ui/icon'
-import { type MarkColor } from '@milo/ui/lib/colors'
-import { List } from '@milo/ui/list'
+import { Icon, type IconName } from '@humans/ui/icon'
+import { type MarkColor } from '@humans/ui/lib/colors'
+import { List } from '@humans/ui/list'
 import { useState } from 'react'
 import { A11y, Anatomy, Demo, Frame, Hero, Page, Practices, Props, Section } from '../kit'
 
@@ -24,7 +24,7 @@ export function ListStory() {
     <Page
       title="List"
       kind="Datos"
-      imports="import { List } from '@milo/ui/list'
+      imports="import { List } from '@humans/ui/list'
 import { useState } from 'react'"
       lead="Agrupa elementos con título, información de apoyo y acciones."
     >

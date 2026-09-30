@@ -1,8 +1,8 @@
 import cls from './steps.module.css'
 import { useState } from 'react'
-import { Button } from '@milo/ui/button'
-import { Icon } from '@milo/ui/icon'
-import { Steps } from '@milo/ui/steps'
+import { Button } from '@humans/ui/button'
+import { Icon } from '@humans/ui/icon'
+import { Steps } from '@humans/ui/steps'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 const design = [
@@ -28,7 +28,7 @@ export function StepsStory() {
     <Page
       title="Steps"
       kind="Navegación"
-      imports="import { Steps } from '@milo/ui/steps'"
+      imports="import { Steps } from '@humans/ui/steps'"
       lead="Muestra las etapas de un proceso y destaca la etapa actual."
     >
       <Hero>

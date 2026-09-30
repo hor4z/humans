@@ -1,4 +1,4 @@
-@layer milo.components {
+@layer humans.components {
   .root {
     display: inline-flex;
     width: 24px;
@@ -51,17 +51,17 @@
   }
 
   .glyphOn {
-    --milo-scale-x: 100%;
-    --milo-scale-y: 100%;
-    --milo-scale-z: 100%;
-    scale: var(--milo-scale-x) var(--milo-scale-y);
+    --humans-scale-x: 100%;
+    --humans-scale-y: 100%;
+    --humans-scale-z: 100%;
+    scale: var(--humans-scale-x) var(--humans-scale-y);
   }
 
   .glyphOff {
-    --milo-scale-x: 0%;
-    --milo-scale-y: 0%;
-    --milo-scale-z: 0%;
-    scale: var(--milo-scale-x) var(--milo-scale-y);
+    --humans-scale-x: 0%;
+    --humans-scale-y: 0%;
+    --humans-scale-z: 0%;
+    scale: var(--humans-scale-x) var(--humans-scale-y);
   }
 
   .dash {

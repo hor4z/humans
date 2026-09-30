@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { OpenQuestion } from '@milo/ui/blocks/task/open-question'
+import { OpenQuestion } from '@humans/ui/blocks/task/open-question'
 import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 export function OpenQuestionStory() {
@@ -9,7 +9,7 @@ export function OpenQuestionStory() {
     <Page
       title="OpenQuestion"
       kind="Consigna"
-      imports="import { OpenQuestion } from '@milo/ui/blocks/task/open-question'"
+      imports="import { OpenQuestion } from '@humans/ui/blocks/task/open-question'"
       lead="Presenta una consigna de respuesta escrita para su posterior revisión."
     >
       <Hero>
