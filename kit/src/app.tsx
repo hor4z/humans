@@ -385,7 +385,7 @@ export function App() {
               <span className={cls.brandMark}><Icon name="deployed_code" size={20} /></span>
               <span className={cls.brandName}>milo</span>
             </button>
-            {desktop && !compact && <IconButton icon={compact ? 'chevron_right' : 'chevron_left'} label={compact ? 'Expandir panel lateral' : 'Plegar panel lateral'} size="sm" aria-expanded={!compact} onClick={() => setCollapsed(v => !v)} />}
+            {desktop && <IconButton icon={compact ? 'chevron_right' : 'chevron_left'} label={compact ? 'Expandir panel lateral' : 'Plegar panel lateral'} size="sm" aria-expanded={!compact} onClick={() => setCollapsed(v => !v)} className={cls.railToggle} />}
             {!desktop && <IconButton icon="close" label="Cerrar el índice" size="sm" onClick={() => setRailOpen(false)} />}
             </div>
 
@@ -499,7 +499,6 @@ export function App() {
           </div>}
 
           <div className={cls.railFoot}>
-            {compact && <IconButton icon="chevron_right" label="Expandir panel lateral" size="sm" onClick={() => setCollapsed(false)} />}
             <span className={cls.railCount}>
               {everything.length} vistas
             </span>
