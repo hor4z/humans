@@ -84,7 +84,7 @@ esa puerta.
 - **Shell:** sidebar 220 `fixed` (72 contraído), topbar 80, padding lateral 20, item de nav 40.
 - **Controles:** tres alturas con un rol cada una, 32 inline, 36 en panel, 40 la principal.
 - **Radios:** 6 · 10 · 12 · 16 · 24. El radio de un hijo es el del padre menos su padding.
-- **Color:** rampa gray de nueve pasos (`#f9fafb` → `#111827`). La interfaz es monocroma;
+- **Color:** rampa gray de nueve pasos (`#f3f4f6` → `#111827`). La interfaz es monocroma;
   las tres excepciones (el azul de marca, las marcas de una lista y las etiquetas de color)
   están acotadas a una pieza cada una. Los hovers van en alpha sobre la rampa.
 - **Relieve:** cinco recetas (`raised`, `solid`, `pressed`, `inset` y la elevación en capas). El

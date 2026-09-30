@@ -1,14 +1,14 @@
 :root {
-  --shade-01: #f9fafb;  
-  --shade-02: #f3f4f6;  
-  --shade-03: #eceef1;
-  --shade-04: #e5e7eb;
-  --shade-05: #d1d5db;
+  --shade-01: #f3f4f6;  
+  --shade-02: #e5e7eb;  
+  --shade-03: #dcdfe4;
+  --shade-04: #d1d5db;
+  --shade-05: #b8bec8;
   --shade-06: #4b5563;  
   --shade-07: #374151;
   --shade-08: #1f2937;
   --shade-09: #111827;  
-  --shade-placeholder: #5d6572;
+  --shade-placeholder: #565e6b;
 
   --shade-09-a04: rgb(17 24 39 / 0.04);
   --shade-09-a06: rgb(17 24 39 / 0.06);
