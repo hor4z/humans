@@ -1,19 +1,19 @@
 import cls from './table.module.css'
 import { useState } from 'react'
-import { Avatar } from '@milo/ui/avatar'
-import { Button } from '@milo/ui/button'
-import { Checkbox } from '@milo/ui/checkbox'
-import { Chip } from '@milo/ui/chip'
-import { EmptyState } from '@milo/ui/empty-state'
-import { Filter } from '@milo/ui/filter'
-import { Icon } from '@milo/ui/icon'
-import { IconButton } from '@milo/ui/icon-button'
-import { timeAgo } from '@milo/ui/lib/time'
-import { useTable } from '@milo/ui/lib/use-table'
-import { Pagination } from '@milo/ui/pagination'
-import { Search } from '@milo/ui/search'
-import { Sheet } from '@milo/ui/sheet'
-import { Table } from '@milo/ui/table'
+import { Avatar } from '@humans/ui/avatar'
+import { Button } from '@humans/ui/button'
+import { Checkbox } from '@humans/ui/checkbox'
+import { Chip } from '@humans/ui/chip'
+import { EmptyState } from '@humans/ui/empty-state'
+import { Filter } from '@humans/ui/filter'
+import { Icon } from '@humans/ui/icon'
+import { IconButton } from '@humans/ui/icon-button'
+import { timeAgo } from '@humans/ui/lib/time'
+import { useTable } from '@humans/ui/lib/use-table'
+import { Pagination } from '@humans/ui/pagination'
+import { Search } from '@humans/ui/search'
+import { Sheet } from '@humans/ui/sheet'
+import { Table } from '@humans/ui/table'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 import { person as p } from '../fixtures'
 const NOW = new Date('2026-03-09T15:00:00-03:00')
@@ -97,7 +97,7 @@ export function TableStory() {
   }))
   const toggleAll = (checked: boolean) => setSelected(current => checked ? [...new Set([...current, ...data.rows.map(a => a.name)])] : current.filter(name => !data.rows.some(a => a.name === name)))
 
-  return <Page title="Table" kind="Datos" imports="import { Table } from '@milo/ui/table'" lead="Datos fáciles de recorrer, comparar y gestionar. Búsqueda, filtros y columnas se adaptan a la tarea.">
+  return <Page title="Table" kind="Datos" imports="import { Table } from '@humans/ui/table'" lead="Datos fáciles de recorrer, comparar y gestionar. Búsqueda, filtros y columnas se adaptan a la tarea.">
     <Hero>
       <div className={cls.workspace}>
         <div className={cls.workspaceHeader}>
@@ -166,10 +166,10 @@ export function TableStory() {
         <Table label="Ejemplo de estructura" minWidth={300}><Table.Header><Table.Row><Table.Head>Actividad</Table.Head><Table.Head align="right">Entregas</Table.Head></Table.Row></Table.Header><Table.Body><Table.Row><Table.Cell><Table.Title>Fracciones equivalentes</Table.Title><Table.Hint>Matemática · 4.º A</Table.Hint></Table.Cell><Table.Num>18</Table.Num></Table.Row></Table.Body></Table>
       </Demo>
       <Demo label="Datos, filtros y columnas" fill code={`import { useState } from 'react'
-import { useTable } from '@milo/ui/lib/use-table'
-import { Table } from '@milo/ui/table'
-import { Filter } from '@milo/ui/filter'
-import { Search } from '@milo/ui/search'
+import { useTable } from '@humans/ui/lib/use-table'
+import { Table } from '@humans/ui/table'
+import { Filter } from '@humans/ui/filter'
+import { Search } from '@humans/ui/search'
 
 const activities = [
   { name: 'Fracciones equivalentes', status: 'Abierta' },

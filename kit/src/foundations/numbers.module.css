@@ -1,4 +1,4 @@
-@layer milo.app {
+@layer humans.app {
   .tabularCompare {
     display: grid;
     gap: 1rem;

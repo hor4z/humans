@@ -1,6 +1,6 @@
 import s from './toolbar.module.css'
 import { useState } from 'react'
-import { Toolbar } from '@milo/ui/blocks/editor/toolbar'
+import { Toolbar } from '@humans/ui/blocks/editor/toolbar'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function ToolbarStory() {
@@ -11,7 +11,7 @@ export function ToolbarStory() {
     <Page
       title="Toolbar"
       kind="Editor"
-      imports="import { Toolbar } from '@milo/ui/blocks/editor/toolbar'"
+      imports="import { Toolbar } from '@humans/ui/blocks/editor/toolbar'"
       lead="Agrupa acciones de edición con navegación por teclado."
     >
       <Hero>

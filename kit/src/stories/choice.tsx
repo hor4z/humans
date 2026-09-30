@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Button } from '@milo/ui/button'
-import { Choice } from '@milo/ui/blocks/task/choice'
+import { Button } from '@humans/ui/button'
+import { Choice } from '@humans/ui/blocks/task/choice'
 import { A11y, Anatomy, Demo, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const places = [
@@ -27,7 +27,7 @@ export function ChoiceStory() {
     <Page
       title="Choice"
       kind="Consigna"
-      imports="import { Choice } from '@milo/ui/blocks/task/choice'"
+      imports="import { Choice } from '@humans/ui/blocks/task/choice'"
       lead="Presenta una pregunta con opciones de respuesta. La selección y la corrección son estados independientes."
     >
       <Hero>

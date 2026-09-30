@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import cls from './empty-state.module.css'
-import { Button } from '@milo/ui/button'
-import { EmptyState } from '@milo/ui/empty-state'
-import { Filter } from '@milo/ui/filter'
+import { Button } from '@humans/ui/button'
+import { EmptyState } from '@humans/ui/empty-state'
+import { Filter } from '@humans/ui/filter'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section, Stack } from '../kit'
 
 export function EmptyStateStory() {
@@ -11,7 +11,7 @@ export function EmptyStateStory() {
     <Page
       title="EmptyState"
       kind="Avisos"
-      imports="import { EmptyState } from '@milo/ui/empty-state'"
+      imports="import { EmptyState } from '@humans/ui/empty-state'"
       lead="Explica por qué no hay contenido y ofrece un próximo paso cuando corresponde."
     >
       <Hero>

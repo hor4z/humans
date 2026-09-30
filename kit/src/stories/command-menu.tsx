@@ -1,9 +1,9 @@
 import cls from './command-menu.module.css'
 import { useState } from 'react'
-import { Button } from '@milo/ui/button'
-import { CommandMenu, type CommandGroup, type CommandItem } from '@milo/ui/blocks/editor/command-menu'
-import { Kbd } from '@milo/ui/kbd'
-import { Popover } from '@milo/ui/popover'
+import { Button } from '@humans/ui/button'
+import { CommandMenu, type CommandGroup, type CommandItem } from '@humans/ui/blocks/editor/command-menu'
+import { Kbd } from '@humans/ui/kbd'
+import { Popover } from '@humans/ui/popover'
 import { A11y, Anatomy, Cluster, Demo, Frame, Hero, Page, Panel, Practices, Props, Section, Stack } from '../kit'
 
 const blocks: CommandGroup[] = [
@@ -46,7 +46,7 @@ export function CommandMenuStory() {
     <Page
       title="CommandMenu"
       kind="Editor"
-      imports="import { CommandMenu } from '@milo/ui/blocks/editor/command-menu'"
+      imports="import { CommandMenu } from '@humans/ui/blocks/editor/command-menu'"
       lead="Permite buscar y ejecutar comandos con el teclado o el puntero."
     >
       <Hero>

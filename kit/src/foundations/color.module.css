@@ -1,4 +1,4 @@
-@layer milo.app {
+@layer humans.app {
   .states {
     display: flex;
     flex-wrap: wrap;

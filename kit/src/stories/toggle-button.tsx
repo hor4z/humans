@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ToggleButton } from '@milo/ui/toggle-button'
+import { ToggleButton } from '@humans/ui/toggle-button'
 import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function ToggleButtonStory() {
@@ -11,7 +11,7 @@ export function ToggleButtonStory() {
     <Page
       title="ToggleButton"
       kind="Acciones"
-      imports="import { ToggleButton } from '@milo/ui/toggle-button'"
+      imports="import { ToggleButton } from '@humans/ui/toggle-button'"
       lead="Activa o desactiva una opción y mantiene visible su estado."
     >
       <Hero>

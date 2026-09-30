@@ -6,7 +6,7 @@ export type Theme = 'light' | 'dark' | 'system'
 
 /** El tema, con `system` de verdad: si nadie eligió, sigue al sistema operativo mientras cambia, y se sincroniza entre pestañas. Escribe `data-theme` en el `<html>`, que es de donde lo leen los tokens. */
 export function useTheme(inicial: Theme = 'system') {
-  const [theme, setTheme] = useLocalStorage<Theme>('milo.theme', inicial)
+  const [theme, setTheme] = useLocalStorage<Theme>('humans.theme', inicial)
   const prefersDark = useMediaQuery('(prefers-color-scheme: dark)')
   const resolved: 'light' | 'dark' = theme === 'system' ? (prefersDark ? 'dark' : 'light') : theme
 

@@ -1,18 +1,18 @@
 import cls from './app.module.css'
 import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
-import { Button } from '@milo/ui/button'
-import { EmptyState } from '@milo/ui/empty-state'
-import { Icon, type IconName } from '@milo/ui/icon'
-import { useMediaQuery } from '@milo/ui/lib/use-media-query'
-import { useFocusTrap, useScrollLock } from '@milo/ui/lib/overlay-hooks'
-import { useEscape } from '@milo/ui/lib/esc'
-import { useLocalStorage } from '@milo/ui/lib/use-local-storage'
-import { IconButton } from '@milo/ui/icon-button'
-import { cx, fold } from '@milo/ui/lib/cx'
+import { Button } from '@humans/ui/button'
+import { EmptyState } from '@humans/ui/empty-state'
+import { Icon, type IconName } from '@humans/ui/icon'
+import { useMediaQuery } from '@humans/ui/lib/use-media-query'
+import { useFocusTrap, useScrollLock } from '@humans/ui/lib/overlay-hooks'
+import { useEscape } from '@humans/ui/lib/esc'
+import { useLocalStorage } from '@humans/ui/lib/use-local-storage'
+import { IconButton } from '@humans/ui/icon-button'
+import { cx, fold } from '@humans/ui/lib/cx'
 import { usePrefs } from './demo/prefs/prefs'
-import { Search } from '@milo/ui/search'
-import { Tooltip } from '@milo/ui/tooltip'
-import { ToastProvider } from '@milo/ui/toast'
+import { Search } from '@humans/ui/search'
+import { Tooltip } from '@humans/ui/tooltip'
+import { ToastProvider } from '@humans/ui/toast'
 import { Intro } from './intro'
 import { Dashboard } from './dashboard'
 import { DocumentStory } from './document'
@@ -281,8 +281,8 @@ const groupIcons: Record<string, IconName> = {
 export function App() {
   const [current, setCurrent] = useState(() => location.hash.slice(1) || INTRO)
   const [query, setQuery] = useState('')
-  const [closedGroups, setClosedGroups] = useLocalStorage<string[]>('milo.closed-groups', [])
-  const [collapsed, setCollapsed] = useLocalStorage('milo.rail-collapsed', false)
+  const [closedGroups, setClosedGroups] = useLocalStorage<string[]>('humans.closed-groups', [])
+  const [collapsed, setCollapsed] = useLocalStorage('humans.rail-collapsed', false)
   const desktop = useMediaQuery('(min-width: 64rem)')
   const compact = desktop && collapsed
   const rail = useRef<HTMLElement>(null)
@@ -381,9 +381,9 @@ export function App() {
         >
           <div className={cls.railHead}>
             <div className={cls.brandRow}>
-            <button type="button" aria-label="milo: introducción" onClick={() => go(INTRO)} className={cls.brand}>
+            <button type="button" aria-label="humans: introducción" onClick={() => go(INTRO)} className={cls.brand}>
               <span className={cls.brandMark}><Icon name="deployed_code" size={20} /></span>
-              <span className={cls.brandName}>milo</span>
+              <span className={cls.brandName}>humans</span>
             </button>
             {desktop && <IconButton icon={compact ? 'chevron_right' : 'chevron_left'} label={compact ? 'Expandir panel lateral' : 'Plegar panel lateral'} size="sm" aria-expanded={!compact} onClick={() => setCollapsed(v => !v)} className={cls.railToggle} />}
             {!desktop && <IconButton icon="close" label="Cerrar el índice" size="sm" onClick={() => setRailOpen(false)} />}
@@ -393,7 +393,7 @@ export function App() {
               ref={searchRef}
               value={query}
               onValueChange={setQuery}
-              placeholder="Buscar en milo"
+              placeholder="Buscar en humans"
               data-autofocus
               aria-label="Buscar componentes"
               shortcut="/"
@@ -519,7 +519,7 @@ export function App() {
             aria-controls="riel"
             onClick={() => setRailOpen(true)}
           />
-          <span className={cls.topBarTitle}>milo · design system</span>
+          <span className={cls.topBarTitle}>humans · design system</span>
         </header>
 
         <main ref={main} className={cx(cls.main, compact && cls.mainCompact)} inert={railOpen && !desktop}>

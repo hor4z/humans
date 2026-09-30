@@ -1,5 +1,5 @@
 import cls from './media.module.css'
-import { Table } from '@milo/ui/table'
+import { Table } from '@humans/ui/table'
 import { A11y, Page, Rich, Section } from '../kit'
 
 const media = [

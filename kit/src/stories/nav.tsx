@@ -1,7 +1,7 @@
 import cls from './nav.module.css'
 import { useState } from 'react'
-import { Icon } from '@milo/ui/icon'
-import { Nav } from '@milo/ui/nav'
+import { Icon } from '@humans/ui/icon'
+import { Nav } from '@humans/ui/nav'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function NavStory() {
@@ -11,7 +11,7 @@ export function NavStory() {
     <Page
       title="Nav"
       kind="Navegación"
-      imports="import { Nav } from '@milo/ui/nav'"
+      imports="import { Nav } from '@humans/ui/nav'"
       lead="Organiza los destinos de navegación y destaca la ubicación actual."
     >
       <Hero>

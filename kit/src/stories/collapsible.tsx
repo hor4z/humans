@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Collapsible } from '@milo/ui/collapsible'
-import { Button } from '@milo/ui/button'
+import { Collapsible } from '@humans/ui/collapsible'
+import { Button } from '@humans/ui/button'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 function Plegable() {
@@ -22,7 +22,7 @@ export function CollapsibleStory() {
     <Page
       title="Collapsible"
       kind="Navegación"
-      imports="import { Collapsible } from '@milo/ui/collapsible'"
+      imports="import { Collapsible } from '@humans/ui/collapsible'"
       lead="Muestra u oculta contenido desde un disparador. Conserva la relación accesible entre ambos."
     >
       <Hero>

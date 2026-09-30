@@ -1,4 +1,4 @@
-import { Breadcrumb } from '@milo/ui/breadcrumb'
+import { Breadcrumb } from '@humans/ui/breadcrumb'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function BreadcrumbStory() {
@@ -6,7 +6,7 @@ export function BreadcrumbStory() {
     <Page
       title="Breadcrumb"
       kind="Navegación"
-      imports="import { Breadcrumb } from '@milo/ui/breadcrumb'"
+      imports="import { Breadcrumb } from '@humans/ui/breadcrumb'"
       lead="Muestra la ubicación dentro de una jerarquía y permite volver a sus niveles anteriores."
     >
       <Hero>

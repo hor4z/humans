@@ -1,7 +1,7 @@
 import cls from './radio.module.css'
 import { useState } from 'react'
-import { Checkbox } from '@milo/ui/checkbox'
-import { Radio } from '@milo/ui/radio'
+import { Checkbox } from '@humans/ui/checkbox'
+import { Radio } from '@humans/ui/radio'
 import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function RadioStory() {
@@ -15,7 +15,7 @@ export function RadioStory() {
     <Page
       title="Radio"
       kind="Formularios"
-      imports="import { Radio } from '@milo/ui/radio'"
+      imports="import { Radio } from '@humans/ui/radio'"
       lead="Permite elegir una única opción dentro de un grupo."
     >
       <Hero>

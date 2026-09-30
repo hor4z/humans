@@ -1,7 +1,7 @@
 import s from './filter.module.css'
 import { useState } from 'react'
-import { Table } from '@milo/ui/table'
-import { Filter } from '@milo/ui/filter'
+import { Table } from '@humans/ui/table'
+import { Filter } from '@humans/ui/filter'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 const columns = [
@@ -27,8 +27,8 @@ export function FilterStory() {
     <Page
       title="Filter"
       kind="Datos"
-      imports="import { Table } from '@milo/ui/table'
-import { Filter } from '@milo/ui/filter'"
+      imports="import { Table } from '@humans/ui/table'
+import { Filter } from '@humans/ui/filter'"
       lead="Permite seleccionar varias opciones para filtrar datos o elegir las columnas visibles."
     >
       <Hero>

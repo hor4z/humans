@@ -1,5 +1,5 @@
 import css from './typography.module.css'
-import { Table } from '@milo/ui/table'
+import { Table } from '@humans/ui/table'
 import { A11y, Page, Rich, Section, Stack, useTokens } from '../kit'
 
 /** Los siete roles, en orden de tamaño. `name` es el token y el resto es lo que documenta. */

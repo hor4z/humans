@@ -1,5 +1,5 @@
 import cls from './link.module.css'
-import { Link } from '@milo/ui/link'
+import { Link } from '@humans/ui/link'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function LinkStory() {
@@ -7,7 +7,7 @@ export function LinkStory() {
     <Page
       title="Link"
       kind="Superficies"
-      imports="import { Link } from '@milo/ui/link'"
+      imports="import { Link } from '@humans/ui/link'"
       lead="Navega a otra página o recurso. Usá un botón cuando la interacción ejecuta una acción."
     >
       <Hero>

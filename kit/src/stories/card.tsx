@@ -1,9 +1,9 @@
 import cls from './card.module.css'
-import { Button } from '@milo/ui/button'
-import { Card } from '@milo/ui/card'
-import { Chip } from '@milo/ui/chip'
-import { Icon } from '@milo/ui/icon'
-import { Progress } from '@milo/ui/progress'
+import { Button } from '@humans/ui/button'
+import { Card } from '@humans/ui/card'
+import { Chip } from '@humans/ui/chip'
+import { Icon } from '@humans/ui/icon'
+import { Progress } from '@humans/ui/progress'
 import { A11y, Anatomy, Demo, Hero, Page, Panel, Practices, Props, Section } from '../kit'
 
 export function CardStory() {
@@ -11,7 +11,7 @@ export function CardStory() {
     <Page
       title="Card"
       kind="Superficies"
-      imports="import { Card } from '@milo/ui/card'"
+      imports="import { Card } from '@humans/ui/card'"
       lead="Agrupa información y acciones sobre un mismo elemento en una superficie."
     >
       <Hero>

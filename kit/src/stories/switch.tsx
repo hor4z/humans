@@ -1,7 +1,7 @@
 import cls from './switch.module.css'
 import { useState } from 'react'
-import { Row } from '@milo/ui/row'
-import { Switch } from '@milo/ui/switch'
+import { Row } from '@humans/ui/row'
+import { Switch } from '@humans/ui/switch'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
 export function SwitchStory() {
@@ -12,7 +12,7 @@ export function SwitchStory() {
     <Page
       title="Switch"
       kind="Formularios"
-      imports="import { Switch } from '@milo/ui/switch'"
+      imports="import { Switch } from '@humans/ui/switch'"
       lead="Activa o desactiva una opción que se aplica de inmediato."
     >
       <Hero>

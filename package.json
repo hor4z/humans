@@ -1,12 +1,12 @@
 {
-  "name": "@milo/ui",
+  "name": "@humans/ui",
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "description": "El design system de milo: los tokens, las piezas que los usan y el sitio que las documenta.",
+  "description": "El design system de humans: los tokens, las piezas que los usan y el sitio que las documenta.",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/hor4z/milo.git"
+    "url": "git+ssh://git@github.com/hor4z/humans.git"
   },
   "license": "UNLICENSED",
   "sideEffects": [

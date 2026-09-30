@@ -1,4 +1,4 @@
-@layer milo.components {
+@layer humans.components {
   .root {
     flex-shrink: 0;
     background-color: var(--border);

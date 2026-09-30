@@ -1,4 +1,4 @@
-@layer milo.app {
+@layer humans.app {
   .emptyNote {
     font-size: var(--type-meta);
     line-height: var(--type-meta-lh);

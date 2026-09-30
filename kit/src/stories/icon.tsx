@@ -1,14 +1,14 @@
 import cls from './icon.module.css'
 import { useMemo, useState } from 'react'
 import type { CSSProperties } from 'react'
-import { EmptyState } from '@milo/ui/empty-state'
-import { Icon, type IconName, type IconWeight } from '@milo/ui/icon'
-import { iconNames } from '@milo/ui/icons'
-import { fold } from '@milo/ui/lib/cx'
-import { Segmented } from '@milo/ui/segmented'
-import { Slider } from '@milo/ui/slider'
-import { TextField } from '@milo/ui/text-field'
-import { iconTags } from '@milo/ui/icons.meta'
+import { EmptyState } from '@humans/ui/empty-state'
+import { Icon, type IconName, type IconWeight } from '@humans/ui/icon'
+import { iconNames } from '@humans/ui/icons'
+import { fold } from '@humans/ui/lib/cx'
+import { Segmented } from '@humans/ui/segmented'
+import { Slider } from '@humans/ui/slider'
+import { TextField } from '@humans/ui/text-field'
+import { iconTags } from '@humans/ui/icons.meta'
 import { A11y, Anatomy, Cluster, Demo, Footnote, Hero, Mono, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 const sizes = [
@@ -48,7 +48,7 @@ export function IconStory() {
     <Page
       title="Icon"
       kind="Fundamentos"
-      imports="import { Icon } from '@milo/ui/icon'"
+      imports="import { Icon } from '@humans/ui/icon'"
       lead="Iconos de Material Symbols Rounded, alojados localmente y con peso base 400."
     >
       <Hero>

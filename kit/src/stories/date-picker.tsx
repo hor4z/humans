@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { DatePicker } from '@milo/ui/date-picker'
-import { Field } from '@milo/ui/field'
+import { DatePicker } from '@humans/ui/date-picker'
+import { Field } from '@humans/ui/field'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section, Stack } from '../kit'
 
 const today = () => {
@@ -18,7 +18,7 @@ export function DatePickerStory() {
     <Page
       title="DatePicker"
       kind="Formularios"
-      imports="import { DatePicker } from '@milo/ui/date-picker'"
+      imports="import { DatePicker } from '@humans/ui/date-picker'"
       lead="Permite elegir una fecha en un calendario. Usa valores `AAAA-MM-DD`, sin hora ni zona horaria."
     >
       <Hero>

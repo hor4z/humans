@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
-import { Avatar } from '@milo/ui/avatar'
-import { Icon } from '@milo/ui/icon'
-import { Select } from '@milo/ui/select'
+import { Avatar } from '@humans/ui/avatar'
+import { Icon } from '@humans/ui/icon'
+import { Select } from '@humans/ui/select'
 import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function SelectStory() {
@@ -22,7 +22,7 @@ export function SelectStory() {
     <Page
       title="Select"
       kind="Formularios"
-      imports="import { Select } from '@milo/ui/select'"
+      imports="import { Select } from '@humans/ui/select'"
       lead="Permite elegir un valor de una lista desplegable con navegación por teclado."
     >
       <Hero>

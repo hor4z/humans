@@ -4,10 +4,10 @@ import { A11y, Code, Note } from '../kit'
 
 describe('las piezas del propio kit', () => {
   it('la pastilla del import deja cada import en su renglón', () => {
-    render(<Code>{"import { List } from '@milo/ui/list'\nimport { useState } from 'react'"}</Code>)
+    render(<Code>{"import { List } from '@humans/ui/list'\nimport { useState } from 'react'"}</Code>)
     const code = screen.getByRole('button').querySelector('code')!
     expect(code.children).toHaveLength(2)
-    expect(code.children[0]).toHaveTextContent("import { List } from '@milo/ui/list'")
+    expect(code.children[0]).toHaveTextContent("import { List } from '@humans/ui/list'")
     expect(code.children[1]).toHaveTextContent("import { useState } from 'react'")
   })
 

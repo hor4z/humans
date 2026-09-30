@@ -1,5 +1,5 @@
 import css from './layout.module.css'
-import { Card } from '@milo/ui/card'
+import { Card } from '@humans/ui/card'
 import { A11y, InlineCode, Note, Page, Section } from '../kit'
 
 const breaks = [

@@ -1,12 +1,12 @@
 import cls from './intro.module.css'
 import { useState } from 'react'
-import { Avatar } from '@milo/ui/avatar'
-import { Button } from '@milo/ui/button'
-import { Chip } from '@milo/ui/chip'
-import { Icon, type IconName } from '@milo/ui/icon'
-import { Progress } from '@milo/ui/progress'
-import { Switch } from '@milo/ui/switch'
-import { TextField } from '@milo/ui/text-field'
+import { Avatar } from '@humans/ui/avatar'
+import { Button } from '@humans/ui/button'
+import { Chip } from '@humans/ui/chip'
+import { Icon, type IconName } from '@humans/ui/icon'
+import { Progress } from '@humans/ui/progress'
+import { Switch } from '@humans/ui/switch'
+import { TextField } from '@humans/ui/text-field'
 import { face } from './fixtures'
 
 const paths: { id: string; icon: IconName; title: string; body: string; number: string }[] = [
@@ -25,7 +25,7 @@ export function Intro({ go }: { go: (id: string) => void }) {
     <div className={cls.intro}>
       <section className={cls.hero} aria-labelledby="intro-title">
         <div className={cls.heroContent}>
-          <h1 id="intro-title" className={cls.heroTitle}>El sistema de milo.<br /><span>Todo encaja.</span></h1>
+          <h1 id="intro-title" className={cls.heroTitle}>El sistema de humans.<br /><span>Todo encaja.</span></h1>
           <p className={cls.heroLead}>Una misma manera de dar forma a cada idea. Componentes, fundamentos y ejemplos para construir con claridad.</p>
           <div className={cls.actions}>
             <Button size="sm" variant="brand" iconEnd={<Icon name="arrow_forward" />} onClick={() => go('button')}>Explorar componentes</Button>

@@ -1,4 +1,4 @@
-@layer milo.app {
+@layer humans.app {
   .colorGrid {
     display: grid;
     max-width: 680px;

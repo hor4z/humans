@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react'
 
-const ID = 'milo-live'
+const ID = 'humans-live'
 
 /** La región viva, una sola para todo el documento: dos regiones compitiendo se pisan. */
 function region(): HTMLElement | null {

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
-import { propsByComponent as packageProps } from '@milo/ui/props'
+import { propsByComponent as packageProps } from '@humans/ui/props'
 import { sitePropsByComponent } from '../demo/props.gen'
 
 const propsByComponent = { ...packageProps, ...sitePropsByComponent }
@@ -288,7 +288,7 @@ describe('useTokens', () => {
 })
 
 describe('el corte entre el sitio y el paquete', () => {
-  it('el sitio entra al paquete por @milo/ui y no por una ruta relativa', () => {
+  it('el sitio entra al paquete por @humans/ui y no por una ruta relativa', () => {
     const base = join(import.meta.dirname, '..')
     const walk = (dir: string, prefix = ''): string[] =>
       readdirSync(dir, { withFileTypes: true }).flatMap(e =>
@@ -306,7 +306,7 @@ describe('el corte entre el sitio y el paquete', () => {
     }
     expect(
       offenders,
-      'el alias @milo/ui es lo que sostiene el corte: una ruta relativa hacia src/ lo rompe',
+      'el alias @humans/ui es lo que sostiene el corte: una ruta relativa hacia src/ lo rompe',
     ).toEqual([])
   })
 })

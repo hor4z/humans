@@ -1,8 +1,8 @@
 import cls from './skeleton.module.css'
-import { Button } from '@milo/ui/button'
-import { Card } from '@milo/ui/card'
-import { Icon } from '@milo/ui/icon'
-import { Skeleton } from '@milo/ui/skeleton'
+import { Button } from '@humans/ui/button'
+import { Card } from '@humans/ui/card'
+import { Icon } from '@humans/ui/icon'
+import { Skeleton } from '@humans/ui/skeleton'
 import { useEffect, useRef, useState } from 'react'
 import { A11y, Anatomy, Cluster, Demo, Hero, Page, Practices, Props, Section, Stack } from '../kit'
 
@@ -48,8 +48,8 @@ export function SkeletonStory() {
     <Page
       title="Skeleton"
       kind="Datos"
-      imports="import { Icon } from '@milo/ui/icon'
-import { Skeleton } from '@milo/ui/skeleton'"
+      imports="import { Icon } from '@humans/ui/icon'
+import { Skeleton } from '@humans/ui/skeleton'"
       lead="Reserva el espacio del contenido mientras carga para evitar saltos en la página."
     >
       <Hero>

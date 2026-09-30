@@ -1,6 +1,6 @@
 /* Generado por scripts/props.mjs: no se edita a mano. */
 
-import type { ComponentDoc } from '@milo/ui/props'
+import type { ComponentDoc } from '@humans/ui/props'
 
 export const sitePropsByComponent: Record<string, ComponentDoc> = {
   "Folder": {

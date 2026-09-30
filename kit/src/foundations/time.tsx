@@ -1,6 +1,6 @@
 import cls from './time.module.css'
-import { Table } from '@milo/ui/table'
-import { clock, day, dayAndTime, duration, machineTime, timeAgo, zoneLabel } from '@milo/ui/lib/time'
+import { Table } from '@humans/ui/table'
+import { clock, day, dayAndTime, duration, machineTime, timeAgo, zoneLabel } from '@humans/ui/lib/time'
 import { A11y, Note, Page, Panel, Rich, Section, Specimen } from '../kit'
 
 const AR = 'America/Argentina/Buenos_Aires'

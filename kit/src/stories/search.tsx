@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { useDebounce } from '@milo/ui/lib/use-debounce'
-import { Search } from '@milo/ui/search'
+import { useDebounce } from '@humans/ui/lib/use-debounce'
+import { Search } from '@humans/ui/search'
 import { A11y, Anatomy, Demo, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 const activities = ['Fracciones equivalentes', 'Fracciones en la recta', 'El texto instructivo', 'Ángulos y triángulos', 'Proporcionalidad directa']
@@ -22,7 +22,7 @@ export function SearchStory() {
       title="Search"
       kind="Formularios"
       lead="Permite buscar contenido y limpiar la consulta con una acción visible."
-      imports="import { Search } from '@milo/ui/search'"
+      imports="import { Search } from '@humans/ui/search'"
     >
       <Hero>
         <Search size="md" value={heroEmpty} onValueChange={setHeroEmpty} shortcut="/" placeholder="Buscar una actividad" />

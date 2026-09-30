@@ -1,8 +1,8 @@
 import cls from './icon-button.module.css'
-import { IconButton } from '@milo/ui/icon-button'
-import { Button } from '@milo/ui/button'
-import { Indicator } from '@milo/ui/indicator'
-import { Tooltip } from '@milo/ui/tooltip'
+import { IconButton } from '@humans/ui/icon-button'
+import { Button } from '@humans/ui/button'
+import { Indicator } from '@humans/ui/indicator'
+import { Tooltip } from '@humans/ui/tooltip'
 import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function IconButtonStory() {
@@ -10,8 +10,8 @@ export function IconButtonStory() {
     <Page
       title="IconButton"
       kind="Acciones"
-      imports="import { IconButton } from '@milo/ui/icon-button'
-import { Indicator } from '@milo/ui/indicator'"
+      imports="import { IconButton } from '@humans/ui/icon-button'
+import { Indicator } from '@humans/ui/indicator'"
       lead="Ejecuta una acción mediante un icono. Requiere un nombre accesible que describa esa acción."
     >
       <Hero>
