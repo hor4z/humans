@@ -50,7 +50,7 @@ export function MeasureSection() {
 
         <Section
           title="Alturas de control"
-          note="Tres alturas y un rol cada una. La de 36 y la de 40 comparten el escalón de lectura (16) y radio 12; la de 32 baja a 14 y a radio 10, porque va inline en una fila densa y el radio sigue al alto. El peso es el mismo en las tres: 430, que es el de lo accionable."
+          note="Tres alturas y un rol cada una. La de 36 y la de 40 comparten el escalón de cuerpo (14) y radio 12; la de 44 sube a lectura (16); la de 32 baja a 14 y a radio 10, porque va inline en una fila densa y el radio sigue al alto. El peso es el mismo en las tres: 500, que es el de lo accionable."
         >
           <Stack>
             {[

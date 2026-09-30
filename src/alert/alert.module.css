@@ -56,17 +56,17 @@
   }
 
   .title {
-    font-size: var(--type-reading);
-    line-height: var(--type-reading-lh);
-    letter-spacing: var(--type-reading-ls);
+    font-size: var(--type-body);
+    line-height: var(--type-body-lh);
+    letter-spacing: var(--type-body-ls);
     font-weight: var(--font-weight-semibold);
     color: var(--text);
   }
 
   .text {
-    font-size: var(--type-reading);
-    line-height: var(--type-reading-lh);
-    letter-spacing: var(--type-reading-ls);
+    font-size: var(--type-body);
+    line-height: var(--type-body-lh);
+    letter-spacing: var(--type-body-ls);
   }
 
   .actions {
