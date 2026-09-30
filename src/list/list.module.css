@@ -7,13 +7,13 @@
 
   .item {
     display: flex;
-    min-height: 72px;
+    min-height: 60px;
     width: 100%;
     align-items: center;
     gap: 1rem;
     border-radius: var(--radius-xl);
     padding-inline: 1rem;
-    padding-block: 1rem;
+    padding-block: 0.75rem;
     text-align: left;
   }
 
@@ -37,8 +37,8 @@
 
   .swatch {
     display: inline-flex;
-    width: 2.75rem;
-    height: 2.75rem;
+    width: 2.5rem;
+    height: 2.5rem;
     flex-shrink: 0;
     align-items: center;
     justify-content: center;
@@ -55,9 +55,9 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    font-size: var(--type-reading);
-    line-height: var(--type-reading-lh);
-    letter-spacing: var(--type-reading-ls);
+    font-size: var(--type-body);
+    line-height: var(--type-body-lh);
+    letter-spacing: var(--type-body-ls);
     font-weight: var(--font-weight-semibold);
     color: var(--text);
   }
@@ -68,9 +68,9 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    font-size: var(--type-reading);
-    line-height: var(--type-reading-lh);
-    letter-spacing: var(--type-reading-ls);
+    font-size: var(--type-label);
+    line-height: var(--type-label-lh);
+    letter-spacing: var(--type-label-ls);
     font-weight: var(--font-weight-medium);
     color: var(--text-muted);
   }

@@ -12,10 +12,15 @@ body {
   letter-spacing: var(--type-body-ls);
 
   font-optical-sizing: auto;
+  font-feature-settings: "cv11", "ss03";
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3 { font-family: var(--font-sans); font-weight: 400; margin: 0; }
+h1, h2, h3 { font-family: var(--font-sans); font-weight: var(--font-weight-semibold); margin: 0; }
 th { font-weight: var(--font-weight-semibold); }
+td, th { font-variant-numeric: tabular-nums; }
 strong, b { font-weight: var(--font-weight-semibold); }
 
 .icon-muted {
@@ -185,7 +190,7 @@ strong, b { font-weight: var(--font-weight-semibold); }
   max-width: calc(var(--folder-w) * 1.1);
 }
 .folder-name { font-size: var(--type-body); line-height: var(--type-body-lh); letter-spacing: var(--type-body-ls); font-weight: var(--font-weight-semibold); color: var(--text); }
-.folder-meta { font-size: var(--type-meta); line-height: var(--type-meta-lh); letter-spacing: var(--type-meta-ls); font-weight: 400; color: var(--text-muted); }
+.folder-meta { font-size: var(--type-meta); line-height: var(--type-meta-lh); letter-spacing: var(--type-meta-ls); font-weight: var(--font-weight-medium); color: var(--text-muted); }
 
 @media (prefers-reduced-motion: reduce) {
   .folder-sheet { transition: none; }
