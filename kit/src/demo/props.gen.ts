@@ -77,6 +77,29 @@ export const sitePropsByComponent: Record<string, ComponentDoc> = {
     ],
     "doc": "La línea de apoyo: \"15 archivos\"."
   },
+  "Logo": {
+    "props": [
+      {
+        "name": "size",
+        "type": "number",
+        "required": false,
+        "def": "32",
+        "doc": "El lado en px."
+      },
+      {
+        "name": "label",
+        "type": "string",
+        "required": false,
+        "doc": "Solo si va sola: al lado del nombre es decorativa y el lector no la anuncia."
+      },
+      {
+        "name": "className",
+        "type": "string",
+        "required": false
+      }
+    ],
+    "doc": "La flor de milo: ocho pétalos y una sonrisa calada, en el color del texto que la rodea."
+  },
   "PrefsProvider": {
     "props": [
       {

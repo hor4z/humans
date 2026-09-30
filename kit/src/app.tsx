@@ -10,6 +10,7 @@ import { useLocalStorage } from '@milo/ui/lib/use-local-storage'
 import { IconButton } from '@milo/ui/icon-button'
 import { cx, fold } from '@milo/ui/lib/cx'
 import { usePrefs } from './demo/prefs/prefs'
+import { Logo } from './demo/logo/logo'
 import { Search } from '@milo/ui/search'
 import { Tooltip } from '@milo/ui/tooltip'
 import { ToastProvider } from '@milo/ui/toast'
@@ -382,7 +383,7 @@ export function App() {
           <div className={cls.railHead}>
             <div className={cls.brandRow}>
             <button type="button" aria-label="milo: introducción" onClick={() => go(INTRO)} className={cls.brand}>
-              <span className={cls.brandMark}><Icon name="deployed_code" size={20} /></span>
+              <Logo size={28} className={cls.brandMark} />
               <span className={cls.brandName}>milo</span>
             </button>
             {desktop && <IconButton icon={compact ? 'chevron_right' : 'chevron_left'} label={compact ? 'Expandir panel lateral' : 'Plegar panel lateral'} size="sm" aria-expanded={!compact} onClick={() => setCollapsed(v => !v)} className={cls.railToggle} />}
