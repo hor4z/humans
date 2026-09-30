@@ -60,7 +60,15 @@
   }
 
   .icon {
-    color: var(--brand);
+    color: var(--text-muted);
+    transition-property: color;
+    transition-duration: var(--duration-fast);
+    transition-timing-function: var(--ease-out);
+  }
+
+  .handle:active .icon,
+  .handle:focus-visible .icon {
+    color: var(--text);
   }
 
   .body {
@@ -71,6 +79,10 @@
   @media (hover:hover) {
     .handle:hover {
         background-color: var(--surface-hover);
+    }
+
+    .handle:hover .icon {
+        color: var(--text);
     }
   }
 }
