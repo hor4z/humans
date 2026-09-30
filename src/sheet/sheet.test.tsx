@@ -42,4 +42,15 @@ describe('Sheet', () => {
     expect(screen.queryByText('hola')).not.toBeInTheDocument()
     delete (HTMLElement.prototype as { getAnimations?: unknown }).getAnimations
   })
+  it('si la salida se cancela, igual se desmonta', async () => {
+    const finished = Promise.reject(new DOMException('cancelada', 'AbortError'))
+    finished.catch(() => {})
+    Object.defineProperty(HTMLElement.prototype, 'getAnimations', { configurable: true, value: () => [{ finished }] })
+    const view = (open: boolean) => <Sheet open={open} onOpenChange={() => {}} label="Filtros"><p>hola</p></Sheet>
+    const { rerender } = render(view(true))
+    rerender(view(false))
+    await act(async () => { await Promise.allSettled([finished]) })
+    expect(screen.queryByText('hola')).not.toBeInTheDocument()
+    delete (HTMLElement.prototype as { getAnimations?: unknown }).getAnimations
+  })
 })

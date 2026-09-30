@@ -35,7 +35,7 @@ export function Dialog({ open, onClose, role = 'dialog', label, centered, blurre
     const running = [veil.current, panel.current].flatMap(el => el?.getAnimations?.() ?? [])
     if (!running.length) { setMounted(false); return }
     let live = true
-    Promise.all(running.map(a => a.finished)).then(() => live && setMounted(false), () => {})
+    Promise.allSettled(running.map(a => a.finished)).then(() => live && setMounted(false))
     return () => { live = false }
   }, [closing])
   if (!mounted) return null
