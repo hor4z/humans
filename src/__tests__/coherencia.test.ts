@@ -186,7 +186,7 @@ describe('coherencia del sistema', () => {
     expect(offenders, 'un bloque se arma con la base; si la base lo necesita, no es un bloque').toEqual([])
   })
 
-  it('un bloque no declara tokens del sistema', () => {
+  it('un bloque no escribe en :root: sus custom properties son locales', () => {
     const offenders: string[] = []
     const walkDir = (base: string, prefix: string) => {
       for (const e of readdirSync(base, { withFileTypes: true })) {

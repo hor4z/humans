@@ -44,9 +44,9 @@ comando.
 - **Los bloques** (`src/blocks/<familia>/<pieza>`) son lo complementario: piezas armadas con la
   base que ponen al sistema en su uso real. Las familias son `editor`, `task` (la consigna),
   `rubric` y `media`. Se importa `@milo/ui/blocks/editor/callout`.
-- **La base nunca importa un bloque, y un bloque no declara tokens.** Si la base necesita algo de
-  un bloque, eso no era un bloque; si a un bloque le falta un rol, el rol es de la base. Hay dos
-  tests.
+- **La base nunca importa un bloque, y un bloque no escribe en `:root`.** Sus custom properties
+  (`--band`, `--icon-size`) son locales a su clase. Si la base necesita algo de un bloque, eso no era
+  un bloque; si a un bloque le falta un rol, el rol es de la base. Hay dos tests.
 - **Dónde va una pieza nueva**: a la base si su forma se repite en cualquier producto; a un bloque
   si lo que la define es el contexto que resuelve.
 - Lo que es del sitio y no del sistema (`settings-modal`, `prefs`, `folder`) vive en
