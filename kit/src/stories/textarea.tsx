@@ -182,7 +182,7 @@ export function TextareaStory() {
         <A11y>
           <A11y.Item>Se remide al cambiar el ancho y al cargar la fuente, así que nunca recorta texto sin barra.</A11y.Item>
           <A11y.Item>Al llegar al techo prende el scroll; abajo del techo lo apaga para que no titile.</A11y.Item>
-          <A11y.Item>El anillo de foco es de la caja, igual que en TextField.</A11y.Item>
+          <A11y.Item>El anillo de foco es de la caja, igual que en `TextField`.</A11y.Item>
         </A11y>
       </Section>
     </Page>

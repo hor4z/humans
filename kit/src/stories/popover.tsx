@@ -83,7 +83,7 @@ export function PopoverStory() {
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>El disparador declara aria-expanded, así que se anuncia si está abierto.</A11y.Item>
+          <A11y.Item>El disparador declara `aria-expanded`, así que se anuncia si está abierto.</A11y.Item>
           <A11y.Item>Cierra con `pointerdown` y no con `click`: con click, el mismo gesto que abre otro panel lo cierra y lo reabre, y parpadea.</A11y.Item>
           <A11y.Item>Escape cierra el de arriba y no todos.</A11y.Item>
           <A11y.Item>El scroll de la página lo cierra; el de su propio contenido, no: el listener va en captura y se filtra por origen.</A11y.Item>

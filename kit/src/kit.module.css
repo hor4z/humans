@@ -220,12 +220,17 @@
   .codeLine {
     display: block;
     font-family: var(--font-mono);
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    min-height: var(--type-body-lh);
+    font-size: var(--type-label);
+    line-height: var(--type-label-lh);
+    letter-spacing: var(--type-label-ls);
+    min-height: var(--type-label-lh);
     color: var(--text);
     white-space: pre;
+  }
+
+  .codeKeyword {
+    font-weight: var(--font-weight-semibold);
+    color: var(--brand-ink);
   }
 
   .codeComponent {
@@ -233,16 +238,38 @@
     color: var(--brand-ink);
   }
 
-  .codeProp {
-    color: var(--warn-700);
+  .codeTag {
+    color: var(--brand-ink);
+  }
+
+  .codeAttr {
+    color: var(--mark-purple-ink);
   }
 
   .codeString {
-    color: var(--yellow-ink);
+    color: var(--ok-ink);
   }
 
-  .codeValue {
-    color: var(--ok-700);
+  .codeNumber {
+    color: var(--mark-blue-ink);
+  }
+
+  .codeFn {
+    font-weight: var(--font-weight-semibold);
+    color: var(--brand-ink);
+  }
+
+  .codeToken {
+    color: var(--brand-ink);
+  }
+
+  .codeParam {
+    font-style: italic;
+    color: var(--mark-pink-ink);
+  }
+
+  .codeBrace {
+    color: var(--bad-ink);
   }
 
   .codePunct {
@@ -250,6 +277,7 @@
   }
 
   .codeComment {
+    font-style: italic;
     color: var(--text-muted);
   }
 
@@ -324,7 +352,7 @@
     line-height: var(--type-meta-lh);
     letter-spacing: var(--type-meta-ls);
     font-weight: var(--font-weight-semibold);
-    color: var(--text);
+    color: var(--brand-ink);
   }
 
   .propsDoc {
@@ -450,7 +478,7 @@
     font-size: var(--type-meta);
     line-height: var(--type-meta-lh);
     letter-spacing: var(--type-meta-ls);
-    color: var(--brand-ink);
+    color: var(--text);
   }
 
   .cellDefault {

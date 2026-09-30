@@ -10,6 +10,7 @@ import { Icon, type IconName } from '@milo/ui/icon'
 import { cx } from '@milo/ui/lib/cx'
 import { propsByComponent as packageProps } from '@milo/ui/props'
 import { sitePropsByComponent } from './demo/props.gen'
+import { highlight, type Lang, type Token, type TokenKind } from './highlight'
 
 const propsByComponent = { ...packageProps, ...sitePropsByComponent }
 
@@ -39,7 +40,7 @@ export function Rich({ text }: { text: string }) {
   return (
     <>
       {parts.map((t, i) => {
-        if (t.startsWith('`') && t.endsWith('`')) return <code key={i} className={s.inlineCode}>{t.slice(1, -1)}</code>
+        if (t.startsWith('`') && t.endsWith('`')) return <InlineCode key={i}>{t.slice(1, -1)}</InlineCode>
         if (t.startsWith('**') && t.endsWith('**')) return <strong key={i} className={s.inlineStrong}>{t.slice(2, -2)}</strong>
         const link = /^\[([^\]]+)\]\(([^)]+)\)$/.exec(t)
         if (link) {
@@ -234,7 +235,7 @@ export function Code({ children }: { children: string }) {
       onClick={() => copy(children)}
       className={`${s.importBlock} group`}
     >
-      <code className={s.importCode}>{children}</code>
+      <code className={s.importCode}>{paintLine(children)}</code>
       <Icon
         name={copied ? 'check' : 'content_copy'}
         size={14}
@@ -245,59 +246,55 @@ export function Code({ children }: { children: string }) {
   )
 }
 
-type Token = { text: string; kind?: string }
-
-/** Lo que se distingue en un JSX. No es una gramática: es lo justo para un ejemplo de uso, que es lo único que este sitio muestra. El nombre de la pieza se reconoce junto al `<` que lo abre y no por venir en mayúscula, así una palabra capitalizada del contenido no se pinta como si fuera un componente. */
-const RULES: { re: RegExp; tokens: (m: RegExpExecArray) => Token[] }[] = [
-  { re: /^(<\/?)([A-Z][A-Za-z0-9.]*)/, tokens: m => [{ text: m[1], kind: 'punct' }, { text: m[2], kind: 'component' }] },
-  { re: /^"[^"]*"/, tokens: m => [{ text: m[0], kind: 'string' }] },
-  { re: /^[a-zA-Z][A-Za-z0-9]*(?=\s*=)/, tokens: m => [{ text: m[0], kind: 'prop' }] },
-  { re: /^(?:true|false|null|undefined|\d+(?:\.\d+)?)\b/, tokens: m => [{ text: m[0], kind: 'value' }] },
-  { re: /^(?:\/?>|[={}()[\]])/, tokens: m => [{ text: m[0], kind: 'punct' }] },
-  { re: /^\/\/.*/, tokens: m => [{ text: m[0], kind: 'comment' }] },
-]
-
-function tokenize(line: string) {
-  const out: Token[] = []
-  let rest = line
-  let plain = ''
-  while (rest) {
-    const rule = RULES.find(r => r.re.test(rest))
-    if (!rule) {
-      plain += rest[0]
-      rest = rest.slice(1)
-      continue
-    }
-    if (plain) { out.push({ text: plain }); plain = '' }
-    const m = rule.re.exec(rest)!
-    out.push(...rule.tokens(m))
-    rest = rest.slice(m[0].length)
-  }
-  if (plain) out.push({ text: plain })
-  return out
-}
-
-const highlight: Record<string, string> = {
+const tokenClass: Record<TokenKind, string | undefined> = {
+  keyword: s.codeKeyword,
   component: s.codeComponent,
-  prop: s.codeProp,
+  tag: s.codeTag,
+  attr: s.codeAttr,
   string: s.codeString,
-  value: s.codeValue,
+  number: s.codeNumber,
+  fn: s.codeFn,
+  param: s.codeParam,
+  property: s.codeAttr,
+  token: s.codeToken,
+  brace: s.codeBrace,
   punct: s.codePunct,
   comment: s.codeComment,
+  plain: undefined,
+}
+
+function Painted({ tokens }: { tokens: Token[] }) {
+  return tokens.map((t, i) => <span key={i} className={tokenClass[t.kind]}>{t.text}</span>)
+}
+
+function paintLine(code: string, lang: Lang = 'tsx') {
+  return <Painted tokens={highlight(code, lang).flat()} />
+}
+
+const looksLikeCode = /[=<>("'`{]|^\.\.\./
+
+/** El código dentro de un texto. Un token de CSS, un componente y una función van en su tinta, lo que tiene forma de código se resalta, y una palabra sola queda en la tinta del texto. */
+export function InlineCode({ children }: { children: string }) {
+  const pair = /^([a-z][\w-]*)(=)("[^"]*")$/.exec(children)
+  const body = pair ? <><span className={s.codeAttr}>{pair[1]}</span><span className={s.codePunct}>{pair[2]}</span><span className={s.codeString}>{pair[3]}</span></>
+    : /^(?:aria|data)-[\w-]+$/.test(children) ? <span className={s.codeAttr}>{children}</span>
+    : /^--[\w-]+$/.test(children) ? <span className={s.codeToken}>{children}</span>
+    : /^(?:true|false|null|undefined|-?\d+(?:[.,]\d+)?)$/.test(children) ? <span className={s.codeNumber}>{children}</span>
+    : /^[A-Z][A-Za-z0-9]*(?:\.[A-Z][A-Za-z0-9]*)*$/.test(children) ? <span className={s.codeComponent}>{children}</span>
+    : /^[a-z][a-z0-9]*[A-Z][A-Za-z0-9]*$/.test(children) ? <span className={s.codeFn}>{children}</span>
+    : looksLikeCode.test(children) ? paintLine(children, /^[a-z-]+:\s/.test(children) ? 'css' : 'tsx')
+    : children
+  return <code className={s.inlineCode}>{body}</code>
 }
 
 /** El código que arma lo que se ve. Lo dibujan `Demo` y `Variant` debajo de su pieza: si la pieza se ve bien y su código no, la API está mal. */
-export function Example({ code, className }: { code: string; className?: string }) {
+export function Example({ code, lang, className }: { code: string; lang?: Lang; className?: string }) {
   return (
     <div className={cx(s.codeBlock, 'group', className)}>
       <pre className={s.codePre}>
         <code>
-          {code.trim().split('\n').map((line, i) => (
-            <span key={i} className={s.codeLine}>
-              {tokenize(line).map((token, j) => (
-                <span key={j} className={token.kind ? highlight[token.kind] : undefined}>{token.text}</span>
-              ))}
-            </span>
+          {highlight(code.trim(), lang).map((line, i) => (
+            <span key={i} className={s.codeLine}><Painted tokens={line} /></span>
           ))}
         </code>
       </pre>
@@ -409,6 +406,8 @@ type ExampleCardProps = {
   description?: string
   /** El código que dibuja lo de adentro, con los mismos props y el mismo contenido. */
   code: string
+  /** Cómo se lee el código: `tsx` para un ejemplo de uso, `css` para tokens, `sh` para un comando. */
+  lang?: Lang
   width?: keyof typeof frameWidths
   fill?: boolean
   mono?: boolean
@@ -417,7 +416,7 @@ type ExampleCardProps = {
 }
 
 /** Un ejemplo: la pieza en su lienzo y, debajo, su descripción y el código que la dibuja en dos solapas. */
-function ExampleCard({ title, description, code, width, fill, mono, className, children }: ExampleCardProps) {
+function ExampleCard({ title, description, code, lang, width, fill, mono, className, children }: ExampleCardProps) {
   return (
     <figure className={s.example}>
       {title && (
@@ -438,21 +437,21 @@ function ExampleCard({ title, description, code, width, fill, mono, className, c
             <p><Rich text={description} /></p>
           </Tabs.Panel>
           <Tabs.Panel value="code" keepMounted className={s.exampleCode}>
-            <Example code={code} />
+            <Example code={code} lang={lang} />
           </Tabs.Panel>
         </Tabs>
       ) : (
-        <Example code={code} className={s.exampleCodeOnly} />
+        <Example code={code} lang={lang} className={s.exampleCodeOnly} />
       )}
     </figure>
   )
 }
 
 /** Un ejemplo con su código. */
-export function Demo({ label, code, width, fill, children, className }: Omit<ExampleCardProps, 'title' | 'description' | 'mono'> & {
+export function Demo({ label, code, lang, width, fill, children, className }: Omit<ExampleCardProps, 'title' | 'description' | 'mono'> & {
   label?: string
 }) {
-  return <ExampleCard title={label} code={code} width={width} fill={fill} className={className}>{children}</ExampleCard>
+  return <ExampleCard title={label} code={code} lang={lang} width={width} fill={fill} className={className}>{children}</ExampleCard>
 }
 
 /** Varios ejemplos en grilla: se acomodan solos, o en la cantidad de columnas que le pidas. */
@@ -474,15 +473,17 @@ export function Grid({ children, min = 320, cols }: {
 }
 
 /** Una variante con su nombre, lo que significa y el código que la dibuja. */
-export function Variant({ name, note, code, children }: {
+export function Variant({ name, note, code, lang, children }: {
   name: string
   /** Qué significa esta variante y cuándo va. */
   note?: string
   /** El código que dibuja lo de adentro, con los mismos props y el mismo contenido. */
   code: string
+  /** Cómo se lee el código, como en `Demo`. */
+  lang?: Lang
   children: ReactNode
 }) {
-  return <ExampleCard title={name} description={note} code={code} mono>{children}</ExampleCard>
+  return <ExampleCard title={name} description={note} code={code} lang={lang} mono>{children}</ExampleCard>
 }
 
 /** Una fila de Fundamentos: como `Variant`, pero sin código, porque lo que muestra es una regla y no una pieza. */
@@ -507,8 +508,10 @@ export function Panel({ children }: { children: ReactNode }) {
   return inPiece ? <div className={s.exampleList}>{children}</div> : <Canvas className={s.panelCanvas}>{children}</Canvas>
 }
 
+/** Un valor o una llamada en la fuente del código. Si es una llamada o un JSX, se resalta. */
 export function Mono({ children }: { children: ReactNode }) {
-  return <code className={s.monoValue}>{children}</code>
+  const body = typeof children === 'string' && /[(<]/.test(children) ? paintLine(children) : children
+  return <code className={s.monoValue}>{body}</code>
 }
 
 /** La tabla de props. Las filas salen del código: tipo, default y descripción los escribe la pieza en su docblock y los extrae `scripts/props.mjs`. */
@@ -534,7 +537,7 @@ export function Props({ of }: { of: string | readonly string[] }) {
             {rows.length === 0 ? (
               <p className={s.propsEmpty}>
                 No tiene props propias: toma los atributos de un{' '}
-                <code className={s.propsEmptyTag}>{`<${info?.html ?? 'div'}>`}</code>.
+                <code className={s.propsEmptyTag}>{paintLine(`<${info?.html ?? 'div'}>`)}</code>.
               </p>
             ) : (
             <table className={s.table}>
@@ -557,9 +560,9 @@ export function Props({ of }: { of: string | readonly string[] }) {
                         )}
                       </span>
                     </td>
-                    <td className={s.cellType}><code className={s.propType}>{r.type}</code></td>
+                    <td className={s.cellType}><code className={s.propType}>{paintLine(r.type)}</code></td>
                     <td className={s.cellDefault}>
-                      <code className={s.propDefault}>{r.def ?? '-'}</code>
+                      <code className={s.propDefault}>{r.def ? paintLine(r.def) : '-'}</code>
                     </td>
                     <td className={s.cellDoc}>
                       {r.doc ? <Rich text={r.doc} /> : '-'}
@@ -572,7 +575,7 @@ export function Props({ of }: { of: string | readonly string[] }) {
             {rows.length > 0 && info?.html && (
               <p className={s.propsHtmlNote}>
                 Y los atributos de un{' '}
-                <code className={s.propsHtmlTag}>{`<${info.html}>`}</code>.
+                <code className={s.propsHtmlTag}>{paintLine(`<${info.html}>`)}</code>.
               </p>
             )}
           </div>

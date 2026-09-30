@@ -71,9 +71,9 @@ export function ColorSection() {
           <Table.Body>
             {which.map(([q, r, e]) => (
               <Table.Row key={q}>
-                <Table.Cell>{q}</Table.Cell>
+                <Table.Cell><Rich text={q} /></Table.Cell>
                 <Table.Cell><Rich text={r} /></Table.Cell>
-                <Table.Cell>{e}</Table.Cell>
+                <Table.Cell><Rich text={e} /></Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>

@@ -136,7 +136,7 @@ export function ToastStory() {
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>La región es aria-live="polite" con su nombre: los avisos se anuncian sin cortar lo que se esté leyendo.</A11y.Item>
+          <A11y.Item>La región es `aria-live="polite"` con su nombre: los avisos se anuncian sin cortar lo que se esté leyendo.</A11y.Item>
           <A11y.Item>El auto-cierre se pausa al enfocar algo adentro, así que quien navega con teclado no pierde el aviso.</A11y.Item>
           <A11y.Item>Cada toast se cierra con un botón que se nombra solo, además de irse por su cuenta.</A11y.Item>
           <A11y.Item>La acción es un botón de verdad y entra en el orden de tabulación mientras el aviso está a la vista.</A11y.Item>

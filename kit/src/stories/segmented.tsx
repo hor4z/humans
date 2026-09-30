@@ -73,8 +73,8 @@ export function SegmentedStory() {
         <A11y>
           <A11y.Item>Es un radiogroup y no un tablist: elige una de varias, y un tablist sin paneles le promete al lector algo que no existe.</A11y.Item>
           <A11y.Item>Las flechas mueven la elección y dan la vuelta; Tab entra al grupo y sale, porque solo la elegida es tabulable.</A11y.Item>
-          <A11y.Item>Con solo iconos, el `title` es el nombre accesible y además la etiqueta del Tooltip: no queda la caja del sistema operativo diciendo lo mismo.</A11y.Item>
-          <A11y.Item>Adentro de un Field o de un Row, el grupo se nombra con la etiqueta que ya está escrita.</A11y.Item>
+          <A11y.Item>Con solo iconos, el `title` es el nombre accesible y además la etiqueta del `Tooltip`: no queda la caja del sistema operativo diciendo lo mismo.</A11y.Item>
+          <A11y.Item>Adentro de un `Field` o de un `Row`, el grupo se nombra con la etiqueta que ya está escrita.</A11y.Item>
           <A11y.Item>El chip elegido conserva el relieve al enfocarse con el teclado.</A11y.Item>
         </A11y>
       </Section>

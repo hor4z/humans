@@ -34,9 +34,9 @@ export function NumbersSection() {
           <Table.Body>
             {which.map(([q, v, r]) => (
               <Table.Row key={q}>
-                <Table.Cell>{q}</Table.Cell>
+                <Table.Cell><Rich text={q} /></Table.Cell>
                 <Table.Cell><Rich text={v} /></Table.Cell>
-                <Table.Cell>{r}</Table.Cell>
+                <Table.Cell><Rich text={r} /></Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>

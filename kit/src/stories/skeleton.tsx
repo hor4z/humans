@@ -155,9 +155,9 @@ import { Skeleton } from '@milo/ui/skeleton'"
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>Es aria-hidden: un lector de pantalla no anuncia rectángulos vacíos.</A11y.Item>
-          <A11y.Item>Quien espera datos necesita que se lo diga el contenedor (aria-busy en la lista, un aviso al terminar), no cada hueco.</A11y.Item>
-          <A11y.Item>El pulso respeta prefers-reduced-motion: sin animación, el hueco se ve igual.</A11y.Item>
+          <A11y.Item>Es `aria-hidden`: un lector de pantalla no anuncia rectángulos vacíos.</A11y.Item>
+          <A11y.Item>Quien espera datos necesita que se lo diga el contenedor (`aria-busy` en la lista, un aviso al terminar), no cada hueco.</A11y.Item>
+          <A11y.Item>El pulso respeta `prefers-reduced-motion`: sin animación, el hueco se ve igual.</A11y.Item>
         </A11y>
       </Section>
     </Page>

@@ -26,7 +26,7 @@ export function BreadcrumbStory() {
 
       <Section title="Ejemplos">
         <Demo
-          label="Con onClick o con href"
+          label="Con `onClick` o con `href`"
           code={`<Breadcrumb
   label="Ruta con onClick"
   items={[{ label: 'Espacios', onClick: openSpaces }, { label: 'Lengua · 6.º' }]}
@@ -64,8 +64,8 @@ export function BreadcrumbStory() {
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>{'Es un <nav> con su nombre, así que un lector lo anuncia como la navegación de la página y lo puede saltear.'}</A11y.Item>
-          <A11y.Item>El item actual lleva aria-current="page" y no es un link: no se puede ir a donde ya estás.</A11y.Item>
+          <A11y.Item>{'Es un `<nav>` con su nombre, así que un lector lo anuncia como la navegación de la página y lo puede saltear.'}</A11y.Item>
+          <A11y.Item>El item actual lleva `aria-current="page"` y no es un link: no se puede ir a donde ya estás.</A11y.Item>
           <A11y.Item>Los separadores son decorativos y no se leen: entre item e item no se escucha "barra".</A11y.Item>
         </A11y>
       </Section>

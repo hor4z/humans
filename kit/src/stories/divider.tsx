@@ -65,9 +65,9 @@ export function DividerStory() {
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>Lleva role="separator" con su orientación, así que un lector anuncia el corte en vez de saltearlo.</A11y.Item>
+          <A11y.Item>Lleva `role="separator"` con su orientación, así que un lector anuncia el corte en vez de saltearlo.</A11y.Item>
           <A11y.Item>No es tabulable ni tiene contenido: separa, y nada más.</A11y.Item>
-          <A11y.Item>El gris sale de --border, el mismo de todas las líneas del sistema, así que sube y baja con el tema.</A11y.Item>
+          <A11y.Item>El gris sale de `--border`, el mismo de todas las líneas del sistema, así que sube y baja con el tema.</A11y.Item>
         </A11y>
       </Section>
     </Page>

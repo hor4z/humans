@@ -111,9 +111,9 @@ export function ChartStory() {
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>{'Cada barra es un <button> que se enfoca y muestra el mismo tooltip que con el mouse.'}</A11y.Item>
+          <A11y.Item>{'Cada barra es un `<button>` que se enfoca y muestra el mismo tooltip que con el mouse.'}</A11y.Item>
           <A11y.Item>Cada barra se anuncia como "Miércoles: 27 de 29".</A11y.Item>
-          <A11y.Item>Los valores viven además en una tabla sr-only: una altura no se lee.</A11y.Item>
+          <A11y.Item>Los valores viven además en una tabla `sr-only`: una altura no se lee.</A11y.Item>
           <A11y.Item>El tono sube con la altura, así que el tamaño y el color dicen lo mismo.</A11y.Item>
         </A11y>
       </Section>

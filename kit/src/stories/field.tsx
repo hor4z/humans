@@ -119,7 +119,7 @@ export function FieldStory() {
             </Field>
           </Stack>
         </Demo>
-        <Demo label="Field.Set: en un formulario de tres campos sobra, en uno de doce lo hace legible" code={`<Field.Set>
+        <Demo label="`Field.Set`: en un formulario de tres campos sobra, en uno de doce lo hace legible" code={`<Field.Set>
   <Field.Legend>Lo básico</Field.Legend>
   <Field required>
     <Field.Label>Nombre</Field.Label>
@@ -164,11 +164,11 @@ export function FieldStory() {
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>La etiqueta usa htmlFor: tocarla enfoca el campo, que además agranda el blanco del click.</A11y.Item>
+          <A11y.Item>La etiqueta usa `htmlFor`: tocarla enfoca el campo, que además agranda el blanco del click.</A11y.Item>
           <A11y.Item>La ayuda y el error se anuncian como descripción del control, no como texto suelto al lado.</A11y.Item>
-          <A11y.Item>Con error, el campo queda aria-invalid y el mensaje lleva su glifo: no depende del color rojo.</A11y.Item>
+          <A11y.Item>Con error, el campo queda `aria-invalid` y el mensaje lleva su glifo: no depende del color rojo.</A11y.Item>
           <A11y.Item>Lo obligatorio se dice con texto además del asterisco.</A11y.Item>
-          <A11y.Item>Los siete controles del sistema toman el id del Field: ninguno queda con la etiqueta colgando.</A11y.Item>
+          <A11y.Item>Los siete controles del sistema toman el `id` del `Field`: ninguno queda con la etiqueta colgando.</A11y.Item>
         </A11y>
       </Section>
     </Page>

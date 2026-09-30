@@ -75,9 +75,9 @@ export function SliderStory() {
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>{'Es un <input type="range"> de verdad: flechas, Home, End y PageUp funcionan solas.'}</A11y.Item>
+          <A11y.Item>{'Es un `<input type="range">` de verdad: flechas, Home, End y PageUp funcionan solas.'}</A11y.Item>
           <A11y.Item>El pulgar dibujado toma el foco del input que hay debajo.</A11y.Item>
-          <A11y.Item>El label lo nombra aunque en pantalla no haya texto al lado.</A11y.Item>
+          <A11y.Item>El `label` lo nombra aunque en pantalla no haya texto al lado.</A11y.Item>
         </A11y>
       </Section>
     </Page>

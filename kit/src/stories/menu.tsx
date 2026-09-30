@@ -141,7 +141,7 @@ export function MenuStory() {
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>role="menu" con menuitem, y las opciones que se marcan son menuitemradio con aria-checked.</A11y.Item>
+          <A11y.Item>`role="menu"` con `menuitem`, y las opciones que se marcan son `menuitemradio` con `aria-checked`.</A11y.Item>
           <A11y.Item>Las flechas recorren las opciones y dan la vuelta; Home y End van a los extremos, y las dos saltean lo apagado. Un `role="menu"` promete eso y hay que cumplirlo.</A11y.Item>
           <A11y.Item>El rótulo de grupo va como presentation: no es una fila que se pueda enfocar.</A11y.Item>
           <A11y.Item>Lo peligroso va en el rojo de tinta, no en el del relleno: sobre el papel, el relleno no llega a AA.</A11y.Item>

@@ -1,6 +1,6 @@
 import css from './layout.module.css'
 import { Card } from '@milo/ui/card'
-import { A11y, Note, Page, Section } from '../kit'
+import { A11y, InlineCode, Note, Page, Section } from '../kit'
 
 const breaks = [
   { cls: 'sm', px: 640, para: 'Lo compacto pasa a varias columnas: chips, talles, swatches, tarjetas de una línea.' },
@@ -75,32 +75,32 @@ export function LayoutSection() {
       <Note title="Un glifo al lado de un texto se centra con su primera línea">
         Y para eso su caja mide lo que mide esa línea (24 al lado de un título, 20 al lado de un
         párrafo) con el glifo centrado adentro. No alcanza con empujarlo un píxel a ojo: el{' '}
-        <code>Callout</code> con tono quedaba 4px más arriba que su título y sin tono 1px,
-        mientras el <code>Toast</code> caía justo. Piezas con la misma forma y cuatro
+        <InlineCode>Callout</InlineCode> con tono quedaba 4px más arriba que su título y sin tono 1px,
+        mientras el <InlineCode>Toast</InlineCode> caía justo. Piezas con la misma forma y cuatro
         recetas distintas se ve enseguida, aunque cada una por separado parezca bien.
       </Note>
 
       <Note tone="warn" title="Las dos que rompen una grilla sin avisar">
-        <strong>Un hijo de grilla no baja de su contenido.</strong> Sin <code>min-w-0</code>, una
+        <strong>Un hijo de grilla no baja de su contenido.</strong> Sin <InlineCode>min-w-0</InlineCode>, una
         tabla o un gráfico adentro de una columna la empujan más ancha que la pantalla, y el
         desborde aparece recién en un teléfono. Le pasó al dashboard.
         {' '}
         <strong>Y lo que scrollea tiene que poder recibir el foco.</strong> Un bloque con{' '}
-        <code>overflow-x-auto</code> y sin <code>tabIndex</code> deja lo que quedó cortado a la
-        derecha fuera del alcance del teclado. Va con <code>role=&quot;region&quot;</code> y su
+        <InlineCode>overflow-x-auto</InlineCode> y sin <InlineCode>tabIndex</InlineCode> deja lo que quedó cortado a la
+        derecha fuera del alcance del teclado. Va con <InlineCode>{'role="region"'}</InlineCode> y su
         nombre, porque "región" no dice de qué.
       </Note>
 
       <Note tone="warn" title="Una cabecera que envuelve deja sus acciones a la izquierda">
-        Un <code>space-between</code> con <code>flex-wrap</code> reparte bien mientras las dos
+        Un <InlineCode>space-between</InlineCode> con <InlineCode>flex-wrap</InlineCode> reparte bien mientras las dos
         partes entren en una línea. Cuando dejan de entrar, las acciones bajan solas a la línea de
-        abajo, y ahí <code>space-between</code> no tiene contra qué repartir: las pega al margen
+        abajo, y ahí <InlineCode>space-between</InlineCode> no tiene contra qué repartir: las pega al margen
         izquierdo. El botón principal salta de punta a punta en un solo píxel de ancho, que es la
         misma clase de salto que el sistema evita en una grilla que se mueve al pasar el mouse.
         {' '}
         La receta es una línea: el bloque de acciones lleva{' '}
-        <code>margin-inline-start: auto</code>, que no cambia nada mientras las dos partes comparten
-        línea y lo mantiene a la derecha cuando envuelve. Lo llevan el <code>Page.Header</code> del
+        <InlineCode>margin-inline-start: auto</InlineCode>, que no cambia nada mientras las dos partes comparten
+        línea y lo mantiene a la derecha cuando envuelve. Lo llevan el <InlineCode>Page.Header</InlineCode> del
         paquete, la cabecera del dashboard y la del documento. Una fila de etiqueta y valor no lo
         lleva: ahí envolver hacia la izquierda es lo correcto.
       </Note>

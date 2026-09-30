@@ -79,8 +79,8 @@ export function SplitButtonStory() {
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>Las dos mitades van en un role="group" con el nombre de la acción principal.</A11y.Item>
-          <A11y.Item>La flecha lleva aria-haspopup="menu" y aria-expanded, así que se anuncia como lo que es.</A11y.Item>
+          <A11y.Item>Las dos mitades van en un `role="group"` con el nombre de la acción principal.</A11y.Item>
+          <A11y.Item>La flecha lleva `aria-haspopup="menu"` y `aria-expanded`, así que se anuncia como lo que es.</A11y.Item>
           <A11y.Item>La flecha tiene su propio nombre ("Más opciones de Publicar"): dos botones sin nombre al lado no se distinguen de oído.</A11y.Item>
           <A11y.Item>Apagar el componente apaga las dos mitades, no una sola.</A11y.Item>
         </A11y>

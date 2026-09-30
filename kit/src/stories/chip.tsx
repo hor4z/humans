@@ -168,7 +168,7 @@ export function ChipStory() {
       <Section title="Accesibilidad">
         <A11y>
           <A11y.Item>El estado está en el texto, no en el color: quien no distingue tonos lee lo mismo.</A11y.Item>
-          <A11y.Item>{'Sin onClick ni onRemove es un <span>: no entra en el orden de tabulación algo que no hace nada.'}</A11y.Item>
+          <A11y.Item>{'Sin `onClick` ni `onRemove` es un `<span>`: no entra en el orden de tabulación algo que no hace nada.'}</A11y.Item>
           <A11y.Item>El glifo es decorativo y no se anuncia dos veces: lo que se lee es el texto.</A11y.Item>
           <A11y.Item>La cruz de quitar es un botón con su propio nombre, así que se puede usar con el teclado.</A11y.Item>
           <A11y.Item>Un chip que se toca y se saca son dos botones hermanos y no uno adentro del otro: anidados, tocar la cruz disparaba también el click del chip.</A11y.Item>

@@ -91,7 +91,7 @@ export function TextFieldStory() {
       <Section title="Accesibilidad">
         <A11y>
           <A11y.Item>El área clickeable es la caja entera y no solo la línea de texto de 16px.</A11y.Item>
-          <A11y.Item>{'El anillo lo toma el campo y no el <input> de adentro, así que no hay dos marcas de foco.'}</A11y.Item>
+          <A11y.Item>{'El anillo lo toma el campo y no el `<input>` de adentro, así que no hay dos marcas de foco.'}</A11y.Item>
           <A11y.Item>Con un botón adentro, el campo no se enciende: la marca es del botón que tiene el foco.</A11y.Item>
         </A11y>
       </Section>

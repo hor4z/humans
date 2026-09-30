@@ -155,7 +155,7 @@ export function FolderStory() {
       <Section title="Accesibilidad">
         <A11y>
           <A11y.Item>El color identifica el espacio de un vistazo, pero el nombre está siempre escrito.</A11y.Item>
-          <A11y.Item>El dibujo es aria-hidden: no se anuncia una carpeta dibujada.</A11y.Item>
+          <A11y.Item>El dibujo es `aria-hidden`: no se anuncia una carpeta dibujada.</A11y.Item>
         </A11y>
       </Section>
     </Page>

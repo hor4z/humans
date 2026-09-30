@@ -64,7 +64,7 @@ export function AccessibilitySection() {
                 <Table.Cell><code>{size}</code></Table.Cell>
                 <Table.Cell><span className="tabular">{px}px</span></Table.Cell>
                 <Table.Cell><Chip size="sm" color="ok">≥ 24</Chip></Table.Cell>
-                <Table.Cell>{use}</Table.Cell>
+                <Table.Cell><Rich text={use} /></Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>

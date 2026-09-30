@@ -69,7 +69,7 @@ Buscando en siete espacios`}
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>Lleva role="status" y un nombre, así que un lector dice qué está cargando.</A11y.Item>
+          <A11y.Item>Lleva `role="status"` y un nombre, así que un lector dice qué está cargando.</A11y.Item>
         </A11y>
       </Section>
     </Page>

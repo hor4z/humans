@@ -74,10 +74,10 @@ export function ToggleButtonStory() {
 
       <Section title="Accesibilidad">
         <A11y>
-          <A11y.Item>Lleva aria-pressed, así que un lector anuncia "activado" o "no activado" y no solo el nombre.</A11y.Item>
+          <A11y.Item>Lleva `aria-pressed`, así que un lector anuncia "activado" o "no activado" y no solo el nombre.</A11y.Item>
           <A11y.Item>Cuando adentro solo hay un glifo, `label` es obligatorio: sin eso el botón no dice nada.</A11y.Item>
           <A11y.Item>Con texto adentro el nombre sale del texto, así que `label` no lo pisa.</A11y.Item>
-          <A11y.Item>Es type="button": adentro de un form no lo manda.</A11y.Item>
+          <A11y.Item>Es `type="button"`: adentro de un form no lo manda.</A11y.Item>
         </A11y>
       </Section>
     </Page>
