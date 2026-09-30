@@ -10,6 +10,7 @@ import { useLocalStorage } from '@humans/ui/lib/use-local-storage'
 import { IconButton } from '@humans/ui/icon-button'
 import { cx, fold } from '@humans/ui/lib/cx'
 import { usePrefs } from './demo/prefs/prefs'
+import { Logo } from './demo/logo/logo'
 import { Search } from '@humans/ui/search'
 import { Tooltip } from '@humans/ui/tooltip'
 import { ToastProvider } from '@humans/ui/toast'
@@ -382,7 +383,7 @@ export function App() {
           <div className={cls.railHead}>
             <div className={cls.brandRow}>
             <button type="button" aria-label="humans: introducción" onClick={() => go(INTRO)} className={cls.brand}>
-              <span className={cls.brandMark}><Icon name="deployed_code" size={20} /></span>
+              <Logo size={28} className={cls.brandMark} />
               <span className={cls.brandName}>humans</span>
             </button>
             {desktop && <IconButton icon={compact ? 'chevron_right' : 'chevron_left'} label={compact ? 'Expandir panel lateral' : 'Plegar panel lateral'} size="sm" aria-expanded={!compact} onClick={() => setCollapsed(v => !v)} className={cls.railToggle} />}

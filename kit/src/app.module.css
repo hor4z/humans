@@ -58,14 +58,8 @@
   }
 
   .brandMark {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: var(--radius-md);
-    background-color: var(--brand-soft);
-    color: var(--brand-ink);
+    flex-shrink: 0;
+    color: var(--brand);
   }
 
   .railHead {
