@@ -6,7 +6,7 @@ import { labelColors } from '@humans/ui/lib/colors'
 import { A11y, Anatomy, Cluster, Demo, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
 
 export function ChipStory() {
-  const [selected, setSelected] = useState('')
+  const [selected, setSelected] = useState('chip')
   const [showRemovable, setShowRemovable] = useState(true)
   const [chips, setChips] = useState(['Indagación', 'Proyecto', 'Taller'])
   const [subjects, setSubjects] = useState([{ name: 'Matemática', color: 'blue' as const }, { name: 'Lengua', color: 'pink' as const }])
@@ -31,42 +31,43 @@ export function ChipStory() {
         <Anatomy.Part name="Texto" required>Lo que el chip dice. El estado vive acá y no en el color.</Anatomy.Part>
         <Anatomy.Part name="Marca de la izquierda">Un glifo (`icon`), un punto (`dot`) o la cara de una persona (`avatar`).</Anatomy.Part>
         <Anatomy.Part name="Cruz">Con `onRemove`, un botón para quitarlo, con su propio nombre.</Anatomy.Part>
-        <Anatomy.Part name="Caja">`sm` mide 20 y va pegado a un título o adentro de una celda; `md` mide 28 y es el default.</Anatomy.Part>
+        <Anatomy.Part name="Caja">`sm` mide 20 y `md` 28, que es el default.</Anatomy.Part>
       </Anatomy>
 
       <Section title="Tamaños y colores">
         <Panel>
           <Variant
             name="sm y md"
-            note="Con `avatar`, la marca de la izquierda es la cara de una persona y no un glifo."
+            note="`sm` va pegado a un título o adentro de una celda; `md` va en todo lo demás."
             code={`<Chip size="sm">Borrador</Chip>
 <Chip size="sm" color="ok" icon="check_circle">Corregida</Chip>
 <Chip>Borrador</Chip>
-<Chip color="ok" icon="check_circle">Corregida</Chip>
-<Chip avatar={{ name: 'Martín Roldán' }}>Martín Roldán</Chip>
-<Chip size="sm" avatar={{ name: 'Bruno Díaz', src: '/avatars/05.webp' }}>Bruno Díaz</Chip>`}
+<Chip color="ok" icon="check_circle">Corregida</Chip>`}
           >
             <Chip size="sm">Borrador</Chip>
             <Chip size="sm" color="ok" icon="check_circle">Corregida</Chip>
             <Chip>Borrador</Chip>
             <Chip color="ok" icon="check_circle">Corregida</Chip>
-            <Chip avatar={{ name: 'Martín Roldán' }}>Martín Roldán</Chip>
-            <Chip size="sm" avatar={{ name: 'Bruno Díaz', src: '/avatars/05.webp' }}>Bruno Díaz</Chip>
           </Variant>
           <Variant
-            name="estado y categoría"
-            note="Los cuatro de estado significan lo mismo que en `Callout` y en `Toast`. Los seis de categoría van en su **par suave**, porque un chip nunca viene solo."
+            name="estado"
+            note="Los cuatro de estado significan lo mismo que en `Callout` y en `Toast`."
             code={`<Chip color="info">En prueba</Chip>
 <Chip color="ok">Corregida</Chip>
 <Chip color="warn">Vence mañana</Chip>
-<Chip color="bad">Sin entregar</Chip>
-{labelColors.map(c => <Chip key={c} color={c}>{c}</Chip>)}
-<Chip>Indagación</Chip>`}
+<Chip color="bad">Sin entregar</Chip>`}
           >
             <Chip color="info">En prueba</Chip>
             <Chip color="ok">Corregida</Chip>
             <Chip color="warn">Vence mañana</Chip>
             <Chip color="bad">Sin entregar</Chip>
+          </Variant>
+          <Variant
+            name="categoría"
+            note="Los seis de categoría van en su **par suave**, porque un chip nunca viene solo. Sin `color`, va en gris."
+            code={`{labelColors.map(c => <Chip key={c} color={c}>{c}</Chip>)}
+<Chip>Indagación</Chip>`}
+          >
             {labelColors.map(c => <Chip key={c} color={c}>{c}</Chip>)}
             <Chip>Indagación</Chip>
           </Variant>
@@ -76,31 +77,33 @@ export function ChipStory() {
       <Section title="Lo que lleva y lo que hace">
         <Panel>
           <Variant
-            name="icono y punto"
-            note="El glifo sirve para reconocerlo de reojo; el punto, para cuando no hay glifo que sirva."
+            name="icono, punto y avatar"
+            note="La marca de la izquierda es una sola, y se elige por lo que identifica: el glifo sirve para reconocerlo de reojo, el punto para cuando no hay glifo que sirva y la cara para una persona."
             code={`<Chip color="green" icon="check">Corregida</Chip>
 <Chip color="orange" icon="schedule">Vence mañana</Chip>
 <Chip color="blue" dot>En curso</Chip>
-<Chip color="pink" dot>Borrador</Chip>`}
+<Chip color="pink" dot>Borrador</Chip>
+<Chip avatar={{ name: 'Martín Roldán' }}>Martín Roldán</Chip>
+<Chip avatar={{ name: 'Bruno Díaz', src: '/avatars/05.webp' }}>Bruno Díaz</Chip>`}
           >
             <Chip color="green" icon="check">Corregida</Chip>
             <Chip color="orange" icon="schedule">Vence mañana</Chip>
             <Chip color="blue" dot>En curso</Chip>
             <Chip color="pink" dot>Borrador</Chip>
+            <Chip avatar={{ name: 'Martín Roldán' }}>Martín Roldán</Chip>
+            <Chip avatar={{ name: 'Bruno Díaz', src: '/avatars/05.webp' }}>Bruno Díaz</Chip>
           </Variant>
           <Variant
-            name="activo, clickeable y removible"
-            note="Sin `onClick` ni `onRemove` es un texto; con uno, un botón; con los dos, dos botones hermanos."
-            code={`<Chip active>Elegido</Chip>
-<Chip active={selected === 'chip'} onClick={() => setSelected(selected === 'chip' ? '' : 'chip')}>Se toca</Chip>
+            name="se toca, se quita o las dos"
+            note="Con `onClick` es un botón, y `active` lo marca elegido. Con `onRemove` lleva una cruz para quitarlo. Con los dos, son dos botones hermanos."
+            code={`<Chip active={selected === 'chip'} onClick={() => setSelected(selected === 'chip' ? '' : 'chip')}>Se toca</Chip>
 {chips.map(c => (
   <Chip key={c} onRemove={() => setChips(cs => cs.filter(x => x !== c))}>{c}</Chip>
 ))}
 {subjects.map(x => (
-  <Chip key={x.name} color={x.color} active={selected === x.name} onClick={() => setSelected(x.name)} onRemove={() => removeSubject(x)}>{x.name}</Chip>
+  <Chip key={x.name} color={x.color} active={selected === x.name} onClick={() => setSelected(x.name)} onRemove={() => setSubjects(xs => xs.filter(y => y !== x))}>{x.name}</Chip>
 ))}`}
           >
-            <Chip active>Elegido</Chip>
             <Chip active={selected === 'chip'} onClick={() => setSelected(selected === 'chip' ? '' : 'chip')}>Se toca</Chip>
             {chips.map(c => (
               <Chip key={c} onRemove={() => setChips(cs => cs.filter(x => x !== c))}>{c}</Chip>

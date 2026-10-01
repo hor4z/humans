@@ -1,17 +1,19 @@
 import s from './checkbox.module.css'
+import type { ReactNode } from 'react'
 import { useField } from '../lib/field-ctx'
+import { InlineLabel } from '../lib/inline-label'
 import { Icon } from '../icon/icon'
 import { cx } from '../lib/cx'
 
 /** La caja mide el interlineado del texto que acompaña: 16 · 20 · 24. Se toca en 24 como mínimo, que es lo que pide WCAG 2.2, sin mover el renglón. */
 export function Checkbox({
-  checked, onCheckedChange, label, disabled, id, indeterminate, size = 'md',
+  checked, onCheckedChange, label, disabled, id, indeterminate, size = 'md', children,
 }: {
   /** Es controlado: el estado lo lleva quien lo usa. */
   checked: boolean
   /** Recibe el valor nuevo, no el evento. */
   onCheckedChange: (v: boolean) => void
-  /** Al aria-label; si va dentro de un <label>, se omite. */
+  /** Al `aria-label`, para cuando no hay texto que se vea. Con hijos sobra. */
   label?: string
   /** Apagado no se toca ni recibe el foco. */
   disabled?: boolean
@@ -21,17 +23,19 @@ export function Checkbox({
   indeterminate?: boolean
   /** 16 · 20 · 24: el interlineado del texto de al lado. */
   size?: 'sm' | 'md' | 'lg'
+  /** El texto que se ve al lado. La casilla lo envuelve en su `<label>` y se centra contra el primer renglón. */
+  children?: ReactNode
 }) {
   const on = checked || indeterminate
   const field = useField()
-  return (
+  const box = (
     <button
       {...field}
       id={id ?? field.id}
       type="button"
       role="checkbox"
       aria-checked={indeterminate ? 'mixed' : checked}
-      aria-label={field.id ? undefined : label}
+      aria-label={field.id || children != null ? undefined : label}
       disabled={disabled}
       onClick={() => onCheckedChange(!checked)}
       className={cx(s.root, size === 'sm' ? s.rootSm : size === 'lg' ? s.rootLg : s.rootMd, s.disabled)}
@@ -50,4 +54,5 @@ export function Checkbox({
       </span>
     </button>
   )
+  return children == null ? box : <InlineLabel size={size} control={box}>{children}</InlineLabel>
 }

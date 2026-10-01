@@ -61,12 +61,17 @@ export function IconButtonStory() {
       <Section title="Estados">
         <Panel>
           <Variant
-            name="active · disabled"
-            note="`active` es para el botón cuyo panel está abierto, o el filtro que está puesto. Apagado no responde y se ve que no responde."
-            code={`<IconButton icon="filter_alt" label="Filtrar" active />
-<IconButton icon="delete" label="Eliminar" disabled />`}
+            name="active"
+            note="`active` es para el botón cuyo panel está abierto, o el filtro que está puesto."
+            code={`<IconButton icon="filter_alt" label="Filtrar" active />`}
           >
             <IconButton icon="filter_alt" label="Filtrar" active />
+          </Variant>
+          <Variant
+            name="Apagado"
+            note="Apagado no responde y se ve que no responde."
+            code={`<IconButton icon="delete" label="Eliminar" disabled />`}
+          >
             <IconButton icon="delete" label="Eliminar" disabled />
           </Variant>
         </Panel>

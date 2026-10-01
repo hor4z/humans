@@ -67,14 +67,14 @@ export function CriterionCardStory() {
   total={15}
   open={open === 'grafico'}
   onOpenChange={() => toggle('grafico')}
-  onRemove={removeChart}
+  onRemove={() => {}}
 />
 <CriterionCard
   criterion={measurement}
   total={15}
   open={open === 'medicion'}
   onOpenChange={() => toggle('medicion')}
-  onRemove={removeMeasurement}
+  onRemove={() => {}}
 />`}
           >
             <Stack width="sm">
@@ -95,13 +95,20 @@ export function CriterionCardStory() {
             </Stack>
           </Variant>
           <Variant
-            name="con descripción y de solo lectura"
-            note="`detail` se lee recién al abrirla, arriba de los renglones. Sin `onRemove` no hay tacho: es la misma tarjeta para quien no escribió la rúbrica."
-            code={`<CriterionCard criterion={measurement} total={15} open={detailOpen} onOpenChange={setDetailOpen} />
-<CriterionCard criterion={chart} total={15} open={readOpen} onOpenChange={setReadOpen} />`}
+            name="con descripción"
+            note="Abrila para leer la descripción: plegada, la tarjeta muestra el nombre solo."
+            code={`<CriterionCard criterion={measurement} total={15} open={detailOpen} onOpenChange={setDetailOpen} onRemove={() => {}} />`}
           >
             <Stack width="sm">
-              <CriterionCard criterion={measurement} total={15} open={detailOpen} onOpenChange={setDetailOpen} />
+              <CriterionCard criterion={measurement} total={15} open={detailOpen} onOpenChange={setDetailOpen} onRemove={() => {}} />
+            </Stack>
+          </Variant>
+          <Variant
+            name="de solo lectura"
+            note="Sin `onRemove` no hay tacho: es la misma tarjeta para quien no escribió la rúbrica."
+            code={`<CriterionCard criterion={chart} total={15} open={readOpen} onOpenChange={setReadOpen} />`}
+          >
+            <Stack width="sm">
               <CriterionCard criterion={chart} total={15} open={readOpen} onOpenChange={setReadOpen} />
             </Stack>
           </Variant>

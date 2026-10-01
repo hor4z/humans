@@ -1,7 +1,7 @@
 import s from './collapsible.module.css'
 import type { ReactNode } from 'react'
-import { Icon } from '../icon/icon'
-import { cx } from '../lib/cx'
+import { Icon } from '../../icon/icon'
+import { cx } from '../../lib/cx'
 
 /** El cuerpo que se abre y se cierra animado. Cerrado queda `inert`: no se enfoca ni se lee, pero conserva su alto para animar. */
 function Root({ open, id, className, children }: {

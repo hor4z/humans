@@ -52,6 +52,8 @@ comando.
   un bloque; si a un bloque le falta un rol, el rol es de la base. Hay dos tests.
 - **Dónde va una pieza nueva**: a la base si su forma se repite en cualquier producto; a un bloque
   si lo que la define es el contexto que resuelve.
+- Lo que comparten bloques de distintas familias y no es de la base (`Collapsible`) vive en
+  `src/blocks/lib/`. No se exporta ni sale en el riel.
 - Lo que es del sitio y no del sistema (`settings-modal`, `prefs`, `folder`) vive en
   `kit/src/demo/`, con su test, y no sale en el paquete.
 
@@ -206,13 +208,15 @@ declara:
 - **Propiedades**: la sección `Props`, que sale de los tipos.
 - **Accesibilidad**: la sección `Accesibilidad`.
 
-**Cada `Demo` y cada `Variant` es una tarjeta con su código**: la pieza arriba y, debajo, solapas
-de Descripción y Código. El código sigue pegado a lo que se ve porque es lo que permite revisar la
-API mirando: si la pieza se ve bien pero su código no, la pieza está mal. **Máximo seis tarjetas
-por vista**: lo que muestra una sola pieza chica se junta con sus hermanas en una tarjeta. Cada
-hecho se dice en un solo lugar: la API en el docblock, la decisión en "Cómo se usa bien", el
-comportamiento en Accesibilidad. Una página sin `Props` es de Fundamentos y va de corrido. Hay
-tests para la plantilla.
+**Cada `Demo` y cada `Variant` es una tarjeta con su código**: la pieza arriba y, debajo, solapas de
+Descripción y Código. El código sigue pegado a lo que se ve porque es lo que permite revisar la API
+mirando: si la pieza se ve bien pero su código no, la pieza está mal. **Máximo seis tarjetas por
+vista**, y siete en `button` e `icon-button`: lo que muestra una sola pieza chica se junta con sus
+hermanas en una tarjeta. **Cada tarjeta muestra un solo tipo de ejemplo**: "Apagado" y "Con error"
+van separadas, y una escala de un mismo eje (`sm · md · lg`) es un tipo. Cada hecho se dice en un
+solo lugar: la API en el docblock, la decisión en "Cómo se usa bien", el comportamiento en
+Accesibilidad. Una página sin `Props` es de Fundamentos y va de corrido. Hay tests para la
+plantilla.
 
 La referencia externa son las Human Interface Guidelines de Apple, salvo lo que es de una app nativa.
 Brainwave 2 (UI8) fue la referencia de arranque y **no está licenciado acá**: se tomaron medidas y

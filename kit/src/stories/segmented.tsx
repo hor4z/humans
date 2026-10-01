@@ -6,7 +6,9 @@ export function SegmentedStory() {
   const [filter, setFilter] = useState<'todas' | 'abiertas'>('todas')
   const [view, setView] = useState<'grilla' | 'lista'>('grilla')
   const [range, setRange] = useState<'semana' | 'mes'>('semana')
+  const [rangeMd, setRangeMd] = useState<'semana' | 'mes'>('semana')
   const [compactRange, setCompactRange] = useState<'semana' | 'mes'>('semana')
+  const [inbox, setInbox] = useState<'todas' | 'nuevas'>('todas')
   const [term, setTerm] = useState<'primero' | 'segundo'>('primero')
 
   return (
@@ -35,7 +37,7 @@ export function SegmentedStory() {
 
       <Section title="Ejemplos">
         <Demo
-          label="Tamaños y compacto"
+          label="Tamaños"
           code={`<Segmented
   size="sm"
   label="Rango"
@@ -44,17 +46,42 @@ export function SegmentedStory() {
   options={[{ value: 'semana', label: 'Semana' }, { value: 'mes', label: 'Mes' }]}
 />
 <Segmented
-  compact
+  size="md"
   label="Rango"
-  value={compactRange}
-  onValueChange={setCompactRange}
-  options={[{ value: 'semana', label: 'Semana' }, { value: 'mes', label: 'Mes', dot: true }]}
+  value={rangeMd}
+  onValueChange={setRangeMd}
+  options={[{ value: 'semana', label: 'Semana' }, { value: 'mes', label: 'Mes' }]}
 />`}
         >
           <Segmented size="sm" label="Rango" value={range} onValueChange={setRange}
             options={[{ value: 'semana', label: 'Semana' }, { value: 'mes', label: 'Mes' }]} />
+          <Segmented size="md" label="Rango" value={rangeMd} onValueChange={setRangeMd}
+            options={[{ value: 'semana', label: 'Semana' }, { value: 'mes', label: 'Mes' }]} />
+        </Demo>
+        <Demo
+          label="Compacto"
+          code={`<Segmented
+  compact
+  label="Rango"
+  value={compactRange}
+  onValueChange={setCompactRange}
+  options={[{ value: 'semana', label: 'Semana' }, { value: 'mes', label: 'Mes' }]}
+/>`}
+        >
           <Segmented compact label="Rango" value={compactRange} onValueChange={setCompactRange}
-            options={[{ value: 'semana', label: 'Semana' }, { value: 'mes', label: 'Mes', dot: true }]} />
+            options={[{ value: 'semana', label: 'Semana' }, { value: 'mes', label: 'Mes' }]} />
+        </Demo>
+        <Demo
+          label="Con un punto"
+          code={`<Segmented
+  label="Entregas"
+  value={inbox}
+  onValueChange={setInbox}
+  options={[{ value: 'todas', label: 'Todas' }, { value: 'nuevas', label: 'Nuevas', dot: true }]}
+/>`}
+        >
+          <Segmented label="Entregas" value={inbox} onValueChange={setInbox}
+            options={[{ value: 'todas', label: 'Todas' }, { value: 'nuevas', label: 'Nuevas', dot: true }]} />
         </Demo>
         <Demo
           label="Apagado"

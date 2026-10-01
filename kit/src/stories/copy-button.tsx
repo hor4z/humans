@@ -28,21 +28,26 @@ export function CopyButtonStory() {
       <Section title="La pieza">
         <Panel>
           <Variant
-            name="sm · md · lg y adentro de un campo"
-            note="`sm` va adentro de un campo o de una fila y `md` suelto. El caso más común es un enlace para compartir, que se lee y se copia sin seleccionarlo a mano."
+            name="sm · md · lg"
+            note="`sm` va adentro de un campo o de una fila, `md` suelto y `lg` donde se toca con el dedo."
             code={`<CopyButton size="sm" value="npm install @humans/ui" />
 <CopyButton value="npm install @humans/ui" />
-<CopyButton size="lg" value="npm install @humans/ui" />
-<TextField
+<CopyButton size="lg" value="npm install @humans/ui" />`}
+          >
+            <CopyButton size="sm" value="npm install @humans/ui" />
+            <CopyButton value="npm install @humans/ui" />
+            <CopyButton size="lg" value="npm install @humans/ui" />
+          </Variant>
+          <Variant
+            name="adentro de un campo"
+            note="El caso más común es un enlace para compartir, que se lee y se copia sin seleccionarlo a mano."
+            code={`<TextField
   readOnly
   value="https://milo.escuela/act/fracciones-equivalentes"
   aria-label="Enlace para compartir"
   suffix={<CopyButton size="sm" value="https://milo.escuela/act/fracciones-equivalentes" label="Copiar el enlace" />}
 />`}
           >
-            <CopyButton size="sm" value="npm install @humans/ui" />
-            <CopyButton value="npm install @humans/ui" />
-            <CopyButton size="lg" value="npm install @humans/ui" />
             <TextField
               readOnly
               value="https://milo.escuela/act/fracciones-equivalentes"

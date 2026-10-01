@@ -36,15 +36,20 @@ export function SpinnerStory() {
             <Spinner size={44} />
           </Variant>
           <Variant
-            name="en un botón y en una fila"
+            name="en un botón"
             note="Adentro de un botón oscuro va `on=&quot;solid&quot;`, o el filo blanco se ve como un halo."
             code={`<Button variant="solid" aria-busy><Spinner size={16} on="solid" />Guardando</Button>
-<Button variant="muted" aria-busy><Spinner size={16} />Guardando</Button>
-<Spinner size={16} />
-Buscando en siete espacios`}
+<Button variant="muted" aria-busy><Spinner size={16} />Guardando</Button>`}
           >
             <Button variant="solid" aria-busy><Spinner size={16} on="solid" />Guardando</Button>
             <Button variant="muted" aria-busy><Spinner size={16} />Guardando</Button>
+          </Variant>
+          <Variant
+            name="en una fila"
+            note="Al lado de un texto va en 16, y el texto dice qué se está esperando."
+            code={`<Spinner size={16} />
+Buscando en siete espacios`}
+          >
             <span className={cls.inlineWait}>
               <Spinner size={16} />
               Buscando en siete espacios

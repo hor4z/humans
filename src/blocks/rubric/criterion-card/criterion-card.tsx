@@ -1,6 +1,6 @@
 import s from './criterion-card.module.css'
 import { useId, type ReactNode } from 'react'
-import { Collapsible } from '../../../collapsible/collapsible'
+import { Collapsible } from '../../lib/collapsible'
 import { Card } from '../../../card/card'
 import { useRovingRadio } from '../../../lib/roving'
 import { Icon } from '../../../icon/icon'

@@ -87,4 +87,12 @@ describe('Radio.Group', () => {
     expect(group).toHaveAttribute('aria-invalid', 'true')
     expect(group).toHaveAccessibleDescription(/Elegí quién la ve/)
   })
+
+  it('el grupo muestra el texto de cada opción y tocarlo la elige', async () => {
+    const onChange = vi.fn()
+    render(<Radio.Group value="a" onValueChange={onChange} options={options} label="Quién ve" />)
+    await userEvent.click(screen.getByText('Todo el equipo'))
+    expect(onChange).toHaveBeenCalledWith('b')
+    expect(screen.getByRole('radio', { name: 'Todo el equipo' })).toBeInTheDocument()
+  })
 })

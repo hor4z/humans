@@ -51,4 +51,12 @@ describe('Switch', () => {
     await userEvent.click(screen.getByRole('switch'))
     expect(onSubmit).not.toHaveBeenCalled()
   })
+
+  it('con texto, tocar el texto lo prende y el texto es su nombre', async () => {
+    const onChange = vi.fn()
+    render(<Switch checked={false} onCheckedChange={onChange}>Sugerencias</Switch>)
+    await userEvent.click(screen.getByText('Sugerencias'))
+    expect(onChange).toHaveBeenCalledWith(true)
+    expect(screen.getByRole('switch', { name: 'Sugerencias' })).toBeInTheDocument()
+  })
 })

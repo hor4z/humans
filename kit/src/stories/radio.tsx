@@ -44,7 +44,7 @@ export function RadioStory() {
         <Anatomy.Part name="Grupo" required>`Radio.Group` reparte las opciones, lleva el nombre del conjunto y le da el teclado.</Anatomy.Part>
         <Anatomy.Part name="Anillo" required>El círculo de 20, o de 16 y 24 con `size`. Apagado es una caja vacía con su línea; elegido pasa al azul.</Anatomy.Part>
         <Anatomy.Part name="Disco">El punto blanco de adentro cuando está elegido. El azul va afuera: con el relleno afuera, la elegida se ve de una en toda la fila.</Anatomy.Part>
-        <Anatomy.Part name="Etiqueta">El texto de cada opción, al lado del anillo.</Anatomy.Part>
+        <Anatomy.Part name="Etiqueta">El texto de cada opción, al lado del anillo: en `Radio.Group` sale de `options`, y un `Radio` suelto lo lleva como hijo. Se toca junto con el anillo.</Anatomy.Part>
       </Anatomy>
 
       <Section title="Ejemplos">
@@ -69,13 +69,13 @@ export function RadioStory() {
           <Variant
             name="El checkbox en redondo"
             note="Mismo relleno azul prendido, misma caja vacía apagado, misma medida: 20, o 16 y 24 con `size`. Lo único que cambia es la marca de adentro: un tilde o un disco."
-            code={`<Radio checked={withHint} onCheckedChange={() => setWithHint(true)} label="Prendido" />
-<Radio checked={!withHint} onCheckedChange={() => setWithHint(false)} label="Apagado" />
+            code={`<Radio checked={withHint} onCheckedChange={() => setWithHint(true)}>Prendido</Radio>
+<Radio checked={!withHint} onCheckedChange={() => setWithHint(false)}>Apagado</Radio>
 <Checkbox checked={compared} onCheckedChange={setCompared} label="Checkbox prendido" />
 <Checkbox checked={!compared} onCheckedChange={on => setCompared(!on)} label="Checkbox apagado" />`}
           >
-            <Radio checked={withHint} onCheckedChange={() => setWithHint(true)} label="Prendido" />
-            <Radio checked={!withHint} onCheckedChange={() => setWithHint(false)} label="Apagado" />
+            <Radio checked={withHint} onCheckedChange={() => setWithHint(true)}>Prendido</Radio>
+            <Radio checked={!withHint} onCheckedChange={() => setWithHint(false)}>Apagado</Radio>
             <span className={cls.checkboxPair}>
               <Checkbox checked={compared} onCheckedChange={setCompared} label="Checkbox prendido" />
               <Checkbox checked={!compared} onCheckedChange={on => setCompared(!on)} label="Checkbox apagado" />
