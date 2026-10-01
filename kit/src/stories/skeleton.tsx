@@ -48,8 +48,7 @@ export function SkeletonStory() {
     <Page
       title="Skeleton"
       kind="Datos"
-      imports="import { Icon } from '@humans/ui/icon'
-import { Skeleton } from '@humans/ui/skeleton'"
+      imports="import { Skeleton } from '@humans/ui/skeleton'"
       lead="Reserva el espacio del contenido mientras carga para evitar saltos en la página."
     >
       <Hero>
@@ -147,6 +146,7 @@ import { Skeleton } from '@humans/ui/skeleton'"
       <Section title="Cómo se usa bien">
         <Practices>
           <Practices.Do>Ocupa el lugar exacto de lo que viene, así que cuando llega no se mueve nada.</Practices.Do>
+          <Practices.Do>Para un párrafo, cada barra mide lo que la letra (`--type-body`) y lo que sobra del interlineado va entre barras: así tres barras ocupan lo mismo que tres renglones.</Practices.Do>
           <Practices.Do>En una fila, la segunda barra va más corta: si las dos miden igual, el bloque se lee como un párrafo y no como una fila.</Practices.Do>
           <Practices.Dont>Si no se sabe la forma de lo que viene (una búsqueda que puede traer cero o cien) no va un esqueleto: va un [Spinner](#spinner), que dice "esperá" sin prometer tres filas.</Practices.Dont>
           <Practices.Dont>Para una espera de menos de un segundo no va nada: el parpadeo molesta más que la espera.</Practices.Dont>

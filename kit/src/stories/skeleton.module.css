@@ -89,15 +89,16 @@
   .lines {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: calc(var(--type-body-lh) - var(--type-body));
+    padding-block: calc((var(--type-body-lh) - var(--type-body)) / 2);
   }
 
   .lineBone {
-    height: 0.875rem;
+    height: var(--type-body);
   }
 
   .lastLineBone {
-    height: 0.875rem;
+    height: var(--type-body);
     width: 60%;
   }
 }

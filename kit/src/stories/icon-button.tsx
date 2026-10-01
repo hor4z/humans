@@ -10,8 +10,7 @@ export function IconButtonStory() {
     <Page
       title="IconButton"
       kind="Acciones"
-      imports="import { IconButton } from '@humans/ui/icon-button'
-import { Indicator } from '@humans/ui/indicator'"
+      imports="import { IconButton } from '@humans/ui/icon-button'"
       lead="Ejecuta una acción mediante un icono. Requiere un nombre accesible que describa esa acción."
     >
       <Hero>

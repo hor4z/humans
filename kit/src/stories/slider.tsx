@@ -42,11 +42,10 @@ export function SliderStory() {
             </Frame>
           </Variant>
           <Variant
-            name="Extremos y deshabilitado"
+            name="Extremos"
             note="En 0 y en 100 el pulgar queda entero adentro de la pista."
             code={`<Slider value={low} onValueChange={setLow} label="En cero" />
-<Slider value={high} onValueChange={setHigh} label="En cien" />
-<Slider value={40} onValueChange={setValue} disabled label="Deshabilitado" />`}
+<Slider value={high} onValueChange={setHigh} label="En cien" />`}
           >
             <Frame width="sm">
               <Slider value={low} onValueChange={setLow} label="En cero" />
@@ -54,6 +53,12 @@ export function SliderStory() {
             <Frame width="sm">
               <Slider value={high} onValueChange={setHigh} label="En cien" />
             </Frame>
+          </Variant>
+          <Variant
+            name="Apagado"
+            note="No se mueve ni recibe el foco, y va en gris."
+            code={`<Slider value={40} onValueChange={() => {}} disabled label="Deshabilitado" />`}
+          >
             <Frame width="sm">
               <Slider value={40} onValueChange={() => {}} disabled label="Deshabilitado" />
             </Frame>

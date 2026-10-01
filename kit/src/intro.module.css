@@ -1,16 +1,27 @@
 @layer humans.app {
   .intro { display: flex; flex-direction: column; gap: var(--space-12); padding-block: var(--space-4); }
-  .hero { display: grid; align-items: center; gap: var(--space-10); }
+  @font-face { font-family: 'Intro Sans'; font-style: normal; font-weight: 800; font-display: swap; src: url('/intro/plumpy/dm-sans-extra-bold.woff2') format('woff2'); }
+  .hero { padding-block: var(--space-6) var(--space-8); }
   .heroContent { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-6); }
   .eyebrow { display: inline-flex; align-items: center; gap: var(--space-2); color: var(--text-muted); font-size: var(--type-meta); line-height: var(--type-meta-lh); letter-spacing: var(--type-meta-ls); font-weight: var(--font-weight-semibold); }
-  .heroTitle { font-size: var(--type-display); line-height: var(--type-display-lh); letter-spacing: var(--type-display-ls); font-weight: var(--font-weight-bold); color: var(--text); }
-  .heroTitle > span { color: var(--brand-ink); }
-  .heroLead { max-width: 42ch; color: var(--text-muted); font-size: var(--type-reading); line-height: var(--type-reading-lh); letter-spacing: var(--type-reading-ls); }
+  .heroTitle { --type-display: clamp(3rem, 6.2vw, 5.5rem); --type-display-lh: .98; --type-display-ls: -.015em; --humans-heading-font: 'Intro Sans', var(--font-display); --humans-heading-weight: 800; font-size: var(--type-display); line-height: var(--type-display-lh); letter-spacing: var(--type-display-ls); color: var(--text); width: 100%; }
+  .heroLine { display: flex; align-items: center; flex-wrap: wrap; column-gap: .12em; }
+  .heroImage { width: 1.3em; height: 1.3em; margin-block: -.15em; object-fit: contain; flex-shrink: 0; }
+  .heroLead { max-width: 52ch; margin-top: var(--space-4); color: var(--text-muted); font-size: var(--type-reading); line-height: var(--type-reading-lh); letter-spacing: var(--type-reading-ls); }
   .actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .subjects { border-block: 1px solid var(--border); padding-block: var(--space-6); }
+  .subjectList { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--space-4); list-style: none; padding: 0; margin: 0; }
+  .subjectItem { display: flex; flex-direction: column; align-items: center; gap: var(--space-3); text-align: center; color: var(--text-muted); font-size: var(--type-meta); line-height: var(--type-meta-lh); letter-spacing: var(--type-meta-ls); }
+  .subjectItem > img { width: min(100%, 112px); height: 112px; object-fit: contain; }
+  .practice { display: grid; align-items: center; grid-template-columns: 1fr 1fr; gap: var(--space-12); }
+  .practiceContent { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-5); }
+  .practiceTitle { color: var(--text); font-size: var(--type-heading); line-height: var(--type-heading-lh); letter-spacing: var(--type-heading-ls); font-weight: var(--font-weight-semibold); }
+  .practiceLead { max-width: 44ch; color: var(--text-muted); font-size: var(--type-reading); line-height: var(--type-reading-lh); letter-spacing: var(--type-reading-ls); }
+  .practiceHint { display: flex; align-items: center; gap: var(--space-2); color: var(--text-muted); font-size: var(--type-body); line-height: var(--type-body-lh); letter-spacing: var(--type-body-ls); }
   .playground { min-width: 0; display: flex; flex-direction: column; }
   .activity { display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-5); border: 1px solid var(--border); border-radius: var(--radius-xl); box-shadow: var(--relief-card); }
   .activityTop { display: flex; align-items: center; gap: var(--space-3); }
-  .courseIcon { display: grid; place-items: center; flex-shrink: 0; width: 36px; height: 36px; background: var(--brand-soft); color: var(--brand-ink); border-radius: var(--radius-md); }
+  .courseImage { flex-shrink: 0; width: 40px; height: 40px; object-fit: contain; }
   .courseName, .fieldLabel { color: var(--text); font-size: var(--type-body); line-height: var(--type-body-lh); letter-spacing: var(--type-body-ls); font-weight: var(--font-weight-semibold); }
   .fieldLabel { margin-bottom: calc(-1 * var(--space-2)); }
   .status { margin-left: auto; }
@@ -20,7 +31,6 @@
   .previewActions { display: flex; justify-content: space-between; gap: var(--space-2); }
   .paths { display: grid; gap: var(--space-4); }
   .pathCard { display: flex; flex-direction: column; gap: var(--space-3); text-align: left; padding: var(--space-5); border: 1px solid var(--border); border-radius: var(--radius-xl); background: var(--surface); transition: border-color var(--duration-fast) var(--ease-out), background-color var(--duration-fast) var(--ease-out); }
-  .pathTop { display: flex; align-items: center; justify-content: space-between; color: var(--brand-ink); margin-bottom: var(--space-3); }
   .pathNumber { color: var(--text-muted); font-family: var(--font-mono); font-size: var(--type-meta); line-height: var(--type-meta-lh); letter-spacing: var(--type-meta-ls); }
   .pathTitle { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); color: var(--text); font-size: var(--type-reading); line-height: var(--type-reading-lh); letter-spacing: var(--type-reading-ls); font-weight: var(--font-weight-semibold); }
   .pathBody { color: var(--text-muted); font-size: var(--type-body); line-height: var(--type-body-lh); letter-spacing: var(--type-body-ls); }
@@ -47,7 +57,9 @@
   .exampleCaption strong { font-size: var(--type-reading); line-height: var(--type-reading-lh); letter-spacing: var(--type-reading-ls); font-weight: var(--font-weight-semibold); }
   .exampleCaption > span > span { color: var(--text-muted); font-size: var(--type-body); line-height: var(--type-body-lh); letter-spacing: var(--type-body-ls); }
   @media (min-width: 48rem) { .paths { grid-template-columns: repeat(3, minmax(0, 1fr)); } .exampleGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-  @media (min-width: 80rem) { .hero { grid-template-columns: 1.05fr 1fr; } }
-  @media (max-width: 30rem) { .activity { padding: var(--space-4); } .heroTitle { font-size: var(--type-heading); line-height: var(--type-heading-lh); letter-spacing: var(--type-heading-ls); } }
+  @media (max-width: 64rem) { .heroTitle { --type-display: clamp(2.5rem, 7.5vw, 5rem); } }
+  @media (max-width: 48rem) { .practice { grid-template-columns: 1fr; gap: var(--space-6); } .subjectList { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: var(--space-6); } }
+  @media (max-width: 30rem) { .intro { gap: var(--space-8); } .hero { padding-block: var(--space-2); } .heroTitle { --type-display: clamp(2.125rem, 10.5vw, 3rem); } .heroLine { column-gap: .14em; } .heroLead { margin-top: 0; } .subjectList { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-5) var(--space-3); } .subjectItem > img { height: 88px; } .activity { padding: var(--space-4); } }
+  @media (max-width: 23rem) { .heroTitle { --type-display: 2rem; } }
   @media (hover: hover) { .pathCard:hover, .exampleCard:hover { border-color: var(--brand-border); background-color: var(--brand-soft); } }
 }

@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { Field } from '../field/field'
 import { describe, expect, it, vi } from 'vitest'
 import { Radio } from './radio'
 
@@ -67,5 +68,23 @@ describe('Radio.Group', () => {
     screen.getByRole('radio', { name: 'Solo yo' }).focus()
     await userEvent.keyboard('{ArrowRight}')
     expect(onChange).toHaveBeenCalledWith('c')
+  })
+
+  it('el grupo apagado apaga todas las opciones', () => {
+    render(<Radio.Group value="a" onValueChange={() => {}} options={options} label="Quién ve" disabled />)
+    for (const radio of screen.getAllByRole('radio')) expect(radio).toBeDisabled()
+  })
+
+  it('adentro de un Field se nombra con la etiqueta y toma el error', () => {
+    render(
+      <Field>
+        <Field.Label>Quién ve</Field.Label>
+        <Radio.Group value="a" onValueChange={() => {}} options={options} />
+        <Field.Error>Elegí quién la ve.</Field.Error>
+      </Field>,
+    )
+    const group = screen.getByRole('radiogroup', { name: 'Quién ve' })
+    expect(group).toHaveAttribute('aria-invalid', 'true')
+    expect(group).toHaveAccessibleDescription(/Elegí quién la ve/)
   })
 })

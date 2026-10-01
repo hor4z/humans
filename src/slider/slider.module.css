@@ -8,10 +8,6 @@
     align-items: center;
   }
 
-  .disabled {
-    opacity: .45;
-  }
-
   .track {
     pointer-events: none;
     position: absolute;
@@ -68,6 +64,9 @@
     height: 0.75rem;
     border-radius: var(--radius-full);
     background-color: var(--brand);
+    &:is(:disabled ~ * > *) {
+      background-color: var(--text-disabled);
+    }
     transition-property: transform,translate,scale,rotate;
     transition-duration: var(--duration-fast);
     transition-timing-function: var(--ease-out);

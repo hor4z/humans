@@ -17,4 +17,17 @@ describe('Divider', () => {
     expect(line).toHaveAttribute('aria-orientation', 'vertical')
     expect(line).toHaveClass(s.vertical)
   })
+
+  it('con texto, el texto se lee y hay un solo separador', () => {
+    render(<Divider>o</Divider>)
+    expect(screen.getAllByRole('separator')).toHaveLength(1)
+    expect(screen.getByText('o')).toBeVisible()
+  })
+
+  it('con el texto al principio, la línea va después', () => {
+    render(<Divider align="start">Hoy</Divider>)
+    const text = screen.getByText('Hoy')
+    expect(text.previousElementSibling).toBeNull()
+    expect(screen.getByRole('separator')).toBe(text.nextElementSibling)
+  })
 })

@@ -44,7 +44,7 @@
 
   .locked {
     cursor: default;
-    opacity: .45;
+    color: var(--text-disabled);
   }
 
   .option {

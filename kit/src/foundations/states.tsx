@@ -18,7 +18,7 @@ const interaction = [
   { name: 'pressed', how: 'El relleno se oscurece un punto, y sin transición.', why: 'Es el único estado que el dedo confirma antes que el ojo, así que tiene que aparecer en el mismo momento del toque: uno que tarda no confirma nada.' },
   { name: 'focus', how: 'El anillo azul, el mismo en todo el sistema.', why: 'El único lugar donde el color es la señal. Va con `:focus-visible`: aparece con el teclado y no con el click, que es cuando estorba.' },
   { name: 'selected', how: 'Hundido o en el suave del azul, según la pieza.', why: '"Elegido" y "apretado" son cosas distintas y se confunden solas: lo apretado vuelve, lo elegido se queda.' },
-  { name: 'disabled', how: 'Opacidad 45% y el puntero apagado.', why: 'Se sigue leyendo, que es el punto: algo deshabilitado tiene que poder explicar por qué lo está.' },
+  { name: 'disabled', how: 'El gris de la rampa: `--disabled-bg` de fondo, `--disabled-border` de línea y `--text-disabled` para el texto y la marca. El puntero, apagado.', why: 'Un apagado no compite con lo que sí se puede usar: pierde el azul y el rojo, y lo único que queda es la forma, que dice qué control es.' },
 ] as const
 
 export function StatesSection() {
@@ -148,11 +148,11 @@ export function StatesSection() {
       </Note>
 
       <A11y>
-        <A11y.Item>Ningún estado se dice solo con color: lo que no distingue tonos lo distingue por relieve, por opacidad, por un glifo o por la palabra.</A11y.Item>
+        <A11y.Item>Ningún estado se dice solo con color: lo que no distingue tonos lo distingue por relieve, por un glifo o por la palabra.</A11y.Item>
         <A11y.Item>El foco va con `:focus-visible`, así que aparece con el teclado y no al hacer click, y cuando aparece, es el mismo anillo en todo el sistema.</A11y.Item>
         <A11y.Item>Lo que carga se anuncia: un `Skeleton` va `aria-hidden` y el contenedor lleva el estado, así que un lector de pantalla no lee cuatro cajas vacías.</A11y.Item>
         <A11y.Item>Un `EmptyState` es contenido de verdad y no una ilustración: el título y el cuerpo se leen, y la acción es un botón real.</A11y.Item>
-        <A11y.Item>Algo deshabilitado se sigue leyendo (opacidad 45%, no gris sobre gris) porque tiene que poder explicar por qué lo está.</A11y.Item>
+        <A11y.Item>Algo deshabilitado va en el gris de la rampa y queda afuera de la regla de contraste (WCAG 1.4.3 exceptúa lo inactivo), así que el porqué no puede vivir solo en el control: va en el texto de al lado.</A11y.Item>
       </A11y>
     </Page>
   )

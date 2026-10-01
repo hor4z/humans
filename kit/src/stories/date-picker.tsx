@@ -13,6 +13,7 @@ export function DatePickerStory() {
   const [from, setFrom] = useState(today())
   const [loose, setLoose] = useState('2026-03-09')
   const [bounded, setBounded] = useState('')
+  const [closes, setCloses] = useState('')
 
   return (
     <Page
@@ -74,6 +75,20 @@ export function DatePickerStory() {
 />`}>
           <DatePicker value={loose} onValueChange={setLoose} label="Fecha del examen" width={260} />
           <DatePicker value={bounded} onValueChange={setBounded} min={today()} label="Nueva entrega" placeholder="No se puede antes de hoy" width={260} />
+        </Demo>
+        <Demo label="Apagado" code={`<DatePicker value="2026-03-09" onValueChange={setLoose} label="Fecha del examen ya tomado" width={260} disabled />`}>
+          <DatePicker value="2026-03-09" onValueChange={setLoose} label="Fecha del examen ya tomado" width={260} disabled />
+        </Demo>
+        <Demo label="Con error" code={`<Field>
+  <Field.Label>Vence</Field.Label>
+  <DatePicker value={closes} onValueChange={setCloses} min={today()} placeholder="Sin fecha de cierre" width={260} />
+  <Field.Error>Elegí hasta cuándo se puede entregar.</Field.Error>
+</Field>`}>
+          <Field>
+            <Field.Label>Vence</Field.Label>
+            <DatePicker value={closes} onValueChange={setCloses} min={today()} placeholder="Sin fecha de cierre" width={260} />
+            <Field.Error>Elegí hasta cuándo se puede entregar.</Field.Error>
+          </Field>
         </Demo>
       </Section>
 

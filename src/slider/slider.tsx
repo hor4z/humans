@@ -35,7 +35,7 @@ export function Slider({
   const move = dragging ? '' : s.move
   return (
     <span
-      className={cx(s.root, disabled && s.disabled, className)}
+      className={cx(s.root, className)}
       style={{ '--t': t } as CSSProperties}
     >
       <span className={`${s.track} switch-track-off`} />

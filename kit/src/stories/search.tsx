@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Field } from '@humans/ui/field'
 import { useDebounce } from '@humans/ui/lib/use-debounce'
 import { Search } from '@humans/ui/search'
 import { A11y, Anatomy, Demo, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
@@ -14,6 +15,7 @@ export function SearchStory() {
   const [empty, setEmpty] = useState('')
   const [filled, setFilled] = useState('6.º B')
   const [query, setQuery] = useState('')
+  const [short, setShort] = useState('fr')
   const searched = useDebounce(query, 250)
   const results = activities.filter(a => a.toLowerCase().includes(searched.trim().toLowerCase()))
 
@@ -40,18 +42,49 @@ export function SearchStory() {
         <Panel>
           <Variant
             name="sm · md · lg"
-            note="`sm` en la barra de una tabla, `md` en la de una pantalla, `lg` cuando el buscador **es** la pantalla. Escribí en el de atajo y borrá el de la cruz para ver cómo cambian de lugar."
+            note="`sm` en la barra de una tabla, `md` en la de una pantalla, `lg` cuando el buscador **es** la pantalla."
             code={`<Search size="sm" value={first} onValueChange={setFirst} placeholder="Buscar una actividad" />
 <Search size="md" value={three} onValueChange={setThree} placeholder="Buscar una actividad" />
-<Search size="lg" value={large} onValueChange={setLarge} placeholder="Buscar una actividad" />
-<Search size="md" value={empty} onValueChange={setEmpty} shortcut="/" placeholder="Buscar" />
-<Search size="md" value={filled} onValueChange={setFilled} shortcut="/" placeholder="Buscar" />`}
+<Search size="lg" value={large} onValueChange={setLarge} placeholder="Buscar una actividad" />`}
           >
             <Search size="sm" value={first} onValueChange={setFirst} placeholder="Buscar una actividad" />
             <Search size="md" value={three} onValueChange={setThree} placeholder="Buscar una actividad" />
             <Search size="lg" value={large} onValueChange={setLarge} placeholder="Buscar una actividad" />
+          </Variant>
+          <Variant
+            name="atajo o cruz"
+            note="Escribí en el primero y borrá el segundo para ver cómo se turnan el mismo lugar."
+            code={`<Search size="md" value={empty} onValueChange={setEmpty} shortcut="/" placeholder="Buscar" />
+<Search size="md" value={filled} onValueChange={setFilled} shortcut="/" placeholder="Buscar" />`}
+          >
             <Search size="md" value={empty} onValueChange={setEmpty} shortcut="/" placeholder="Buscar" />
             <Search size="md" value={filled} onValueChange={setFilled} shortcut="/" placeholder="Buscar" />
+          </Variant>
+          <Variant
+            name="Apagado"
+            note="No se escribe ni recibe el foco, y va en gris."
+            code={`<Search value="" onValueChange={setShort} aria-label="Buscar en un curso archivado" placeholder="Buscar en un curso archivado" disabled />`}
+          >
+            <Stack gap="md" width="sm">
+              <Search value="" onValueChange={setShort} aria-label="Buscar en un curso archivado" placeholder="Buscar en un curso archivado" disabled />
+            </Stack>
+          </Variant>
+          <Variant
+            name="Con error"
+            note="`Field.Error` pinta la línea del campo en rojo y dice qué falta para buscar."
+            code={`<Field>
+  <Field.Label>Buscar una actividad</Field.Label>
+  <Search value={short} onValueChange={setShort} placeholder="Fracciones, ángulos, proporciones" />
+  <Field.Error>Escribí al menos tres letras para buscar.</Field.Error>
+</Field>`}
+          >
+            <Stack gap="md" width="sm">
+              <Field>
+                <Field.Label>Buscar una actividad</Field.Label>
+                <Search value={short} onValueChange={setShort} placeholder="Fracciones, ángulos, proporciones" />
+                <Field.Error>Escribí al menos tres letras para buscar.</Field.Error>
+              </Field>
+            </Stack>
           </Variant>
           <Demo label="Contra una lista: filtra recién cuando dejás de escribir" width="md" code={`const [query, setQuery] = useState('')
 const searched = useDebounce(query, 250)

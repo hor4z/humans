@@ -3,9 +3,9 @@ import { useField } from '../lib/field-ctx'
 import { Icon } from '../icon/icon'
 import { cx } from '../lib/cx'
 
-/** La caja de 18, la misma medida del pulgar del switch, así una fila con los dos no tiene dos tamaños de "marca". Se toca en 24, que es el mínimo de WCAG 2.2, sin mover el renglón. */
+/** La caja mide el interlineado del texto que acompaña: 16 · 20 · 24. Se toca en 24 como mínimo, que es lo que pide WCAG 2.2, sin mover el renglón. */
 export function Checkbox({
-  checked, onCheckedChange, label, disabled, id, indeterminate,
+  checked, onCheckedChange, label, disabled, id, indeterminate, size = 'md',
 }: {
   /** Es controlado: el estado lo lleva quien lo usa. */
   checked: boolean
@@ -19,6 +19,8 @@ export function Checkbox({
   id?: string
   /** Pinta la raya y manda aria-checked="mixed". */
   indeterminate?: boolean
+  /** 16 · 20 · 24: el interlineado del texto de al lado. */
+  size?: 'sm' | 'md' | 'lg'
 }) {
   const on = checked || indeterminate
   const field = useField()
@@ -32,7 +34,7 @@ export function Checkbox({
       aria-label={field.id ? undefined : label}
       disabled={disabled}
       onClick={() => onCheckedChange(!checked)}
-      className={cx(s.root, s.disabled)}
+      className={cx(s.root, size === 'sm' ? s.rootSm : size === 'lg' ? s.rootLg : s.rootMd, s.disabled)}
     >
       <span className={cx(s.control, s.motion, on ? s.on : s.off)}>
         <span
@@ -43,7 +45,7 @@ export function Checkbox({
         >
           {indeterminate
             ? <span className={s.dash} />
-            : <Icon name="check" size={14} weight={700} />}
+            : <Icon name="check" size={size === 'sm' ? 12 : size === 'lg' ? 20 : 16} weight={700} />}
         </span>
       </span>
     </button>

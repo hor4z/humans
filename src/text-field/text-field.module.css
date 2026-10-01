@@ -9,12 +9,6 @@
     background-color: var(--field-bg);
   }
 
-  .disabled {
-    &:has(:is(input:disabled)) {
-      pointer-events: none;
-      opacity: .45;
-    }
-  }
 
   .icon {
     flex-shrink: 0;

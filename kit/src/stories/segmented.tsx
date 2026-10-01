@@ -7,6 +7,7 @@ export function SegmentedStory() {
   const [view, setView] = useState<'grilla' | 'lista'>('grilla')
   const [range, setRange] = useState<'semana' | 'mes'>('semana')
   const [compactRange, setCompactRange] = useState<'semana' | 'mes'>('semana')
+  const [term, setTerm] = useState<'primero' | 'segundo'>('primero')
 
   return (
     <Page
@@ -54,6 +55,19 @@ export function SegmentedStory() {
             options={[{ value: 'semana', label: 'Semana' }, { value: 'mes', label: 'Mes' }]} />
           <Segmented compact label="Rango" value={compactRange} onValueChange={setCompactRange}
             options={[{ value: 'semana', label: 'Semana' }, { value: 'mes', label: 'Mes', dot: true }]} />
+        </Demo>
+        <Demo
+          label="Apagado"
+          code={`<Segmented
+  label="Trimestre"
+  value={term}
+  onValueChange={setTerm}
+  disabled
+  options={[{ value: 'primero', label: 'Primero' }, { value: 'segundo', label: 'Segundo' }]}
+/>`}
+        >
+          <Segmented label="Trimestre" value={term} onValueChange={setTerm} disabled
+            options={[{ value: 'primero', label: 'Primero' }, { value: 'segundo', label: 'Segundo' }]} />
         </Demo>
       </Section>
 

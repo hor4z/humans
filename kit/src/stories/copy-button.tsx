@@ -7,17 +7,16 @@ export function CopyButtonStory() {
     <Page
       title="CopyButton"
       kind="Acciones"
-      imports="import { CopyButton } from '@humans/ui/copy-button'
-import { TextField } from '@humans/ui/text-field'"
+      imports="import { CopyButton } from '@humans/ui/copy-button'"
       lead="Copia texto al portapapeles y comunica si la operación se completó."
     >
       <Hero>
         <CopyButton value="npm install @humans/ui" />
         <TextField
           readOnly
-          value="https://humans.escuela/act/fracciones-equivalentes"
+          value="https://milo.escuela/act/fracciones-equivalentes"
           aria-label="Enlace para compartir"
-          suffix={<CopyButton size="sm" value="https://humans.escuela/act/fracciones-equivalentes" label="Copiar el enlace" />}
+          suffix={<CopyButton size="sm" value="https://milo.escuela/act/fracciones-equivalentes" label="Copiar el enlace" />}
         />
       </Hero>
 
@@ -36,9 +35,9 @@ import { TextField } from '@humans/ui/text-field'"
 <CopyButton size="lg" value="npm install @humans/ui" />
 <TextField
   readOnly
-  value="https://humans.escuela/act/fracciones-equivalentes"
+  value="https://milo.escuela/act/fracciones-equivalentes"
   aria-label="Enlace para compartir"
-  suffix={<CopyButton size="sm" value="https://humans.escuela/act/fracciones-equivalentes" label="Copiar el enlace" />}
+  suffix={<CopyButton size="sm" value="https://milo.escuela/act/fracciones-equivalentes" label="Copiar el enlace" />}
 />`}
           >
             <CopyButton size="sm" value="npm install @humans/ui" />
@@ -46,9 +45,9 @@ import { TextField } from '@humans/ui/text-field'"
             <CopyButton size="lg" value="npm install @humans/ui" />
             <TextField
               readOnly
-              value="https://humans.escuela/act/fracciones-equivalentes"
+              value="https://milo.escuela/act/fracciones-equivalentes"
               aria-label="Enlace para compartir"
-              suffix={<CopyButton size="sm" value="https://humans.escuela/act/fracciones-equivalentes" label="Copiar el enlace" />}
+              suffix={<CopyButton size="sm" value="https://milo.escuela/act/fracciones-equivalentes" label="Copiar el enlace" />}
             />
           </Variant>
         </Panel>

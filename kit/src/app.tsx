@@ -2,7 +2,7 @@ import cls from './app.module.css'
 import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import { Button } from '@humans/ui/button'
 import { EmptyState } from '@humans/ui/empty-state'
-import { Icon, type IconName } from '@humans/ui/icon'
+import { Icon, type FolderColor, type IconName } from '@humans/ui/icon'
 import { useMediaQuery } from '@humans/ui/lib/use-media-query'
 import { useFocusTrap, useScrollLock } from '@humans/ui/lib/overlay-hooks'
 import { useEscape } from '@humans/ui/lib/esc'
@@ -67,7 +67,6 @@ import { ListStory } from './stories/list'
 import { TableStory } from './stories/table'
 import { CardStory } from './stories/card'
 import { RowStory } from './stories/row'
-import { NavStory } from './stories/nav'
 import { ToastStory } from './stories/toast'
 import { FieldStory } from './stories/field'
 import { SheetStory } from './stories/sheet'
@@ -173,7 +172,6 @@ const groups: Group[] = [
       { id: 'breadcrumb', label: 'Migas de pan', alias: 'Breadcrumb ruta migas volver jerarquía', render: () => <BreadcrumbStory /> },
       { id: 'reorder', label: 'Reordenar', alias: 'Reorder reordenar arrastrar soltar mover orden bloques manija drag', render: () => <ReorderStory /> },
       { id: 'steps', label: 'Pasos', alias: 'Steps etapas pasos proceso wizard progreso secuencia', render: () => <StepsStory /> },
-      { id: 'nav', label: 'Item de navegación', alias: 'NavItem navegación item sidebar riel', render: () => <NavStory /> },
     ],
   },
   {
@@ -277,6 +275,10 @@ const groupIcons: Record<string, IconName> = {
   Fundamentos: 'palette', Acciones: 'touch_app', Formularios: 'tune', Navegación: 'explore',
   Datos: 'table_rows', Avisos: 'notifications', Superficies: 'layers', Editor: 'edit',
   Consigna: 'menu_book', Rúbrica: 'checklist', Medios: 'volume_up', 'Del sitio': 'folder',
+}
+
+const groupFolders: Record<string, FolderColor> = {
+  Editor: 'blue', Consigna: 'green', Rúbrica: 'orange', Medios: 'purple', 'Del sitio': 'pink',
 }
 
 export function App() {
@@ -449,7 +451,7 @@ export function App() {
                         aria-controls={groupId}
                         onClick={() => { if (compact) { setCollapsed(false); setClosedGroups(groups.filter(x => x.label !== g.label).map(x => x.label)) } else setClosedGroups(xs => xs.includes(g.label) ? xs.filter(x => x !== g.label) : [...xs, g.label]) }}
                       >
-                        <Icon name={groupIcons[g.label] ?? 'layers'} size={18} /><span className={cls.groupText}>{g.label}</span>
+                        {groupFolders[g.label] ? <Icon.Folder color={groupFolders[g.label]} size={18} /> : <Icon name={groupIcons[g.label] ?? 'layers'} size={18} />}<span className={cls.groupText}>{g.label}</span>
                         <Icon name="keyboard_arrow_down" size={16} className={cx(cls.navChevron, expanded && cls.navChevronOpen)} />
                       </button>
                       <div id={groupId} className={cls.navGroupItems} hidden={!expanded}>

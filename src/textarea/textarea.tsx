@@ -87,7 +87,6 @@ export function Textarea({
       }}
       className={cx(
         `${cls.root} field`,
-        cls.disabled,
         cls.shape,
         counter ? cls.withCounter : '',
         resize === 'vertical' ? cls.resizablePad : cls.fixedPad,

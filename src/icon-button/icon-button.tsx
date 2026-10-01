@@ -30,7 +30,7 @@ export function IconButton({
       className={cx(
         `${s.root} touch-target`,
         s.pressed,
-        s.disabled,
+        variant === 'ghost' && !active ? s.disabledPlain : s.disabled,
         variants[variant === 'ghost' && active ? 'muted' : variant],
         c.square, c.radius,
         className,

@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Field } from '@humans/ui/field'
 import { Textarea } from '@humans/ui/textarea'
 import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
@@ -12,6 +13,7 @@ export function TextareaStory() {
   const [feedback, setFeedback] = useState('Resolviste bien las dos primeras. En la tercera te falta justificar por qué la pendiente da la mitad de g.')
   const [near, setNear] = useState('Le puse un techo corto para que veas qué pasa al final.')
   const [belowMin, setBelowMin] = useState('Bien')
+  const [prompt, setPrompt] = useState('')
 
   return (
     <Page
@@ -142,7 +144,7 @@ export function TextareaStory() {
           </Variant>
           <Variant
             name="quién decide el alto: auto, vertical y none"
-            note="Tres modos excluyentes: lo decide el contenido, quien arrastra o nadie. Con el tirador y el crecimiento a la vez, la tecla siguiente pisa el alto que arrastraste. El deshabilitado usa la misma opacidad que el de `TextField`."
+            note="Tres modos excluyentes: lo decide el contenido, quien arrastra o nadie. Con el tirador y el crecimiento a la vez, la tecla siguiente pisa el alto que arrastraste."
             code={`<Textarea aria-label="Consigna, alto automático" value={mode} onValueChange={setMode} rows={2} maxRows={6} />
 <Textarea aria-label="Consigna, alto arrastrable" defaultValue="Arrastrá la esquina." rows={2} resize="vertical" />
 <Textarea
@@ -150,8 +152,7 @@ export function TextareaStory() {
   defaultValue={'Alto fijo de dos filas.\\nLo que sobra scrollea y el campo no se mueve.'}
   rows={2}
   resize="none"
-/>
-<Textarea aria-label="Consigna no editable" value="No editable" disabled rows={3} />`}
+/>`}
           >
             <Stack gap="md" width="sm">
               <Textarea aria-label="Consigna, alto automático" value={mode} onValueChange={setMode} rows={2} maxRows={6} />
@@ -162,7 +163,42 @@ export function TextareaStory() {
                 rows={2}
                 resize="none"
               />
-              <Textarea aria-label="Consigna no editable" value="No editable" disabled rows={3} />
+            </Stack>
+          </Variant>
+          <Variant
+            name="Apagado"
+            note="No se edita ni recibe el foco, y va en el mismo gris que el `TextField`."
+            code={`<Textarea
+  aria-label="Consigna de una actividad cerrada"
+  value="Calculá cuántos litros de agua gasta tu casa en una semana."
+  disabled
+  rows={2}
+/>`}
+          >
+            <Stack gap="md" width="sm">
+              <Textarea
+                aria-label="Consigna de una actividad cerrada"
+                value="Calculá cuántos litros de agua gasta tu casa en una semana."
+                disabled
+                rows={2}
+              />
+            </Stack>
+          </Variant>
+          <Variant
+            name="Con error"
+            note="`Field.Error` pinta la línea de la caja en rojo y dice qué falta para seguir."
+            code={`<Field>
+  <Field.Label>Consigna</Field.Label>
+  <Textarea value={prompt} onValueChange={setPrompt} rows={3} maxRows={6} />
+  <Field.Error>Escribí la consigna antes de publicar la actividad.</Field.Error>
+</Field>`}
+          >
+            <Stack gap="md" width="sm">
+              <Field>
+                <Field.Label>Consigna</Field.Label>
+                <Textarea value={prompt} onValueChange={setPrompt} rows={3} maxRows={6} />
+                <Field.Error>Escribí la consigna antes de publicar la actividad.</Field.Error>
+              </Field>
             </Stack>
           </Variant>
         </Panel>

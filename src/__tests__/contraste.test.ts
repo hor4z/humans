@@ -48,6 +48,14 @@ describe('contraste de los tonos de estado', () => {
   }
 })
 
+describe('el borde de un campo con error', () => {
+  for (const theme of ['light', 'dark'] as const) {
+    it(`--bad-700 sobre el campo en ${theme} llega a 3:1`, () => {
+      expect(ratio(value('--bad-700', theme)!, value('--shade-01', theme)!)).toBeGreaterThanOrEqual(3)
+    })
+  }
+})
+
 const softs = [
   '--ok-050', '--warn-050', '--bad-050', '--blue-050',
   ...['green', 'teal', 'blue', 'purple', 'pink', 'orange'].map(c => `--label-${c}-soft`),

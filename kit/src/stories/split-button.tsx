@@ -33,8 +33,8 @@ export function SplitButtonStory() {
       <Section title="Variantes">
         <Panel>
           <Variant
-            name="brand · muted · disabled"
-            note="`brand` es la acción que manda de una pantalla; `muted`, lo secundario: exportar, descargar, compartir. Las dos mitades se apagan juntas."
+            name="brand · muted"
+            note="`brand` es la acción que manda de una pantalla; `muted`, lo secundario: exportar, descargar, compartir."
             code={`<SplitButton size="sm">
   <SplitButton.Action onClick={publish}>Publicar</SplitButton.Action>
   <SplitButton.Item icon="draft" onSelect={saveDraft}>Guardar como borrador</SplitButton.Item>
@@ -44,10 +44,6 @@ export function SplitButtonStory() {
   <SplitButton.Action onClick={exportAll}>Exportar</SplitButton.Action>
   <SplitButton.Item onSelect={exportPdf}>Como PDF</SplitButton.Item>
   <SplitButton.Item onSelect={exportSheet}>Como planilla</SplitButton.Item>
-</SplitButton>
-<SplitButton size="sm" variant="muted" disabled>
-  <SplitButton.Action onClick={publish}>Publicar</SplitButton.Action>
-  <SplitButton.Item icon="draft" onSelect={saveDraft}>Guardar como borrador</SplitButton.Item>
 </SplitButton>`}
           >
             <SplitButton size="sm">
@@ -60,6 +56,15 @@ export function SplitButtonStory() {
               <SplitButton.Item onSelect={() => toast({ title: 'Acción seleccionada: Como PDF', body: 'Demostración del menú de acciones.' })}>Como PDF</SplitButton.Item>
               <SplitButton.Item onSelect={() => toast({ title: 'Acción seleccionada: Como planilla', body: 'Demostración del menú de acciones.' })}>Como planilla</SplitButton.Item>
             </SplitButton>
+          </Variant>
+          <Variant
+            name="Apagado"
+            note="Las dos mitades se apagan juntas y van en gris."
+            code={`<SplitButton size="sm" variant="muted" disabled>
+  <SplitButton.Action onClick={publish}>Publicar</SplitButton.Action>
+  <SplitButton.Item icon="draft" onSelect={saveDraft}>Guardar como borrador</SplitButton.Item>
+</SplitButton>`}
+          >
             <SplitButton size="sm" variant="muted" disabled>
               <SplitButton.Action onClick={() => toast({ title: 'Acción seleccionada: Publicar', body: 'Demostración del menú de acciones.' })}>Publicar</SplitButton.Action>
               <SplitButton.Item icon="draft" onSelect={() => toast({ title: 'Acción seleccionada: Guardar como borrador', body: 'Demostración del menú de acciones.' })}>Guardar como borrador</SplitButton.Item>

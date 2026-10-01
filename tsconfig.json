@@ -93,9 +93,6 @@
       "@humans/ui/modal": [
         "./src/modal/modal.tsx"
       ],
-      "@humans/ui/nav": [
-        "./src/nav/nav.tsx"
-      ],
       "@humans/ui/pagination": [
         "./src/pagination/pagination.tsx"
       ],

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Avatar } from '@humans/ui/avatar'
+import { Field } from '@humans/ui/field'
 import { Icon } from '@humans/ui/icon'
 import { Select } from '@humans/ui/select'
 import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Variant } from '../kit'
@@ -11,6 +12,7 @@ export function SelectStory() {
   const [withIcon, setWithIcon] = useState('Matemática')
   const [space, setSpace] = useState('Matemática · 4.º A')
   const [teacher, setTeacher] = useState('Melina Rivero')
+  const [course, setCourse] = useState('5.º B')
 
   const [loading, setLoading] = useState(true)
   useEffect(() => {
@@ -150,6 +152,28 @@ export function SelectStory() {
               loading={loading}
               options={['Matemática · 4.º A', 'Lengua · 6.º', 'Ciencias · 5.º B']}
             />
+          </Variant>
+          <Variant
+            name="Apagado"
+            note="No abre ni recibe el foco, y va en gris."
+            code={`<Select value="Matemática · 4.º A" width={200} disabled options={['Matemática · 4.º A', 'Lengua · 6.º']} />`}
+          >
+            <Select value="Matemática · 4.º A" width={200} disabled options={['Matemática · 4.º A', 'Lengua · 6.º']} />
+          </Variant>
+          <Variant
+            name="Con error"
+            note="`Field.Error` pinta la línea del botón en rojo y dice qué elegir para seguir."
+            code={`<Field>
+  <Field.Label>Curso</Field.Label>
+  <Select value={course} onValueChange={setCourse} width={200} options={['4.º A', '5.º B', '6.º']} />
+  <Field.Error>El 5.º B ya rinde ese día: elegí otro curso o cambiá la fecha.</Field.Error>
+</Field>`}
+          >
+            <Field>
+              <Field.Label>Curso</Field.Label>
+              <Select value={course} onValueChange={setCourse} width={200} options={['4.º A', '5.º B', '6.º']} />
+              <Field.Error>El 5.º B ya rinde ese día: elegí otro curso o cambiá la fecha.</Field.Error>
+            </Field>
           </Variant>
         </Panel>
       </Section>

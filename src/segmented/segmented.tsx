@@ -19,7 +19,7 @@ type SegmentedOption<T extends string> = {
 
 /** Un solo segmented para todo: el de texto ("Todas · Abiertas") y el de iconos (grilla · lista) son el mismo componente con distintas opciones. */
 export function Segmented<T extends string>({
-  value, onValueChange, options, size = 'md', compact, label,
+  value, onValueChange, options, size = 'md', compact, label, disabled,
 }: {
   /** La opción elegida: es controlado. */
   value: T
@@ -33,6 +33,8 @@ export function Segmented<T extends string>({
   compact?: boolean
   /** Cómo se llama el grupo. Adentro de un `Field` lo toma de la etiqueta. */
   label?: string
+  /** Apaga todas las opciones juntas. */
+  disabled?: boolean
 }) {
   const roving = useRovingRadio(value, onValueChange, options)
   const group = useFieldGroup()
@@ -60,7 +62,7 @@ export function Segmented<T extends string>({
             role="radio"
             aria-checked={selected}
             aria-label={iconOnly ? o.title : undefined}
-            disabled={o.disabled}
+            disabled={disabled || o.disabled}
             tabIndex={roving.tabIndex(o.value)}
             onClick={() => onValueChange(o.value)}
             className={cx(
@@ -77,7 +79,7 @@ export function Segmented<T extends string>({
             )}
           >
             {o.icon && <Icon name={o.icon} size={!compact && size === 'md' ? 20 : 16} />}
-            {o.label}
+            {o.label && <span className="weight-steady"><span>{o.label}</span><span aria-hidden="true">{o.label}</span></span>}
             {o.dot && <span className={s.dot} />}
           </button>
         )

@@ -38,6 +38,7 @@ const roles: RoleRow[] = [
   { token: '--bad', use: 'Se rompió' },
   { token: '--track', use: 'Lo que había para hacer, en una barra' },
   { token: '--chart-fill', use: 'Lo hecho, en una barra' },
+  { token: '--skeleton', use: 'El hueco de lo que está cargando' },
 ]
 
 const pairs: ContrastRow[] = [

@@ -18,7 +18,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3 { font-family: var(--font-sans); font-weight: var(--font-weight-semibold); margin: 0; }
+h1, h2, h3 { font-family: var(--humans-heading-font, var(--font-sans)); font-weight: var(--humans-heading-weight, var(--font-weight-semibold)); margin: 0; }
 th { font-weight: var(--font-weight-semibold); }
 td, th { font-variant-numeric: tabular-nums; }
 strong, b { font-weight: var(--font-weight-semibold); }
@@ -26,6 +26,16 @@ strong, b { font-weight: var(--font-weight-semibold); }
 .icon-muted {
   color: var(--icon-muted);
   --icon-wght: 400;
+}
+
+.weight-steady {
+  display: inline-grid;
+  justify-items: center;
+}
+.weight-steady > * { grid-area: 1 / 1; }
+.weight-steady > [aria-hidden="true"] {
+  visibility: hidden;
+  font-weight: var(--font-weight-semibold);
 }
 
 .sr-only {
@@ -213,6 +223,29 @@ strong, b { font-weight: var(--font-weight-semibold); }
 .field input:focus-visible,
 .field textarea:focus-visible { box-shadow: none; }
 
+.field:has(input:disabled, textarea:disabled),
+.field-focus:disabled {
+  pointer-events: none;
+  border-color: var(--disabled-border);
+  background-color: var(--disabled-bg);
+  color: var(--text-disabled);
+}
+:is(.field:has(input:disabled, textarea:disabled), .field-focus:disabled) * { color: var(--text-disabled); }
+.field :is(input, textarea):disabled::placeholder { color: var(--text-disabled); }
+
+:disabled .icon-muted { color: var(--text-disabled); }
+
+.switch-track-on:is(:disabled, :has(~ :disabled)) { background: var(--text-disabled); box-shadow: none; }
+.switch-track-off:is(:disabled, :has(~ :disabled)) { background: var(--disabled-bg); box-shadow: inset 0 0 0 1px var(--disabled-border); }
+
+.field:has([aria-invalid="true"]),
+.field-focus[aria-invalid="true"] { border-color: var(--bad-ink); }
+.field:has([aria-invalid="true"]):focus-within:not(:has(button:focus, a:focus, [tabindex]:focus)),
+.field-focus[aria-invalid="true"]:focus-visible {
+  border-color: var(--bad-ink);
+  box-shadow: inset 0 0 0 1px var(--bad-ink);
+}
+
 .chart-bar:focus-visible { box-shadow: none; }
 
 :where(a, button, input, select, textarea, [tabindex]):focus-visible {
@@ -256,7 +289,7 @@ tr[tabindex]:focus-visible {
 @keyframes ui-fade-in { from { opacity: 0 } to { opacity: 1 } }
 @keyframes ui-rise { from { opacity: 0; transform: translateY(10px) } to { opacity: 1; transform: none } }
 
-@keyframes ui-pulse { 0%, 100% { opacity: 1 } 50% { opacity: 0.45 } }
+@keyframes ui-pulse { 0%, 100% { opacity: 1 } 50% { opacity: 0.6 } }
 .ui-pulse { animation: ui-pulse 1.6s var(--ease-out) infinite }
 .ui-pop { animation: ui-pop-in var(--duration-fast) var(--ease-out) }
 .ui-fade { animation: ui-fade-in var(--duration-normal) var(--ease-out) }

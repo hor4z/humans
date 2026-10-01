@@ -1,7 +1,6 @@
 import cls from './steps.module.css'
 import { useState } from 'react'
-import { Button } from '@humans/ui/button'
-import { Icon } from '@humans/ui/icon'
+import { IconButton } from '@humans/ui/icon-button'
 import { Steps } from '@humans/ui/steps'
 import { A11y, Anatomy, Demo, Hero, Page, Practices, Props, Section } from '../kit'
 
@@ -35,8 +34,8 @@ export function StepsStory() {
         <div>
           <Steps steps={design} current={current} label="Etapas del proyecto" />
           <div className={cls.pieceActions}>
-            <Button size="sm" variant="muted" iconStart={<Icon name="arrow_back" />} disabled={current === 0} onClick={() => setCurrent(n => n - 1)}>Atrás</Button>
-            <Button size="sm" variant="muted" iconEnd={<Icon name="arrow_forward" />} disabled={current === design.length - 1} onClick={() => setCurrent(n => n + 1)}>Siguiente</Button>
+            <IconButton size="sm" variant="muted" icon="arrow_back" label="Etapa anterior" disabled={current === 0} onClick={() => setCurrent(n => n - 1)} />
+            <IconButton size="sm" variant="muted" icon="arrow_forward" label="Etapa siguiente" disabled={current === design.length - 1} onClick={() => setCurrent(n => n + 1)} />
           </div>
         </div>
       </Hero>
@@ -51,17 +50,13 @@ export function StepsStory() {
 
       <Section title="Ejemplos">
         <Demo fill label="Acostada, con botones de afuera" code={`<Steps steps={design} current={current} label="Etapas del proyecto" />
-<Button size="sm" variant="muted" iconStart={<Icon name="arrow_back" />} disabled={current === 0} onClick={back}>
-  Atrás
-</Button>
-<Button size="sm" variant="muted" iconEnd={<Icon name="arrow_forward" />} disabled={current === design.length - 1} onClick={next}>
-  Siguiente
-</Button>`}>
+<IconButton size="sm" variant="muted" icon="arrow_back" label="Etapa anterior" disabled={current === 0} onClick={() => setCurrent(n => n - 1)} />
+<IconButton size="sm" variant="muted" icon="arrow_forward" label="Etapa siguiente" disabled={current === design.length - 1} onClick={() => setCurrent(n => n + 1)} />`}>
           <div>
             <Steps steps={design} current={current} label="Etapas del proyecto" />
             <div className={cls.pieceActions}>
-              <Button size="sm" variant="muted" iconStart={<Icon name="arrow_back" />} disabled={current === 0} onClick={() => setCurrent(n => n - 1)}>Atrás</Button>
-              <Button size="sm" variant="muted" iconEnd={<Icon name="arrow_forward" />} disabled={current === design.length - 1} onClick={() => setCurrent(n => n + 1)}>Siguiente</Button>
+              <IconButton size="sm" variant="muted" icon="arrow_back" label="Etapa anterior" disabled={current === 0} onClick={() => setCurrent(n => n - 1)} />
+              <IconButton size="sm" variant="muted" icon="arrow_forward" label="Etapa siguiente" disabled={current === design.length - 1} onClick={() => setCurrent(n => n + 1)} />
             </div>
           </div>
         </Demo>

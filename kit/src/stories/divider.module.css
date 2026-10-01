@@ -1,20 +1,10 @@
 @layer humans.app {
-  .aboveText {
-    padding-bottom: 0.75rem;
+  .entry {
     font-size: var(--type-body);
     line-height: var(--type-body-lh);
     letter-spacing: var(--type-body-ls);
     font-weight: var(--font-weight-medium);
     color: var(--text);
-  }
-
-  .belowText {
-    padding-top: 0.75rem;
-    font-size: var(--type-body);
-    line-height: var(--type-body-lh);
-    letter-spacing: var(--type-body-ls);
-    font-weight: var(--font-weight-medium);
-    color: var(--text-muted);
   }
 
   .inlineStrip {
