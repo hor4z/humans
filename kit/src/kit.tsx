@@ -3,7 +3,6 @@ import { Children, createContext, isValidElement, useContext, useEffect, useStat
 import { Chip } from '@humans/ui/chip'
 import { CopyButton } from '@humans/ui/copy-button'
 import { Tabs } from '@humans/ui/tabs'
-import { useClipboard } from '@humans/ui/lib/use-clipboard'
 import type { LabelColor } from '@humans/ui/lib/colors'
 import { toneIcon, toneInk, toneSurface, type Tone } from '@humans/ui/lib/tone'
 import { Icon, type IconName } from '@humans/ui/icon'
@@ -139,8 +138,6 @@ export function Page({ title, lead, imports, kind, children }: PageProps) {
     <article className={s.page}>
       <header className={s.pageHeaderPiece}>
         {header}
-        <p className={s.pageLead}><Rich text={lead} /></p>
-        {imports && <Code>{imports}</Code>}
       </header>
       <InPiece.Provider value>
         <Tabs defaultValue="overview">
@@ -152,6 +149,11 @@ export function Page({ title, lead, imports, kind, children }: PageProps) {
 
           <Tabs.Panel value="overview" keepMounted className={s.overview}>
             {hero}
+            <section className={s.section}>
+              <h2 className={s.sectionTitle}>Uso</h2>
+              <p className={s.usageLead}><Rich text={lead} /></p>
+              {imports && <Code>{imports}</Code>}
+            </section>
             {anatomy && (
               <section className={s.section}>
                 <h2 className={s.sectionTitle}>Anatomía</h2>
@@ -234,25 +236,20 @@ export const Anatomy = Object.assign(AnatomyRoot, { Part: AnatomyPart })
 
 /** Una línea de código que se puede copiar. */
 export function Code({ children }: { children: string }) {
-  const { copied, copy } = useClipboard()
   return (
-    <button
-      type="button"
-      onClick={() => copy(children)}
-      className={`${s.importBlock} group`}
-    >
-      <code className={s.importCode}>
-        {highlight(children.trim()).map((line, i) => (
-          <span key={i} className={s.importLine}><Painted tokens={line} /></span>
-        ))}
-      </code>
-      <Icon
-        name={copied ? 'check' : 'content_copy'}
-        size={14}
-        className={`${s.importCopyIcon} icon-muted`}
-      />
-      <span className="sr-only">{copied ? 'Copiado' : 'Copiar'}</span>
-    </button>
+    <div className={s.importBlock}>
+      <div className={s.importHeader}>
+        <span className={s.importLang}>tsx</span>
+        <CopyButton value={children.trim()} label="Copiar el import" size="sm" />
+      </div>
+      <pre className={s.importPre} tabIndex={0}>
+        <code className={s.importCode}>
+          {highlight(children.trim()).map((line, i) => (
+            <span key={i} className={s.importLine}><Painted tokens={line} /></span>
+          ))}
+        </code>
+      </pre>
+    </div>
   )
 }
 
@@ -413,7 +410,7 @@ export function Footnote({ children }: { children: ReactNode }) {
 type ExampleCardProps = {
   title?: string
   /** Qué es y cuándo va. Sin esto la tarjeta muestra solo el código. */
-  description?: string
+  description: string
   /** El código que dibuja lo de adentro, con los mismos props y el mismo contenido. */
   code: string
   /** Cómo se lee el código: `tsx` para un ejemplo de uso, `css` para tokens, `sh` para un comando. */
@@ -437,8 +434,7 @@ function ExampleCard({ title, description, code, lang, width, fill, mono, classN
       <Canvas className={cx(s.demoCanvas, fill && s.demoFill, className)}>
         {width ? <Frame width={width} className={cx(s.demoItems, fill && s.demoItemsFill)}>{children}</Frame> : children}
       </Canvas>
-      {description ? (
-        <Tabs defaultValue="description" className={s.exampleTabs}>
+      <Tabs defaultValue="description" className={s.exampleTabs}>
           <Tabs.List label={`Detalle de ${title ?? 'el ejemplo'}`}>
             <Tabs.Tab value="description">Descripción</Tabs.Tab>
             <Tabs.Tab value="code">Código</Tabs.Tab>
@@ -449,19 +445,18 @@ function ExampleCard({ title, description, code, lang, width, fill, mono, classN
           <Tabs.Panel value="code" keepMounted className={s.exampleCode}>
             <Example code={code} lang={lang} />
           </Tabs.Panel>
-        </Tabs>
-      ) : (
-        <Example code={code} lang={lang} className={s.exampleCodeOnly} />
-      )}
+      </Tabs>
     </figure>
   )
 }
 
 /** Un ejemplo con su código. */
-export function Demo({ label, code, lang, width, fill, children, className }: Omit<ExampleCardProps, 'title' | 'description' | 'mono'> & {
+export function Demo({ label, note, code, lang, width, fill, children, className }: Omit<ExampleCardProps, 'title' | 'description' | 'mono'> & {
   label?: string
+  /** Qué muestra el ejemplo y cuándo va. Sale en la solapa Descripción, al lado del Código. */
+  note: string
 }) {
-  return <ExampleCard title={label} code={code} lang={lang} width={width} fill={fill} className={className}>{children}</ExampleCard>
+  return <ExampleCard title={label} description={note} code={code} lang={lang} width={width} fill={fill} className={className}>{children}</ExampleCard>
 }
 
 /** Varios ejemplos en grilla: se acomodan solos, o en la cantidad de columnas que le pidas. */
@@ -486,7 +481,7 @@ export function Grid({ children, min = 320, cols }: {
 export function Variant({ name, note, code, lang, children }: {
   name: string
   /** Qué significa esta variante y cuándo va. */
-  note?: string
+  note: string
   /** El código que dibuja lo de adentro, con los mismos props y el mismo contenido. */
   code: string
   /** Cómo se lee el código, como en `Demo`. */

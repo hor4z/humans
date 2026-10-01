@@ -70,7 +70,7 @@ export function CommandMenuStory() {
 
       <Section title="Ejemplos">
         <Panel>
-        <Demo label="Sin buscador: lo que se escribe ya está afuera" code={`<CommandMenu groups={blocks} onSelect={setPicked} search={false} query="lis" />`}>
+        <Demo label="Sin buscador: lo que se escribe ya está afuera" note="Para el menú que abre la barra en el editor: el texto ya se escribe en el documento, así que la lista solo filtra." code={`<CommandMenu groups={blocks} onSelect={setPicked} search={false} query="lis" />`}>
           <Cluster gap="xl" align="start">
             <div className={`${cls.queryStrip} bg-surface`}>
               <span className={cls.queryLead}>Escribí</span>
@@ -84,7 +84,7 @@ export function CommandMenuStory() {
           </Cluster>
         </Demo>
 
-        <Demo label="Anclado a su disparador con un `Popover`" code={`<Popover
+        <Demo label="Anclado a su disparador con un `Popover`" note="Para insertar un bloque desde un botón de la barra: elegir cierra el panel y el bloque entra en la consigna." code={`<Popover
   align="start"
   width={380}
   trigger={props => <Button {...props} variant="muted">Insertar un bloque</Button>}

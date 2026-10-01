@@ -40,7 +40,7 @@ export function CalloutStory() {
       </Anatomy>
 
       <Section title="Contenido" note="Sin `tone`: parte de lo que se lee, y sigue ahí aunque nadie haga nada.">
-        <Demo label="Con título y glifo, y sin ninguno" code={`<Callout icon="lightbulb" color="blue">
+        <Demo label="Con título y glifo, y sin ninguno" note="El título y el glifo son para un bloque que se lee aparte, como un dato para acordarse; una aclaración de una línea va sola." code={`<Callout icon="lightbulb" color="blue">
   <Callout.Title>Para acordarse</Callout.Title>
   La velocidad límite no depende de la masa: depende de la forma y del aire.
 </Callout>
@@ -62,7 +62,7 @@ export function CalloutStory() {
           </Stack>
         </Demo>
 
-        <Demo label="Los colores" code={`<Callout color="neutral" icon="label">neutral</Callout>
+        <Demo label="Los colores" note="Cuando una consigna tiene varios bloques, un color por tipo los separa: uno para lo que hay que recordar, otro para lo que hay que probar." code={`<Callout color="neutral" icon="label">neutral</Callout>
 <Callout color="blue" icon="label">blue</Callout>
 <Callout color="green" icon="label">green</Callout>
 <Callout color="teal" icon="label">teal</Callout>
@@ -78,7 +78,7 @@ export function CalloutStory() {
       </Section>
 
       <Section title="Avisos" note="Con `tone`: algo que pasó. Cada tono trae su glifo, porque un color de estado sin forma ni texto no dice nada a quien no distingue colores.">
-        <Demo fill label="Los cuatro tonos" code={`<Callout tone="info">
+        <Demo fill label="Los cuatro tonos" note="Una función en prueba, una publicación hecha, un vencimiento cerca y una carga que falló. Cerrá el último con la X y volvelo a mostrar." code={`<Callout tone="info">
   <Callout.Title>La corrección automática está en prueba</Callout.Title>
   Podés desactivarla desde Ajustes mientras la probamos.
 </Callout>
@@ -128,7 +128,7 @@ export function CalloutStory() {
           </Stack>
         </Demo>
 
-        <Demo fill label="El glifo de un aviso" code={`<Callout tone="info" icon="schedule">
+        <Demo fill label="El glifo de un aviso" note="Cambiá el glifo cuando otro dice mejor de qué se trata, como un reloj para un cierre, y sacalo cuando hay varios avisos juntos y se repetiría." code={`<Callout tone="info" icon="schedule">
   <Callout.Title>Cierra el viernes a las 23:59</Callout.Title>
 </Callout>
 <Callout tone="info" icon={null}>

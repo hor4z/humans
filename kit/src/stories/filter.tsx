@@ -41,7 +41,7 @@ export function FilterStory() {
       </Anatomy>
 
       <Section title="Cómo se usa">
-        <Demo label="Filtrar filas: el botón cuenta lo elegido" code={`const [picked, setPicked] = useState<string[]>([])
+        <Demo label="Filtrar filas: el botón cuenta lo elegido" note="Para recortar una tabla de actividades por un dato de pocos valores, como el estado. La cuenta de cada opción dice cuántas filas quedan antes de tildarla." code={`const [picked, setPicked] = useState<string[]>([])
 
 <Filter
   label="Estado"
@@ -55,14 +55,14 @@ export function FilterStory() {
 />`}>
           <Filter label="Estado" options={states} value={picked} onValueChange={setPicked} />
         </Demo>
-        <Demo label="Condiciones a demanda" code={`const [conditions, setConditions] = useState({})
+        <Demo label="Condiciones a demanda" note="Cuando hay varios datos para filtrar y casi nunca se usan todos: se agrega solo la condición que hace falta, como la materia." code={`const [conditions, setConditions] = useState({})
 <Filter.Builder fields={[
   { key: 'estado', label: 'Estado', options: states },
   { key: 'materia', label: 'Materia', options: [{ value: 'Matemática' }, { value: 'Lengua' }] },
 ]} value={conditions} onValueChange={setConditions} />`}>
           <Filter.Builder fields={[{ key: 'estado', label: 'Estado', options: states }, { key: 'materia', label: 'Materia', options: [{ value: 'Matemática' }, { value: 'Lengua' }] }]} value={conditions} onValueChange={setConditions} />
         </Demo>
-        <Demo label="Visibilidad de columnas" code={`<Table.Columns
+        <Demo label="Visibilidad de columnas" note="Para una tabla con más columnas de las que entran: cada docente deja a la vista las que usa, y la de la actividad no se puede sacar." code={`<Table.Columns
   columns={columns.map(column => ({ id: column.value, label: column.label, locked: column.locked }))}
   value={visible}
   onValueChange={setVisible}

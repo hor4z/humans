@@ -5,6 +5,7 @@
   --surface: var(--shade-01);
   --surface-alt: var(--shade-09-a04);
   --surface-muted: var(--shade-03);
+  --surface-rail: var(--shade-rail);
   --surface-sunken: var(--shade-04);
   --surface-hover: var(--shade-09-a04);
   --surface-active: var(--shade-09-a08);

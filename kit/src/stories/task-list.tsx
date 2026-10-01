@@ -32,10 +32,10 @@ export function TaskListStory() {
       </Anatomy>
       <Section title="Editable y de solo lectura">
         <Grid>
-          <Demo label="Marcá y desmarcá" fill code={`<TaskList value={tasks} onValueChange={setTasks} label="Pasos del experimento" />`}>
+          <Demo label="Marcá y desmarcá" note="Los pasos de un experimento que el estudiante va tachando mientras lo hace." fill code={`<TaskList value={tasks} onValueChange={setTasks} label="Pasos del experimento" />`}>
             <TaskList value={tasks} onValueChange={setTasks} label="Pasos del experimento" />
           </Demo>
-          <Demo label="Solo de lectura" fill code={`<TaskList value={steps} label="Pasos, ya cerrados" />`}>
+          <Demo label="Solo de lectura" note="Así la ve el docente al corregir: muestra qué marcó el estudiante y no deja cambiarlo." fill code={`<TaskList value={steps} label="Pasos, ya cerrados" />`}>
             <TaskList value={initial} label="Pasos, ya cerrados" />
           </Demo>
         </Grid>

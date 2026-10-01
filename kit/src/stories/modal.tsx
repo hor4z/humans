@@ -47,7 +47,7 @@ export function ModalStory() {
 
       <Section title="Ejemplos">
         <Grid min={300}>
-          <Demo label="`md` · 620, el de siempre" code={`<Button variant="muted" onClick={() => setOpen(true)}>Abrir modal</Button>
+          <Demo label="`md` · 620, el de siempre" note="Para una tarea con varios campos o con texto para leer, como editar los datos de una actividad." code={`<Button variant="muted" onClick={() => setOpen(true)}>Abrir modal</Button>
 <Modal open={open} onOpenChange={setOpen} size="md">
   <Modal.Header>
     <Modal.Title>Un modal de 620</Modal.Title>
@@ -78,7 +78,7 @@ export function ModalStory() {
             </Modal>
           </Demo>
 
-          <Demo label="`sm` · 420, una pregunta o un campo" code={`<Button variant="muted" onClick={() => setOpen(true)}>Renombrar</Button>
+          <Demo label="`sm` · 420, una pregunta o un campo" note="Para un solo dato, como el nombre de un curso: en un panel angosto la mirada no tiene que cruzar la pantalla." code={`<Button variant="muted" onClick={() => setOpen(true)}>Renombrar</Button>
 <Modal open={open} onOpenChange={setOpen} size="sm">
   <Modal.Header>
     <Modal.Title>Renombrar el espacio</Modal.Title>
@@ -114,7 +114,7 @@ export function ModalStory() {
             </Modal>
           </Demo>
 
-          <Demo label="`md` · el caso real" code={`<Button variant="muted" iconStart={<Icon name="tune" />} onClick={() => setOpen(true)}>Ajustes</Button>
+          <Demo label="`md` · el caso real" note="Así van los ajustes de la cuenta: en un modal con su propio riel, que al cerrarse te deja donde estabas." code={`<Button variant="muted" iconStart={<Icon name="tune" />} onClick={() => setOpen(true)}>Ajustes</Button>
 <SettingsModal
   open={open}
   onOpenChange={setOpen}

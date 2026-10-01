@@ -42,7 +42,7 @@ export function SheetStory() {
 
       <Section title="Un formulario y un filtro">
         <Panel>
-        <Demo label="Un formulario entero: guardar queda siempre a la vista" code={`<Button variant="brand" onClick={() => setOpen(true)}>Nueva actividad</Button>
+        <Demo label="Un formulario entero: guardar queda siempre a la vista" note="Para crear algo de varios campos, como una actividad nueva, sin perder de vista la lista que queda de fondo." code={`<Button variant="brand" onClick={() => setOpen(true)}>Nueva actividad</Button>
 
 <Sheet open={open} onOpenChange={setOpen}>
   <Sheet.Header><Sheet.Title>Nueva actividad</Sheet.Title></Sheet.Header>
@@ -114,7 +114,7 @@ export function SheetStory() {
             </Sheet.Footer>
           </Sheet>
         </Demo>
-        <Demo label="Del lado izquierdo, para lo que acompaña a la navegación" code={`<Button variant="muted" iconStart={<Icon name="filter_list" />} onClick={() => setLeftOpen(true)}>Filtros</Button>
+        <Demo label="Del lado izquierdo, para lo que acompaña a la navegación" note="Los filtros se eligen adentro y se aplican todos juntos con Aplicar; Limpiar los vuelve al principio." code={`<Button variant="muted" iconStart={<Icon name="filter_list" />} onClick={() => setLeftOpen(true)}>Filtros</Button>
 
 <Sheet open={leftOpen} onOpenChange={setLeftOpen} side="left" width={360}>
   <Sheet.Header><Sheet.Title>Filtros</Sheet.Title></Sheet.Header>

@@ -26,7 +26,7 @@ export function QuoteStory() {
         <Anatomy.Part name="Fuente">`Quote.Source`: de quién es la cita.</Anatomy.Part>
       </Anatomy>
       <Section title="Con la fuente declarada">
-        <Demo width="xl" fill code={`<Quote cite="https://es.wikipedia.org/wiki/Principio_de_Arquímedes">
+        <Demo note="Para traer a una consigna la definición de un libro o una ley, con la fuente a la vista para que el estudiante sepa de dónde sale." width="xl" fill code={`<Quote cite="https://es.wikipedia.org/wiki/Principio_de_Arquímedes">
   <Quote.Source>Principio de Arquímedes</Quote.Source>
   Todo cuerpo sumergido en un fluido experimenta un empuje vertical hacia arriba igual al
   peso del fluido que desaloja.

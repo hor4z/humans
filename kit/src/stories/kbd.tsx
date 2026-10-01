@@ -24,7 +24,7 @@ export function KbdStory() {
       </Anatomy>
 
       <Section title="Ejemplos">
-        <Demo label="Dónde aparece" code={`<span>Buscar una pieza <Kbd>/</Kbd></span>
+        <Demo label="Dónde aparece" note="Al final de la instrucción, después de decir qué hace: primero se lee la acción y después la tecla." code={`<span>Buscar una pieza <Kbd>/</Kbd></span>
 <span>Abrir la paleta <Kbd>⌘K</Kbd></span>
 <span>Cerrar <Kbd>Esc</Kbd></span>`}>
           <span className={cls.hint}>

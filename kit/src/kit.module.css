@@ -61,47 +61,62 @@
   }
 
   .importBlock {
-    display: inline-flex;
-    height: 2rem;
     max-width: 100%;
-    align-items: center;
-    gap: 0.5rem;
-    align-self: flex-start;
-    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border-radius: var(--radius-xl);
     border-style: solid;
     border-width: 1px;
     border-color: var(--border);
     background-color: var(--surface-muted);
-    padding-right: 0.5rem;
-    padding-left: 0.75rem;
-    text-align: left;
-    transition-property: color,background-color,border-color,outline-color,text-decoration-color,fill,stroke;
-    transition-duration: var(--duration-fast);
-    transition-timing-function: var(--ease-out);
   }
 
-  .importCode {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+  .importHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+    padding-block: var(--space-1);
+    padding-right: var(--space-1);
+    padding-left: var(--space-4);
+    box-shadow: inset 0 -1px 0 var(--border);
+  }
+
+  .importLang {
     font-family: var(--font-mono);
     font-size: var(--type-meta);
     line-height: var(--type-meta-lh);
     letter-spacing: var(--type-meta-ls);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-muted);
+  }
+
+  .importPre {
+    overflow-x: auto;
+    margin: 0;
+    padding-block: var(--space-3);
+    padding-inline: var(--space-4);
+  }
+
+  .importCode {
+    font-family: var(--font-mono);
+    font-size: var(--type-body);
+    line-height: var(--type-body-lh);
+    letter-spacing: var(--type-body-ls);
     color: var(--text);
   }
 
   .importLine {
     display: block;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    white-space: pre;
   }
 
-  .importCopyIcon {
-    flex-shrink: 0;
-    transition-property: color,background-color,border-color,outline-color,text-decoration-color,fill,stroke;
-    transition-duration: var(--duration-fast);
-    transition-timing-function: var(--ease-out);
+  .usageLead {
+    max-width: 68ch;
+    font-size: var(--type-reading);
+    line-height: var(--type-reading-lh);
+    letter-spacing: var(--type-reading-ls);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-muted);
   }
 
   .section {
@@ -725,18 +740,6 @@
     color: var(--text);
   }
 
-  @media (hover:hover) {
-    .importBlock:hover {
-        background-color: var(--surface-sunken);
-    }
-  }
-
-  @media (hover:hover) {
-    .importCopyIcon:is(:where(:global(.group)):hover *) {
-        color: var(--text);
-    }
-  }
-
   @media (min-width:40rem) {
     .headCellDefault {
         display: table-cell;
@@ -1012,9 +1015,6 @@
     }
   }
 
-  .exampleCodeOnly {
-    border-radius: var(--radius-lg);
-  }
   @media (max-width: 40rem) {
     .section { scroll-margin-top: 5rem; }
     .overview { gap: var(--space-8); }

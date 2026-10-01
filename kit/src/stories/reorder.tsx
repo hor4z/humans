@@ -45,7 +45,7 @@ export function ReorderStory() {
       </Anatomy>
 
       <Section title="Ejemplos">
-        <Demo label="Los bloques de una consigna" code={`<Reorder items={blocks} onReorder={setBlocks} label="Bloques de la consigna">
+        <Demo label="Los bloques de una consigna" note="Para ordenar los bloques de una consigna mientras se arma: lo que va primero es lo que el estudiante lee primero." code={`<Reorder items={blocks} onReorder={setBlocks} label="Bloques de la consigna">
   {block => (
     <div>
       <Icon name={block.icon} size={18} className="icon-muted" />

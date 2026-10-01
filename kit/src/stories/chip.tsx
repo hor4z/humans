@@ -117,7 +117,7 @@ export function ChipStory() {
       </Section>
 
       <Section title="Dónde va">
-        <Demo label="en la cabecera de una tarjeta" code={`<Card>
+        <Demo label="en la cabecera de una tarjeta" note="El estado de cada actividad al lado de su nombre: una grilla de tarjetas se recorre leyendo solo los chips." code={`<Card>
   <Card.Header>
     <Card.Title>Fracciones equivalentes</Card.Title>
     <Chip size="sm" color="ok" icon="check_circle">Corregida</Chip>

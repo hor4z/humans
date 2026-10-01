@@ -86,7 +86,7 @@ export function SearchStory() {
               </Field>
             </Stack>
           </Variant>
-          <Demo label="Contra una lista: filtra recién cuando dejás de escribir" width="md" code={`const [query, setQuery] = useState('')
+          <Demo label="Contra una lista: filtra recién cuando dejás de escribir" note="Va arriba de una lista que ya está en pantalla, como las actividades de un curso, para achicarla sin cambiar de página. Escribí fracciones y quedan dos." width="md" code={`const [query, setQuery] = useState('')
 const searched = useDebounce(query, 250)
 const results = activities.filter(a => a.toLowerCase().includes(searched.trim().toLowerCase()))
 

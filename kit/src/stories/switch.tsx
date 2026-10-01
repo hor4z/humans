@@ -29,6 +29,7 @@ export function SwitchStory() {
         <Demo
           fill
           label="En una fila"
+          note="Es la forma de una lista de ajustes: cada fila nombra lo que el switch prende, y la línea gris dice cuándo pasa."
           code={`<Row>
   <Row.Label>Avisos por mail</Row.Label>
   <Row.Hint>Cuando llega una entrega nueva</Row.Hint>
@@ -56,6 +57,7 @@ export function SwitchStory() {
         <Demo
           fill
           label="Apagado"
+          note="No se toca ni recibe el foco, y va en gris. Va cuando el ajuste lo decide otro, como la escuela."
           code={`<Row>
   <Row.Label>Copia al director</Row.Label>
   <Switch checked onCheckedChange={() => {}} disabled label="Copia al director" />

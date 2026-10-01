@@ -55,7 +55,7 @@ export function ListStory() {
       </Anatomy>
 
       <Section title="Elegir y navegar">
-        <Demo label="Tocá una fila para elegirla" code={`<List>
+        <Demo label="Tocá una fila para elegirla" note="Para una serie de pasos u opciones donde se elige una sola, como lo que falta para empezar a usar el aula." code={`<List>
   {onboarding.map(i => (
     <List.Item key={i.title} icon={i.icon} color={i.color} active={i.title === current} onClick={() => setCurrent(i.title)}>
       <List.Title>{i.title}</List.Title>
@@ -75,7 +75,7 @@ export function ListStory() {
           </Frame>
         </Demo>
 
-        <Demo label="Como índice: el color identifica el espacio, no el estado" code={`<List>
+        <Demo label="Como índice: el color identifica el espacio, no el estado" note="Como entrada a los espacios de un docente: el chevron dice que la fila lleva a otra pantalla, y el `List.Hint` resume qué hay adentro." code={`<List>
   {spaces.map(e => (
     <List.Item key={e.title} icon={e.icon} color={e.color} active={current === e.title} onClick={() => setCurrent(e.title)}>
       <List.Title>{e.title}</List.Title>

@@ -78,7 +78,7 @@ export function DividerStory() {
               <span className={cls.inlineCount}>18 entregas</span>
             </div>
           </Variant>
-          <Variant name="una barra" code={`<Icon name="search" size={18} className="icon-muted" />
+          <Variant name="una barra" note="En una barra de herramientas agrupa los controles: el buscador por un lado, el atajo en el medio y la cuenta al final." code={`<Icon name="search" size={18} className="icon-muted" />
 <span>Buscar</span>
 <Divider orientation="vertical" className={s.beforeShortcut} />
 <Kbd>⌘K</Kbd>

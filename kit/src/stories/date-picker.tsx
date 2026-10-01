@@ -35,7 +35,7 @@ export function DatePickerStory() {
       </Anatomy>
 
       <Section title="Ejemplos">
-        <Demo label="En un campo" code={`<Field.Set>
+        <Demo label="En un campo" note="El caso de una actividad: cuándo abre y cuándo vence, y el vencimiento no deja elegir un día antes de la apertura." code={`<Field.Set>
   <Field.Legend>Cuándo</Field.Legend>
   <Field>
     <Field.Label>Abre</Field.Label>
@@ -64,7 +64,7 @@ export function DatePickerStory() {
             </Field.Set>
           </Stack>
         </Demo>
-        <Demo label="Suelto y acotado" code={`<DatePicker value={loose} onValueChange={setLoose} label="Fecha del examen" width={260} />
+        <Demo label="Suelto y acotado" note="Suelto va donde no hay un formulario alrededor, como el filtro del calendario de un curso. Abrí el segundo para ver el mes acotado." code={`<DatePicker value={loose} onValueChange={setLoose} label="Fecha del examen" width={260} />
 <DatePicker
   value={bounded}
   onValueChange={setBounded}
@@ -76,10 +76,10 @@ export function DatePickerStory() {
           <DatePicker value={loose} onValueChange={setLoose} label="Fecha del examen" width={260} />
           <DatePicker value={bounded} onValueChange={setBounded} min={today()} label="Nueva entrega" placeholder="No se puede antes de hoy" width={260} />
         </Demo>
-        <Demo label="Apagado" code={`<DatePicker value="2026-03-09" onValueChange={setLoose} label="Fecha del examen ya tomado" width={260} disabled />`}>
+        <Demo label="Apagado" note="Para una fecha que ya no se puede cambiar, como la de un examen que ya se tomó: se lee pero no se abre." code={`<DatePicker value="2026-03-09" onValueChange={setLoose} label="Fecha del examen ya tomado" width={260} disabled />`}>
           <DatePicker value="2026-03-09" onValueChange={setLoose} label="Fecha del examen ya tomado" width={260} disabled />
         </Demo>
-        <Demo label="Con error" code={`<Field>
+        <Demo label="Con error" note="Cuando falta una fecha para poder publicar: el mensaje dice qué elegir, no que algo está mal." code={`<Field>
   <Field.Label>Vence</Field.Label>
   <DatePicker value={closes} onValueChange={setCloses} min={today()} placeholder="Sin fecha de cierre" width={260} />
   <Field.Error>Elegí hasta cuándo se puede entregar.</Field.Error>

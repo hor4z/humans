@@ -14,7 +14,7 @@ function TryLoading() {
     timer.current = setTimeout(() => setRunning(''), ms) as unknown as number
   }
   return (
-    <Demo label="Tocá los dos: uno responde enseguida y el otro tarda" code={`<Button variant="brand" iconStart={<Icon name="save" />} loading={saving} onClick={saveFast}>
+    <Demo label="Tocá los dos: uno responde enseguida y el otro tarda" note="Así se siente guardar una actividad con buena y con mala conexión: el rápido no parpadea y el lento avisa que sigue trabajando." code={`<Button variant="brand" iconStart={<Icon name="save" />} loading={saving} onClick={saveFast}>
   Guardar
 </Button>
 <Button variant="brand" iconStart={<Icon name="save" />} loading={saving} onClick={saveSlow}>
@@ -85,15 +85,15 @@ export function ButtonStory() {
 
       <Section title="Con icono, ancho completo y deshabilitado">
         <Grid>
-          <Demo label="Iconos" code={`<Button variant="muted" iconStart={<Icon name="folder" />}>Nuevo espacio</Button>
+          <Demo label="Iconos" note="El glifo al comienzo nombra la cosa, como una carpeta para un espacio; la flecha al final dice que hay un paso siguiente." code={`<Button variant="muted" iconStart={<Icon name="folder" />}>Nuevo espacio</Button>
 <Button variant="muted" iconEnd={<Icon name="chevron_right" />}>Siguiente</Button>`}>
             <Button variant="muted" iconStart={<Icon name="folder" />}>Nuevo espacio</Button>
             <Button variant="muted" iconEnd={<Icon name="chevron_right" />}>Siguiente</Button>
           </Demo>
-          <Demo label="Apagado" code={`<Button variant="brand" disabled>Guardar</Button>`}>
+          <Demo label="Apagado" note="Para una acción que todavía no se puede hacer, como guardar sin cambios. Si falta completar algo, decilo cerca: el gris solo no explica por qué." code={`<Button variant="brand" disabled>Guardar</Button>`}>
             <Button variant="brand" disabled>Guardar</Button>
           </Demo>
-          <Demo label="Ocupando el ancho" code={`<Button variant="brand" block>Entrar</Button>`}>
+          <Demo label="Ocupando el ancho" note="Llena su contenedor: va en una pantalla angosta o en un formulario corto, como el de entrar." code={`<Button variant="brand" block>Entrar</Button>`}>
             <Button variant="brand" block>Entrar</Button>
           </Demo>
         </Grid>

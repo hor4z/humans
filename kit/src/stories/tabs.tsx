@@ -40,7 +40,7 @@ export function TabsStory() {
       </Anatomy>
 
       <Section title="Ejemplos">
-        <Demo fill label="Cómo se arma" code={`<Tabs defaultValue="entregas">
+        <Demo fill label="Cómo se arma" note="Las secciones de una actividad, que se miran de a una y en cualquier orden." code={`<Tabs defaultValue="entregas">
   <Tabs.List label="Secciones de la actividad">
     <Tabs.Tab value="entregas">Entregas</Tabs.Tab>
     <Tabs.Tab value="rubrica">Rúbrica</Tabs.Tab>
@@ -73,7 +73,7 @@ export function TabsStory() {
             </Tabs.Panel>
           </Tabs>
         </Demo>
-        <Demo fill label="Controlado: la decide la pantalla" code={`<Tabs value={range} onValueChange={setRange}>
+        <Demo fill label="Controlado: la decide la pantalla" note="La pantalla tiene el rango en su estado: con él pide los datos de ese período, o lo guarda si tiene que recordarlo para la próxima vez." code={`<Tabs value={range} onValueChange={setRange}>
   <Tabs.List label="Rango del panel">
     <Tabs.Tab value="semana">Esta semana</Tabs.Tab>
     <Tabs.Tab value="mes">Este mes</Tabs.Tab>

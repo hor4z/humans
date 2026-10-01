@@ -34,7 +34,7 @@ export function NumberAnswerStory() {
       <Section title="Calculando y corrigiendo">
         <Panel>
           <Variant
-            name="antes y después"
+            name="antes y después" note="Escribí un número y tocá Corregir para ver lo que recibe el estudiante cuando le devolvés la actividad."
             code={`<NumberAnswer
   value={value}
   onValueChange={setValue}

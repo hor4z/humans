@@ -43,7 +43,7 @@ export function ConfirmStory() {
 
       <Section title="Ejemplos">
         <Grid min={300}>
-          <Demo label='tone="bad"' code={`<Button variant="bad" iconStart={<Icon name="delete" />} onClick={() => setOpen(true)}>Borrar la actividad</Button>
+          <Demo label='tone="bad"' note="Para borrar algo que se lleva trabajo de los estudiantes con él, como las entregas de una actividad." code={`<Button variant="bad" iconStart={<Icon name="delete" />} onClick={() => setOpen(true)}>Borrar la actividad</Button>
 <ConfirmDialog open={open} onOpenChange={setOpen} onConfirm={remove} tone="bad">
   <ConfirmDialog.Header>
     <ConfirmDialog.Title>¿Borrar "Fracciones equivalentes"?</ConfirmDialog.Title>
@@ -79,7 +79,7 @@ export function ConfirmStory() {
             </ConfirmDialog>
           </Demo>
 
-          <Demo label='tone="neutral"' code={`<Button variant="brand" iconStart={<Icon name="send" />} onClick={() => setOpen(true)}>Publicar sin fecha</Button>
+          <Demo label='tone="neutral"' note="Para una decisión que cambia cómo sigue la actividad pero no borra nada, como publicarla sin fecha de cierre." code={`<Button variant="brand" iconStart={<Icon name="send" />} onClick={() => setOpen(true)}>Publicar sin fecha</Button>
 <ConfirmDialog open={open} onOpenChange={setOpen} onConfirm={publish}>
   <ConfirmDialog.Header>
     <ConfirmDialog.Title>¿Publicar sin fecha de cierre?</ConfirmDialog.Title>

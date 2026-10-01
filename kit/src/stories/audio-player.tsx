@@ -58,14 +58,14 @@ export function AudioPlayerStory() {
       </Anatomy>
 
       <Section title="Talles y acciones">
-        <Demo label="Los tres talles" width="lg" fill code={`<AudioPlayer src="/audio/consigna.mp3" peaks={peaks} size="sm" />
+        <Demo label="Los tres talles" note="`sm` en una lista de devoluciones, `md` en una consigna y `lg` cuando el audio es lo principal de la pantalla." width="lg" fill code={`<AudioPlayer src="/audio/consigna.mp3" peaks={peaks} size="sm" />
 <AudioPlayer src="/audio/consigna.mp3" peaks={peaks} />
 <AudioPlayer src="/audio/consigna.mp3" peaks={peaks} size="lg" />`}>
           <AudioPlayer src={AUDIO} peaks={peaks} size="sm" />
           <AudioPlayer src={AUDIO} peaks={peaks} />
           <AudioPlayer src={AUDIO} peaks={peaks} size="lg" />
         </Demo>
-        <Demo label="Con una acción al costado" width="lg" fill code={`function downloadAudio() {
+        <Demo label="Con una acción al costado" note="Para una devolución que el estudiante se quiere guardar: un botón chico de descarga al costado, con su `Tooltip`." width="lg" fill code={`function downloadAudio() {
   const link = document.createElement('a')
   link.href = '/audio/consigna.mp3'
   link.download = 'consigna.mp3'
@@ -90,12 +90,12 @@ export function AudioPlayerStory() {
       </Section>
 
       <Section title="Comportamiento">
-        <Demo label="Uno por vez: arrancar el segundo pausa el primero" width="lg" fill code={`<AudioPlayer src="/audio/consigna.mp3" title="Devolución para Ana Pérez" peaks={peaks} size="sm" />
+        <Demo label="Uno por vez: arrancar el segundo pausa el primero" note="Dale play a uno y después al otro: en una lista de devoluciones nunca suenan dos a la vez." width="lg" fill code={`<AudioPlayer src="/audio/consigna.mp3" title="Devolución para Ana Pérez" peaks={peaks} size="sm" />
 <AudioPlayer src="/audio/explicacion.mp3" title="Devolución para Bruno Díaz" peaks={longPeaks} size="sm" />`}>
           <AudioPlayer src={AUDIO} title="Devolución para Ana Pérez" peaks={peaks} size="sm" />
           <AudioPlayer src={LONG} title="Devolución para Bruno Díaz" peaks={longPeaks} size="sm" />
         </Demo>
-        <Demo label="Si falla la carga, explica qué pasó y permite reintentar" width="lg" fill code={`<AudioPlayer src="/audio/no-existe.mp3" title="Consigna · Matemática 4.º A" />`}>
+        <Demo label="Si falla la carga, explica qué pasó y permite reintentar" note="Este apunta a un archivo que no existe, como pasa con un audio que se borró: el resto de la consigna sigue a la vista." width="lg" fill code={`<AudioPlayer src="/audio/no-existe.mp3" title="Consigna · Matemática 4.º A" />`}>
           <AudioPlayer src="/audio/no-existe.mp3" title="Consigna · Matemática 4.º A" />
         </Demo>
       </Section>

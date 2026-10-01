@@ -152,7 +152,7 @@ export function TableStory() {
     </Anatomy>
 
     <Section title="Componer una tabla" note="La presentación y los datos son independientes. Usá las piezas que necesite cada pantalla.">
-      <Demo label="Estructura mínima" fill code={`<Table label="Actividades" minWidth={480}>
+      <Demo label="Estructura mínima" note="Alcanza para una lista corta que se lee de un vistazo, sin búsqueda ni filtros, como las entregas de una actividad." fill code={`<Table label="Actividades" minWidth={480}>
   <Table.Header><Table.Row>
     <Table.Head>Actividad</Table.Head>
     <Table.Head align="right">Entregas</Table.Head>
@@ -165,7 +165,7 @@ export function TableStory() {
 </Table>`}>
         <Table label="Ejemplo de estructura" minWidth={300}><Table.Header><Table.Row><Table.Head>Actividad</Table.Head><Table.Head align="right">Entregas</Table.Head></Table.Row></Table.Header><Table.Body><Table.Row><Table.Cell><Table.Title>Fracciones equivalentes</Table.Title><Table.Hint>Matemática · 4.º A</Table.Hint></Table.Cell><Table.Num>18</Table.Num></Table.Row></Table.Body></Table>
       </Demo>
-      <Demo label="Datos, filtros y columnas" fill code={`import { useState } from 'react'
+      <Demo label="Datos, filtros y columnas" note="Copialo como punto de partida para una lista que se busca y se filtra, como las actividades de todos tus cursos." fill code={`import { useState } from 'react'
 import { useTable } from '@humans/ui/lib/use-table'
 import { Table } from '@humans/ui/table'
 import { Filter } from '@humans/ui/filter'
