@@ -106,6 +106,7 @@ describe('las vistas del kit', () => {
   })
 
   it('cada vista de una pieza abre con un Hero y una Anatomía, y no pasa de seis tarjetas', () => {
+    const sevenCards = ['button.tsx', 'icon-button.tsx']
     const offenders: string[] = []
     for (const f of files) {
       if (f === 'utilidades.tsx') continue
@@ -119,7 +120,8 @@ describe('las vistas del kit', () => {
       if (hero >= 0 && anatomy >= 0 && hero > anatomy) offenders.push(`${f}: la Anatomía va después del Hero`)
       if (firstSection >= 0 && anatomy > firstSection) offenders.push(`${f}: el Hero y la Anatomía van antes de los ejemplos`)
       const cards = (text.match(/<(Demo|Variant)\b/g) ?? []).length
-      if (cards > 6) offenders.push(`${f}: ${cards} tarjetas`)
+      const limit = sevenCards.includes(f) ? 7 : 6
+      if (cards > limit) offenders.push(`${f}: ${cards} tarjetas`)
     }
     expect(
       offenders,

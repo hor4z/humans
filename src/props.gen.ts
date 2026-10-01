@@ -457,7 +457,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "name": "label",
         "type": "string",
         "required": false,
-        "doc": "Al aria-label; si va dentro de un <label>, se omite."
+        "doc": "Al `aria-label`, para cuando no hay texto que se vea. Con hijos sobra."
       },
       {
         "name": "disabled",
@@ -483,6 +483,12 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "required": false,
         "def": "'md'",
         "doc": "16 · 20 · 24: el interlineado del texto de al lado."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "doc": "El texto que se ve al lado. La casilla lo envuelve en su `<label>` y se centra contra el primer renglón."
       }
     ],
     "doc": "La caja mide el interlineado del texto que acompaña: 16 · 20 · 24. Se toca en 24 como mínimo, que es lo que pide WCAG 2.2, sin mover el renglón."
@@ -736,51 +742,6 @@ export const propsByComponent: Record<string, ComponentDoc> = {
       }
     ],
     "doc": "Una de las opciones que se ofrecen."
-  },
-  "Collapsible": {
-    "props": [
-      {
-        "name": "open",
-        "type": "boolean",
-        "required": true,
-        "doc": "Si se ve."
-      },
-      {
-        "name": "id",
-        "type": "string",
-        "required": false,
-        "doc": "El id que nombra el `aria-controls` del botón que lo abre."
-      },
-      {
-        "name": "className",
-        "type": "string",
-        "required": false
-      },
-      {
-        "name": "children",
-        "type": "ReactNode",
-        "required": true
-      }
-    ],
-    "doc": "Un cuerpo plegable con su flecha. El botón lo pone quien lo usa, porque cada uno lo dibuja distinto."
-  },
-  "Collapsible.Chevron": {
-    "props": [
-      {
-        "name": "open",
-        "type": "boolean",
-        "required": true,
-        "doc": "Si lo que abre está abierto."
-      },
-      {
-        "name": "size",
-        "type": "16 | 20 | 24",
-        "required": false,
-        "def": "20",
-        "doc": "16 · 20 · 24, como todo icono."
-      }
-    ],
-    "doc": "La flecha del botón que abre: hacia la derecha cerrado, hacia abajo abierto."
   },
   "CommandMenu": {
     "props": [
@@ -2402,7 +2363,7 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "name": "label",
         "type": "string",
         "required": false,
-        "doc": "Va al `aria-label`."
+        "doc": "Va al `aria-label`, para cuando no hay texto que se vea. Con hijos sobra."
       },
       {
         "name": "disabled",
@@ -2434,6 +2395,12 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "required": false,
         "def": "'md'",
         "doc": "16 · 20 · 24: el interlineado del texto de al lado."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "doc": "El texto que se ve al lado. El radio lo envuelve en su `<label>` y se centra contra el primer renglón."
       }
     ],
     "doc": "La elección de una entre varias."
@@ -3274,6 +3241,12 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "type": "string",
         "required": false,
         "doc": "Para atarlo a una etiqueta de afuera. Adentro de un `Field` lo toma solo."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "doc": "El texto que se ve al lado. El switch lo envuelve en su `<label>` y se centra contra el primer renglón."
       }
     ],
     "doc": "El switch: pista de 40×24 con 3 de padding, así que el pulgar es de 18 y viaja 16. Mide 24 de alto porque es el mínimo de WCAG 2.2 para lo que se toca."

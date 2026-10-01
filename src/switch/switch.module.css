@@ -22,6 +22,10 @@
     }
   }
 
+  .inLabel {
+    margin-block: calc((var(--type-body-lh) - 24px) / 2);
+  }
+
   .thumb {
     width: 18px;
     height: 18px;

@@ -1,6 +1,6 @@
 import s from './self-assessment.module.css'
 import { useId, useState, type ReactNode } from 'react'
-import { Collapsible } from '../../../collapsible/collapsible'
+import { Collapsible } from '../../lib/collapsible'
 import { CriterionCard, namesFor, type Criterion } from '../criterion-card/criterion-card'
 import { Progress } from '../../../progress/progress'
 import { cx } from '../../../lib/cx'

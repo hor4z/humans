@@ -15,7 +15,7 @@ export function pieces(src) {
   }
   for (const name of dirs(src)) if (!skip.has(name)) add(join(src, name), name, name, 'base')
   const blocks = join(src, 'blocks')
-  for (const family of dirs(blocks)) {
+  for (const family of families(src)) {
     for (const name of dirs(join(blocks, family))) add(join(blocks, family, name), name, `blocks/${family}/${name}`, 'blocks', family)
   }
   return out
@@ -23,7 +23,7 @@ export function pieces(src) {
 
 /** Las familias de bloques, en el orden de la carpeta. */
 export function families(src) {
-  return dirs(join(src, 'blocks'))
+  return dirs(join(src, 'blocks')).filter(f => f !== 'lib')
 }
 
 /** Las piezas del sitio que no son del paquete, en `kit/src/demo/<pieza>`. */

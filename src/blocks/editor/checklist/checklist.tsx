@@ -1,6 +1,6 @@
 import s from './checklist.module.css'
 import { Children, cloneElement, isValidElement, useId, useState, type ReactElement, type ReactNode } from 'react'
-import { Collapsible } from '../../../collapsible/collapsible'
+import { Collapsible } from '../../lib/collapsible'
 import { Icon } from '../../../icon/icon'
 import { Progress } from '../../../progress/progress'
 import { Spinner } from '../../../spinner/spinner'

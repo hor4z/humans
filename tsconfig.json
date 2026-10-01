@@ -42,9 +42,6 @@
       "@humans/ui/chip": [
         "./src/chip/chip.tsx"
       ],
-      "@humans/ui/collapsible": [
-        "./src/collapsible/collapsible.tsx"
-      ],
       "@humans/ui/confirm-dialog": [
         "./src/confirm-dialog/confirm-dialog.tsx"
       ],

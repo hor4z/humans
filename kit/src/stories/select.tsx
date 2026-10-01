@@ -51,19 +51,24 @@ export function SelectStory() {
       <Section title="Variantes">
         <Panel>
           <Variant
-            name="ancho fijo, al contenido y valor largo"
-            note="Probalo con el teclado: abrí el de las materias y escribí 'ci'. Sin `width` toma el ancho del contenido, y un valor más largo que el ancho se trunca."
+            name="ancho fijo o al contenido"
+            note="Con `width` mide eso; sin `width` toma el ancho del contenido. Probalo con el teclado: abrí el de las materias y escribí 'ci'."
             code={`<Select value={level} onValueChange={setLevel} width={160} options={['4.º grado', '5.º grado', '6.º grado', '7.º grado']} />
-<Select value={subject} onValueChange={setSubject} options={['Matemática', 'Lengua', 'Ciencias', 'Geografía', 'Convivencia']} />
-<Select
+<Select value={subject} onValueChange={setSubject} options={['Matemática', 'Lengua', 'Ciencias', 'Geografía', 'Convivencia']} />`}
+          >
+            <Select value={level} onValueChange={setLevel} width={160} options={['4.º grado', '5.º grado', '6.º grado', '7.º grado']} />
+            <Select value={subject} onValueChange={setSubject} options={['Matemática', 'Lengua', 'Ciencias', 'Geografía', 'Convivencia']} />
+          </Variant>
+          <Variant
+            name="valor largo"
+            note="Un valor más largo que el ancho se trunca: el botón no crece ni empuja lo que tiene al lado."
+            code={`<Select
   value={long}
   onValueChange={setLong}
   width={280}
   options={['Solo yo', 'Todo el equipo', 'Cualquiera con el link puede ver y comentar']}
 />`}
           >
-            <Select value={level} onValueChange={setLevel} width={160} options={['4.º grado', '5.º grado', '6.º grado', '7.º grado']} />
-            <Select value={subject} onValueChange={setSubject} options={['Matemática', 'Lengua', 'Ciencias', 'Geografía', 'Convivencia']} />
             <Select
               value={long}
               onValueChange={setLong}

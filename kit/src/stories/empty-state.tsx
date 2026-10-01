@@ -37,9 +37,9 @@ export function EmptyStateStory() {
   <EmptyState.Action><Button variant="brand" onClick={() => { window.location.hash = 'documento' }}>Crear una actividad</Button></EmptyState.Action>
 </EmptyState>
 <EmptyState size="sm" icon="search_off">
-  <EmptyState.Title>Ninguna actividad con eso</EmptyState.Title>
-  <EmptyState.Body>Probá con otras palabras, o sacá alguno de los filtros puestos.</EmptyState.Body>
-  <EmptyState.Action><Filter.Reset onClick={clearFilters}>Limpiar los filtros</Filter.Reset></EmptyState.Action>
+  <EmptyState.Title>No hay actividades con esos filtros</EmptyState.Title>
+  <EmptyState.Body>Probá con otras palabras o quitá los filtros.</EmptyState.Body>
+  <EmptyState.Action><Filter.Reset onClick={() => setFiltered(false)}>Limpiar filtros</Filter.Reset></EmptyState.Action>
 </EmptyState>`}>
           <Stack gap="lg">
             <EmptyState icon="inbox">
@@ -57,28 +57,28 @@ export function EmptyStateStory() {
           </Stack>
         </Demo>
 
-        <Demo label="Sin caja, adentro de una tarjeta, y sin icono" code={`<EmptyState bordered={false} icon="folder_open">
+        <Demo label="Sin caja, adentro de una tarjeta" code={`<EmptyState bordered={false} icon="folder_open">
   <EmptyState.Title>Este espacio está vacío</EmptyState.Title>
   <EmptyState.Body>Todavía no hay actividades acá.</EmptyState.Body>
-</EmptyState>
-<EmptyState>
+</EmptyState>`}>
+          <div className={`${cls.raisedBox} bg-surface`}>
+            <EmptyState bordered={false} icon="folder_open">
+              <EmptyState.Title>Este espacio está vacío</EmptyState.Title>
+              <EmptyState.Body>Todavía no hay actividades acá.</EmptyState.Body>
+            </EmptyState>
+          </div>
+        </Demo>
+
+        <Demo label="Sin icono" code={`<EmptyState>
   <EmptyState.Title>Acá no hay nada</EmptyState.Title>
   <EmptyState.Body>La dirección existe pero no lleva a ninguna pantalla.</EmptyState.Body>
   <EmptyState.Action><Button variant="muted" onClick={() => { window.location.hash = 'intro' }}>Volver al inicio</Button></EmptyState.Action>
 </EmptyState>`}>
-          <Stack gap="lg">
-            <div className={`${cls.raisedBox} bg-surface`}>
-              <EmptyState bordered={false} icon="folder_open">
-                <EmptyState.Title>Este espacio está vacío</EmptyState.Title>
-                <EmptyState.Body>Todavía no hay actividades acá.</EmptyState.Body>
-              </EmptyState>
-            </div>
-            <EmptyState>
-              <EmptyState.Title>Acá no hay nada</EmptyState.Title>
-              <EmptyState.Body>La dirección existe pero no lleva a ninguna pantalla.</EmptyState.Body>
-              <EmptyState.Action><Button variant="muted" onClick={() => { window.location.hash = 'intro' }}>Volver al inicio</Button></EmptyState.Action>
-            </EmptyState>
-          </Stack>
+          <EmptyState>
+            <EmptyState.Title>Acá no hay nada</EmptyState.Title>
+            <EmptyState.Body>La dirección existe pero no lleva a ninguna pantalla.</EmptyState.Body>
+            <EmptyState.Action><Button variant="muted" onClick={() => { window.location.hash = 'intro' }}>Volver al inicio</Button></EmptyState.Action>
+          </EmptyState>
         </Demo>
       </Section>
 

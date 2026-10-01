@@ -63,8 +63,8 @@ export function DropdownStory() {
 <Dropdown
   label="Más opciones"
   items={[
-    { label: 'Duplicar', icon: 'content_copy', onSelect: duplicate },
-    { label: 'Eliminar', icon: 'delete', danger: true, onSelect: remove },
+    { label: 'Duplicar', icon: 'content_copy', onSelect: () => {} },
+    { label: 'Eliminar', icon: 'delete', danger: true, onSelect: () => {} },
   ]}
   trigger={props => <IconButton {...props} icon="more_horiz" label="Más opciones" />}
 />`}
@@ -91,16 +91,15 @@ export function DropdownStory() {
             />
           </Variant>
           <Variant
-            name="con atajos y una peligrosa"
-            note="Un glifo adelante, el atajo de teclado a la derecha y el rojo de lo que no se deshace."
+            name="con atajos"
+            note="Poné el atajo solo en la opción que lo tiene de verdad: va a la derecha, para quien prefiere el teclado."
             code={`<Dropdown
   align="start"
   width={240}
   items={[
     { label: 'Duplicar', icon: 'content_copy', shortcut: '⌘D' },
     { label: 'Descargar', icon: 'download', shortcut: '⌘S' },
-    { label: 'Archivar', icon: 'inventory_2', disabled: true },
-    { label: 'Borrar', icon: 'delete', danger: true },
+    { label: 'Compartir', icon: 'share' },
   ]}
   trigger={props => (
     <Button {...props} variant="muted" iconStart={<Icon name="more_horiz" />}>Acciones</Button>
@@ -113,8 +112,61 @@ export function DropdownStory() {
               items={[
                 { label: 'Duplicar', icon: 'content_copy', shortcut: '⌘D' },
                 { label: 'Descargar', icon: 'download', shortcut: '⌘S' },
-                { label: 'Archivar', icon: 'inventory_2', disabled: true },
+                { label: 'Compartir', icon: 'share' },
+              ]}
+              trigger={props => (
+                <Button {...props} variant="muted" iconStart={<Icon name="more_horiz" />}>Acciones</Button>
+              )}
+            />
+          </Variant>
+          <Variant
+            name="una peligrosa"
+            note="El rojo es para la opción que no se deshace, y para ninguna otra."
+            code={`<Dropdown
+  align="start"
+  width={220}
+  items={[
+    { label: 'Duplicar', icon: 'content_copy' },
+    { label: 'Borrar', icon: 'delete', danger: true },
+  ]}
+  trigger={props => (
+    <Button {...props} variant="muted" iconStart={<Icon name="more_horiz" />}>Acciones</Button>
+  )}
+/>`}
+          >
+            <Dropdown
+              align="start"
+              width={220}
+              items={[
+                { label: 'Duplicar', icon: 'content_copy' },
                 { label: 'Borrar', icon: 'delete', danger: true },
+              ]}
+              trigger={props => (
+                <Button {...props} variant="muted" iconStart={<Icon name="more_horiz" />}>Acciones</Button>
+              )}
+            />
+          </Variant>
+          <Variant
+            name="una apagada"
+            note="Lo que hoy no se puede hacer queda en la lista, apagado, para que se sepa que existe."
+            code={`<Dropdown
+  align="start"
+  width={220}
+  items={[
+    { label: 'Duplicar', icon: 'content_copy' },
+    { label: 'Archivar', icon: 'inventory_2', disabled: true },
+  ]}
+  trigger={props => (
+    <Button {...props} variant="muted" iconStart={<Icon name="more_horiz" />}>Acciones</Button>
+  )}
+/>`}
+          >
+            <Dropdown
+              align="start"
+              width={220}
+              items={[
+                { label: 'Duplicar', icon: 'content_copy' },
+                { label: 'Archivar', icon: 'inventory_2', disabled: true },
               ]}
               trigger={props => (
                 <Button {...props} variant="muted" iconStart={<Icon name="more_horiz" />}>Acciones</Button>

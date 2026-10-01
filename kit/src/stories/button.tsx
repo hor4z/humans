@@ -85,11 +85,12 @@ export function ButtonStory() {
 
       <Section title="Con icono, ancho completo y deshabilitado">
         <Grid>
-          <Demo label="Iconos y deshabilitado" code={`<Button variant="muted" iconStart={<Icon name="folder" />}>Nuevo espacio</Button>
-<Button variant="muted" iconEnd={<Icon name="chevron_right" />}>Siguiente</Button>
-<Button variant="brand" disabled>Guardar</Button>`}>
+          <Demo label="Iconos" code={`<Button variant="muted" iconStart={<Icon name="folder" />}>Nuevo espacio</Button>
+<Button variant="muted" iconEnd={<Icon name="chevron_right" />}>Siguiente</Button>`}>
             <Button variant="muted" iconStart={<Icon name="folder" />}>Nuevo espacio</Button>
             <Button variant="muted" iconEnd={<Icon name="chevron_right" />}>Siguiente</Button>
+          </Demo>
+          <Demo label="Apagado" code={`<Button variant="brand" disabled>Guardar</Button>`}>
             <Button variant="brand" disabled>Guardar</Button>
           </Demo>
           <Demo label="Ocupando el ancho" code={`<Button variant="brand" block>Entrar</Button>`}>

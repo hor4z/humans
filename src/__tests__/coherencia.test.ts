@@ -144,6 +144,7 @@ describe('coherencia del sistema', () => {
 
       if (parts.length === 1) { if (!loose.has(parts[0].replace(/\.tsx?$/, ''))) unreachable.push(who); continue }
       if (parts[0] === 'lib') { if (!exports['./lib/*']) unreachable.push(who); continue }
+      if (parts[0] === 'blocks' && parts[1] === 'lib') continue
       const [folder, file] = parts.slice(-2)
       const family = parts[0] === 'blocks' && parts.length === 4 ? parts[1] : undefined
       if (parts[0] === 'blocks' && (!family || !exports[`./blocks/${family}/*`])) { unreachable.push(who); continue }
