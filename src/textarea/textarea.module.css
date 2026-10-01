@@ -20,12 +20,6 @@
     background-color: var(--field-bg);
   }
 
-  .disabled {
-    &:has(:is(textarea:disabled)) {
-      pointer-events: none;
-      opacity: .45;
-    }
-  }
 
   .shape {
     border-radius: var(--radius-lg);

@@ -1,5 +1,6 @@
 import { act, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { Field } from '../field/field'
 import { describe, expect, it, vi } from 'vitest'
 import { Select } from './select'
 
@@ -93,5 +94,25 @@ describe('Select', () => {
     const list = screen.getByRole('listbox')
     await act(async () => { list.dispatchEvent(new Event('scroll', { bubbles: true })) })
     expect(screen.getByRole('listbox')).toBeInTheDocument()
+  })
+
+  it('apagado no abre ni recibe el foco', async () => {
+    render(<Select value="Uno" onValueChange={() => {}} options={['Uno', 'Dos']} disabled />)
+    const trigger = screen.getByRole('button', { name: /Uno/ })
+    expect(trigger).toBeDisabled()
+    await userEvent.click(trigger)
+    expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
+  })
+
+  it('con un error en el Field queda marcado como inválido', () => {
+    render(
+      <Field>
+        <Field.Label>Curso</Field.Label>
+        <Select value="Uno" onValueChange={() => {}} options={['Uno', 'Dos']} />
+        <Field.Error>Elegí un curso.</Field.Error>
+      </Field>,
+    )
+    expect(screen.getByRole('button', { name: 'Curso' })).toHaveAttribute('aria-invalid', 'true')
+    expect(screen.getByRole('button', { name: 'Curso' })).toHaveAccessibleDescription(/Elegí un curso/)
   })
 })

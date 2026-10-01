@@ -29,7 +29,7 @@ export function SwitchStory() {
       <Section title="Ejemplos">
         <Demo
           fill
-          label="En una fila, y deshabilitado"
+          label="En una fila"
           code={`<Row>
   <Row.Label>Avisos por mail</Row.Label>
   <Row.Hint>Cuando llega una entrega nueva</Row.Hint>
@@ -39,10 +39,6 @@ export function SwitchStory() {
   <Row.Label>Entregas fuera de fecha</Row.Label>
   <Row.Hint>Después del cierre</Row.Hint>
   <Switch checked={off} onCheckedChange={setOff} label="Entregas fuera de fecha" />
-</Row>
-<Row>
-  <Row.Label>Copia al director</Row.Label>
-  <Switch checked onCheckedChange={toggle} disabled label="Copia al director" />
 </Row>`}
         >
           <div className={`${cls.rowBox} bg-surface`}>
@@ -56,6 +52,17 @@ export function SwitchStory() {
               <Row.Hint>Después del cierre</Row.Hint>
               <Switch checked={off} onCheckedChange={setOff} label="Entregas fuera de fecha" />
             </Row>
+          </div>
+        </Demo>
+        <Demo
+          fill
+          label="Apagado"
+          code={`<Row>
+  <Row.Label>Copia al director</Row.Label>
+  <Switch checked onCheckedChange={() => {}} disabled label="Copia al director" />
+</Row>`}
+        >
+          <div className={`${cls.rowBox} bg-surface`}>
             <Row>
               <Row.Label>Copia al director</Row.Label>
               <Switch checked onCheckedChange={() => {}} disabled label="Copia al director" />

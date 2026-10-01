@@ -476,9 +476,16 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "type": "boolean",
         "required": false,
         "doc": "Pinta la raya y manda aria-checked=\"mixed\"."
+      },
+      {
+        "name": "size",
+        "type": "'sm' | 'md' | 'lg'",
+        "required": false,
+        "def": "'md'",
+        "doc": "16 · 20 · 24: el interlineado del texto de al lado."
       }
     ],
-    "doc": "La caja de 18, la misma medida del pulgar del switch, así una fila con los dos no tiene dos tamaños de \"marca\". Se toca en 24, que es el mínimo de WCAG 2.2, sin mover el renglón."
+    "doc": "La caja mide el interlineado del texto que acompaña: 16 · 20 · 24. Se toca en 24 como mínimo, que es lo que pide WCAG 2.2, sin mover el renglón."
   },
   "Checklist": {
     "props": [
@@ -1173,6 +1180,12 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "type": "number",
         "required": false,
         "doc": "Sin esto toma el ancho del contenido."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "doc": "Apagado no abre ni recibe el foco."
       }
     ],
     "doc": "Elegir una fecha: un campo que abre un mes."
@@ -1187,13 +1200,26 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "doc": "El vertical se estira solo: en una fila que centra a sus hijos mediría cero."
       },
       {
+        "name": "align",
+        "type": "'center' | 'start'",
+        "required": false,
+        "def": "'center'",
+        "doc": "Dónde va el texto: al medio, con línea a los dos lados, o al principio, con la línea después."
+      },
+      {
         "name": "className",
         "type": "string",
         "required": false,
         "doc": "Para el margen, que depende de dónde esté."
+      },
+      {
+        "name": "children",
+        "type": "ReactNode",
+        "required": false,
+        "doc": "El texto que corta la línea: \"o\", \"Hoy\", el nombre de un grupo. Solo en horizontal."
       }
     ],
-    "doc": "La línea que separa."
+    "doc": "La línea que separa. Con texto, el texto se lee y la línea lo acompaña: un lector anuncia el corte y después lo que dice."
   },
   "Dropdown": {
     "props": [
@@ -1982,104 +2008,6 @@ export const propsByComponent: Record<string, ComponentDoc> = {
     "html": "div",
     "doc": "La fila de acciones, contra el borde derecho."
   },
-  "Nav": {
-    "props": [
-      {
-        "name": "label",
-        "type": "string",
-        "required": true,
-        "doc": "Va al `aria-label`: con dos navegaciones en la página, es lo que las distingue."
-      }
-    ],
-    "html": "nav",
-    "doc": "La navegación de una app: el riel y sus items."
-  },
-  "Nav.Item": {
-    "props": [
-      {
-        "name": "current",
-        "type": "boolean",
-        "required": false,
-        "doc": "Dónde estás parado: la barra de la izquierda y el `aria-current`."
-      },
-      {
-        "name": "collapsed",
-        "type": "boolean",
-        "required": false,
-        "doc": "El riel de 72: queda el icono y nada más."
-      },
-      {
-        "name": "muted",
-        "type": "boolean",
-        "required": false,
-        "doc": "El caso aparte que sí se apaga, como un item que todavía no se puede abrir."
-      }
-    ],
-    "doc": "Un item del riel. Es un botón; para un link de router van `Nav.itemClass` y `Nav.Body`."
-  },
-  "Nav.SubItem": {
-    "props": [],
-    "html": "button",
-    "doc": "Un subitem, debajo de su padre."
-  },
-  "Nav.Body": {
-    "props": [
-      {
-        "name": "icon",
-        "type": "IconName",
-        "required": false,
-        "doc": "El glifo del set; para uno propio va `glyph`."
-      },
-      {
-        "name": "glyph",
-        "type": "ReactNode",
-        "required": false,
-        "doc": "Para cuando el glifo no sale del set: la carpeta de color de un espacio."
-      },
-      {
-        "name": "badge",
-        "type": "string",
-        "required": false,
-        "doc": "Hundido como un kbd: un contador no es accionable."
-      },
-      {
-        "name": "collapsed",
-        "type": "boolean",
-        "required": false,
-        "doc": "El riel de 72: queda el icono y nada más."
-      },
-      {
-        "name": "children",
-        "type": "ReactNode",
-        "required": true,
-        "doc": "El texto del item, que se esconde al contraerse."
-      }
-    ],
-    "doc": "Lo de adentro del item: el glifo, el texto y el contador."
-  },
-  "Nav.itemClass": {
-    "props": [
-      {
-        "name": "current",
-        "type": "boolean",
-        "required": false,
-        "doc": "Dónde estás parado: la barra de la izquierda y el `aria-current`."
-      },
-      {
-        "name": "collapsed",
-        "type": "boolean",
-        "required": false,
-        "doc": "El riel de 72: queda el icono y nada más."
-      },
-      {
-        "name": "muted",
-        "type": "boolean",
-        "required": false,
-        "doc": "El caso aparte que sí se apaga, como un item que todavía no se puede abrir."
-      }
-    ],
-    "doc": "Las clases del item, para quien lo dibuja con su propio elemento: el `NavLink` de un router."
-  },
   "NumberAnswer": {
     "props": [
       {
@@ -2499,6 +2427,13 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "type": "Ref<HTMLButtonElement>",
         "required": false,
         "doc": "Lo usa `Group` para mover el foco con las flechas."
+      },
+      {
+        "name": "size",
+        "type": "'sm' | 'md' | 'lg'",
+        "required": false,
+        "def": "'md'",
+        "doc": "16 · 20 · 24: el interlineado del texto de al lado."
       }
     ],
     "doc": "La elección de una entre varias."
@@ -2528,6 +2463,18 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "type": "string",
         "required": false,
         "doc": "Al aria-label del grupo."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "doc": "Apaga todas las opciones juntas."
+      },
+      {
+        "name": "size",
+        "type": "'sm' | 'md' | 'lg'",
+        "required": false,
+        "doc": "El de cada radio."
       },
       {
         "name": "className",
@@ -2889,6 +2836,12 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "type": "string",
         "required": false,
         "doc": "Cómo se llama el grupo. Adentro de un `Field` lo toma de la etiqueta."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "doc": "Apaga todas las opciones juntas."
       }
     ],
     "doc": "Un solo segmented para todo: el de texto (\"Todas · Abiertas\") y el de iconos (grilla · lista) son el mismo componente con distintas opciones."
@@ -2937,6 +2890,12 @@ export const propsByComponent: Record<string, ComponentDoc> = {
         "type": "boolean",
         "required": false,
         "doc": "Mientras los datos no están: no abre, y el spinner va solo si no hay `leading`."
+      },
+      {
+        "name": "disabled",
+        "type": "boolean",
+        "required": false,
+        "doc": "Apagado no abre ni recibe el foco."
       }
     ],
     "doc": "El select es un botón con un listbox propio, no un `<select>` nativo."

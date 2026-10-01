@@ -1,10 +1,11 @@
 import s from './radio.module.css'
 import type { Ref } from 'react'
 import { cx } from '../lib/cx'
+import { useFieldGroup } from '../lib/field-ctx'
 import { useRovingRadio } from '../lib/roving'
 
 function Root({
-  checked, onCheckedChange, label, disabled, id, tabIndex, ref,
+  checked, onCheckedChange, label, disabled, id, tabIndex, ref, size = 'md',
 }: {
   /** Es controlado. */
   checked: boolean
@@ -20,6 +21,8 @@ function Root({
   tabIndex?: number
   /** Lo usa `Group` para mover el foco con las flechas. */
   ref?: Ref<HTMLButtonElement>
+  /** 16 · 20 · 24: el interlineado del texto de al lado. */
+  size?: 'sm' | 'md' | 'lg'
 }) {
   return (
     <button
@@ -32,7 +35,7 @@ function Root({
       disabled={disabled}
       tabIndex={tabIndex}
       onClick={() => onCheckedChange(true)}
-      className={cx(s.root, s.disabled)}
+      className={cx(s.root, size === 'sm' ? s.rootSm : size === 'lg' ? s.rootLg : s.rootMd, s.disabled)}
     >
       <span className={cx(s.control, s.motion, checked ? s.on : s.off)}>
         <span
@@ -48,7 +51,7 @@ function Root({
 
 /** El grupo va suelto: las opciones sobre el papel, cada una con su etiqueta al lado. */
 function Group<T extends string>({
-  value, onValueChange, options, label, className,
+  value, onValueChange, options, label, disabled, size, className,
 }: {
   /** El valor elegido: es controlado. */
   value: T
@@ -58,13 +61,19 @@ function Group<T extends string>({
   options: readonly { value: T; label: string; disabled?: boolean }[]
   /** Al aria-label del grupo. */
   label?: string
+  /** Apaga todas las opciones juntas. */
+  disabled?: boolean
+  /** El de cada radio. */
+  size?: 'sm' | 'md' | 'lg'
   className?: string
 }) {
   const roving = useRovingRadio(value, onValueChange, options)
+  const group = useFieldGroup()
   return (
     <div
       role="radiogroup"
       aria-label={label}
+      {...(label ? {} : group)}
       onKeyDown={roving.onKeyDown}
       className={cx(s.row, className)}
     >
@@ -75,7 +84,8 @@ function Group<T extends string>({
           checked={o.value === value}
           onCheckedChange={() => onValueChange(o.value)}
           label={o.label}
-          disabled={o.disabled}
+          disabled={disabled || o.disabled}
+          size={size}
           tabIndex={roving.tabIndex(o.value)}
         />
       ))}

@@ -1,6 +1,7 @@
 import cls from './checkbox.module.css'
 import { useState } from 'react'
 import { Checkbox } from '@humans/ui/checkbox'
+import { Field } from '@humans/ui/field'
 import { A11y, Anatomy, Hero, Page, Panel, Practices, Props, Section, Stack, Variant } from '../kit'
 
 export function CheckboxStory() {
@@ -9,6 +10,8 @@ export function CheckboxStory() {
   const [checked, setChecked] = useState(true)
   const [unchecked, setUnchecked] = useState(false)
   const [shared, setShared] = useState(true)
+  const [reviewed, setReviewed] = useState(false)
+  const [sizes, setSizes] = useState(true)
 
   return (
     <Page
@@ -24,7 +27,7 @@ export function CheckboxStory() {
       </Hero>
 
       <Anatomy>
-        <Anatomy.Part name="Caja" required>El cuadrado de 18. Apagada es una caja vacía con su línea, del color del campo que la rodea.</Anatomy.Part>
+        <Anatomy.Part name="Caja" required>El cuadrado de 20, o de 16 y 24 con `size`. Apagada es una caja vacía con su línea, del color del campo que la rodea.</Anatomy.Part>
         <Anatomy.Part name="Marca">El tilde en blanco sobre el azul cuando está marcada, o la raya cuando es `indeterminate`.</Anatomy.Part>
         <Anatomy.Part name="Etiqueta">{'El texto que la nombra, con `label` o envolviendo la casilla en un `<label>`.'}</Anatomy.Part>
       </Anatomy>
@@ -32,13 +35,42 @@ export function CheckboxStory() {
       <Section title="Ejemplos">
         <Panel>
           <Variant
-            name="Deshabilitadas"
-            note="Apagadas, no se tocan ni reciben el foco."
-            code={`<Checkbox checked onCheckedChange={setChecked} disabled label="Fija" />
-<Checkbox checked={false} onCheckedChange={setChecked} disabled label="Fija" />`}
+            name="Apagadas"
+            note="No se tocan ni reciben el foco, y van en el gris de la rampa: marcada o vacía, la caja dice su estado sin el azul."
+            code={`<label>
+  <Checkbox checked onCheckedChange={() => {}} disabled />
+  Ciencias, que la eligió la escuela
+</label>
+<label>
+  <Checkbox checked={false} onCheckedChange={() => {}} disabled />
+  Educación Física, que ya cerró
+</label>`}
           >
-            <Checkbox checked onCheckedChange={() => {}} disabled label="Fija" />
-            <Checkbox checked={false} onCheckedChange={() => {}} disabled label="Fija" />
+            <Stack gap="sm">
+              <label className={cls.itemLabel}>
+                <Checkbox checked onCheckedChange={() => {}} disabled />
+                Ciencias, que la eligió la escuela
+              </label>
+              <label className={cls.itemLabel}>
+                <Checkbox checked={false} onCheckedChange={() => {}} disabled />
+                Educación Física, que ya cerró
+              </label>
+            </Stack>
+          </Variant>
+          <Variant
+            name="Con error"
+            note="Lo pone `Field.Error`: la caja pasa a rojo y el texto de abajo dice qué hacer para seguir."
+            code={`<Field>
+  <Field.Label>Revisé las notas del trimestre</Field.Label>
+  <Checkbox checked={reviewed} onCheckedChange={setReviewed} />
+  <Field.Error>Marcá la casilla para cerrar el trimestre.</Field.Error>
+</Field>`}
+          >
+            <Field>
+              <Field.Label>Revisé las notas del trimestre</Field.Label>
+              <Checkbox checked={reviewed} onCheckedChange={setReviewed} />
+              <Field.Error>Marcá la casilla para cerrar el trimestre.</Field.Error>
+            </Field>
           </Variant>
           <Variant
             name="En una fila"
@@ -71,6 +103,37 @@ export function CheckboxStory() {
                   {space}
                 </label>
               ))}
+            </Stack>
+          </Variant>
+          <Variant
+            name="sm · md · lg"
+            note="La caja mide el interlineado del texto que acompaña: `sm` va con el texto chico de una tabla, `md` con el del cuerpo y `lg` con el de lectura."
+            code={`<label className={s.labelSm}>
+  <Checkbox size="sm" checked={sizes} onCheckedChange={setSizes} />
+  Entregó a tiempo
+</label>
+<label className={s.labelMd}>
+  <Checkbox checked={sizes} onCheckedChange={setSizes} />
+  Entregó a tiempo
+</label>
+<label className={s.labelLg}>
+  <Checkbox size="lg" checked={sizes} onCheckedChange={setSizes} />
+  Entregó a tiempo
+</label>`}
+          >
+            <Stack gap="md">
+              <label className={cls.labelSm}>
+                <Checkbox size="sm" checked={sizes} onCheckedChange={setSizes} />
+                Entregó a tiempo
+              </label>
+              <label className={cls.labelMd}>
+                <Checkbox checked={sizes} onCheckedChange={setSizes} />
+                Entregó a tiempo
+              </label>
+              <label className={cls.labelLg}>
+                <Checkbox size="lg" checked={sizes} onCheckedChange={setSizes} />
+                Entregó a tiempo
+              </label>
             </Stack>
           </Variant>
         </Panel>

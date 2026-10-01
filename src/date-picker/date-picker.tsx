@@ -34,7 +34,7 @@ const inWords = (iso: string) => {
 }
 
 /** Elegir una fecha: un campo que abre un mes. */
-export function DatePicker({ value, onValueChange, min, max, placeholder = 'Elegir fecha', label, size = 'md', width }: {
+export function DatePicker({ value, onValueChange, min, max, placeholder = 'Elegir fecha', label, size = 'md', width, disabled }: {
   /** La fecha elegida como `AAAA-MM-DD`, o vacío. */
   value: string
   /** Recibe la fecha nueva en el mismo formato. */
@@ -51,6 +51,8 @@ export function DatePicker({ value, onValueChange, min, max, placeholder = 'Eleg
   size?: 'sm' | 'md' | 'lg'
   /** Sin esto toma el ancho del contenido. */
   width?: number
+  /** Apagado no abre ni recibe el foco. */
+  disabled?: boolean
 }) {
   const field = useField()
   const [open, setOpen] = useState(false)
@@ -128,6 +130,7 @@ export function DatePicker({ value, onValueChange, min, max, placeholder = 'Eleg
         aria-expanded={open}
         aria-label={label}
         {...field}
+        disabled={disabled}
         onClick={() => setOpen(o => !o)}
         style={{ width }}
         className={cx(cls.root, fieldSizes[size], 'field-focus')}

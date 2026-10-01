@@ -80,7 +80,7 @@ function Tab({ value, className, children, ...props }: ComponentPropsWithoutRef<
       )}
       {...props}
     >
-      {children}
+      <span className="weight-steady"><span>{children}</span><span aria-hidden="true">{children}</span></span>
       {selected && <span className={s.marker} />}
     </button>
   )

@@ -95,7 +95,7 @@ src/theme.css                      el orden de las capas y los imports de arriba
 - **Una carpeta por pieza, con su test al lado, y una pieza no vive adentro de otra.** Una carpeta
   con nombre de caso de uso es un cajón: `filter/` llegó a esconder un buscador que terminó
   dibujado a mano en tres lugares.
-- **Las partes cuelgan de la raíz**: `Modal.Header`, `Nav.Item`. Se declaran con nombre corto y
+- **Las partes cuelgan de la raíz**: `Modal.Header`, `Card.Header`. Se declaran con nombre corto y
   local y se arma el namespace ahí (`Object.assign(Root, { Header })`): `ModalHeader` no existe en
   ningún lado.
 - **El contenido va como hijo, nunca en una prop**: `<Progress.Label>` y no `label="…"`. Siguen
@@ -226,8 +226,8 @@ recetas de sombra, no pantallas. No seguir igualándolo: el conjunto armado es l
 - **Una superficie es 16** (`--radius-xl`): tarjeta, fila, panel flotante, modal, diálogo.
 - **Un radio se elige contra el alto de la pieza, no contra su tipo.** Sobre un item de 40, 16 se
   lee como pastilla: va `lg`, que es el radio del panel menos su relleno.
-- **Un item elegido se marca con una barra de 2px a la izquierda**, fondo azul suave y texto destacado, en el `Nav`
-  y en el riel de Ajustes.
+- **Un item elegido se marca con una barra de 2px a la izquierda**, fondo azul suave y texto destacado, en el riel
+  del sitio y en el de Ajustes.
 - **Las tarjetas no se mueven en hover** ni tienen acciones que aparecen al pasar el mouse.
 - **El movimiento dice de dónde vino algo y adónde se fue.** `--duration-fast` (120) acompaña al
   dedo, `--duration-normal` (190) es lo que aparece o se va, `--duration-content` (280) es contenido

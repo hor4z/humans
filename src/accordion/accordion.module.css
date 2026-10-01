@@ -1,11 +1,23 @@
 @layer humans.components {
   .root {
+    interpolate-size: allow-keywords;
     border-bottom-style: solid;
     border-bottom-width: 1px;
     border-color: var(--border);
     &:last-child {
       border-style: solid;
       border-width: 0;
+    }
+    &::details-content {
+      block-size: 0;
+      overflow: clip;
+      transition-property: block-size, content-visibility;
+      transition-duration: var(--duration-content);
+      transition-timing-function: var(--ease-slide);
+      transition-behavior: allow-discrete;
+    }
+    &[open]::details-content {
+      block-size: auto;
     }
   }
 
@@ -21,6 +33,12 @@
     letter-spacing: var(--type-body-ls);
     font-weight: var(--font-weight-semibold);
     color: var(--text);
+    transition-property: padding-block-end;
+    transition-duration: var(--duration-content);
+    transition-timing-function: var(--ease-slide);
+    &:is([open] > *) {
+      padding-block-end: var(--space-2);
+    }
     & ::marker {
       --humans-content: none;
       content: none;

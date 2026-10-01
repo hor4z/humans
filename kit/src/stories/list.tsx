@@ -24,8 +24,7 @@ export function ListStory() {
     <Page
       title="List"
       kind="Datos"
-      imports="import { List } from '@humans/ui/list'
-import { useState } from 'react'"
+      imports="import { List } from '@humans/ui/list'"
       lead="Agrupa elementos con título, información de apoyo y acciones."
     >
       <Hero>

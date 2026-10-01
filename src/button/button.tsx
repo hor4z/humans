@@ -60,8 +60,7 @@ export function Button({
         `${cls.root} touch-target`,
         cls.motion,
         cls.pressed,
-        cls.disabled,
-        spinning && cls.loading,
+        disabled && !loading && (variant === 'ghost' ? cls.disabledPlain : cls.disabled),
         variants[variant], c.box, c.px, c.text, c.gap, c.radius, block && cls.block, className,
       )}
       {...rest}

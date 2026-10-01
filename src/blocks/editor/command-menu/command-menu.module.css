@@ -54,7 +54,7 @@
   }
 
   .disabled {
-    opacity: .45;
+    color: var(--text-disabled);
   }
 
   .active {

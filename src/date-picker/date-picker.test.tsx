@@ -117,4 +117,12 @@ describe('DatePicker', () => {
     window.dispatchEvent(new Event('scroll'))
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
   })
+
+  it('apagado no abre', async () => {
+    render(<DatePicker value="" onValueChange={() => {}} label="Vence" disabled />)
+    const trigger = screen.getByRole('button', { name: 'Vence' })
+    expect(trigger).toBeDisabled()
+    await userEvent.click(trigger)
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
 })

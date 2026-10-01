@@ -46,16 +46,21 @@ export function ToggleButtonStory() {
             </ToggleButton>
           </Variant>
           <Variant
-            name="sm · 36 · md · 40 · lg · 44 · apagado"
-            note="Los tres tamaños del `Button`: `sm` en una barra, `md` suelto, `lg` donde se toca con el dedo. Apagado no responde y se ve que no responde."
+            name="sm · 36 · md · 40 · lg · 44"
+            note="Los tres tamaños del `Button`: `sm` en una barra, `md` suelto, `lg` donde se toca con el dedo."
             code={`<ToggleButton size="sm" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
 <ToggleButton size="md" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
-<ToggleButton size="lg" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
-<ToggleButton size="sm" pressed={false} disabled icon="format_bold" label="Negrita" />`}
+<ToggleButton size="lg" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />`}
           >
             <ToggleButton size="sm" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
             <ToggleButton size="md" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
             <ToggleButton size="lg" pressed={bold} onPressedChange={setBold} icon="format_bold" label="Negrita" />
+          </Variant>
+          <Variant
+            name="Apagado"
+            note="No responde ni recibe el foco, y se ve que no responde."
+            code={`<ToggleButton size="sm" pressed={false} disabled icon="format_bold" label="Negrita" />`}
+          >
             <ToggleButton size="sm" pressed={false} disabled icon="format_bold" label="Negrita" />
           </Variant>
         </Panel>

@@ -98,4 +98,12 @@ describe('Segmented', () => {
     await userEvent.keyboard('{ArrowLeft}')
     expect(onChange).toHaveBeenCalledWith('b')
   })
+
+  it('apagado entero no se elige', async () => {
+    const onChange = vi.fn()
+    render(<Segmented value="a" onValueChange={onChange} options={filters} label="Estado" disabled />)
+    for (const radio of screen.getAllByRole('radio')) expect(radio).toBeDisabled()
+    await userEvent.click(screen.getByRole('radio', { name: 'Abiertas' }))
+    expect(onChange).not.toHaveBeenCalled()
+  })
 })

@@ -27,8 +27,7 @@ export function FilterStory() {
     <Page
       title="Filter"
       kind="Datos"
-      imports="import { Table } from '@humans/ui/table'
-import { Filter } from '@humans/ui/filter'"
+      imports="import { Filter } from '@humans/ui/filter'"
       lead="Permite seleccionar varias opciones para filtrar datos o elegir las columnas visibles."
     >
       <Hero>

@@ -11,7 +11,7 @@ import { fieldSizes } from '../lib/control'
 
 /** El select es un botón con un listbox propio, no un `<select>` nativo. */
 export function Select({
-  value, onValueChange, options, size = 'md', width, leading, loading,
+  value, onValueChange, options, size = 'md', width, leading, loading, disabled,
 }: {
   /** El valor elegido, que es lo que se ve en el botón. */
   value: string
@@ -27,6 +27,8 @@ export function Select({
   leading?: ReactNode
   /** Mientras los datos no están: no abre, y el spinner va solo si no hay `leading`. */
   loading?: boolean
+  /** Apagado no abre ni recibe el foco. */
+  disabled?: boolean
 }) {
   const field = useField()
   const [open, setOpen] = useState(false)
@@ -102,6 +104,7 @@ export function Select({
         {...field}
         aria-busy={loading || undefined}
         aria-disabled={loading || undefined}
+        disabled={disabled}
         onClick={() => { if (!loading) setOpen(o => !o) }}
         onKeyDown={e => {
           if (loading || open) return

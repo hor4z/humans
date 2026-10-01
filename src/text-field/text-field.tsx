@@ -35,7 +35,6 @@ export function TextField({ icon, suffix, size = 'md', className, ref, inputRef,
       }}
       className={cx(
         `${s.root} field`,
-        s.disabled,
         fieldSizes[size], className,
       )}
     >

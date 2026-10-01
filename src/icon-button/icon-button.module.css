@@ -15,8 +15,16 @@
 
   .disabled {
     &:disabled {
-      opacity: .45;
       pointer-events: none;
+      background-color: var(--disabled-bg);
+      color: var(--text-disabled);
+    }
+  }
+
+  .disabledPlain {
+    &:disabled {
+      pointer-events: none;
+      color: var(--text-disabled);
     }
   }
 

@@ -40,7 +40,7 @@
   .disabled {
     &:disabled {
       pointer-events: none;
-      opacity: .45;
+      color: var(--text-disabled);
     }
   }
 
