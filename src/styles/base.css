@@ -230,7 +230,8 @@ strong, b { font-weight: var(--font-weight-semibold); }
   background-color: var(--disabled-bg);
   color: var(--text-disabled);
 }
-:is(.field:has(input:disabled, textarea:disabled), .field-focus:disabled) :is(*, ::placeholder) { color: var(--text-disabled); }
+:is(.field:has(input:disabled, textarea:disabled), .field-focus:disabled) * { color: var(--text-disabled); }
+.field :is(input, textarea):disabled::placeholder { color: var(--text-disabled); }
 
 :disabled .icon-muted { color: var(--text-disabled); }
 
