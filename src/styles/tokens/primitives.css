@@ -9,6 +9,7 @@
   --shade-08: #30302d;
   --shade-09: #232220;
   --shade-placeholder: #5e5d5b;
+  --shade-rail: #f6f5f0;
 
   --shade-09-a04: rgb(35 34 32 / 0.04);
   --shade-09-a06: rgb(35 34 32 / 0.06);
@@ -97,6 +98,7 @@
   --shade-08: #dfe0e1;
   --shade-09: #f3f3f4;
   --shade-placeholder: #8e9091;
+  --shade-rail: #1d1e20;
 
   --shade-09-a04: rgb(243 243 244 / 0.05);
   --shade-09-a06: rgb(243 243 244 / 0.08);

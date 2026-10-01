@@ -31,7 +31,7 @@ export function EmptyStateStory() {
       </Anatomy>
 
       <Section title="Tamaños y marco">
-        <Demo label="`md` y `sm`: una pantalla, y una búsqueda sin resultados adentro de una pieza" code={`<EmptyState icon="inbox">
+        <Demo label="`md` y `sm`: una pantalla, y una búsqueda sin resultados adentro de una pieza" note="Tocá Limpiar filtros: la salida resuelve el vacío en el lugar, sin mandar a otra pantalla." code={`<EmptyState icon="inbox">
   <EmptyState.Title>Todavía no llegó ninguna entrega</EmptyState.Title>
   <EmptyState.Body>Cuando alguien entregue una actividad de este espacio, la vas a ver acá con su estado.</EmptyState.Body>
   <EmptyState.Action><Button variant="brand" onClick={() => { window.location.hash = 'documento' }}>Crear una actividad</Button></EmptyState.Action>
@@ -57,7 +57,7 @@ export function EmptyStateStory() {
           </Stack>
         </Demo>
 
-        <Demo label="Sin caja, adentro de una tarjeta" code={`<EmptyState bordered={false} icon="folder_open">
+        <Demo label="Sin caja, adentro de una tarjeta" note="Con `bordered={false}` cuando la tarjeta ya pone el marco: dos bordes, uno adentro del otro, se leen como dos cajas." code={`<EmptyState bordered={false} icon="folder_open">
   <EmptyState.Title>Este espacio está vacío</EmptyState.Title>
   <EmptyState.Body>Todavía no hay actividades acá.</EmptyState.Body>
 </EmptyState>`}>
@@ -69,7 +69,7 @@ export function EmptyStateStory() {
           </div>
         </Demo>
 
-        <Demo label="Sin icono" code={`<EmptyState>
+        <Demo label="Sin icono" note="Cuando ningún glifo dice mejor que el título lo que pasó, como una dirección que no lleva a ninguna pantalla." code={`<EmptyState>
   <EmptyState.Title>Acá no hay nada</EmptyState.Title>
   <EmptyState.Body>La dirección existe pero no lleva a ninguna pantalla.</EmptyState.Body>
   <EmptyState.Action><Button variant="muted" onClick={() => { window.location.hash = 'intro' }}>Volver al inicio</Button></EmptyState.Action>

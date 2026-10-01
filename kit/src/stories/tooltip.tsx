@@ -29,7 +29,7 @@ export function TooltipStory() {
         title="El retraso se comparte"
         note="El primero tarda medio segundo y el de al lado abre al instante: pasá el mouse por la fila."
       >
-        <Demo code={`<Tooltip label="Buscar"><IconButton icon="search" label="Buscar" /></Tooltip>
+        <Demo note="Va en una fila de botones que son solo un glifo, como las acciones de una actividad: cada uno dice su nombre al pasar." code={`<Tooltip label="Buscar"><IconButton icon="search" label="Buscar" /></Tooltip>
 <Tooltip label="Duplicar"><IconButton icon="content_copy" label="Duplicar" /></Tooltip>
 <Tooltip label="Compartir"><IconButton icon="share" label="Compartir" /></Tooltip>
 <Tooltip label="Archivar"><IconButton icon="inventory_2" label="Archivar" /></Tooltip>
@@ -50,7 +50,7 @@ export function TooltipStory() {
         title="Texto largo, abajo y contra el borde"
         note="Contra el borde de arriba se va abajo, y contra el costado se pega a 8 del canto en vez de salirse."
       >
-        <Demo fill code={`<Tooltip label="Una actividad archivada sale de la lista pero no se borra: queda en 'Archivadas' y se puede restaurar.">
+        <Demo fill note="Para explicar qué pasa con lo que se toca, como archivar una actividad, sin abrir un diálogo." code={`<Tooltip label="Una actividad archivada sale de la lista pero no se borra: queda en 'Archivadas' y se puede restaurar.">
   <IconButton icon="inventory_2" label="Archivar" variant="muted" />
 </Tooltip>
 <Tooltip side="bottom" label="Va abajo si entra">
@@ -80,7 +80,7 @@ export function TooltipStory() {
       </Section>
 
       <Section title="Posición" note="Elegí el lado con `side`, la alineación con `align` y la separación con `offset`. Si no entra, cambia al lado opuesto y respeta el borde de la ventana.">
-        <Demo label="Cuatro lados" code={`<Tooltip label="Arriba" side="top"><Button>Arriba</Button></Tooltip>
+        <Demo label="Cuatro lados" note="Arriba es el lado por defecto. Otro va cuando arriba tapa algo que hace falta ver, como la fila de encima en una tabla." code={`<Tooltip label="Arriba" side="top"><Button>Arriba</Button></Tooltip>
 <Tooltip label="Abajo" side="bottom"><Button>Abajo</Button></Tooltip>
 <Tooltip label="Izquierda" side="left"><Button>Izquierda</Button></Tooltip>
 <Tooltip label="Derecha" side="right" align="center" offset={8}><Button>Derecha</Button></Tooltip>`}>

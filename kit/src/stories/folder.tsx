@@ -43,7 +43,7 @@ export function FolderStory() {
 
       <Section title="Ejemplos">
         <Panel>
-          <Demo label="Tamaños" code={`<Folder size={88} />
+          <Demo label="Tamaños" note="La chica va en una grilla con muchos espacios, y la grande cuando hay pocos y la carpeta hace de portada." code={`<Folder size={88} />
   <Folder size={128} />
   <Folder size={168} />
   <Folder size={220} />`}>
@@ -57,7 +57,7 @@ export function FolderStory() {
             </Card>
           </Demo>
 
-          <Demo label="Colores" code={`<Folder>
+          <Demo label="Colores" note="Usá el color para la carpeta que un docente tiene que encontrar rápido, como la del curso que corrige esta semana." code={`<Folder>
     <Folder.Label>Amarillo</Folder.Label>
     <Folder.Meta>el default</Folder.Meta>
   </Folder>
@@ -93,7 +93,7 @@ export function FolderStory() {
             </Card>
           </Demo>
 
-          <Demo label="Con avatares y un icono" code={`<Folder avatars={[person('Ana Pérez', 1), person('Bruno Díaz', 2)]}>
+          <Demo label="Con avatares y un icono" note="Los avatares cuando importa quién comparte el espacio, como una carpeta que arman dos docentes; el icono, para algo que la carpeta trae, como un adjunto." code={`<Folder avatars={[person('Ana Pérez', 1), person('Bruno Díaz', 2)]}>
     <Folder.Label>Con dos</Folder.Label>
     <Folder.Meta>6 archivos</Folder.Meta>
   </Folder>

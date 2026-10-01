@@ -60,7 +60,7 @@ export function ChartStory() {
         title="Vivo"
         note="Pasá el mouse por las barras, y después tabulá hasta ellas: el tooltip aparece igual con el teclado. El jueves lleva `detail`."
       >
-        <Demo fill code={`const week = [
+        <Demo fill note="Corregidas sobre entregadas en una semana, con el jueves destacado porque es el día del que habla la pantalla." code={`const week = [
   { label: 'Lunes', value: 18, total: 24, caption: 'Actividades corregidas' },
   { label: 'Martes', value: 6, total: 14, caption: 'Actividades corregidas' },
   { label: 'Miércoles', value: 27, total: 29, caption: 'Actividades corregidas' },

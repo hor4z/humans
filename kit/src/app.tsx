@@ -374,7 +374,7 @@ export function App() {
           aria-modal={railOpen && !desktop ? true : undefined}
           inert={!desktop && !railOpen}
           className={cx(
-            `${cls.rail} bg-surface`,
+            cls.rail,
             compact && cls.railCompact,
             cls.railMotion,
             railOpen ? cls.railOpen : cls.railClosed,

@@ -30,7 +30,7 @@ export function ProgressStory() {
       </Anatomy>
 
       <Section title="Rótulo y tono">
-        <Demo fill code={`<Progress value={18} max={24}>
+        <Demo note="Las barras del día a día de un curso: corregir, subir un archivo, publicar y una cuota que se llena." fill code={`<Progress value={18} max={24}>
   <Progress.Label>Corregidas</Progress.Label>
   <Progress.Hint>18 de 24</Progress.Hint>
 </Progress>

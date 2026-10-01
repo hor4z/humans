@@ -26,7 +26,7 @@ export function SpinnerStory() {
 
       <Section title="Tamaños y contexto">
         <Panel>
-          <Variant name="16 · 20 · 28 · 44" code={`<Spinner size={16} />
+          <Variant name="16 · 20 · 28 · 44" note="16 adentro de un botón o de una fila, 20 y 28 en un panel, 44 cuando ocupa solo el medio de una pantalla." code={`<Spinner size={16} />
 <Spinner size={20} />
 <Spinner size={28} />
 <Spinner size={44} />`}>
@@ -56,7 +56,7 @@ Buscando en siete espacios`}
             </span>
           </Variant>
         </Panel>
-        <Demo label="Con lo que está cargando" code={`<Spinner label="Cargando las entregas" />`}>
+        <Demo label="Con lo que está cargando" note="Cuando va solo en un panel, sin texto al lado, `label` nombra lo que se espera, como las entregas de la actividad." code={`<Spinner label="Cargando las entregas" />`}>
           <Spinner label="Cargando las entregas" />
         </Demo>
       </Section>

@@ -25,7 +25,7 @@ export function MentionStory() {
         <Anatomy.Part name="Nombre" required>`name`: el texto que se lee dentro de la oración. Con `href` es un enlace subrayado.</Anatomy.Part>
       </Anatomy>
       <Section title="En un párrafo y sueltas">
-        <Demo label="En un párrafo" width="xl" fill code={`<p>
+        <Demo label="En un párrafo" note="Para nombrar estudiantes, cursos y consignas en un aviso o en una devolución sin cortar la lectura." width="xl" fill code={`<p>
   Para el jueves, <Mention name="Ana Pérez" src={face(1)} href="#avatar" /> y{' '}
   <Mention name="Bruno Díaz" src={face(2)} href="#avatar" /> tienen que subir el informe
   del experimento a <Mention name="Ciencias · 5.º B" icon="folder" href="#folder" />. Si
@@ -44,7 +44,7 @@ export function MentionStory() {
             martes.
           </p>
         </Demo>
-        <Demo label="Sueltas" className={s.looseStrip} code={`<Mention name="Ana Pérez" src={face(1)} href="#avatar" />
+        <Demo label="Sueltas" note="Comparalas antes de elegir: una persona con foto, otra con su inicial, un curso y una consigna, con enlace y sin enlace." className={s.looseStrip} code={`<Mention name="Ana Pérez" src={face(1)} href="#avatar" />
 <Mention name="Elena Vega" />
 <Mention name="Matemática · 4.º A" icon="folder" href="#folder" />
 <Mention name="Fracciones equivalentes" icon="description" />`}>

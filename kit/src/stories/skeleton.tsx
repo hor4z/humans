@@ -16,7 +16,7 @@ function Swap() {
     timer.current = setTimeout(() => setLoading(false), 1200) as unknown as number
   }
   return (
-    <Demo label="Tocá recargar: el hueco ocupa el lugar del párrafo" code={`{loading ? (
+    <Demo label="Tocá recargar: el hueco ocupa el lugar del párrafo" note="Es lo que pasa al volver a pedir una consigna: el texto se va, las barras ocupan su alto y el párrafo vuelve sin correr el botón." code={`{loading ? (
   <div className={s.lines}>
     <Skeleton className={s.lineBone} />
     <Skeleton className={s.lineBone} />
@@ -80,7 +80,7 @@ export function SkeletonStory() {
       </Anatomy>
 
       <Section title="Copiar la forma">
-        <Demo label="Una fila de lista" code={`{[0, 1, 2].map(i => (
+        <Demo label="Una fila de lista" note="Para la lista de estudiantes o de entregas mientras llega: el círculo ocupa el lugar del avatar y las barras el del nombre y su dato." code={`{[0, 1, 2].map(i => (
   <div key={i} className={s.row}>
     <Skeleton className={s.avatarBone} />
     <div className={s.rowLines}>
@@ -102,7 +102,7 @@ export function SkeletonStory() {
           </Stack>
         </Demo>
 
-        <Demo label="Una tarjeta, larga y corta" code={`<Card className={s.longCard}>
+        <Demo label="Una tarjeta, larga y corta" note="Cada hueco toma la medida de la tarjeta que viene, así que una grilla de actividades carga con la misma forma que va a tener." code={`<Card className={s.longCard}>
   <Skeleton className={s.longCoverBone} />
   <div className={s.longBody}>
     <Skeleton className={s.longTitleBone} />

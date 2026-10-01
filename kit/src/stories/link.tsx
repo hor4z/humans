@@ -23,7 +23,7 @@ export function LinkStory() {
       </Anatomy>
 
       <Section title="Ejemplos">
-        <Demo label="El de afuera avisa" code={`<Link href="https://m3.material.io/styles/icons" external>Material Symbols</Link>
+        <Demo label="El de afuera avisa" note="Suelto o adentro de un párrafo, para un recurso de otro sitio que se suma a la consigna, como un video o un simulador." code={`<Link href="https://m3.material.io/styles/icons" external>Material Symbols</Link>
 <p>
   El set sale de <Link href="https://fonts.google.com/icons" external>Google Fonts</Link>, subseteado
   a los 160 que usamos.

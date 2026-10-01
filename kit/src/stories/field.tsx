@@ -68,7 +68,7 @@ export function FieldStory() {
   <Field.Label>Consigna</Field.Label>
   <Field.Hint>Podés pegar el texto que ya tenías</Field.Hint>
   <Textarea rows={3} maxRows={8} placeholder="Escribí la consigna…" />
-</Field>`} label="Nombre, ayuda y error: tocá el nombre y salí sin escribir">
+</Field>`} label="Nombre, ayuda y error: tocá el nombre y salí sin escribir" note="Mostrá el error al salir del campo y no mientras se escribe: nadie tiene que leer que está mal algo que todavía no terminó.">
           <Stack gap="xl" width="md">
             <Field required>
               <Field.Label>Nombre de la actividad</Field.Label>
@@ -88,7 +88,7 @@ export function FieldStory() {
             </Field>
           </Stack>
         </Demo>
-        <Demo label="El select, el switch y la casilla toman el id solos" code={`<Field required>
+        <Demo label="El select, el switch y la casilla toman el id solos" note="Mezclá controles en el mismo formulario: la etiqueta, la ayuda y el asterisco quedan iguales en todos." code={`<Field required>
   <Field.Label>Espacio</Field.Label>
   <Field.Hint>Dónde se publica</Field.Hint>
   <Select value={space} onValueChange={setSpace} options={['Matemática · 4.º A', 'Lengua · 6.º']} />
@@ -119,7 +119,7 @@ export function FieldStory() {
             </Field>
           </Stack>
         </Demo>
-        <Demo label="`Field.Set`: en un formulario de tres campos sobra, en uno de doce lo hace legible" code={`<Field.Set>
+        <Demo label="`Field.Set`: en un formulario de tres campos sobra, en uno de doce lo hace legible" note="Partí el formulario de una actividad en grupos como lo básico, las entregas y la corrección: la leyenda dice qué decide cada parte." code={`<Field.Set>
   <Field.Legend>Lo básico</Field.Legend>
   <Field required>
     <Field.Label>Nombre</Field.Label>

@@ -49,7 +49,7 @@ export function ChoiceStory() {
         <Anatomy.Part name="Veredicto">Al revelar, cada tarjeta dice en texto si iba, con el tilde en las que iban y la raya amarilla en las marcadas de más.</Anatomy.Part>
       </Anatomy>
       <Section title="Una o varias">
-        <Demo label="Con multiple las tarjetas pasan a ser casillas" code={`<Choice options={places} value={one} onValueChange={setOne}>
+        <Demo label="Con multiple las tarjetas pasan a ser casillas" note="Una sola correcta para una predicción, varias para una lista de condiciones que se cumplen a la vez." code={`<Choice options={places} value={one} onValueChange={setOne}>
   <Choice.Prompt>¿Dónde esperás que dé más alto?</Choice.Prompt>
 </Choice>
 <Choice multiple options={care} value={many} onValueChange={setMany}>

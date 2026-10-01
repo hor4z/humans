@@ -40,7 +40,7 @@ export function RowStory() {
       </Anatomy>
 
       <Section title="Ejemplos">
-        <Demo fill label="Una lista de ajustes, con y sin control" code={`<Row>
+        <Demo fill label="Una lista de ajustes, con y sin control" note="Un dato que no se cambia desde acá, como el correo, va como texto suelto en el lugar del control." code={`<Row>
   <Row.Label>Sugerir mejoras</Row.Label>
   <Row.Hint>Mientras escribís una consigna</Row.Hint>
   <Switch checked={suggest} onCheckedChange={setSuggest} />

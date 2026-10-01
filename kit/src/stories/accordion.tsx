@@ -34,7 +34,7 @@ export function AccordionStory() {
       </Anatomy>
 
       <Section title="Ejemplos">
-        <Demo fill label="Cómo se arma" code={`<Accordion>
+        <Demo fill label="Cómo se arma" note="Para las dudas que aparecen al publicar una actividad: cada fila es una pregunta con su respuesta, y la que más se consulta arranca abierta." code={`<Accordion>
   <Accordion.Item defaultOpen>
     <Accordion.Summary>¿Qué pasa si publico sin fecha de cierre?</Accordion.Summary>
     <Accordion.Body>La actividad queda abierta hasta que la cierres a mano. Los estudiantes pueden seguir entregando.</Accordion.Body>
@@ -55,7 +55,7 @@ export function AccordionStory() {
             </Accordion.Item>
           </Accordion>
         </Demo>
-        <Demo fill label="Varias abiertas a la vez: ninguna cierra a las otras" code={`<Accordion>
+        <Demo fill label="Varias abiertas a la vez: ninguna cierra a las otras" note="Sirve cuando se leen dos respuestas una al lado de la otra, como quién ve una actividad y cómo se califica." code={`<Accordion>
   <Accordion.Item defaultOpen>
     <Accordion.Summary>Quién ve la actividad</Accordion.Summary>
     <Accordion.Body>Los espacios en los que la publiques, y nadie más. Cambiarlo después no avisa de nuevo.</Accordion.Body>

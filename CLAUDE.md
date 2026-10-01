@@ -202,9 +202,11 @@ prosa, y la prosa se despega en silencio.
 **Propiedades** y **Accesibilidad**. `Page` las arma solo a partir de las secciones que la vista
 declara:
 
-- **Resumen**: el `<Hero>` (el ejemplo grande, sin código), el uso (el `lead` y el `import`), la
-  `<Anatomy>` (una fila por parte, ranura o estado que agrega un elemento), las buenas prácticas
-  (la sección "Cómo se usa bien", como tabla de Sí y No) y los ejemplos, que son todo lo demás.
+- **Resumen**: el `<Hero>` (el ejemplo grande, sin código), el uso (la sección "Uso", con el `lead`
+  y el bloque del `import`, después del ejemplo y no en la cabecera: lo primero que se ve es la
+  pieza), la `<Anatomy>` (una fila por parte, ranura o estado que agrega un elemento), las buenas
+  prácticas (la sección "Cómo se usa bien", como tabla de Sí y No) y los ejemplos, que son todo lo
+  demás.
 - **Propiedades**: la sección `Props`, que sale de los tipos.
 - **Accesibilidad**: la sección `Accesibilidad`.
 
@@ -230,8 +232,8 @@ recetas de sombra, no pantallas. No seguir igualándolo: el conjunto armado es l
 - **Una superficie es 16** (`--radius-xl`): tarjeta, fila, panel flotante, modal, diálogo.
 - **Un radio se elige contra el alto de la pieza, no contra su tipo.** Sobre un item de 40, 16 se
   lee como pastilla: va `lg`, que es el radio del panel menos su relleno.
-- **Un item elegido se marca con una barra de 2px a la izquierda**, fondo azul suave y texto destacado, en el riel
-  del sitio y en el de Ajustes.
+- **Un item elegido se marca con una barra de 2px a la izquierda**, fondo azul suave y el texto en
+  azul, sin cambiar de peso para que no se corra, en el riel del sitio y en el de Ajustes.
 - **Las tarjetas no se mueven en hover** ni tienen acciones que aparecen al pasar el mouse.
 - **El movimiento dice de dónde vino algo y adónde se fue.** `--duration-fast` (120) acompaña al
   dedo, `--duration-normal` (190) es lo que aparece o se va, `--duration-content` (280) es contenido

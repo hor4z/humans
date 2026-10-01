@@ -46,7 +46,7 @@ export function CardStory() {
 
       <Section title="Ejemplos">
         <Panel>
-          <Demo label="Completo" code={`<Card>
+          <Demo label="Completo" note="Un resumen de corrección en el tablero: el título dice qué se mide, la etiqueta cómo va y el pie adónde ir para ver más." code={`<Card>
   <Card.Header>
     <div>
       <Card.Title>Entregas de la semana</Card.Title>
@@ -84,7 +84,7 @@ export function CardStory() {
             </Card>
           </Demo>
 
-          <Demo label="Quieta y con `interactive`" code={`<Card>
+          <Demo label="Quieta y con `interactive`" note="Pasá el mouse por las dos: solo la que abre la actividad al tocarla sube la sombra." code={`<Card>
   <div className={cover} />
   <div>El barrio como mapa</div>
   <div>Geografía · 6.º · Indagación</div>
@@ -110,7 +110,7 @@ export function CardStory() {
             </Card>
           </Demo>
 
-          <Demo label="`paper` o `muted`" code={`<Card surface="paper">
+          <Demo label="`paper` o `muted`" note="Una al lado de la otra en una pantalla, la de `paper` es la que se mira primero." code={`<Card surface="paper">
   <div>paper</div>
   <div>Sobresale. El default.</div>
 </Card>

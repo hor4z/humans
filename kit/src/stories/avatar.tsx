@@ -27,7 +27,7 @@ export function AvatarStory() {
       </Anatomy>
 
       <Section title="Con y sin foto">
-        <Demo code={`<Avatar name="Horacio Rivero" size={24} />
+        <Demo note="24 va adentro de una fila de tabla, 34 en una lista de estudiantes y 44 en la cabecera de un perfil." code={`<Avatar name="Horacio Rivero" size={24} />
 <Avatar name="Horacio Rivero" size={34} />
 <Avatar name="Equipo Timonel" size={44} />
 <Avatar name="Ana Pérez" src="/avatars/01.webp" size={24} />
@@ -43,7 +43,7 @@ export function AvatarStory() {
       </Section>
 
       <Section title="El grupo">
-        <Demo label="cinco con foto, mezclados (el caso que importa mirar) y cuatro" code={`<Avatar.Group
+        <Demo label="cinco con foto, mezclados (el caso que importa mirar) y cuatro" note="Para mostrar quién entregó o quién comparte un espacio, cuando importa reconocer a algunos y no leer la lista entera." code={`<Avatar.Group
   people={[
     { name: 'Ana Pérez', src: '/avatars/01.webp' },
     { name: 'Bruno Díaz', src: '/avatars/02.webp' },
@@ -77,7 +77,7 @@ export function AvatarStory() {
         title="Sobre otro fondo"
         note="Fuera del papel hay que pasarle `ring`: un avatar no puede saber sobre qué lo pusieron."
       >
-        <Demo label='ring="var(--surface-muted)" arriba, y el anillo por default abajo: se corta contra el fondo' code={`<Avatar.Group
+        <Demo label='ring="var(--surface-muted)" arriba, y el anillo por default abajo: se corta contra el fondo' note="El caso típico es el resumen de un curso adentro de una tarjeta `muted`." code={`<Avatar.Group
   people={[
     { name: 'Ana Pérez', src: '/avatars/01.webp' },
     { name: 'Bruno Díaz', src: '/avatars/02.webp' },

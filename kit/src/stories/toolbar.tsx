@@ -30,7 +30,7 @@ export function ToolbarStory() {
       </Anatomy>
 
       <Section title="Ejemplos">
-        <Demo label="Completo" className={s.sunken} code={`<Toolbar label="Formato del texto">
+        <Demo label="Completo" note="La barra de formato del editor de consignas. Borrar el bloque va apagado mientras no haya un bloque elegido." className={s.sunken} code={`<Toolbar label="Formato del texto">
   <Toolbar.Button icon="format_bold" label="Negrita" pressed={format.bold} onPressedChange={() => toggle('bold')} />
   <Toolbar.Button icon="format_italic" label="Cursiva" pressed={format.italic} onPressedChange={() => toggle('italic')} />
   <Toolbar.Button icon="format_underlined" label="Subrayado" pressed={format.underline} onPressedChange={() => toggle('underline')} />

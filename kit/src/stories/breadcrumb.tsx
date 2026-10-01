@@ -27,6 +27,7 @@ export function BreadcrumbStory() {
       <Section title="Ejemplos">
         <Demo
           label="Con `onClick` o con `href`"
+          note="Va arriba del título, en una pantalla que vive adentro de un espacio, como una actividad dentro de su curso."
           code={`<Breadcrumb
   label="Ruta con onClick"
   items={[{ label: 'Espacios', onClick: openSpaces }, { label: 'Lengua · 6.º' }]}

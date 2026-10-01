@@ -37,7 +37,7 @@ export function PopoverStory() {
 
       <Section title="Ejemplos">
         <Panel>
-          <Demo label="Con `veil`" code={`<Popover
+          <Demo label="Con `veil`" note="Para un panel que hay que leer antes de decidir, como la lista de entregas pendientes de un curso." code={`<Popover
   width={340}
   veil
   trigger={props => <Button {...props} variant="muted">Con velo</Button>}

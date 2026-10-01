@@ -49,7 +49,7 @@ export function StepsStory() {
       </Anatomy>
 
       <Section title="Ejemplos">
-        <Demo fill label="Acostada, con botones de afuera" code={`<Steps steps={design} current={current} label="Etapas del proyecto" />
+        <Demo fill label="Acostada, con botones de afuera" note="Para un proyecto que avanza por etapas a lo largo de semanas: la pantalla decide cuándo se pasa a la siguiente." code={`<Steps steps={design} current={current} label="Etapas del proyecto" />
 <IconButton size="sm" variant="muted" icon="arrow_back" label="Etapa anterior" disabled={current === 0} onClick={() => setCurrent(n => n - 1)} />
 <IconButton size="sm" variant="muted" icon="arrow_forward" label="Etapa siguiente" disabled={current === design.length - 1} onClick={() => setCurrent(n => n + 1)} />`}>
           <div>
@@ -60,12 +60,12 @@ export function StepsStory() {
             </div>
           </div>
         </Demo>
-        <Demo fill label="Parada, para etapas con su propio texto o una columna angosta" code={`<Steps orientation="vertical" steps={handIn} current={1} label="Cómo se entrega" />`}>
+        <Demo fill label="Parada, para etapas con su propio texto o una columna angosta" note="Va al costado de una consigna, donde el estudiante ve en qué paso de la entrega está." code={`<Steps orientation="vertical" steps={handIn} current={1} label="Cómo se entrega" />`}>
           <div className={cls.stoppedBox}>
             <Steps orientation="vertical" steps={handIn} current={1} label="Cómo se entrega" />
           </div>
         </Demo>
-        <Demo fill label="Navegable: cada etapa es un botón" code={`<Steps steps={handIn} current={step} label="Cómo se entrega, navegable" onSelect={setStep} />`}>
+        <Demo fill label="Navegable: cada etapa es un botón" note="Tocá una etapa para volver a ella: sirve en un recorrido que se puede revisar, como releer la consigna antes de entregar." code={`<Steps steps={handIn} current={step} label="Cómo se entrega, navegable" onSelect={setStep} />`}>
           <Steps steps={handIn} current={step} label="Cómo se entrega, navegable" onSelect={setStep} />
         </Demo>
       </Section>

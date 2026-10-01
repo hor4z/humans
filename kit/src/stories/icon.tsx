@@ -69,7 +69,7 @@ export function IconStory() {
         title={`El set · ${iconNames.length} iconos`}
         note="Buscá por nombre o por lo que el icono es. Los tags son los de Google y están en inglés: 'calendar' encuentra `calendar_month`, 'calendario' no encuentra nada."
       >
-        <Demo fill code={`<div style={{ '--icon-wght': weight }}>
+        <Demo note="Probá el peso y el tamaño antes de elegir: un glifo que se lee bien en 24 puede empastarse en 16." fill code={`<div style={{ '--icon-wght': weight }}>
   {visible.map(name => <Icon key={name} name={name} size={size} />)}
 </div>`}>
           <div>
@@ -177,7 +177,7 @@ export function IconStory() {
 
       <Section title="Cómo se agrega uno">
         <Demo
-          label="Un comando, no un path"
+          label="Un comando, no un path" note="`add` pregunta antes de bajar si ya hay uno parecido en el set, y `check` falla si el código usa un glifo que no está."
           lang="sh"
           code={`npm run icons -- search notification
 npm run icons -- add rocket_launch

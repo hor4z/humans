@@ -38,6 +38,7 @@ export function SegmentedStory() {
       <Section title="Ejemplos">
         <Demo
           label="Tamaños"
+          note="`sm` va en la barra de una tabla o de un gráfico, `md` en la cabecera de una pantalla."
           code={`<Segmented
   size="sm"
   label="Rango"
@@ -60,6 +61,7 @@ export function SegmentedStory() {
         </Demo>
         <Demo
           label="Compacto"
+          note="Sin la pista de fondo: va donde una caja más sobraría, como la cabecera de una tarjeta."
           code={`<Segmented
   compact
   label="Rango"
@@ -73,6 +75,7 @@ export function SegmentedStory() {
         </Demo>
         <Demo
           label="Con un punto"
+          note="Avisa que hay entregas sin mirar sin sumar un número más a la pantalla. Se saca cuando ya no queda nada nuevo."
           code={`<Segmented
   label="Entregas"
   value={inbox}
@@ -85,6 +88,7 @@ export function SegmentedStory() {
         </Demo>
         <Demo
           label="Apagado"
+          note="No se elige ni recibe el foco, y va en gris. Va cuando elegir todavía no tiene sentido, como un trimestre sin notas cargadas."
           code={`<Segmented
   label="Trimestre"
   value={term}

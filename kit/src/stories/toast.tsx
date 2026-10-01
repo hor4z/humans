@@ -37,7 +37,7 @@ export function ToastStory() {
       </Anatomy>
 
       <Section title="Probalo">
-        <Demo label="los casos, y cinco seguidos para ver la pila" code={`const { toast } = useToast()
+        <Demo label="los casos, y cinco seguidos para ver la pila" note="Publicar y Guardar confirman algo que salió bien; Error dice qué hacer para que salga. Sin vencimiento se queda hasta que lo cerrás." code={`const { toast } = useToast()
 
 <Button variant="brand" onClick={() => toast({ title: 'Actividad publicada', body: 'Ya está disponible en los siete espacios.', tone: 'ok' })}>
   Publicar
@@ -96,7 +96,7 @@ export function ToastStory() {
         title="Deshacer"
         note="Un toast con acción reemplaza al '¿estás seguro?' de lo que se puede revertir."
       >
-        <Demo label="con salida" code={`<Button
+        <Demo label="con salida" note="Archivá la actividad y tocá Deshacer: tenés ocho segundos para recuperarla." code={`<Button
   variant="muted"
   iconStart={<Icon name="delete" />}
   onClick={() => toast({
